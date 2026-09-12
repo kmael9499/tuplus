@@ -27,8 +27,9 @@
           <ul class="nav-list">
             <li><a class="nav-link active" href="#inicio">Inicio</a></li>
             <li><a class="nav-link" href="#servicios">Soluciones</a></li>
+            <li><a class="nav-link" href="#proceso">Proceso</a></li>
             <li><a class="nav-link" href="#nosotros">Nosotros</a></li>
-            <li><a class="nav-link" href="#contacto">Contacto</a></li>
+            <li><a class="nav-link nav-contacto" href="#contacto">Hablemos</a></li>
           </ul>
         </nav>
 
@@ -48,10 +49,9 @@
     </header>
 
     <main id="contenido" tabindex="-1">
-      <!-- INICIO: el botón ahora es un enlace real; no necesita script.js aunq deberiamos agregarle para mejor actividad al moenntos de interactuar los usuarios. -->
       <section class="inicio" id="inicio" aria-labelledby="titulo-inicio">
         <div class="contenedor">
-          <p class="etiqueta">Tecnología para tu negocio</p>
+          <p class="etiqueta inicio-etiqueta">Soluciones digitales para Latinoamérica</p>
           <h1 id="titulo-inicio">
             El siguiente paso de tu negocio<br class="salto-escritorio" />
             empieza en <span>digital.</span>
@@ -68,6 +68,11 @@
               >Conoce TUPLUS <span aria-hidden="true">→</span></a
             >
           </div>
+          <ul class="inicio-resumen" aria-label="Nuestro enfoque">
+            <li>Alcance definido</li>
+            <li>Diseño pensado para móviles</li>
+            <li>Pruebas antes de la entrega</li>
+          </ul>
         </div>
       </section>
 
@@ -93,6 +98,7 @@
                 facilitar el contacto con tus clientes.
               </p>
               <span class="tarjeta-detalle">Presencia digital</span>
+              <a class="enlace-secundario" href="#contacto">Consultar sobre Web <span aria-hidden="true">→</span></a>
             </article>
             <article class="tarjeta" id="solucion-commerce">
               <span class="tarjeta-numero" aria-hidden="true">02</span>
@@ -102,6 +108,7 @@
                 organizar el recorrido de venta.
               </p>
               <span class="tarjeta-detalle">Comercio digital</span>
+              <a class="enlace-secundario" href="#contacto">Consultar sobre Commerce <span aria-hidden="true">→</span></a>
             </article>
             <article class="tarjeta" id="solucion-automation">
               <span class="tarjeta-numero" aria-hidden="true">03</span>
@@ -111,6 +118,7 @@
                 simplificar tareas repetitivas.
               </p>
               <span class="tarjeta-detalle">Procesos conectados</span>
+              <a class="enlace-secundario" href="#contacto">Consultar sobre Automation <span aria-hidden="true">→</span></a>
             </article>
             <article class="tarjeta" id="solucion-systems">
               <span class="tarjeta-numero" aria-hidden="true">04</span>
@@ -120,6 +128,7 @@
                 gestión y operación de tu negocio.
               </p>
               <span class="tarjeta-detalle">Software y gestión</span>
+              <a class="enlace-secundario" href="#contacto">Consultar sobre Systems <span aria-hidden="true">→</span></a>
             </article>
             <article class="tarjeta" id="solucion-data">
               <span class="tarjeta-numero" aria-hidden="true">05</span>
@@ -129,7 +138,35 @@
                 acompañar tus procesos digitales.
               </p>
               <span class="tarjeta-detalle">Datos y protección</span>
+              <a class="enlace-secundario" href="#contacto">Consultar sobre Data &amp; Security <span aria-hidden="true">→</span></a>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="seccion proceso" id="proceso" aria-labelledby="titulo-proceso">
+        <div class="contenedor">
+          <div class="encabezado-seccion">
+            <p class="etiqueta">Cómo trabajamos</p>
+            <h2 id="titulo-proceso">Un proceso claro, de la idea a la entrega</h2>
+            <p>Conoce los pasos para dar forma a tu proyecto digital.</p>
+          </div>
+          <ol class="pasos">
+            <li>
+              <h3>Diagnóstico y propuesta</h3>
+              <p>Revisamos tu necesidad y definimos el alcance y la solución antes de comenzar.</p>
+            </li>
+            <li>
+              <h3>Diseño y desarrollo</h3>
+              <p>Validamos la propuesta visual y construimos la solución, cuidando la experiencia móvil.</p>
+            </li>
+            <li>
+              <h3>Pruebas y entrega</h3>
+              <p>Revisamos el funcionamiento, corregimos detalles y documentamos la entrega antes de publicar con aprobación.</p>
+            </li>
+          </ol>
+          <div class="inicio-acciones">
+            <a class="boton boton-principal" href="#contacto">Conversemos sobre tu proyecto <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>
@@ -241,6 +278,7 @@
             <h3>Explora</h3>
             <a href="#inicio">Inicio</a>
             <a href="#servicios">Soluciones</a>
+            <a href="#proceso">Cómo trabajamos</a>
             <a href="#nosotros">Nosotros</a>
             <a href="#contacto">Contacto</a>
           </nav>
