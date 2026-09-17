@@ -65,43 +65,7 @@
   });
   document.querySelectorAll('a[href$="cotizador.html"]').forEach(link => link.addEventListener('click', () => track('quote_cta')));
 
-  // Portafolio: conceptos identificados y detalle accesible con diálogo nativo.
-  const filters = document.querySelectorAll('[data-filter]');
-  filters.forEach(button => button.addEventListener('click', () => {
-    filters.forEach(item => {item.classList.toggle('active', item === button); item.setAttribute('aria-pressed', String(item === button));});
-    let count = 0;
-    document.querySelectorAll('[data-category]').forEach(card => {
-      card.hidden = button.dataset.filter !== 'all' && button.dataset.filter !== card.dataset.category;
-      if (!card.hidden) count++;
-    });
-    document.getElementById('filter-status').textContent = `${count} ${count === 1 ? 'concepto disponible' : 'conceptos disponibles'}.`;
-  }));
-  const projects = {
-    web: {title: 'Una presencia que se distingue.', description: 'Concepto de sitio corporativo con una portada editorial, presentación de servicios y una ruta de contacto clara.', features: ['Jerarquía de contenido y navegación sencilla.', 'Secciones para explicar la propuesta de la empresa.', 'Diseño adaptable a escritorio y móvil.']},
-    commerce: {title: 'Una vitrina siempre abierta.', description: 'Concepto de tienda para explorar productos y organizar la experiencia de compra. Las funciones de venta se definen en cada propuesta.', features: ['Colecciones y categorías de productos.', 'Fichas con información y presentación visual.', 'Recorrido de consulta o compra según el alcance.']},
-    systems: {title: 'Tu operación, en orden.', description: 'Concepto de panel para reunir información y facilitar el seguimiento de procesos internos.', features: ['Vista organizada de la actividad.', 'Módulos ajustados a una necesidad de gestión.', 'Información y estados en una misma interfaz.']}
-  };
-  const dialog = document.getElementById('project-dialog');
-  if (dialog) {
-    document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => {
-      const key = button.dataset.project, item = projects[key];
-      document.getElementById('dialog-title').textContent = item.title;
-      document.getElementById('dialog-description').textContent = item.description;
-      document.getElementById('dialog-features').replaceChildren(...item.features.map(text => {const li = document.createElement('li'); li.textContent = text; return li;}));
-      document.getElementById('dialog-cta').dataset.service = key;
-      dialog.showModal();
-    }));
-    dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', event => {
-      const rect = dialog.getBoundingClientRect();
-      if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
-    });
-    document.getElementById('dialog-cta').addEventListener('click', event => {
-      document.getElementById('contact-service').value = serviceNames[event.currentTarget.dataset.service];
-      dialog.close();
-      document.getElementById('contact-form').elements.name.focus({preventScroll: true});
-    });
-  }
+  // Portafolio: ahora se muestra con el carrusel de carrusel.js (independiente).
   const interest = new URLSearchParams(location.search).get('interes');
   if (Object.hasOwn(serviceNames, interest || '') && document.getElementById('contact-service')) document.getElementById('contact-service').value = serviceNames[interest];
 
