@@ -7,8 +7,8 @@ window.TUPLUS_CONFIG = Object.freeze({
   maxExtraPages: 20,
   types: {
     corporativa: { name: 'Página corporativa', price: 0 },
-    tienda: { name: 'Tienda online', price: 350 },
-    landing: { name: 'Landing page', price: -150 }
+    tienda: { name: 'Tienda virtual', price: 350 },
+    landing: { name: 'Página de campaña', price: -150 }
   },
   plans: {
     profesional: { name: 'Profesional', price: 950 },

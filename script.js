@@ -4,7 +4,7 @@
   const config = window.TUPLUS_CONFIG;
   const quote = window.TuplusQuote;
   const money = value => new Intl.NumberFormat(config.locale, {style: 'currency', currency: config.currency}).format(value);
-  const serviceNames = {web: 'Diseño web', commerce: 'Tiendas virtuales', automation: 'Automatización', systems: 'Software a medida', 'data-security': 'Datos y seguridad'};
+  const serviceNames = {web: 'Diseño web', commerce: 'Tiendas virtuales', automation: 'Automatización', systems: 'Sistemas a medida', 'data-security': 'Datos y seguridad'};
   // Eventos locales sin datos del visitante. Conectar un proveedor solo tras su aprobación.
   const track = (name, detail = {}) => window.dispatchEvent(new CustomEvent('tuplus:event', {detail: {name, ...detail}}));
   track('page_view', {page: location.pathname.split('/').pop() || 'index.html'});
@@ -76,7 +76,7 @@
   const getTotals = () => quote.calculate(config, selection.type, selection.plan, selection.extras);
   const estimateText = () => {
     const totals = getTotals();
-    return ['ESTIMACIÓN WEB · TUPLUS', `Tipo: ${config.types[selection.type].name}`, `Plan: ${config.plans[selection.plan].name}`, `Base del plan: ${money(totals.base)}`, `Ajuste por tipo de web: ${money(totals.adjustment)}`, `Páginas adicionales: ${selection.extras} × ${money(config.pricePerPage)} = ${money(totals.additional)}`, `TOTAL ESTIMADO: ${money(totals.total)} (PEN)`, '', 'Importe orientativo sujeto a validación comercial. Impuestos, dominio, hosting, integraciones y plazos se confirman en la propuesta.'].join('\n');
+    return ['ESTIMACIÓN WEB · TUPLUS', `Tipo: ${config.types[selection.type].name}`, `Plan: ${config.plans[selection.plan].name}`, `Base del plan: ${money(totals.base)}`, `Ajuste por tipo de web: ${money(totals.adjustment)}`, `Páginas adicionales: ${selection.extras} × ${money(config.pricePerPage)} = ${money(totals.additional)}`, `TOTAL ESTIMADO: ${money(totals.total)} (PEN)`, '', 'Importe orientativo sujeto a validación comercial. Impuestos, dominio, alojamiento web, integraciones y plazos se confirman en la propuesta.'].join('\n');
   };
   function invalidateResults() {
     document.querySelectorAll('.form-result').forEach(result => {result.hidden = true; result.querySelector('a').removeAttribute('href');});
@@ -90,7 +90,7 @@
     document.getElementById('summary-base').textContent = money(totals.base);
     document.getElementById('summary-adjustment').textContent = money(totals.adjustment);
     document.getElementById('summary-extras').textContent = money(totals.additional);
-    document.getElementById('scope-note').textContent = selection.type === 'landing' ? 'Una landing se plantea como una página. Si añades páginas, revisaremos contigo el alcance adicional.' : 'El número de páginas y bloques se confirma en la propuesta.';
+    document.getElementById('scope-note').textContent = selection.type === 'landing' ? 'Una página de campaña se plantea como una página. Si añades páginas, revisaremos contigo el alcance adicional.' : 'El número de páginas y bloques se confirma en la propuesta.';
     document.getElementById('download-status').textContent = '';
     invalidateResults();
   }

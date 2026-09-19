@@ -21,3 +21,28 @@
 @media(max-width:360px){.plan-option{padding:14px;gap:8px}.plan-option b{font-size:11px}.plan-option strong{font-size:19px}.plan-option small{font-size:10px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}.button:hover,.service-card:hover{transform:none}}
 @media print{.site-header,.site-footer,.whatsapp-float,.menu-overlay,.hero-visual,button,.project-filters,.hero-actions,.contact-section{display:none!important}.section{padding:25px 0}.container{width:100%}.quote-summary{position:static;color:black;background:white;border:1px solid #aaa}.quote-summary p,.quote-summary small,.quote-summary dt,.quote-summary span{color:black}.quote-layout{display:block}.quote-main{display:none}.hero h1{font-size:45px}body{background:white}}
+
+/* Referencias visuales y navegación de soluciones en español. */
+.discipline-strip .container{display:block;padding-block:28px}
+.solution-strip-label{font-size:11px;letter-spacing:.12em;font-weight:700;color:var(--gold-ink);margin-bottom:16px}
+.solution-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.discipline-strip .solution-tile{display:block;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--white);text-decoration:none;transition:transform .18s,box-shadow .18s}
+.solution-tile img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-bottom:1px solid var(--line)}
+.solution-tile>span{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 12px;min-height:68px;font-size:14px;line-height:1.4;font-weight:600}
+.discipline-strip .solution-tile i{margin:0;color:var(--gold-ink);font-style:normal}
+.solution-tile:hover{transform:translateY(-3px);box-shadow:0 8px 24px #122c3d12}
+.solution-intro-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:center}
+.solution-intro-copy{min-width:0}.solution-intro-copy h1{font-size:clamp(2.5rem,4vw,4.4rem)}
+.solution-reference{margin:0;min-width:0;border-radius:18px;overflow:hidden;background:white;border:1px solid var(--line);box-shadow:0 18px 55px #122c3d0d}
+.solution-reference img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}
+.solution-reference figcaption{padding:18px 22px;color:var(--muted);font-size:13px;line-height:1.6;border-top:1px solid var(--line)}
+.solution-reference figcaption span{display:block;font-size:10px;letter-spacing:.09em;font-weight:700;color:var(--gold-ink);margin-bottom:5px}
+@media(max-width:1000px){.solution-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.solution-intro-grid{gap:28px}.solution-tile>span{min-height:58px}}
+@media(max-width:850px){.solution-intro-grid{grid-template-columns:1fr}.solution-reference{max-width:720px;width:100%}.solution-intro-copy h1{max-width:650px}}
+@media(max-width:620px){.solution-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.solution-tile>span{font-size:13px;padding:12px;min-height:62px}.solution-strip-label{font-size:10px}.solution-reference figcaption{padding:16px}.solution-intro-copy h1{font-size:40px}}
+@media(prefers-reduced-motion:reduce){.solution-tile:hover{transform:none}}
+
+/* Botones de soluciones: mismo azul que el botón de cotización. */
+.discipline-strip .solution-tile>span{background:var(--navy);color:var(--white);transition:background .18s}
+.discipline-strip .solution-tile i{color:var(--white)}
+.discipline-strip .solution-tile:hover>span{background:#24485b}
