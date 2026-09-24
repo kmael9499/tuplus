@@ -1,4 +1,4 @@
-/* Aplicar antes de pintar la página para evitar un destello claro. */
+
 (() => {
   'use strict';
   const key = 'tuplus-theme';
