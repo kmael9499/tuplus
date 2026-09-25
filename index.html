@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#09090d">
+  <meta name="description" content="Azziz — Cotizador web premium en dólares. Configura tu proyecto y recibe una estimación clara por WhatsApp.">
+  <title>Azziz — Cotizador Web Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/hummingbird.png" type="image/png">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
+    <div class="grid-plane"></div><div class="noise"></div>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="@azziz inicio">
+      <span class="brand-mark">A</span><span class="brand-word">@azziz</span>
+    </a>
+    <div class="brand-note"><span class="brand-pulse"></span> SOFTWARE ENGINEERING <b>×</b> AI</div>
+    <button class="ghost-btn" id="restartTop" type="button">Reiniciar <span>↺</span></button>
+  </header>
+
+  <main id="top" class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> COTIZADOR DIGITAL · <span id="heroEyebrowCurrency">USD</span> · 2026</div>
+        <h1>Diseña la web.<br><em>Visualiza la inversión.</em></h1>
+        <p>Configura alcance, funciones y acabado visual. El precio se actualiza al instante y puedes enviar tu resumen directo a WhatsApp.</p>
+        <div class="hero-meta">
+          <div><strong>05</strong><span>pasos</span></div>
+          <div><strong id="heroCurrencyCode">USD</strong><span>moneda</span></div>
+          <div><strong>3D</strong><span>interfaz</span></div>
+        </div>
+      </div>
+
+      <div class="hero-stage" id="heroStage">
+        <div class="stage-halo"></div>
+        <div class="scene hummingbird-scene" aria-label="Colibrí 3D animado">
+          <div class="bird-aura"></div>
+          <div class="bird-depth depth-3"><img src="assets/hummingbird.png" alt=""></div>
+          <div class="bird-depth depth-2"><img src="assets/hummingbird.png" alt=""></div>
+          <div class="bird-depth depth-1"><img src="assets/hummingbird.png" alt=""></div>
+          <div class="bird-core"><img src="assets/hummingbird.png" alt="Colibrí de Tuplus"></div>
+          <div class="wing-streak streak-a"></div><div class="wing-streak streak-b"></div>
+          <div class="ring ring-1"></div><div class="ring ring-2"></div>
+          <div class="spark s1"></div><div class="spark s2"></div><div class="spark s3"></div><div class="spark s4"></div>
+          <div class="bird-status"><span class="bird-status-dot"></span><span id="birdCurrencyLabel">USD · LIVE</span></div>
+        </div>
+        <div class="currency-control" aria-label="Seleccionar moneda">
+          <div class="currency-copy"><span>MONEDA DEL PROYECTO</span><b id="currencyHeadline">Dólares USD</b><small id="currencyRate">1 USD = S/ 3.55</small></div>
+          <div class="currency-switch" role="group" aria-label="Moneda">
+            <button class="currency-option" data-currency="PEN" type="button"><span class="flag">🇵🇪</span><span>Soles</span><strong>PEN</strong></button>
+            <button class="currency-option active" data-currency="USD" type="button"><span class="flag">🇺🇸</span><span>Dólares</span><strong>USD</strong></button>
+          </div>
+        </div>
+        <div class="stage-caption"><span>ESTIMATE ENGINE</span><span>LIVE 3D</span></div>
+      </div>
+    </section>
+
+    <section class="quote-layout" aria-label="Cotizador Azziz">
+      <aside class="side-panel">
+        <div class="side-brand">
+          <span class="side-kicker">TU PROYECTO</span>
+          <strong id="sideProjectName">Landing page</strong>
+        </div>
+        <nav class="steps" aria-label="Progreso">
+          <button class="step active" data-step="1" type="button"><span>01</span><div><b>Tipo</b><small>Qué vas a construir</small></div></button>
+          <button class="step" data-step="2" type="button"><span>02</span><div><b>Alcance</b><small>Páginas y contenido</small></div></button>
+          <button class="step" data-step="3" type="button"><span>03</span><div><b>Funciones</b><small>Qué hará tu web</small></div></button>
+          <button class="step" data-step="4" type="button"><span>04</span><div><b>Experiencia</b><small>Diseño y soporte</small></div></button>
+          <button class="step" data-step="5" type="button"><span>05</span><div><b>Contacto</b><small>Tu propuesta</small></div></button>
+        </nav>
+
+        <div class="side-mini">
+          <span class="mini-check">✓</span>
+          <div><b>Precio transparente</b><small>Sin costos sorpresa</small></div>
+        </div>
+      </aside>
+
+      <div class="main-panel">
+        <div class="progress-row">
+          <span id="progressLabel">Paso 1 de 5</span>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="mono" id="progressPercent">20%</span>
+        </div>
+
+        <form id="quoteForm" novalidate>
+          <section class="step-view active" data-view="1">
+            <div class="view-heading">
+              <div><span class="kicker">01 / FUNDACIÓN</span><h2>¿Qué quieres construir?</h2><p>Elige el formato que más se parece a tu proyecto.</p></div>
+              <span class="estimate-pill" id="estimatePill">USD · estimado</span>
+            </div>
+            <div class="option-grid project-grid" id="projectOptions">
+              <button class="choice-card selected" data-key="landing" type="button"><span class="choice-icon">↗</span><div><b>Landing page</b><small>Una página enfocada en conversión</small></div><strong class="option-price" data-usd="295">desde $295</strong></button>
+              <button class="choice-card" data-key="website" type="button"><span class="choice-icon">◌</span><div><b>Sitio corporativo</b><small>Web profesional multipágina</small></div><strong class="option-price" data-usd="450">desde $450</strong></button>
+              <button class="choice-card" data-key="catalog" type="button"><span class="choice-icon">▦</span><div><b>Catálogo online</b><small>Productos, categorías y contacto</small></div><strong class="option-price" data-usd="600">desde $600</strong></button>
+              <button class="choice-card" data-key="ecommerce" type="button"><span class="choice-icon">◫</span><div><b>Tienda e-commerce</b><small>Carrito, checkout y pagos</small></div><strong class="option-price" data-usd="890">desde $890</strong></button>
+              <button class="choice-card wide" data-key="webapp" type="button"><span class="choice-icon">⌘</span><div><b>Aplicación web / SaaS</b><small>Dashboard, usuarios, lógica personalizada, automatización o producto digital</small></div><strong class="option-price" data-usd="1500">desde $1,500</strong></button>
+            </div>
+            <div class="feature-note">
+              <span class="note-icon">✦</span>
+              <div><b>Idea en mente pero sin nombre técnico</b><p>No importa. Elige la opción más cercana y luego lo aterrizamos.</p></div>
+            </div>
+          </section>
+
+          <section class="step-view" data-view="2">
+            <div class="view-heading">
+              <div><span class="kicker">02 / ALCANCE</span><h2>Define el tamaño.</h2><p>Más páginas = más estructura, contenido y desarrollo.</p></div>
+            </div>
+            <div class="slider-card">
+              <div class="slider-top"><div><span>Páginas principales</span><b id="pagesValue">5</b></div><span class="mono">01 — 20</span></div>
+              <input id="pagesRange" type="range" min="1" max="20" value="5" aria-label="Cantidad de páginas">
+              <div class="range-labels"><span>1</span><span>10</span><span>20+</span></div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-label">Contenido</div>
+              <div class="option-grid two">
+                <button class="toggle-card selected" data-toggle="contentClient" type="button"><span class="check">✓</span><div><b>Yo entrego el contenido</b><small>Textos, imágenes y estructura base</small></div><strong>Incluido</strong></button>
+                <button class="toggle-card" data-toggle="contentPro" type="button"><span class="check">+</span><div><b>Contenido profesional</b><small>Copy, estructura, edición y criterio visual</small></div><strong><span class="option-price" data-usd="120">+$120</span></strong></button>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-label">Incluido en la base</div>
+              <div class="included-grid">
+                <span>✓ Responsive</span><span>✓ SSL</span><span>✓ SEO técnico base</span><span>✓ Formulario / contacto</span><span>✓ WhatsApp</span><span>✓ Analytics listo</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="step-view" data-view="3">
+            <div class="view-heading">
+              <div><span class="kicker">03 / FUNCIONES</span><h2>Haz que tu web trabaje.</h2><p>Activa solo las integraciones que realmente necesitas.</p></div>
+            </div>
+            <div class="feature-grid">
+              <button class="feature-card" data-feature="whatsapp" type="button"><span>◉</span><b>WhatsApp</b><small>Contacto directo</small><em><span class="option-price" data-usd="25">+$25</span></em></button>
+              <button class="feature-card" data-feature="forms" type="button"><span>⌁</span><b>Formularios</b><small>Leads + email</small><em><span class="option-price" data-usd="45">+$45</span></em></button>
+              <button class="feature-card" data-feature="seo" type="button"><span>⌕</span><b>SEO inicial</b><small>Base técnica + on-page</small><em><span class="option-price" data-usd="80">+$80</span></em></button>
+              <button class="feature-card" data-feature="analytics" type="button"><span>◔</span><b>Analítica</b><small>Eventos + métricas</small><em><span class="option-price" data-usd="35">+$35</span></em></button>
+              <button class="feature-card" data-feature="booking" type="button"><span>◷</span><b>Reservas</b><small>Calendario + solicitudes</small><em><span class="option-price" data-usd="110">+$110</span></em></button>
+              <button class="feature-card" data-feature="multilingual" type="button"><span>文</span><b>Multidioma</b><small>Hasta 2 idiomas extra</small><em><span class="option-price" data-usd="120">+$120</span></em></button>
+              <button class="feature-card" data-feature="payments" type="button"><span>＄</span><b>Pagos online</b><small>Pasarela de pago</small><em><span class="option-price" data-usd="160">+$160</span></em></button>
+              <button class="feature-card" data-feature="blog" type="button"><span>✎</span><b>Blog / CMS</b><small>Publica sin depender de código</small><em><span class="option-price" data-usd="75">+$75</span></em></button>
+              <button class="feature-card" data-feature="maps" type="button"><span>⌖</span><b>Mapa interactivo</b><small>Ubicación + rutas</small><em><span class="option-price" data-usd="30">+$30</span></em></button>
+              <button class="feature-card" data-feature="automation" type="button"><span>⌁</span><b>Automatización</b><small>Conecta procesos y herramientas</small><em><span class="option-price" data-usd="180">+$180</span></em></button>
+              <button class="feature-card" data-feature="speed" type="button"><span>ϟ</span><b>Performance+</b><small>Optimización avanzada</small><em><span class="option-price" data-usd="95">+$95</span></em></button>
+              <button class="feature-card" data-feature="security" type="button"><span>◈</span><b>Hardening</b><small>Buenas prácticas de seguridad</small><em><span class="option-price" data-usd="85">+$85</span></em></button>
+            </div>
+            <div class="hint">Puedes cambiar estas opciones en cualquier momento.</div>
+          </section>
+
+          <section class="step-view" data-view="4">
+            <div class="view-heading">
+              <div><span class="kicker">04 / EXPERIENCIA</span><h2>Ahora, hazlo inolvidable.</h2><p>Define el acabado visual y el acompañamiento después del lanzamiento.</p></div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-label">Dirección visual</div>
+              <div class="design-grid">
+                <button class="radio-card selected" data-design="clean" type="button"><span class="radio"></span><div><b>Clean / inteligente</b><small>Precisión, aire y jerarquía visual</small></div><strong>Incluido</strong></button>
+                <button class="radio-card" data-design="custom" type="button"><span class="radio"></span><div><b>Custom UI</b><small>Diseño visual a medida para tu marca</small></div><strong><span class="option-price" data-usd="180">+$180</span></strong></button>
+                <button class="radio-card" data-design="premium" type="button"><span class="radio"></span><div><b>Premium motion</b><small>Dirección art + 3D + microanimaciones</small></div><strong><span class="option-price" data-usd="350">+$350</span></strong></button>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-label">Soporte post-lanzamiento</div>
+              <div class="support-grid">
+                <button class="radio-card selected" data-support="30" type="button"><span class="radio"></span><div><b>30 días</b><small>Correcciones y acompañamiento</small></div><strong>Incluido</strong></button>
+                <button class="radio-card" data-support="90" type="button"><span class="radio"></span><div><b>90 días</b><small>Soporte extendido</small></div><strong><span class="option-price" data-usd="75">+$75</span></strong></button>
+                <button class="radio-card" data-support="180" type="button"><span class="radio"></span><div><b>180 días</b><small>Seguimiento prolongado</small></div><strong><span class="option-price" data-usd="150">+$150</span></strong></button>
+              </div>
+            </div>
+
+            <div class="section-block addons-row">
+              <button class="toggle-line" id="rushToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Entrega prioritaria</b><small>Reduce el plazo estimado cuando el alcance lo permite</small></div><strong><span class="option-price" data-usd="180">+$180</span></strong></button>
+              <button class="toggle-line" id="hostingToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Pack Cloud anual</b><small>Hosting + dominio + SSL + backups</small></div><strong><span class="option-price" data-usd="120">+$120</span></strong></button>
+            </div>
+
+            <div class="tax-card">
+              <div><b>Mostrar IGV</b><small>18% · referencia para facturación en Perú</small></div>
+              <button class="switch" id="taxToggle" type="button" aria-pressed="false"><span></span></button>
+            </div>
+          </section>
+
+          <section class="step-view summary-view" data-view="5">
+            <div class="view-heading">
+              <div><span class="kicker">05 / CONTACTO</span><h2>Convierte la estimación en una propuesta.</h2><p>Déjanos tus datos y abre WhatsApp con todo el resumen prellenado.</p></div>
+              <span class="secure-pill">● guardado local</span>
+            </div>
+
+            <div class="summary-grid">
+              <div class="summary-card">
+                <div class="summary-hero">
+                  <div><span class="summary-label" id="summaryPriceLabel">INVERSIÓN ESTIMADA · SIN IGV</span><div class="big-price" id="totalPrice">$320</div><span class="summary-range" id="rangePrice">rango orientativo $295 — $500</span></div>
+                  <span class="currency-tag" id="summaryCurrencyTag">USD</span>
+                </div>
+                <div class="summary-lines" id="summaryLines"></div>
+                <div class="summary-note">Estimación orientativa. El alcance final se valida antes de iniciar el proyecto.</div>
+              </div>
+
+              <div class="contact-card">
+                <div class="contact-head"><span class="kicker">TU INFORMACIÓN</span><span class="contact-badge">WhatsApp directo</span></div>
+                <label>Nombre o empresa<input id="nombre" type="text" autocomplete="name" placeholder="Ej. Juan Pérez" required></label>
+                <label>Correo electrónico<input id="email" type="email" autocomplete="email" placeholder="cliente@correo.com" required></label>
+                <label>Teléfono / WhatsApp<input id="telefono" type="tel" autocomplete="tel" placeholder="987 654 321" required></label>
+                <label>Cuéntame algo más <span class="optional">opcional</span><textarea id="mensajeCliente" rows="3" placeholder="Qué necesitas, qué vendes o qué te gustaría automatizar..."></textarea></label>
+                <div class="contact-actions">
+                  <button id="whatsappBtn" class="whatsapp-btn" type="button"><span class="wa-icon">◔</span><span>Enviar cotización a WhatsApp</span><span>↗</span></button>
+                  <button id="downloadBtn" class="subtle-btn" type="button"><span>↓</span> Descargar resumen</button>
+                  <button id="printBtn" class="subtle-btn" type="button"><span>▧</span> Imprimir / PDF</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="final-perks">
+              <span>✓ Presupuesto en <b id="perkCurrency">USD</b></span><span>✓ Resumen prellenado</span><span>✓ WhatsApp directo</span><span>✓ Sin framework obligatorio</span>
+            </div>
+          </section>
+
+          <div class="nav-row">
+            <button id="backBtn" class="secondary-btn" type="button" disabled>← Atrás</button>
+            <div class="nav-spacer"></div>
+            <div class="live-total"><span>ESTIMADO</span><b id="liveTotal">$295</b></div>
+            <button id="nextBtn" class="primary-btn" type="button"><span id="nextLabel">Continuar</span><span>→</span></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="feature-marquee">
+      <div>DISEÑO RESPONSIVE</div><span>✦</span><div>SEO BASE</div><span>✦</span><div>WHATSAPP</div><span>✦</span><div>3D & MOTION</div><span>✦</span><div>IA READY</div><span>✦</span><div>PRECIO EN <span id="marqueeCurrency">USD</span></div>
+    </section>
+  </main>
+
+  <a class="floating-whatsapp" id="floatingWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp de Azziz">
+    <span class="wa-symbol">◔</span><span>WhatsApp</span><i></i>
+  </a>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer class="footer"><span>© 2026 @azziz</span><span>Software Engineering × AI · Diseño 3D · IA · WhatsApp</span></footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
