@@ -6,6 +6,7 @@
   let preference = null;
   try { preference = localStorage.getItem(key); } catch {}
   if (!['light', 'dark'].includes(preference)) preference = null;
+  const t = value => window.TUPLUS_I18N?.t(value) || value;
   function apply(theme) {
     document.documentElement.dataset.theme = theme;
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#101b24' : '#122c3d');
@@ -13,11 +14,12 @@
     if (button) {
       const dark = theme === 'dark';
       button.setAttribute('aria-pressed', String(dark));
-      button.title = dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+      button.title = t(dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
       button.querySelector('span').textContent = dark ? '☀' : '☾';
     }
   }
   apply(preference || (system.matches ? 'dark' : 'light'));
+  document.addEventListener('tuplus:language-change', () => apply(document.documentElement.dataset.theme));
   document.addEventListener('DOMContentLoaded', () => {
     apply(document.documentElement.dataset.theme);
     document.querySelector('.theme-toggle')?.addEventListener('click', () => {

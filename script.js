@@ -2,6 +2,7 @@
 
 (() => {
   const config = window.TUPLUS_CONFIG;
+  const t = value => window.TUPLUS_I18N?.t(value) || value;
   const quote = window.TuplusQuote;
   const money = value => new Intl.NumberFormat(config.locale, {style: 'currency', currency: config.currency}).format(value);
   const serviceNames = {web: 'Diseño web', commerce: 'Tiendas virtuales', automation: 'Automatización', systems: 'Sistemas a medida', 'data-security': 'Datos y seguridad'};
@@ -16,7 +17,7 @@
   function setMenu(open, restoreFocus = false) {
     const isOpen = open && mobile.matches;
     menuButton.setAttribute('aria-expanded', String(isOpen));
-    menuButton.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+    menuButton.setAttribute('aria-label', isOpen ? t('Cerrar menú') : t('Abrir menú'));
     nav.classList.toggle('open', isOpen);
     overlay.hidden = !isOpen;
     document.body.classList.toggle('menu-open', isOpen);
@@ -59,6 +60,10 @@
   }
   addEventListener('scroll', () => {if (!scheduled) {scheduled = true; requestAnimationFrame(updateNavigation);}}, {passive: true});
   updateNavigation();
+  document.addEventListener('tuplus:language-change', () => {
+    setMenu(false);
+    if (totalOutput) renderQuote();
+  });
   document.querySelectorAll('[data-whatsapp]').forEach(link => {
     link.href = quote.whatsappUrl(config.whatsapp, 'Hola, vengo desde la web de TUPLUS. Quisiera orientación para mi proyecto.');
     link.addEventListener('click', () => track('contact_open', {channel: 'whatsapp'}));
@@ -84,13 +89,13 @@
   function renderQuote() {
     const totals = getTotals();
     totalOutput.textContent = money(totals.total);
-    document.getElementById('summary-plan').textContent = 'Plan ' + config.plans[selection.plan].name;
+    document.getElementById('summary-plan').textContent = t('Plan') + ' ' + t(config.plans[selection.plan].name);
     document.getElementById('summary-type').textContent = config.types[selection.type].name;
-    document.getElementById('summary-pages').textContent = selection.extras ? `${selection.extras} páginas adicionales` : 'Sin páginas adicionales';
+    document.getElementById('summary-pages').textContent = selection.extras ? `${selection.extras} ${t('páginas adicionales')}` : t('Sin páginas adicionales');
     document.getElementById('summary-base').textContent = money(totals.base);
     document.getElementById('summary-adjustment').textContent = money(totals.adjustment);
     document.getElementById('summary-extras').textContent = money(totals.additional);
-    document.getElementById('scope-note').textContent = selection.type === 'landing' ? 'Una página de campaña se plantea como una página. Si añades páginas, revisaremos contigo el alcance adicional.' : 'El número de páginas y bloques se confirma en la propuesta.';
+    document.getElementById('scope-note').textContent = selection.type === 'landing' ? t('Una página de campaña se plantea como una página. Si añades páginas, revisaremos contigo el alcance adicional.') : t('El número de páginas y bloques se confirma en la propuesta.');
     document.getElementById('download-status').textContent = '';
     invalidateResults();
   }
@@ -133,7 +138,7 @@
       link.href = url; link.download = 'TUPLUS-estimacion-web.txt';
       document.body.append(link); link.click(); link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      document.getElementById('download-status').textContent = 'Descarga preparada con tu selección actual.';
+      document.getElementById('download-status').textContent = t('Descarga preparada con tu selección actual.');
       track('quote_download', {type: selection.type, plan: selection.plan});
     });
     renderQuote();
@@ -158,7 +163,7 @@
       const requiredNames = id === 'contact-form' ? ['name', 'company', 'contact', 'country', 'message'] : ['name', 'company', 'contact', 'country'];
       const missing = requiredNames.find(key => !values[key]);
       if (missing) {
-        error.textContent = 'Completa los campos con información válida; los espacios en blanco no son suficientes.';
+        error.textContent = t('Completa los campos con información válida; los espacios en blanco no son suficientes.');
         error.hidden = false; form.elements[missing].focus(); return;
       }
       if (!quote.validContact(values.contact)) {
@@ -176,7 +181,7 @@
         result.scrollIntoView({block: 'nearest', behavior: 'instant'});
         track('lead_prepared', {source: id === 'quote-form' ? 'quote' : 'contact'});
       } catch {
-        error.textContent = 'No pudimos preparar el enlace. Intenta de nuevo o usa el contacto directo.';
+        error.textContent = t('No pudimos preparar el enlace. Intenta de nuevo o usa el contacto directo.');
         error.hidden = false;
       }
     });

@@ -11,7 +11,9 @@
   });
  });
  scene.addEventListener('pointerleave',reset);document.addEventListener('tuplus:motion',reset);
- const demos={web:['DISEÑO WEB','Ideas claras.<br>Marcas que<br>dejan huella.','Conoce el estudio ↗','01 — 05'],tienda:['TIENDA VIRTUAL','Objetos únicos.<br>Compras<br>más simples.','Ver colección ↗','02 — 05'],sistema:['SISTEMA DE GESTIÓN','Tu equipo.<br>Tus proyectos.<br>Todo conectado.','Explorar el panel ↗','04 — 05']};
+ const rawDemos={web:['DISEÑO WEB','Ideas claras.<br>Marcas que<br>dejan huella.','Conoce el estudio ↗','01 — 05'],tienda:['TIENDA VIRTUAL','Objetos únicos.<br>Compras<br>más simples.','Ver colección ↗','02 — 05'],sistema:['SISTEMA DE GESTIÓN','Tu equipo.<br>Tus proyectos.<br>Todo conectado.','Explorar el panel ↗','04 — 05']};
+ const t=value=>window.TUPLUS_I18N?.t(value)||value;
+ const demos=Object.fromEntries(Object.entries(rawDemos).map(([key,values])=>[key,[t(values[0]),t(values[1]),t(values[2]),values[3]]]));
  const keys=Object.keys(demos);let current=Math.max(0,keys.indexOf(scene.dataset.demo));let animation=null,revision=0;
  const body=root.querySelector('.ux-demo-body');
  async function show(index,direction){
