@@ -3,6 +3,11 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
   if (carousel.dataset.tplReady === 'true') return;
   carousel.dataset.tplReady = 'true';
   const slides = [...carousel.querySelectorAll('.tpl-slide')];
+  const t = value => window.TUPLUS_I18N?.t(value) || value;
+  const setText = (element, source) => {
+    if (window.TUPLUS_I18N) window.TUPLUS_I18N.setText(element, source);
+    else { element.setAttribute('data-i18n', source); element.textContent = source; }
+  };
   const stage = carousel.querySelector('.tpl-stage');
   const dots = carousel.querySelector('.tpl-dots');
   if (!slides.length) return;
@@ -11,7 +16,7 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'tpl-dot';
-    button.setAttribute('aria-label', `Ver ${slide.dataset.title}`);
+    button.setAttribute('aria-label', `${t('Ver')} ${t(slide.dataset.title)}`);
     button.addEventListener('click', () => show(index));
     dots.append(button);
     return button;
@@ -29,8 +34,9 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
       slide.setAttribute('aria-hidden', String(offset !== 0));
       controls[i].setAttribute('aria-current', String(i === current));
     });
-    carousel.querySelector('.tpl-category').textContent = slides[current].dataset.tplCategory;
-    carousel.querySelector('.tpl-name').textContent = slides[current].dataset.title;
+    setText(carousel.querySelector('.tpl-category'), slides[current].dataset.tplCategory);
+    setText(carousel.querySelector('.tpl-name'), slides[current].dataset.title);
+    slides.forEach((slide, i) => controls[i].setAttribute('aria-label', `${t('Ver')} ${t(slide.dataset.title)}`));
     carousel.querySelector('.tpl-count').textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
   }
   carousel.querySelectorAll('[data-tpl-step]').forEach(button => {
@@ -53,4 +59,5 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
   });
   stage.addEventListener('pointercancel', () => { start = null; });
   show(current);
+  document.addEventListener('tuplus:language-change', () => show(current));
 });

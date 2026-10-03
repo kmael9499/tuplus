@@ -5,94 +5,125 @@
   const htmlLang = {es:'es', en:'en', zh:'zh-CN', ru:'ru', pt:'pt-BR', fr:'fr', ja:'ja', de:'de'};
   const ogLang = {es:'es_LA', en:'en_US', zh:'zh_CN', ru:'ru_RU', pt:'pt_BR', fr:'fr_FR', ja:'ja_JP', de:'de_DE'};
   const labels = {es:'Idioma del sitio', en:'Site language', zh:'网站语言', ru:'Язык сайта', pt:'Idioma do site', fr:'Langue du site', ja:'サイトの言語', de:'Seitensprache'};
-  const names = {es:'Español', en:'English', zh:'简体中文', ru:'Русский', pt:'Português', fr:'Français', ja:'日本語', de:'Deutsch'};
-  const textOriginals = new WeakMap();
-  const textRendered = new WeakMap();
-  const attrOriginals = new WeakMap();
-  const attrRendered = new WeakMap();
+  const normalize = value => String(value).trim().replace(/\s+/g, ' ');
+  const texts = new WeakMap(), attributes = new WeakMap();
   const textAttributes = ['aria-label', 'title', 'placeholder', 'alt', 'content'];
-  const normalize = value => value.trim().replace(/\s+/g, ' ');
-  let currentLocale = 'es';
-  try { const saved = localStorage.getItem('tuplus-language'); if (supported.includes(saved)) currentLocale = saved; } catch {}
-
-  function skipped(node) {
-    const element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
-    return !element || Boolean(element.closest('[translate="no"], [data-i18n-static], script, style, noscript, svg'));
+  const managedSelector = '[data-i18n], [data-i18n-html]';
+  const ignored = '[translate="no"], [data-i18n-static], script, style, noscript, svg';
+  // Normalizar también las claves, no solo el texto que llega desde el DOM.
+  for (const locale of Object.keys(dictionaries)) {
+    dictionaries[locale] = Object.fromEntries(Object.entries(dictionaries[locale]).map(([key,value]) => [normalize(key),value]));
   }
-  function translated(source) {
-    return dictionaries[currentLocale]?.[normalize(source)] || source;
+  const sources = new Set(Object.values(dictionaries).flatMap(dict => Object.keys(dict)));
+  const reverse = new Map();
+  for (const dict of Object.values(dictionaries)) for (const [source, result] of Object.entries(dict)) {
+    const value = normalize(result);
+    if (!reverse.has(value)) reverse.set(value, new Set());
+    reverse.get(value).add(source);
+  }
+  let currentLocale = 'es';
+  const translate = source => dictionaries[currentLocale]?.[normalize(source)] ?? dictionaries.es?.[normalize(source)] ?? source;
+  function canonical(value, previous) {
+    const text = normalize(value);
+    if (previous && (text === previous.source || text === normalize(previous.rendered))) return previous.source;
+    if (sources.has(text)) return text;
+    const candidates = reverse.get(text);
+    if (previous && candidates?.has(previous.source)) return previous.source;
+    return candidates?.size === 1 ? candidates.values().next().value : text;
   }
   function applyText(node) {
-    if (!node.nodeValue || skipped(node)) return;
-    const current = node.nodeValue;
-    const last = textRendered.get(node);
-    if (!textOriginals.has(node) || (last !== undefined && current !== last)) textOriginals.set(node, normalize(current));
-    else if (last === undefined) textOriginals.set(node, normalize(current));
-    const original = textOriginals.get(node);
-    const leading = current.match(/^\s*/)?.[0] || '';
-    const trailing = current.match(/\s*$/)?.[0] || '';
-    const next = leading + translated(original) + trailing;
-    if (current !== next) node.nodeValue = next;
-    textRendered.set(node, next);
+    if (!node.nodeValue?.trim() || !node.parentElement || node.parentElement.closest(`${ignored}, ${managedSelector}`)) return;
+    const current = node.nodeValue, previous = texts.get(node);
+    const source = canonical(current, previous);
+    const next = (current.match(/^\s*/)?.[0] || '') + translate(source) + (current.match(/\s*$/)?.[0] || '');
+    if (next !== current) node.nodeValue = next;
+    texts.set(node, {source, rendered: next});
   }
   function applyAttributes(element) {
-    if (element.closest('[translate="no"], [data-i18n-static]')) return;
+    if (element.closest(ignored)) return;
+    let saved = attributes.get(element);
+    if (!saved) {saved = {}; attributes.set(element, saved);}
     for (const attribute of textAttributes) {
       if (!element.hasAttribute(attribute)) continue;
-      if (attribute === 'content' && element.tagName === 'META' && !['description', 'og:title', 'og:description'].includes(element.name || element.getAttribute('property'))) continue;
-      let originals = attrOriginals.get(element);
-      let rendered = attrRendered.get(element);
-      if (!originals) { originals = {}; attrOriginals.set(element, originals); rendered = {}; attrRendered.set(element, rendered); }
+      if (attribute === 'content' && !['description','og:title','og:description'].includes(element.name || element.getAttribute('property'))) continue;
       const current = element.getAttribute(attribute);
-      if (!(attribute in originals) || (attribute in rendered && rendered[attribute] !== current)) originals[attribute] = normalize(current);
-      const next = translated(originals[attribute]);
+      const source = canonical(current, saved[attribute]), next = translate(source);
       if (current !== next) element.setAttribute(attribute, next);
-      rendered[attribute] = next;
+      saved[attribute] = {source, rendered: next};
     }
   }
-  function applyLocale(locale) {
+  function applyManaged(element) {
+    if (element.closest(ignored)) return;
+    const rich = element.hasAttribute('data-i18n-html');
+    const key = element.getAttribute(rich ? 'data-i18n-html' : 'data-i18n');
+    const value = translate(key);
+    if (rich) {
+      // Solo se admite el formato editorial local: saltos, énfasis y negritas.
+      const template = document.createElement('template'); template.innerHTML = value;
+      template.content.querySelectorAll('*').forEach(node => {
+        if (!['BR','EM','STRONG'].includes(node.tagName)) node.replaceWith(document.createTextNode(node.textContent));
+        else [...node.attributes].forEach(attribute => node.removeAttribute(attribute.name));
+      });
+      const clean = template.innerHTML;
+      if (element.innerHTML !== clean) element.innerHTML = clean;
+    } else if (element.textContent !== value) element.textContent = value;
+  }
+  function applyTree(root) {
+    if (root.nodeType === Node.TEXT_NODE) {applyText(root);return;}
+    if (root.nodeType !== Node.ELEMENT_NODE) return;
+    if (root.closest(ignored)) return;
+    const owner = root.closest(managedSelector);
+    if (owner) {applyManaged(owner); applyAttributes(root); return;}
+    root.querySelectorAll(managedSelector).forEach(applyManaged);
+    applyAttributes(root);
+    root.querySelectorAll('[aria-label], [title], [placeholder], [alt], meta[content]').forEach(applyAttributes);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node; while ((node = walker.nextNode())) applyText(node);
+  }
+  const options = {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:[...textAttributes,'data-i18n','data-i18n-html']};
+  function process(records) {
+    const roots = new Set();
+    for (const record of records) {
+      roots.add(record.type === 'characterData' ? record.target.parentElement : record.target);
+    }
+    roots.forEach(root => root && applyTree(root));
+  }
+  const observer = new MutationObserver(records => {
     observer.disconnect();
+    try {process(records);} finally {observer.observe(document.documentElement, options);}
+  });
+  function applyLocale(locale) {
+    // Consumir los cambios pendientes mientras aún conocemos el idioma anterior.
+    const pending = observer.takeRecords(); observer.disconnect(); process(pending);
     currentLocale = supported.includes(locale) ? locale : 'es';
     document.documentElement.lang = htmlLang[currentLocale];
-    const ogLocale = document.querySelector('meta[property="og:locale"]');
-    if (ogLocale) ogLocale.content = ogLang[currentLocale];
+    const og = document.querySelector('meta[property="og:locale"]'); if (og) og.content = ogLang[currentLocale];
+    applyTree(document.documentElement);
+    // Los textos incrustados en fotografías requieren un archivo por idioma.
+    document.querySelectorAll('img[data-i18n-image]').forEach(image => {
+      const original = image.getAttribute('data-i18n-image');
+      const next = currentLocale === 'es' ? original : original.replace(/([^/]+)\.webp$/, `idiomas/${currentLocale}/$1.png`);
+      if (image.getAttribute('src') !== next) image.setAttribute('src', next);
+    });
     const picker = document.getElementById('site-language');
     if (picker) {
-      picker.value = currentLocale;
-      picker.setAttribute('aria-label', labels[currentLocale]);
+      picker.value = currentLocale; picker.setAttribute('aria-label', labels[currentLocale]);
       picker.closest('.language-picker')?.querySelector('.sr-only')?.replaceChildren(labels[currentLocale]);
     }
-    document.querySelectorAll('title, meta[content], [aria-label], [title], [placeholder], [alt]').forEach(applyAttributes);
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    let node;
-    while ((node = walker.nextNode())) applyText(node);
-    try { localStorage.setItem('tuplus-language', currentLocale); } catch {}
-    observer.observe(document.documentElement, observerOptions);
-    document.dispatchEvent(new CustomEvent('tuplus:language-change', {detail: {locale: currentLocale}}));
+    try {localStorage.setItem('tuplus-language', currentLocale);} catch {}
+    observer.observe(document.documentElement, options);
+    document.dispatchEvent(new CustomEvent('tuplus:language-change', {detail:{locale:currentLocale}}));
   }
-
+  // Los componentes dinámicos guardan su clave española antes de mostrar el texto.
+  function setText(element, source, rich = false) {
+    if (!element) return;
+    element.removeAttribute(rich ? 'data-i18n' : 'data-i18n-html');
+    element.setAttribute(rich ? 'data-i18n-html' : 'data-i18n', source);
+    applyManaged(element);
+  }
+  window.TUPLUS_I18N = {t:translate, setText, setLocale:applyLocale, get locale(){return currentLocale;}};
   const picker = document.getElementById('site-language');
-  if (picker) picker.addEventListener('change', () => applyLocale(picker.value));
-  window.TUPLUS_I18N = {t: value => translated(value), get locale() { return currentLocale; }};
-  const observerOptions = {subtree:true, childList:true, characterData:true, attributes:true, attributeFilter:textAttributes};
-  const observer = new MutationObserver(records => {
-    for (const record of records) {
-      if (record.type === 'characterData') applyText(record.target);
-      else {
-        record.addedNodes.forEach(node => {
-          if (node.nodeType === Node.TEXT_NODE) applyText(node);
-          else if (node.nodeType === Node.ELEMENT_NODE) {
-            applyAttributes(node);
-            node.querySelectorAll?.('[aria-label], [title], [placeholder], [alt], meta[content]').forEach(applyAttributes);
-            const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
-            let child; while ((child = walker.nextNode())) applyText(child);
-          }
-        });
-        if (record.type === 'attributes' && record.target instanceof Element) applyAttributes(record.target);
-      }
-    }
-    observer.takeRecords();
-  });
-  observer.observe(document.documentElement, observerOptions);
-  applyLocale(currentLocale);
+  picker?.addEventListener('change', () => applyLocale(picker.value));
+  let saved = 'es'; try {saved = localStorage.getItem('tuplus-language') || 'es';} catch {}
+  applyLocale(saved);
 })();

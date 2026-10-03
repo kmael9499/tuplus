@@ -1,4 +1,4 @@
-
+/* Aplicar antes de pintar la página para evitar un destello claro. */
 (() => {
   'use strict';
   const key = 'tuplus-theme';
@@ -6,6 +6,7 @@
   let preference = null;
   try { preference = localStorage.getItem(key); } catch {}
   if (!['light', 'dark'].includes(preference)) preference = null;
+  const translate = value => window.TUPLUS_I18N?.t(value) || value;
   function apply(theme) {
     document.documentElement.dataset.theme = theme;
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#101b24' : '#122c3d');
@@ -13,7 +14,9 @@
     if (button) {
       const dark = theme === 'dark';
       button.setAttribute('aria-pressed', String(dark));
-      button.title = dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+      const action = dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+      button.title = translate(action);
+      button.setAttribute('aria-label', translate(dark ? 'Modo claro' : 'Modo oscuro'));
       button.querySelector('span').textContent = dark ? '☀' : '☾';
     }
   }
@@ -26,6 +29,7 @@
       apply(preference);
     });
   });
+  document.addEventListener('tuplus:language-change', () => apply(document.documentElement.dataset.theme));
   system.addEventListener('change', () => {
     if (!preference) apply(system.matches ? 'dark' : 'light');
   });

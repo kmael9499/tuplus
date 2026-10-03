@@ -145,7 +145,7 @@ function renderProgress(){
   const pct = state.step*20;
   $(".progress-track").setAttribute("aria-valuenow",pct);
   $("#progressFill").style.width = `${pct}%`;
-  $("#progressLabel").textContent = `${t("Paso")} ${state.step} ${t("de")} 5`;
+  $("#progressLabel").textContent = t("Paso {step} de {total}").replace("{step}",state.step).replace("{total}",5);
   $("#progressPercent").textContent = `${pct}%`;
   $$(".step").forEach(el => {
     const step=Number(el.dataset.step);
