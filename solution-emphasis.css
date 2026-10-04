@@ -1,4 +1,21 @@
 /* Referencias de soluciones y tarjetas de servicios. */
+html[data-theme="dark"] #servicios .service-card {
+  border-color: #8e7950;
+  border-top: 4px solid #b28a43;
+  box-shadow: 0 12px 30px #0000002b, 0 0 0 1px #d3b16b2b, 0 8px 24px #d3b16b18;
+}
+
+html[data-theme="dark"] #servicios .service-card .icon-box {
+  color: #e0c38a;
+  background: #d3b16b12;
+  border: 1px solid #d3b16b55;
+}
+
+html[data-theme="dark"] #servicios .service-card:hover {
+  border-color: #c6a35c;
+  box-shadow: 0 18px 38px #00000040, 0 0 0 1px #d3b16b66, 0 10px 32px #d3b16b30;
+}
+
 html[data-theme="dark"] .discipline-strip .solution-tile {
   border-color: #8e7950;
   box-shadow: 0 8px 22px #00000024;
