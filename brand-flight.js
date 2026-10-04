@@ -1,6 +1,6 @@
 
 (()=>{
- const root=document.querySelector('.site-header .brand-art');
+ const root=document.querySelector('.site-header .brand-art, .quote-header .brand-art');
  if(!root) return;
  const original=root.querySelector('img');
  const screen=document.createElement('canvas');screen.width=2172;screen.height=724;

@@ -2,3 +2,13 @@
 .site-header .brand-art { position: relative; }
 .site-header .brand-art .brand-flight { position:absolute;inset:0;width:100%;height:100%;pointer-events:none; }
 .site-header .brand-art.brand-flight-ready > img { opacity:0; }
+
+/* Logo animado en el encabezado del cotizador */
+.quote-header .quote-brand{gap:0;line-height:0}
+.quote-header .quote-brand .brand-art{position:relative;display:block;width:172px;aspect-ratio:3/1;height:auto;flex-shrink:0;overflow:visible}
+.quote-header .quote-brand .brand-art>img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain}
+.quote-header .brand-art .brand-flight{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.quote-header .brand-art.brand-flight-ready>img{opacity:0}
+@media(max-width:1100px){.quote-header .quote-brand .brand-art{width:150px}}
+@media(max-width:620px){.quote-header .quote-brand .brand-art{width:128px}.quote-header .quote-brand .brand-art>img{width:100%;height:auto}}
+@media(max-width:374px){.quote-header .quote-brand .brand-art{width:108px}}
