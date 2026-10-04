@@ -18,6 +18,7 @@ const state = {
   currency: "PEN",
   currencyManual: false
 };
+let reached = 1; // paso más lejano al que se llegó avanzando en orden
 
 const catalog = {
   landing: {label:"Landing page", base:295, pagesBase:1, pageRate:35, days:5},
@@ -112,7 +113,7 @@ function updateCurrencyUI(){
   $("#currencyHeadline").textContent=fx.name(code);
   $("#currencyRate").textContent=code==='USD'?t('Precios base en USD'):`1 USD = ${new Intl.NumberFormat(document.documentElement.lang,{maximumFractionDigits:4}).format(row.rate)} ${code} · ${row.date}`;
   ["heroCurrencyCode","heroEyebrowCurrency","summaryCurrencyTag","perkCurrency"].forEach(id=>{const el=$("#"+id);if(el)el.textContent=code});
-  $("#estimatePill").textContent=`${code} · ${t('estimado')}`;
+  $("#estimatePill").textContent=`${code} · ${t('estimado')} · ${t(state.tax?'CON IGV':'SIN IGV')}`;
   $$(".option-price[data-usd]").forEach(el=>{
     el.setAttribute('translate','no');
     const prefix=el.closest('.choice-card')?t('desde')+' ':'+';
@@ -141,8 +142,22 @@ function sync(){
   }
   $("#liveTotal").setAttribute("aria-label", `${t("Estimado")} ${money(grandTotal())}`);
 }
+function contactComplete(){
+  const v=id=>($("#"+id)?.value||"").trim();
+  const phone=v("telefono"), digits=phone.replace(/\D/g,"");
+  return ["nombre","empresa","pais","email","telefono"].every(id=>v(id))
+    && /^\S+@\S+\.\S+$/.test(v("email"))
+    && /^\+?[\d\s().-]{7,30}$/.test(phone) && digits.length>=7 && digits.length<=15;
+}
+function progressPct(){ return state.step===5 && !contactComplete() ? 80 : state.step*20; }
+function renderPercent(){
+  const pct=progressPct();
+  $(".progress-track").setAttribute("aria-valuenow",pct);
+  $("#progressFill").style.width=`${pct}%`;
+  $("#progressPercent").textContent=`${pct}%`;
+}
 function renderProgress(){
-  const pct = state.step*20;
+  const pct = progressPct();
   $(".progress-track").setAttribute("aria-valuenow",pct);
   $("#progressFill").style.width = `${pct}%`;
   $("#progressLabel").textContent = t("Paso {step} de {total}").replace("{step}",state.step).replace("{total}",5);
@@ -183,7 +198,9 @@ function toast(msg){
   clearTimeout(window.__toast); window.__toast=setTimeout(()=>el.classList.remove("show"),2600);
 }
 function go(n){
-  state.step=Math.max(1,Math.min(5,n)); renderProgress(); sync();
+  n=Math.max(1,Math.min(5,n));
+  if(n>reached){ toast("Completa los pasos anteriores antes de continuar."); return; }
+  state.step=n; renderProgress(); sync();
   const heading=document.querySelector(".step-view.active h2"); heading.tabIndex=-1; heading.focus({preventScroll:true});
   document.querySelector(".quote-layout").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"start"});
 }
@@ -266,8 +283,9 @@ $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();syn
 $("#hostingToggle").addEventListener("click",()=>{state.hosting=!state.hosting;save();sync();});
 $("#taxToggle").addEventListener("click",()=>{state.tax=!state.tax;save();sync();});
 $$(".step").forEach(el=>el.addEventListener("click",()=>go(Number(el.dataset.step))));
-$("#nextBtn").addEventListener("click",()=>state.step<5?go(state.step+1):go(1));
+$("#nextBtn").addEventListener("click",()=>{if(state.step<5){reached=Math.max(reached,state.step+1);go(state.step+1);}else go(1);});
 $("#backBtn").addEventListener("click",()=>go(state.step-1));
+["nombre","empresa","pais","email","telefono"].forEach(id=>{$("#"+id).addEventListener("input",renderPercent);$("#"+id).addEventListener("change",renderPercent);});
 $("#whatsappBtn").addEventListener("click",()=>{if(!validateContact(true))return; sendToBackend(); window.open(whatsappUrl(),"_blank","noopener"); toast("Abriendo WhatsApp con tu cotización.");});
 $("#downloadBtn").addEventListener("click",downloadTxt);
 $("#printBtn").addEventListener("click",()=>window.print());
