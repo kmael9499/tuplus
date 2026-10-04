@@ -1,0 +1,161 @@
+/* Acentos de marca sobre las superficies claras. */
+@media screen {
+  html:not([data-theme="dark"]) {
+    --gold-ink: #76551d;
+  }
+
+  html:not([data-theme="dark"]) .discipline-strip {
+    background: #edeae2;
+    border-color: #d3c7af;
+  }
+
+  html:not([data-theme="dark"]) .discipline-strip .solution-tile {
+    border-color: #b59a68;
+    box-shadow: 0 5px 16px #122c3d12;
+  }
+
+  html:not([data-theme="dark"]) .discipline-strip .solution-tile > span {
+    border-top: 2px solid #c6a35c;
+  }
+
+  html:not([data-theme="dark"]) .discipline-strip .solution-tile i {
+    color: #e0c38a;
+  }
+
+  html:not([data-theme="dark"]) .service-card:not(.service-featured) {
+    border-color: #d4c9b5;
+    box-shadow: 0 4px 14px #122c3d06;
+  }
+
+  html:not([data-theme="dark"]) .service-card:not(.service-featured) .icon-box {
+    color: #76551d;
+    background: #f4ead6;
+    border: 1px solid #d8c49e;
+    border-radius: 9px;
+  }
+
+  html:not([data-theme="dark"]) .about-circle {
+    border-color: #a98542;
+    background: radial-gradient(circle, #eee6d6 0%, #f5f1e8 58%, transparent 72%);
+  }
+
+  html:not([data-theme="dark"]) .about-circle::before {
+    border-color: #b99a60;
+  }
+
+  html:not([data-theme="dark"]) .about-circle::after {
+    border-color: #cbbc9e;
+  }
+
+  html:not([data-theme="dark"]) .hero-stage {
+    border-color: #b9cbd0;
+    background: linear-gradient(145deg, #d6e3e8 0%, #e8eef0 46%, #faf9f5 100%);
+    box-shadow: 0 16px 40px #122c3d12;
+  }
+
+  html:not([data-theme="dark"]) .hero-stage :is(.bird-aura, .stage-halo, .ring) {
+    display: none;
+  }
+
+  html:not([data-theme="dark"]) .hero-stage .hummingbird-scene {
+    animation: none;
+  }
+
+  html:not([data-theme="dark"]) .hero-stage .bird-core {
+    width: 175px;
+    z-index: 1;
+    animation: light-bird-float 6s ease-in-out infinite;
+  }
+
+  html:not([data-theme="dark"]) .hero-stage .bird-core img {
+    filter: drop-shadow(0 9px 10px #25485824);
+  }
+
+  html:not([data-theme="dark"]) .hero-stage .hummingbird-scene::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 65px);
+    width: 95px;
+    height: 10px;
+    border-radius: 50%;
+    background: #294b5c26;
+    filter: blur(7px);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+}
+
+/* El formulario mantiene una superficie clara y acentos de marca. */
+@media screen {
+  html:not([data-theme="dark"]) #contacto .contact-form-card {
+    border: 1px solid #bda477;
+    border-top: 4px solid #b28a43;
+    background: linear-gradient(145deg, #fcf8ee, #fff 40%);
+    box-shadow: 0 18px 42px #122c3d18, 0 3px 10px #122c3d08;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card > h3::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin-top: 14px;
+    border-radius: 2px;
+    background: #a17a35;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    border: 1px solid #9caeb4;
+    background: #f8fafb;
+    color: #122c3d;
+    border-radius: 9px;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card :is(input, textarea)::placeholder {
+    color: #526775;
+    opacity: 1;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card :is(input, select, textarea):focus-visible {
+    outline: 3px solid #a17a35;
+    outline-offset: 2px;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card input[type="checkbox"] {
+    accent-color: #122c3d;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card button[type="submit"] {
+    background: linear-gradient(120deg, #214858, #122c3d);
+    color: #fff;
+    border: 1px solid #b28a43;
+    box-shadow: 0 6px 16px #122c3d20;
+    min-height: 52px;
+  }
+
+  html:not([data-theme="dark"]) #contacto .contact-form-card button[type="submit"]:focus-visible {
+    outline: 3px solid #a17a35;
+    outline-offset: 3px;
+  }
+}
+
+@keyframes light-bird-float {
+  0%, 100% { transform: translate(-50%, -55%) rotate(-2deg); }
+  50% { transform: translate(-50%, calc(-55% - 7px)) rotate(1deg); }
+}
+
+@media screen and (max-width: 700px) {
+  html:not([data-theme="dark"]) .hero-stage .bird-core { width: 135px; }
+  html:not([data-theme="dark"]) .hero-stage .hummingbird-scene::after {
+    top: calc(50% + 50px);
+    width: 75px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-theme="dark"]) .hero-stage .bird-core {
+    animation: none;
+    transform: translate(-50%, -55%);
+  }
+}
