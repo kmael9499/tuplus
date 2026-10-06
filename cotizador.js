@@ -290,6 +290,55 @@ $("#whatsappBtn").addEventListener("click",()=>{if(!validateContact(true))return
 $("#downloadBtn").addEventListener("click",downloadTxt);
 $("#printBtn").addEventListener("click",()=>window.print());
 
+/* ---- Pagos: pasarela y crypto ---- */
+const payCfg=(window.TUPLUS_CONFIG&&window.TUPLUS_CONFIG.payments)||{};
+const cryptoWallets=((payCfg.crypto&&payCfg.crypto.wallets)||[]).filter(w=>w&&w.id&&w.label);
+let cryptoSelected=null;
+function payAmountUsd(){return `$${grandTotal().toLocaleString('en-US')} USD`;}
+function openGateway(){
+  if(!validateContact(true))return;
+  const url=String(payCfg.gatewayUrl||'').trim();
+  if(!/^https:\/\//i.test(url)){toast("La pasarela aún no está disponible. Escríbenos por WhatsApp y te enviamos el enlace de pago.");return;}
+  sendToBackend(); window.open(url,"_blank","noopener,noreferrer"); toast("Abriendo la pasarela de pago.");
+}
+function renderCryptoWallet(){
+  const w=cryptoWallets.find(x=>x.id===cryptoSelected)||cryptoWallets[0];
+  $("#cryptoAddress").value=w&&w.address?w.address:"";
+  $("#cryptoAddress").placeholder=w&&w.address?"":t("Dirección pendiente: pídela por WhatsApp");
+  $$("#cryptoNetworks .crypto-net").forEach(b=>{const on=w&&b.dataset.id===w.id;b.classList.toggle("selected",!!on);b.setAttribute("aria-checked",on?"true":"false");});
+}
+function openCrypto(){
+  if(!(payCfg.crypto&&payCfg.crypto.enabled)||!cryptoWallets.length){toast("El pago con crypto aún no está disponible. Escríbenos por WhatsApp.");return;}
+  if(!validateContact(true))return;
+  cryptoSelected=cryptoSelected||cryptoWallets[0].id;
+  const box=$("#cryptoNetworks"); box.textContent="";
+  for(const w of cryptoWallets){
+    const b=document.createElement("button"); b.type="button"; b.className="crypto-net"; b.dataset.id=w.id; b.setAttribute("role","radio"); b.textContent=w.label;
+    b.addEventListener("click",()=>{cryptoSelected=w.id;renderCryptoWallet();}); box.append(b);
+  }
+  $("#cryptoAmount").textContent=payAmountUsd(); renderCryptoWallet();
+  const dlg=$("#cryptoDialog"); if(typeof dlg.showModal==="function")dlg.showModal(); else dlg.setAttribute("open","");
+}
+function closeCrypto(){const d=$("#cryptoDialog"); if(typeof d.close==="function")d.close(); else d.removeAttribute("open");}
+async function copyCryptoAddress(){
+  const v=$("#cryptoAddress").value; if(!v){toast("Aún no hay dirección configurada.");return;}
+  try{await navigator.clipboard.writeText(v);}catch{$("#cryptoAddress").select();document.execCommand("copy");}
+  toast("Dirección copiada.");
+}
+function cryptoPaidWhatsApp(){
+  const w=cryptoWallets.find(x=>x.id===cryptoSelected)||cryptoWallets[0], tx=$("#cryptoTx").value.trim();
+  const extra=['','PAGO CON CRYPTO',`Red: ${w.label}`,`Monto: ${payAmountUsd()}`,`TXID: ${tx||'—'}`].join('\n');
+  sendToBackend(); closeCrypto();
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText()+'\n'+extra)}`,"_blank","noopener");
+  toast("Abriendo WhatsApp para confirmar tu pago.");
+}
+$("#gatewayBtn").addEventListener("click",openGateway);
+$("#cryptoBtn").addEventListener("click",openCrypto);
+$("#cryptoClose").addEventListener("click",closeCrypto);
+$("#cryptoCopy").addEventListener("click",copyCryptoAddress);
+$("#cryptoPaid").addEventListener("click",cryptoPaidWhatsApp);
+$("#cryptoDialog").addEventListener("click",e=>{if(e.target===e.currentTarget)closeCrypto();});
+
 function syncFloatingWhatsApp(){
   const href=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola TUPLUS, quiero información sobre una cotización web.")}`;
   $("#floatingWhatsapp").href=href;

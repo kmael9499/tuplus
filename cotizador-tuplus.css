@@ -31,3 +31,26 @@ button,a,input,textarea{-webkit-tap-highlight-color:transparent}button:focus-vis
 @media(max-width:620px){.quote-header{flex-wrap:wrap;justify-content:space-between}.quote-header nav{gap:8px}.quote-header nav>a{font-size:11px}.quote-language select{width:82px;font-size:11px;padding:5px;min-height:38px}.theme-toggle{font-size:0;min-height:38px}.theme-toggle span{font-size:19px}.quote-brand{font-size:17px}.quote-brand img{width:27px;height:27px}.hero-stage{height:355px}.hero-meta{flex-wrap:wrap}.currency-control{width:calc(100% - 24px);gap:7px;padding:12px}.big-price{font-size:32px}.live-total b{font-size:12px}.step b{font-size:9px;overflow-wrap:anywhere}.quote-header{position:relative}.steps{position:relative}.quote-layout{scroll-margin-top:16px}.rate-actions{font-size:10px}.feature-card em{position:static;display:block;margin-top:12px}.feature-card{padding-bottom:15px}}
 
 .start-quote{display:inline-flex;align-items:center;gap:30px;margin-top:24px;padding:13px 19px;border:1px solid var(--page-line);border-radius:10px;background:var(--page-ink);color:var(--page);font-weight:600;font-size:13px;text-decoration:none;transition:transform .2s,box-shadow .2s}.start-quote:hover{transform:translateY(-3px);box-shadow:0 12px 24px #122c3d20}.start-quote span{font-size:18px}.hero h1{animation:step-arrive .6s both}.hero p{animation:step-arrive .7s both}.hero-stage{animation:step-arrive .8s both}.choice-card.selected .choice-icon{background:#e1c38b;color:#122c3d;transition:background .2s}.theme-toggle:active,.start-quote:active{transform:scale(.97)}.progress-track{position:relative}.progress-fill::after{content:"";display:block;width:45px;height:100%;background:linear-gradient(90deg,transparent,#fff8,transparent);animation:progress-shine 4s ease-in-out infinite;position:absolute;left:0;max-width:100%}@keyframes progress-shine{0%,40%{left:0;opacity:0}55%{opacity:.6}90%,100%{left:85%;opacity:0}}@media(prefers-reduced-motion:reduce){.hero h1,.hero p,.hero-stage,.progress-fill::after{animation:none!important}}
+
+/* Pagos: pasarela y crypto */
+.pay-box{margin-top:16px;padding:16px;border:1px solid #c7a66b55;border-radius:14px;background:#e1c38b0a}
+.pay-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.pay-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 12px;border-radius:10px;border:1px solid #e1c38b;font:700 13px inherit;font-family:inherit;cursor:pointer;transition:transform .15s,background .2s}
+.pay-btn:active{transform:scale(.98)}
+.pay-gateway{background:#e1c38b;color:#102c3d}.pay-gateway:hover{background:#eed2a0}
+.pay-crypto{background:transparent;color:#f0d8aa}.pay-crypto:hover{background:#e1c38b1a}
+.pay-box small{display:block;font-size:11px;line-height:1.5;color:#bbcbd5}
+.crypto-dialog{border:1px solid #c7a66b80;border-radius:16px;background:#122f41;color:#f3f3ed;padding:22px;width:min(480px,calc(100% - 28px));font-family:inherit}
+.crypto-dialog::backdrop{background:#000a;backdrop-filter:blur(3px)}
+.crypto-head{display:flex;justify-content:space-between;align-items:center}.crypto-head h3{margin:0;font-size:20px}
+.crypto-close{background:none;border:0;color:inherit;font-size:18px;cursor:pointer;min-width:40px;min-height:40px}
+.crypto-amount{margin:10px 0}.crypto-amount b{color:#f0d8aa;font-size:18px}
+.crypto-networks{display:grid;gap:8px;margin-bottom:14px}
+.crypto-net{text-align:left;padding:11px 12px;border-radius:10px;border:1px solid #3b5564;background:#0e2737;color:#d3dce1;font:600 13px inherit;font-family:inherit;cursor:pointer}
+.crypto-net.selected{border-color:#e1c38b;color:#f0d8aa;background:#e1c38b14}
+.crypto-field{display:block;font-size:12px;color:#d3dce1;margin-bottom:12px}
+.crypto-field input{width:100%;box-sizing:border-box;margin-top:6px;background:#0e2737;color:#fff;border:1px solid #3b5564;border-radius:10px;min-height:44px;padding:8px 10px;font:12px "DM Mono",monospace}
+.crypto-copy{display:flex;gap:8px;align-items:center}.crypto-copy input{margin-top:6px}.crypto-copy .subtle-btn{margin-top:6px;white-space:nowrap}
+.crypto-warn{font-size:11px;line-height:1.6;color:#ddcbaa;background:#e1c38b09;border-radius:8px;padding:9px 10px;margin:0 0 12px}
+@media(max-width:620px){.pay-actions{grid-template-columns:1fr}.crypto-copy{flex-wrap:wrap}.crypto-field input{font-size:16px}}
+@media print{.pay-box,.crypto-dialog{display:none!important}}
