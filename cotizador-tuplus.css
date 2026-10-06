@@ -54,3 +54,7 @@ button,a,input,textarea{-webkit-tap-highlight-color:transparent}button:focus-vis
 .crypto-warn{font-size:11px;line-height:1.6;color:#ddcbaa;background:#e1c38b09;border-radius:8px;padding:9px 10px;margin:0 0 12px}
 @media(max-width:620px){.pay-actions{grid-template-columns:1fr}.crypto-copy{flex-wrap:wrap}.crypto-field input{font-size:16px}}
 @media print{.pay-box,.crypto-dialog{display:none!important}}
+
+.crypto-qr{display:grid;place-items:center;width:200px;height:200px;margin:0 auto 14px;background:#fff;border:2px dashed #c7a66b;border-radius:14px;overflow:hidden;color:#5b6b75;font-size:12px}
+.crypto-qr img{width:100%;height:100%;object-fit:contain;display:block}
+.crypto-qr [hidden]{display:none}

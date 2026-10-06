@@ -305,6 +305,9 @@ function renderCryptoWallet(){
   const w=cryptoWallets.find(x=>x.id===cryptoSelected)||cryptoWallets[0];
   $("#cryptoAddress").value=w&&w.address?w.address:"";
   $("#cryptoAddress").placeholder=w&&w.address?"":t("Dirección pendiente: pídela por WhatsApp");
+  const qr=w&&typeof w.qr==="string"?w.qr.trim():"", okQr=/^(https:\/\/|[\w.\-\/]+\.(png|jpe?g|webp|svg)$)/i.test(qr)&&!qr.startsWith("//");
+  const img=$("#cryptoQrImg"); img.hidden=!okQr; $("#cryptoQrEmpty").hidden=okQr;
+  if(okQr)img.src=qr; else img.removeAttribute("src");
   $$("#cryptoNetworks .crypto-net").forEach(b=>{const on=w&&b.dataset.id===w.id;b.classList.toggle("selected",!!on);b.setAttribute("aria-checked",on?"true":"false");});
 }
 function openCrypto(){

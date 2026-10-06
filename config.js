@@ -9,10 +9,11 @@ window.TUPLUS_CONFIG = Object.freeze({
     crypto: {
       enabled: true,
       // Pega aquí TUS direcciones reales. Verifica cada red antes de publicar.
+      // qr: ruta de la imagen del QR, ej. 'imagenes/qr-usdt-trc20.png'.
       wallets: [
-        { id: 'usdt-trc20', label: 'USDT · red TRON (TRC-20)', address: '' },
-        { id: 'usdt-erc20', label: 'USDT · red Ethereum (ERC-20)', address: '' },
-        { id: 'btc', label: 'Bitcoin (BTC)', address: '' }
+        { id: 'usdt-trc20', label: 'USDT · red TRON (TRC-20)', address: '', qr: '' },
+        { id: 'usdt-erc20', label: 'USDT · red Ethereum (ERC-20)', address: '', qr: '' },
+        { id: 'btc', label: 'Bitcoin (BTC)', address: '', qr: '' }
       ]
     }
   },
