@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cotizador TUPLUS, prototipo animado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#f3efe6;--ink:#122c3d;--mut:#586a77;--gold:#b97f0e;--gold2:#e6b43c;--card:rgba(255,255,255,.72);--line:rgba(18,44,61,.14);--glow:rgba(214,160,40,.4);--bar:rgba(243,239,230,.9)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1a26;--ink:#f4ecd8;--mut:#9db0bd;--gold:#f2c14e;--gold2:#ffe08f;--card:rgba(255,255,255,.05);--line:rgba(242,193,78,.2);--glow:rgba(242,193,78,.5);--bar:rgba(10,26,38,.88)}}
+:root[data-theme="dark"]{--bg:#0a1a26;--ink:#f4ecd8;--mut:#9db0bd;--gold:#f2c14e;--gold2:#ffe08f;--card:rgba(255,255,255,.05);--line:rgba(242,193,78,.2);--glow:rgba(242,193,78,.5);--bar:rgba(10,26,38,.88)}
+*{box-sizing:border-box;margin:0}
+html,body{min-height:100%}
+:root{padding-top:env(safe-area-inset-top,0px)}
+body{background:radial-gradient(900px 500px at 85% -10%,var(--glow),transparent 60%),radial-gradient(700px 500px at -10% 40%,rgba(18,44,61,.25),transparent 60%),var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,sans-serif;padding-bottom:150px}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+main{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:28px 20px}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.logo{font:700 22px Fraunces,Georgia,serif;letter-spacing:.02em}.logo b{color:var(--gold)}
+.note{font-size:13px;color:var(--mut)}
+h1{font:700 clamp(32px,6vw,52px)/1.08 Fraunces,Georgia,serif;margin:34px 0 8px;max-width:14em}
+.sub{color:var(--mut);max-width:34em}
+.track{position:relative;margin:54px 8px 30px;height:4px;background:var(--line);border-radius:4px}
+.fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:4px;box-shadow:0 0 14px var(--glow);transition:width .9s cubic-bezier(.5,0,.2,1)}
+.node{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--line);transform:translate(-50%,-50%);transition:.5s}
+.node.on{background:var(--gold2);border-color:var(--gold);box-shadow:0 0 12px var(--glow)}
+.node span{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--mut);white-space:nowrap}
+.bird{position:absolute;top:-46px;left:0;width:74px;transform:translateX(-50%);transition:left .9s cubic-bezier(.5,0,.2,1);filter:drop-shadow(0 0 10px var(--glow))}
+.bird svg{display:block;animation:bob 2.4s ease-in-out infinite}
+.wing{transform-box:fill-box;transform-origin:90% 95%;animation:flap .16s ease-in-out infinite alternate}
+.wing.b{animation-delay:.08s;opacity:.55}
+@keyframes flap{to{transform:rotate(-22deg) scaleY(.62)}}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.panel{perspective:1000px;min-height:340px}
+.step{animation:in .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes in{from{opacity:0;transform:rotateY(14deg) translateX(30px)}}
+h2{font:600 26px Fraunces,Georgia,serif;margin-bottom:6px}
+.help{color:var(--mut);margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.card{--rx:0deg;--ry:0deg;--mx:50%;--my:50%;position:relative;text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;backdrop-filter:blur(8px);transform:perspective(800px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .15s,border-color .3s,box-shadow .3s;overflow:hidden}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(180px circle at var(--mx) var(--my),var(--glow),transparent 70%);opacity:0;transition:opacity .3s}
+.card:hover::before,.card.sel::before{opacity:.55}
+.card.sel{border-color:var(--gold2);box-shadow:0 0 0 1px var(--gold2),0 0 28px var(--glow)}
+.card>*{position:relative}
+.card i{font-style:normal;font-size:26px;color:var(--gold)}
+.card strong{display:block;font:600 18px Fraunces,Georgia,serif;margin:6px 0 2px}
+.card small{color:var(--mut);display:block}
+.card em{font-style:normal;display:block;margin-top:10px;font-weight:700;color:var(--gold)}
+.card:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
+.pages{text-align:center;padding:20px 0}
+.big{font:700 clamp(64px,14vw,110px)/1 Fraunces,Georgia,serif;color:var(--gold);text-shadow:0 0 28px var(--glow)}
+input[type=range]{width:100%;max-width:520px;accent-color:var(--gold);margin-top:18px}
+.group{margin-top:22px}.group h3{font:600 17px Manrope;margin-bottom:10px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:26px}
+.btn{font:700 15px Manrope;border-radius:999px;padding:13px 26px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block}
+.btn.pri{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#122c3d;border:0;box-shadow:0 6px 24px var(--glow)}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.warn{color:var(--gold);font-size:14px;min-height:20px}
+.sum{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px 20px}
+.sum div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.sum div:last-child{border:0}
+.qn{display:inline-block;margin:0 0 14px;font-weight:700;color:var(--gold)}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--bar);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px))}
+.bar>div{max-width:880px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.tot{font:700 clamp(28px,6vw,40px)/1 Fraunces,Georgia,serif;color:var(--gold);text-shadow:0 0 18px var(--glow)}
+.lbl{font-size:13px;color:var(--mut)}
+.sw{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+.sw input{width:40px;height:22px;accent-color:var(--gold)}
+@media (prefers-reduced-motion:reduce){.wing,.bird svg,.step{animation:none}.fill,.bird{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<main>
+<header><div class="logo">TU<b>PLUS</b></div><div class="note">Prototipo de animación. Los precios son de ejemplo.</div></header>
+<h1>Arma tu web y mira el precio mientras vuelas.</h1>
+<p class="sub">Elige paso a paso. El colibrí avanza contigo y el total se actualiza en cada decisión.</p>
+<div class="track" id="track"><div class="fill" id="fill"></div>
+<div class="bird" id="bird"><svg viewBox="0 0 135 80" role="img" aria-label="Colibrí dorado de TuPlus"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08f"/><stop offset="1" stop-color="#c58a10"/></linearGradient></defs>
+<path class="wing b" d="M62 38C52 8 28 0 12 8c20 4 36 16 50 34z" fill="url(#g)"/>
+<path d="M44 46L12 68l22-14-20 2 28-14z" fill="url(#g)"/>
+<path d="M40 44C48 30 70 28 84 36c8 5 10 14 2 20-12 10-36 8-46-12z" fill="url(#g)"/>
+<circle cx="88" cy="36" r="10" fill="url(#g)"/><path d="M97 33l36-6-35 12z" fill="#e6b43c"/><circle cx="91" cy="34" r="2" fill="#122c3d"/>
+<path class="wing" d="M66 36C60 2 36-8 14 2c24 2 40 18 54 38z" fill="url(#g)"/></svg></div></div>
+<div class="panel" id="panel"></div>
+</main>
+<div class="bar"><div>
+<div><div class="lbl" id="lbl">Total estimado, sin IGV</div><div class="tot" id="tot">S/ 0</div></div>
+<div><div class="lbl">Plazo aproximado</div><strong id="plazo">Elige un tipo de web</strong></div>
+<label class="sw"><input type="checkbox" id="igv"> Ver con IGV (18%)</label>
+</div></div>
+<script>
+const T=[{id:'corp',n:'Web corporativa',d:'Presenta tu negocio con confianza',p:1200,t:12,i:'◈'},{id:'land',n:'Landing page',d:'Una página enfocada en convertir',p:600,t:6,i:'◇'},{id:'shop',n:'Tienda virtual',d:'Vende en línea con catálogo y pagos',p:2200,t:20,i:'▣'},{id:'cat',n:'Catálogo digital',d:'Muestra productos y cotiza por WhatsApp',p:1500,t:14,i:'❖'}];
+const F=[{n:'Formulario y WhatsApp',d:'Los clientes te escriben en un toque',p:150,t:1},{n:'SEO básico',d:'Para que Google te encuentre',p:300,t:3},{n:'Varios idiomas',d:'Tu web en más de un idioma',p:400,t:4},{n:'Blog',d:'Publica novedades y artículos',p:350,t:3},{n:'Pagos en línea',d:'Cobra con tarjeta o billetera',p:500,t:5},{n:'Panel de administración',d:'Edita contenido sin programar',p:800,t:7}];
+const D=[{n:'Plantilla pulida',d:'Rápida y limpia',p:0,t:0},{n:'Diseño personalizado',d:'Hecho con tu marca',p:600,t:4},{n:'Diseño premium',d:'Con animaciones a medida',p:1400,t:8}];
+const S=[{n:'1 mes de soporte',d:'Incluido',p:0},{n:'6 meses de soporte',d:'Ajustes y atención',p:350},{n:'12 meses de soporte',d:'Acompañamiento anual',p:600}];
+const st={step:0,type:null,pages:3,feat:new Set(),des:0,sup:0,igv:false,q:null},names=['Tipo','Páginas','Funciones','Estilo','Resumen'];
+const $=id=>document.getElementById(id),fmt=n=>'S/ '+Math.round(n).toLocaleString('es-PE');
+function calc(){const t=T[st.type];if(!t)return{sub:0,days:0};const pg=t.id==='land'?1:st.pages,fs=[...st.feat].map(i=>F[i]);
+return{sub:t.p+(pg-1)*120+fs.reduce((a,f)=>a+f.p,0)+D[st.des].p+S[st.sup].p,days:t.t+Math.ceil((pg-1)*.6)+fs.reduce((a,f)=>a+f.t,0)+D[st.des].t,pg}}
+let cur=0,raf;function roll(to){cancelAnimationFrame(raf);const a=cur,t0=performance.now();(function f(n){const k=Math.min(1,(n-t0)/650),e=1-Math.pow(1-k,3);cur=a+(to-a)*e;$('tot').textContent=fmt(cur);if(k<1)raf=requestAnimationFrame(f)})(t0)}
+function upd(){const c=calc(),m=st.igv?1.18:1;roll(c.sub*m);$('lbl').textContent='Total estimado, '+(st.igv?'con IGV':'sin IGV');$('plazo').textContent=st.type===null?'Elige un tipo de web':'≈ '+Math.max(1,Math.round(c.days/5))+' semanas'}
+function track(){const tr=$('track');tr.querySelectorAll('.node').forEach(n=>n.remove());names.forEach((n,i)=>{const d=document.createElement('div');d.className='node'+(i<=st.step?' on':'');d.style.left=i/4*100+'%';d.innerHTML='<span>'+n+'</span>';tr.appendChild(d)});const p=st.step/4*100;$('fill').style.width=p+'%';$('bird').style.left=p+'%'}
+const card=(i,s,ic,n,d,x,sel)=>`<button class="card${sel?' sel':''}" data-i="${i}" aria-pressed="${!!sel}">${ic?'<i>'+ic+'</i>':''}<strong>${n}</strong><small>${d}</small>${x?'<em>'+x+'</em>':''}</button>`;
+function render(){const p=$('panel');let h='';const s=st.step;
+if(s===0)h=`<h2>¿Qué quieres construir?</h2><p class="help">Elige una opción para empezar.</p><div class="grid" data-k="type">${T.map((t,i)=>card(i,0,t.i,t.n,t.d,'desde '+fmt(t.p),st.type===i)).join('')}</div>`;
+if(s===1){const l=T[st.type].id==='land';h=`<h2>¿Cuántas páginas necesitas?</h2><p class="help">${l?'Una landing page es de una sola página.':'Cada página extra suma S/ 120 al total.'}</p><div class="pages"><div class="big" id="pg">${l?1:st.pages}</div><input type="range" min="1" max="20" value="${l?1:st.pages}" id="rg" ${l?'disabled':''} aria-label="Número de páginas"></div>`}
+if(s===2)h=`<h2>¿Qué funciones quieres sumar?</h2><p class="help">Puedes elegir varias, o ninguna.</p><div class="grid" data-k="feat">${F.map((f,i)=>card(i,0,'',f.n,f.d,'+ '+fmt(f.p),st.feat.has(i))).join('')}</div>`;
+if(s===3)h=`<h2>Diseño y soporte</h2><div class="group"><h3>¿Cómo quieres que se vea?</h3><div class="grid" data-k="des">${D.map((x,i)=>card(i,0,'',x.n,x.d,x.p?'+ '+fmt(x.p):'Incluido',st.des===i)).join('')}</div></div><div class="group"><h3>¿Cuánto acompañamiento quieres?</h3><div class="grid" data-k="sup">${S.map((x,i)=>card(i,0,'',x.n,x.d,x.p?'+ '+fmt(x.p):'Incluido',st.sup===i)).join('')}</div></div>`;
+if(s===4){const c=calc(),t=T[st.type],m=st.igv?1.18:1;st.q=st.q||'TP-'+(1000+Math.floor(Math.random()*9000));const fs=[...st.feat].map(i=>F[i].n).join(', ')||'Ninguna';
+const msg=encodeURIComponent(`Hola TUPLUS, preparé la cotización ${st.q}: ${t.n}, ${c.pg} páginas, funciones: ${fs}, ${D[st.des].n}, ${S[st.sup].n}. Total estimado ${fmt(c.sub*m)} ${st.igv?'con':'sin'} IGV.`);
+h=`<h2>Tu cotización está lista</h2><span class="qn">${st.q}, válida por 15 días</span><div class="sum"><div><span>Tipo</span><strong>${t.n}</strong></div><div><span>Páginas</span><strong>${c.pg}</strong></div><div><span>Funciones</span><strong>${fs}</strong></div><div><span>Diseño</span><strong>${D[st.des].n}</strong></div><div><span>Soporte</span><strong>${S[st.sup].n}</strong></div><div><span>Total estimado</span><strong>${fmt(c.sub*m)}</strong></div></div><p class="help" style="margin-top:12px">Es una estimación. El alcance final se confirma en una propuesta.</p><div class="nav"><button class="btn" id="re">Empezar de nuevo</button><a class="btn pri" href="https://wa.me/51916828870?text=${msg}" target="_blank" rel="noopener">Preparar mensaje de WhatsApp</a></div>`}
+const ok=s!==0||st.type!==null;
+if(s<4)h+=`<div class="nav"><button class="btn" id="bk" ${s?'':'disabled'}>Atrás</button><span class="warn" id="wn">${ok?'':'Elige un tipo de web para continuar.'}</span><button class="btn pri" id="nx" ${ok?'':'disabled'}>${s===3?'Ver mi cotización':'Siguiente'}</button></div>`;
+p.innerHTML='<div class="step">'+h+'</div>';track();upd();bind();if(s===4)burst(innerWidth/2,innerHeight*.35)}
+function bind(){const p=$('panel');p.querySelectorAll('.card').forEach(c=>{c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.setProperty('--ry',(x-.5)*12+'deg');c.style.setProperty('--rx',(.5-y)*12+'deg');c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')});c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
+c.addEventListener('click',()=>{const k=c.parentElement.dataset.k,i=+c.dataset.i;if(k==='type')st.type=i;if(k==='des')st.des=i;if(k==='sup')st.sup=i;if(k==='feat')st.feat.has(i)?st.feat.delete(i):st.feat.add(i);const sc=scrollY;render();scrollTo(0,sc)})});
+const rg=$('rg');if(rg)rg.oninput=()=>{st.pages=+rg.value;$('pg').textContent=st.pages;upd()};
+const nx=$('nx');if(nx)nx.onclick=()=>{st.step++;render()};const bk=$('bk');if(bk)bk.onclick=()=>{st.step--;render()};
+const re=$('re');if(re)re.onclick=()=>{Object.assign(st,{step:0,type:null,pages:3,des:0,sup:0,q:null});st.feat=new Set();render()}}
+$('igv').onchange=e=>{st.igv=e.target.checked;if(st.step===4)render();else upd()};
+const cv=$('fx'),cx=cv.getContext('2d'),pt=[],rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function sz(){cv.width=innerWidth;cv.height=innerHeight}sz();addEventListener('resize',sz);
+for(let i=0;i<46;i++)pt.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2+.6,v:Math.random()*.35+.1,a:Math.random()*.5+.2,vx:0,vy:0,b:0});
+function burst(x,y){if(rm)return;for(let i=0;i<70;i++){const a=Math.random()*6.28,s=Math.random()*5+2;pt.push({x,y,r:Math.random()*2.6+1,v:0,a:1,vx:Math.cos(a)*s,vy:Math.sin(a)*s,b:1})}}
+(function loop(){cx.clearRect(0,0,cv.width,cv.height);for(let i=pt.length-1;i>=0;i--){const q=pt[i];if(q.b){q.x+=q.vx;q.y+=q.vy;q.vy+=.1;q.vx*=.985;q.a-=.012;if(q.a<=0){pt.splice(i,1);continue}}else if(!rm){q.y-=q.v;if(q.y<-5){q.y=cv.height+5;q.x=Math.random()*cv.width}}
+cx.beginPath();cx.fillStyle=`rgba(242,193,78,${q.a})`;cx.shadowColor='rgba(242,193,78,.9)';cx.shadowBlur=10;cx.arc(q.x,q.y,q.r,0,6.28);cx.fill()}requestAnimationFrame(loop)})();
+render();
+</script>
+</body>
+</html>
