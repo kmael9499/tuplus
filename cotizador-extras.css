@@ -2,52 +2,193 @@
    Para desactivarla, quita los 2 enlaces de cotizador.html. No modifica ningún otro archivo. */
 
 /* Colibrí que vuela por la barra de progreso */
-.quote-layout .progress-row{position:relative}
-.xt-bird{position:absolute;top:-26px;left:0;width:34px;height:34px;pointer-events:none;transform:translateX(-50%);transition:left .6s cubic-bezier(.5,0,.2,1);z-index:3}
-.xt-bird img{display:block;width:100%;height:100%;object-fit:contain;animation:xt-hover 2.6s ease-in-out infinite;filter:saturate(1.5) brightness(1.2) drop-shadow(0 0 6px #ffc83d) drop-shadow(0 0 14px rgba(255,190,50,.5))}
-@keyframes xt-hover{50%{transform:translateY(-4px) rotate(-5deg)}}
+.quote-layout .progress-row { position: relative; }
+
+.xt-bird {
+  position: absolute;
+  top: -26px;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: left .6s cubic-bezier(.5, 0, .2, 1);
+  z-index: 3;
+}
+
+.xt-bird img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: xt-hover 2.6s ease-in-out infinite;
+  filter: saturate(1.5) brightness(1.2) drop-shadow(0 0 6px #ffc83d) drop-shadow(0 0 14px rgba(255, 190, 50, .5));
+}
+
+@keyframes xt-hover {
+  50% { transform: translateY(-4px) rotate(-5deg); }
+}
 
 /* Giro 3D al cambiar de paso */
-.quote-layout .step-view{animation:xt-turn .55s cubic-bezier(.2,.7,.2,1) both}
-@keyframes xt-turn{from{opacity:0;transform:perspective(1200px) rotateY(-9deg) translateX(26px)}to{opacity:1;transform:none}}
+.quote-layout .step-view { animation: xt-turn .55s cubic-bezier(.2, .7, .2, 1) both; }
+
+@keyframes xt-turn {
+  from { opacity: 0; transform: perspective(1200px) rotateY(-9deg) translateX(26px); }
+  to { opacity: 1; transform: none; }
+}
 
 /* Tarjetas con inclinación 3D y luz dorada que sigue al cursor */
-.quote-layout :is(.choice-card,.toggle-card,.feature-card,.radio-card,.toggle-line){position:relative;--rx:0deg;--ry:0deg;--mx:50%;--my:50%}
-@media (hover:hover) and (pointer:fine){
-  .quote-layout :is(.choice-card,.toggle-card,.feature-card,.radio-card,.toggle-line):hover{
-    transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px);
-    background-image:radial-gradient(230px circle at var(--mx) var(--my),rgba(225,195,139,.2),transparent 65%);
+.quote-layout :is(.choice-card, .toggle-card, .feature-card, .radio-card, .toggle-line) {
+  position: relative;
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 50%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .quote-layout :is(.choice-card, .toggle-card, .feature-card, .radio-card, .toggle-line):hover {
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-3px);
+    background-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(225, 195, 139, .2), transparent 65%);
   }
 }
 
 /* Etiquetas "Más elegido" / "Recomendado" */
-.xt-badge{position:absolute;top:8px;right:10px;font-style:normal;font-weight:700;font-size:9px;line-height:1;padding:5px 8px;border-radius:99px;background:#e1c38b;color:#102c3d;pointer-events:none;z-index:2}
-html:not([lang^="es"]) .xt-badge{display:none}
+.xt-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 9px;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: 99px;
+  background: #e1c38b;
+  color: #102c3d;
+  pointer-events: none;
+  z-index: 2;
+}
 
 /* Resumen "Tu proyecto" siempre visible */
-.xt-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:18px}
-.xt-chip{font:inherit;font-size:11px;line-height:1.2;padding:7px 11px;border:1px solid #ffffff22;border-radius:99px;color:#d9e2e7;background:#ffffff06;white-space:nowrap}
-.xt-chip b{color:#f0d8aa;font-weight:700}
-button.xt-chip{cursor:pointer;color:#f0d8aa;border-color:#e1c38b66;transition:background .2s,transform .15s}
-button.xt-chip:hover{background:#e1c38b1a}
-button.xt-chip:active{transform:scale(.97)}
-.xt-chips .xt-grow{flex:1}
+.xt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.xt-chip {
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.2;
+  padding: 7px 11px;
+  border: 1px solid #ffffff22;
+  border-radius: 99px;
+  color: #d9e2e7;
+  background: #ffffff06;
+  white-space: nowrap;
+}
+
+.xt-chip b { color: #f0d8aa; font-weight: 700; }
+
+button.xt-chip {
+  cursor: pointer;
+  color: #f0d8aa;
+  border-color: #e1c38b66;
+  transition: background .2s, transform .15s;
+}
+
+button.xt-chip:hover { background: #e1c38b1a; }
+button.xt-chip:active { transform: scale(.97); }
+.xt-chips .xt-grow { flex: 1; }
 
 /* Paquetes rápidos */
-.xt-presets{margin-top:22px}
-.xt-presets-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-.xt-preset{position:relative;font:inherit;text-align:left;cursor:pointer;color:inherit;background:#ffffff04;border:1px dashed #e1c38b66;border-radius:14px;padding:14px 14px 12px;transition:transform .2s,border-color .2s,background .2s}
-.xt-preset:hover{transform:translateY(-3px);border-color:#e1c38b;background:#e1c38b12}
-.xt-preset b{display:block;font-size:14px}
-.xt-preset small{display:block;margin-top:4px;font-size:11px;color:#bacbd6;line-height:1.5}
-@media(max-width:620px){.xt-presets-grid{grid-template-columns:1fr}}
+.xt-presets { margin-top: 22px; }
+
+.xt-presets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.xt-preset {
+  position: relative;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  background: #ffffff04;
+  border: 1px dashed #e1c38b66;
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  transition: transform .2s, border-color .2s, background .2s;
+}
+
+.xt-preset:hover {
+  transform: translateY(-3px);
+  border-color: #e1c38b;
+  background: #e1c38b12;
+}
+
+.xt-preset b { display: block; font-size: 14px; }
+
+.xt-preset small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #bacbd6;
+  line-height: 1.5;
+}
+
+@media (max-width: 620px) {
+  .xt-presets-grid { grid-template-columns: 1fr; }
+}
 
 /* Tooltip "¿qué es esto?" */
-.xt-tip{position:fixed;z-index:60;max-width:240px;background:#0b2230;color:#f3f3ed;border:1px solid #c7a66b80;border-radius:10px;padding:9px 11px;font-size:12px;line-height:1.5;pointer-events:none;opacity:0;transform:translate(-50%,calc(-100% + 4px));transition:opacity .15s,transform .15s}
-.xt-tip.on{opacity:1;transform:translate(-50%,-100%)}
+.xt-tip {
+  position: fixed;
+  z-index: 60;
+  max-width: 240px;
+  background: #0b2230;
+  color: #f3f3ed;
+  border: 1px solid #c7a66b80;
+  border-radius: 10px;
+  padding: 9px 11px;
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, calc(-100% + 4px));
+  transition: opacity .15s, transform .15s;
+}
+
+.xt-tip.on { opacity: 1; transform: translate(-50%, -100%); }
 
 /* Destello dorado al terminar */
-.xt-spark{position:fixed;width:6px;height:6px;border-radius:50%;background:#ffd36b;box-shadow:0 0 10px #ffc83d;pointer-events:none;z-index:70;animation:xt-fly .9s ease-out forwards}
-@keyframes xt-fly{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+.xt-spark {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffd36b;
+  box-shadow: 0 0 10px #ffc83d;
+  pointer-events: none;
+  z-index: 70;
+  animation: xt-fly .9s ease-out forwards;
+}
 
-@media print{.xt-bird,.xt-chips,.xt-presets,.xt-tip,.xt-spark,.xt-badge{display:none!important}}
+@keyframes xt-fly {
+  to { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0; }
+}
+
+@media print {
+  .xt-bird,
+  .xt-chips,
+  .xt-presets,
+  .xt-tip,
+  .xt-spark,
+  .xt-badge { display: none !important; }
+}

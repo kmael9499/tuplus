@@ -1,0 +1,40 @@
+/* TUPLUS cotizador: colibrí completo y con vida (capa aditiva).
+   No cambia ni quita nada de tus otros archivos. Mantiene los mismos colores dorado y azul.
+   Para desactivarla, quita los 2 enlaces de cotizador.html. */
+
+/* ===== 1. El colibrí en su propio espacio, completo y encima de la tarjeta =====
+   El JS calcula --xc-s (tamaño) y --xc-sy (posición) para que el colibrí nunca quede tapado. */
+.hero-stage{position:relative}
+.hero-stage .hummingbird-scene{z-index:3;overflow:visible;pointer-events:none;scale:var(--xc-s,1);translate:0 var(--xc-sy,0px)}
+.hero-stage .hummingbird-scene .bird-core{translate:var(--xc-x,0px) var(--xc-y,0px);rotate:var(--xc-r,0deg);transition:none;will-change:translate,rotate}
+.hero-stage .hummingbird-scene .bird-core::before{content:"";position:absolute;inset:-14%;border-radius:50%;background:radial-gradient(circle,rgba(255,206,92,.34),rgba(255,206,92,0) 64%);z-index:-1;pointer-events:none;animation:xc-glow 3.4s ease-in-out infinite}
+@keyframes xc-glow{50%{transform:scale(1.14);opacity:.7}}
+/* mientras el colibrí vuela lejos, sus copias de profundidad y estelas no se quedan atrás */
+.hero-stage .hummingbird-scene.xc-away :is(.bird-depth,.wing-streak){visibility:hidden}
+/* descansa: alas lentas */
+.hero-stage .hummingbird-scene.xc-rest .bird-core img{animation-duration:7s}
+
+/* ===== 2. Etiqueta "ESTIMADO" arriba a la derecha, sin tapar al colibrí ni quedar bajo la tarjeta ===== */
+.hero-stage>.xd-pricebadge{position:absolute;top:14px;right:14px;left:auto;z-index:9}
+@media(max-width:480px){.hero-stage>.xd-pricebadge{top:8px;right:8px;padding:6px 9px}}
+
+/* ===== 3. Tarjeta de moneda: "Precios base en ..." con aire y la misma tipografía del sitio ===== */
+.currency-control .xd-fx{margin:4px 0 2px}
+.currency-control .currency-copy{display:grid;gap:4px;margin-top:8px}
+.currency-control .currency-copy b{display:block;margin:6px 0 0;font:700 12.5px/1.35 "Manrope",system-ui,sans-serif;letter-spacing:.01em}
+.currency-control .xd-calc{margin-top:6px}
+
+/* ===== 4. Polen dorado ===== */
+.xc-pollen{position:absolute;z-index:7;width:var(--s,4px);height:var(--s,4px);margin:-2px 0 0 -2px;border-radius:50%;background:#ffd36b;box-shadow:0 0 10px #ffc83d;opacity:.95;pointer-events:none;animation:xc-pol var(--t,1000ms) cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes xc-pol{to{transform:translate(var(--dx,0px),var(--dy,24px)) scale(.25);opacity:0}}
+
+/* ===== 5. El botón de WhatsApp flotante se hace compacto mientras ves la tarjeta (ya no la tapa) ===== */
+body.xc-wa-compact .floating-whatsapp{width:50px;height:50px;padding:0!important;gap:0;border-radius:50%;justify-content:center}
+body.xc-wa-compact .floating-whatsapp span:not(.wa-symbol),body.xc-wa-compact .floating-whatsapp i{display:none}
+
+/* ===== 6. Movimiento reducido y para imprimir ===== */
+@media(prefers-reduced-motion:reduce){
+  .hero-stage .hummingbird-scene .bird-core::before{animation:none}
+  .xc-pollen{display:none}
+}
+@media print{.xc-pollen{display:none!important}}

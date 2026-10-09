@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260925-2"><link rel="stylesheet" href="cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="brand-flight.css?v=20261004-1"><link rel="stylesheet" href="cotizador-extras.css?v=20261007-1"><script defer src="brand-flight.js?v=20261004-1"></script><script src="theme.js?v=20260925-2"></script><script src="config.js?v=20261005-2"></script><meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="styles.css?v=20260925-2"><link rel="stylesheet" href="cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="brand-flight.css?v=20261004-1"><link rel="stylesheet" href="cotizador-extras.css?v=20261009-1"><link rel="stylesheet" href="cotizador-diseno.css?v=20261010-1"><link rel="stylesheet" href="cotizador-colibri.css?v=20261011-1"><script defer src="brand-flight.js?v=20261004-1"></script><script src="theme.js?v=20260925-2"></script><script src="config.js?v=20261005-2"></script><meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="colibri.png" type="image/png">
 <style id="colibri-neon">
   /* Solo el colibri del hero: dorado neon. No toca aura, anillos, chispas, textos ni el logo del menu. */
@@ -53,7 +53,7 @@
         <div class="eyebrow"><span class="pulse"></span> COTIZADOR DIGITAL <span id="heroEyebrowCurrency" translate="no">PEN</span></div>
         <h1>Diseña la web.<br><em>Visualiza la inversión.</em></h1>
         <p>Configura alcance, funciones y acabado visual. El precio se actualiza al instante y puedes enviar tu resumen directo a WhatsApp.</p>
-        <a class="start-quote" href="#cotizador">Empezar mi cotización <span aria-hidden="true">↓</span></a><div class="hero-meta">
+        <a class="start-quote" href="#cotizador">Empezar mi cotización <span aria-hidden="true">↓</span></a><ul class="xd-pills"><li data-xd="tr1">Sin compromiso</li><li data-xd="tr2">Respuesta por WhatsApp</li><li data-xd="tr3">Precio claro</li></ul><div class="hero-meta">
           <div><strong>05</strong><span>pasos</span></div>
           <div><strong id="heroCurrencyCode" translate="no">PEN</strong><span>moneda</span></div>
           <div><strong>A tu medida</strong><span>alcance</span></div>
@@ -83,8 +83,20 @@
       </div>
     </section>
 
+    <div class="xd-marquee" aria-hidden="true"><div class="xd-track"><div class="xd-grp"><span>Responsive</span><span>SSL</span><span data-xd="mq1">SEO técnico</span><span>Analytics</span><span>WhatsApp</span><span data-xd="mq2">Soporte 30 días</span><span data-xd="tr3">Precio claro</span></div><div class="xd-grp"><span>Responsive</span><span>SSL</span><span data-xd="mq1">SEO técnico</span><span>Analytics</span><span>WhatsApp</span><span data-xd="mq2">Soporte 30 días</span><span data-xd="tr3">Precio claro</span></div></div></div>
+
+    <section class="xd-how" aria-label="Cómo funciona">
+      <span class="xd-k" data-xd="howK">Cómo funciona</span>
+      <h2 data-xd="howH">Tu cotización en tres pasos.</h2>
+      <ol class="xd-how-grid">
+        <li><i>01</i><b data-xd="how1b">Configura tu proyecto</b><p data-xd="how1p">Elige el tipo de web, las páginas, las funciones y el acabado visual.</p></li>
+        <li><i>02</i><b data-xd="how2b">Mira el precio al instante</b><p data-xd="how2p">El total se actualiza contigo, en tu moneda y con o sin IGV.</p></li>
+        <li><i>03</i><b data-xd="how3b">Recibe tu propuesta</b><p data-xd="how3p">Envía el resumen por WhatsApp y confirmamos contigo el alcance y el importe final.</p></li>
+      </ol>
+    </section>
+
     <section id="cotizador" class="quote-layout" aria-label="Cotizador TUPLUS">
-      <aside class="side-panel">
+      <aside class="side-panel"><div class="xd-side">
         <div class="side-brand">
           <span class="side-kicker">TU PROYECTO</span>
           <strong id="sideProjectName">Landing page</strong>
@@ -101,7 +113,7 @@
           <span class="mini-check">✓</span>
           <div><b>Precio transparente</b><small>El precio final se confirma contigo</small></div>
         </div>
-      </aside>
+      </div></aside>
 
       <div class="main-panel">
         <div class="progress-row">
@@ -117,11 +129,11 @@
               <span class="estimate-pill" id="estimatePill">USD · estimado</span>
             </div>
             <div class="option-grid project-grid" id="projectOptions">
-              <button class="choice-card selected" data-key="landing" type="button"><span class="choice-icon">↗</span><div><b>Landing page</b><small>Una página enfocada en conversión</small></div><strong class="option-price" data-usd="295">desde $295</strong></button>
-              <button class="choice-card" data-key="website" type="button"><span class="choice-icon">◌</span><div><b>Sitio corporativo</b><small>Web profesional multipágina</small></div><strong class="option-price" data-usd="450">desde $450</strong></button>
-              <button class="choice-card" data-key="catalog" type="button"><span class="choice-icon">▦</span><div><b>Catálogo online</b><small>Productos, categorías y contacto</small></div><strong class="option-price" data-usd="600">desde $600</strong></button>
-              <button class="choice-card" data-key="ecommerce" type="button"><span class="choice-icon">◫</span><div><b>Tienda e-commerce</b><small>Carrito, checkout y pagos</small></div><strong class="option-price" data-usd="890">desde $890</strong></button>
-              <button class="choice-card wide" data-key="webapp" type="button"><span class="choice-icon">⌘</span><div><b>Aplicación web / SaaS</b><small>Dashboard, usuarios, lógica personalizada, automatización o producto digital</small></div><strong class="option-price" data-usd="1500">desde $1,500</strong></button>
+              <button class="choice-card selected" data-key="landing" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div><b>Landing page</b><small>Una página enfocada en conversión</small></div><strong class="option-price" data-usd="295">desde $295</strong></button>
+              <button class="choice-card" data-key="website" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span><div><b>Sitio corporativo</b><small>Web profesional multipágina</small></div><strong class="option-price" data-usd="450">desde $450</strong></button>
+              <button class="choice-card" data-key="catalog" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><div><b>Catálogo online</b><small>Productos, categorías y contacto</small></div><strong class="option-price" data-usd="600">desde $600</strong></button>
+              <button class="choice-card" data-key="ecommerce" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 11h10.6L20 8H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg></span><div><b>Tienda e-commerce</b><small>Carrito, checkout y pagos</small></div><strong class="option-price" data-usd="890">desde $890</strong></button>
+              <button class="choice-card wide" data-key="webapp" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M9 14l-2 2 2 2M15 14l2 2-2 2"/></svg></span><div><b>Aplicación web / SaaS</b><small>Dashboard, usuarios, lógica personalizada, automatización o producto digital</small></div><strong class="option-price" data-usd="1500">desde $1,500</strong></button>
             </div>
             <div class="feature-note">
               <span class="note-icon">✦</span>
@@ -135,7 +147,7 @@
             </div>
             <div class="slider-card">
               <div class="slider-top"><div><span>Páginas principales</span><b id="pagesValue">5</b></div><span class="mono">01 — 20</span></div>
-              <input id="pagesRange" aria-label="Número de páginas" type="range" min="1" max="20" value="5" aria-label="Cantidad de páginas">
+              <input id="pagesRange" aria-label="Número de páginas" type="range" min="1" max="20" value="5">
               <div class="range-labels"><span>1</span><span>10</span><span>20</span></div>
             </div>
 
@@ -160,18 +172,18 @@
               <div><span class="kicker">03 / FUNCIONES</span><h2>Haz que tu web trabaje.</h2><p>Activa solo las integraciones que realmente necesitas.</p></div>
             </div>
             <div class="feature-grid">
-              <button class="feature-card" data-feature="whatsapp" type="button"><span>◉</span><b>WhatsApp</b><small>Contacto directo</small><em><span class="option-price" data-usd="25">+$25</span></em></button>
-              <button class="feature-card" data-feature="forms" type="button"><span>⌁</span><b>Formularios</b><small>Leads + email</small><em><span class="option-price" data-usd="45">+$45</span></em></button>
-              <button class="feature-card" data-feature="seo" type="button"><span>⌕</span><b>SEO inicial</b><small>Base técnica + on-page</small><em><span class="option-price" data-usd="80">+$80</span></em></button>
-              <button class="feature-card" data-feature="analytics" type="button"><span>◔</span><b>Analítica</b><small>Eventos + métricas</small><em><span class="option-price" data-usd="35">+$35</span></em></button>
-              <button class="feature-card" data-feature="booking" type="button"><span>◷</span><b>Reservas</b><small>Calendario + solicitudes</small><em><span class="option-price" data-usd="110">+$110</span></em></button>
-              <button class="feature-card" data-feature="multilingual" type="button"><span>文</span><b>Multidioma</b><small>Hasta 2 idiomas extra</small><em><span class="option-price" data-usd="120">+$120</span></em></button>
-              <button class="feature-card" data-feature="payments" type="button"><span>＄</span><b>Pagos online</b><small>Pasarela de pago</small><em><span class="option-price" data-usd="160">+$160</span></em></button>
-              <button class="feature-card" data-feature="blog" type="button"><span>✎</span><b>Blog / CMS</b><small>Publica sin depender de código</small><em><span class="option-price" data-usd="75">+$75</span></em></button>
-              <button class="feature-card" data-feature="maps" type="button"><span>⌖</span><b>Mapa interactivo</b><small>Ubicación + rutas</small><em><span class="option-price" data-usd="30">+$30</span></em></button>
-              <button class="feature-card" data-feature="automation" type="button"><span>⌁</span><b>Automatización</b><small>Conecta procesos y herramientas</small><em><span class="option-price" data-usd="180">+$180</span></em></button>
-              <button class="feature-card" data-feature="speed" type="button"><span>ϟ</span><b>Performance+</b><small>Optimización avanzada</small><em><span class="option-price" data-usd="95">+$95</span></em></button>
-              <button class="feature-card" data-feature="security" type="button"><span>◈</span><b>Hardening</b><small>Buenas prácticas de seguridad</small><em><span class="option-price" data-usd="85">+$85</span></em></button>
+              <button class="feature-card" data-feature="whatsapp" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.7 7.1L4 20l1-4.1A8 8 0 1 1 20 12Z"/></svg></span><b>WhatsApp</b><small>Contacto directo</small><em><span class="option-price" data-usd="25">+$25</span></em></button>
+              <button class="feature-card" data-feature="forms" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><b>Formularios</b><small>Leads + email</small><em><span class="option-price" data-usd="45">+$45</span></em></button>
+              <button class="feature-card" data-feature="seo" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span><b>SEO inicial</b><small>Base técnica + on-page</small><em><span class="option-price" data-usd="80">+$80</span></em></button>
+              <button class="feature-card" data-feature="analytics" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span><b>Analítica</b><small>Eventos + métricas</small><em><span class="option-price" data-usd="35">+$35</span></em></button>
+              <button class="feature-card" data-feature="booking" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><b>Reservas</b><small>Calendario + solicitudes</small><em><span class="option-price" data-usd="110">+$110</span></em></button>
+              <button class="feature-card" data-feature="multilingual" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M8.5 4v2M6 6c.8 3.4 3 5.8 6 7M12 6c-.8 3.4-3 5.8-6 7"/><path d="m13 20 3.5-8 3.5 8M14.3 17h4.4"/></svg></span><b>Multidioma</b><small>Hasta 2 idiomas extra</small><em><span class="option-price" data-usd="120">+$120</span></em></button>
+              <button class="feature-card" data-feature="payments" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg></span><b>Pagos online</b><small>Pasarela de pago</small><em><span class="option-price" data-usd="160">+$160</span></em></button>
+              <button class="feature-card" data-feature="blog" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1Z"/><path d="M14 7l3 3"/></svg></span><b>Blog / CMS</b><small>Publica sin depender de código</small><em><span class="option-price" data-usd="75">+$75</span></em></button>
+              <button class="feature-card" data-feature="maps" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6-5.2 6-10a6 6 0 0 0-12 0c0 4.8 6 10 6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg></span><b>Mapa interactivo</b><small>Ubicación + rutas</small><em><span class="option-price" data-usd="30">+$30</span></em></button>
+              <button class="feature-card" data-feature="automation" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M8.3 6H15a3 3 0 0 1 3 3v6.7M15.7 18H9a3 3 0 0 1-3-3V8.3"/></svg></span><b>Automatización</b><small>Conecta procesos y herramientas</small><em><span class="option-price" data-usd="180">+$180</span></em></button>
+              <button class="feature-card" data-feature="speed" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></span><b>Performance+</b><small>Optimización avanzada</small><em><span class="option-price" data-usd="95">+$95</span></em></button>
+              <button class="feature-card" data-feature="security" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.4 3 7.9 7 9.5 4-1.6 7-5.1 7-9.5V6l-7-3Z"/><path d="m9 12 2.2 2.2L15 10.5"/></svg></span><b>Hardening</b><small>Buenas prácticas de seguridad</small><em><span class="option-price" data-usd="85">+$85</span></em></button>
             </div>
             <div class="hint">Puedes cambiar estas opciones en cualquier momento.</div>
           </section>
@@ -263,6 +275,24 @@
         </form>
       </div>
     </section>
+  
+    <section class="xd-faq" aria-label="Preguntas frecuentes">
+      <span class="xd-k" data-xd="faqK">Preguntas frecuentes</span>
+      <h2 data-xd="faqH">Antes de cotizar.</h2>
+      <details><summary data-xd="faq1q">¿El precio que veo es el final?</summary><p data-xd="faq1a">Es una estimación orientativa. El importe final, los impuestos y el alcance se confirman contigo en la propuesta.</p></details>
+      <details><summary data-xd="faq2q">¿Qué incluye el soporte?</summary><p data-xd="faq2a">Todas las webs incluyen 30 días de correcciones y acompañamiento después del lanzamiento. Puedes ampliarlo a 90 o 180 días en el paso 4.</p></details>
+      <details><summary data-xd="faq3q">¿Cuánto demora mi proyecto?</summary><p data-xd="faq3a">En el resumen de tu proyecto verás un plazo estimado en días hábiles. Con la entrega prioritaria se reduce cuando el alcance lo permite.</p></details>
+      <details><summary data-xd="faq4q">¿En qué moneda puedo cotizar?</summary><p data-xd="faq4a">Los precios base están en dólares y se muestran en la moneda de tu país, o en la que elijas. El tipo de cambio es solo de referencia.</p></details>
+      <details><summary data-xd="faq5q">¿Cómo pago?</summary><p data-xd="faq5a">En el paso 5 verás las opciones de pago disponibles, y siempre puedes coordinar por WhatsApp. Confirmamos tu pago por el mismo chat.</p></details>
+    </section>
+  
+    <section class="xd-cta" aria-label="Empezar">
+      <div class="xd-cta-in">
+        <h2 data-xd="ctaH">¿Listo para tener tu web?</h2>
+        <p data-xd="ctaP">Configura tu proyecto en un par de minutos y recibe una estimación clara.</p>
+        <a class="xd-cta-btn" href="#cotizador" data-xd="ctaB">Empezar mi cotización</a>
+      </div>
+    </section>
   </main>
 
 
@@ -287,8 +317,6 @@
   <footer class="footer"><span>© 2026 TUPLUS · Tu siguiente paso digital</span><a href="index.html">Volver al inicio</a><a href="privacidad.html">Privacidad</a></footer>
 
   <noscript><p class="no-js">Activa JavaScript para calcular tu proyecto o <a href="index.html#contacto">contacta con TUPLUS</a>.</p></noscript><script src="js/i18n-data.js?v=20260925-2"></script><script src="js/quote-translations.js?v=20260925-2"></script><script src="i18n.js?v=20260925-2"></script><script src="currencies.js?v=20260925-2"></script><script src="countries.js?v=20260925-2"></script><script src="quote-nav.js?v=20260925-2"></script><script src="cotizador.js?v=20261005-2"></script>
-<script src="neon-trail.js?v=20261006-1" defer></script><script src="cotizador-extras.js?v=20261007-1" defer></script>
-
-
+<script src="neon-trail.js?v=20261006-1" defer></script><script src="cotizador-extras.js?v=20261010-1" defer></script><script src="cotizador-colibri.js?v=20261011-1" defer></script>
 </body>
 </html>
