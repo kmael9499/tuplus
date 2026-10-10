@@ -1,20 +1,22 @@
-/* Estela de mouse en dorado neón. Se desactiva en táctil y con "reducir movimiento". */
+/* Estela de mouse dorada (cola continua que se afina y se desvanece).
+   Se desactiva en táctil y con "reducir movimiento". */
 (() => {
   'use strict';
   const mqReduce = matchMedia('(prefers-reduced-motion: reduce)');
   const mqFine = matchMedia('(hover: hover) and (pointer: fine)');
   if (mqReduce.matches || !mqFine.matches) return;
 
-  const MAX = 140, LIFE = 750;
-  const COLORS = ['255,211,107', '240,216,170', '225,195,139', '255,236,179'];
+  const LIFE = 650;      // ms que dura la cola
+  const WIDTH = 7;       // grosor máximo en la cabeza (px)
+  const MAXPTS = 90;
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-hidden', 'true');
   canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:2147483000';
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  let dpr = 1, w = 0, h = 0, raf = 0, last = 0, lx = null, ly = null;
-  const parts = [];
+  let dpr = 1, w = 0, h = 0, raf = 0;
+  let pts = [];
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -23,45 +25,41 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  function spawn(x, y, n) {
-    for (let i = 0; i < n; i++) {
-      if (parts.length >= MAX) parts.shift();
-      const a = Math.random() * Math.PI * 2, v = Math.random() * 0.6;
-      parts.push({
-        x: x + (Math.random() - 0.5) * 6, y: y + (Math.random() - 0.5) * 6,
-        vx: Math.cos(a) * v, vy: Math.sin(a) * v + 0.12,
-        r: 1 + Math.random() * 2, c: COLORS[(Math.random() * COLORS.length) | 0],
-        t: performance.now()
-      });
-    }
-  }
-
   function frame(now) {
     ctx.clearRect(0, 0, w, h);
-    const dark = document.documentElement.dataset.theme !== 'light';
+    pts = pts.filter(p => now - p.t < LIFE);
+    const dark = document.documentElement.dataset.theme === 'dark';
     ctx.globalCompositeOperation = dark ? 'lighter' : 'source-over';
-    for (let i = parts.length - 1; i >= 0; i--) {
-      const p = parts[i], age = (now - p.t) / LIFE;
-      if (age >= 1) { parts.splice(i, 1); continue; }
-      p.x += p.vx; p.y += p.vy; p.vx *= 0.98;
-      const alpha = (1 - age) * (dark ? 0.9 : 0.75), r = p.r * (1 - age * 0.5);
-      ctx.shadowColor = `rgba(${p.c},${alpha})`;
-      ctx.shadowBlur = dark ? 12 : 6;
-      ctx.fillStyle = dark ? `rgba(${p.c},${alpha})` : `rgba(176,128,32,${alpha})`;
-      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fill();
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1], b = pts[i];
+      const k = 1 - (now - b.t) / LIFE;          // 1 = reciente, 0 = viejo
+      if (k <= 0) continue;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      ctx.lineWidth = Math.max(0.6, WIDTH * k * k);
+      ctx.strokeStyle = dark ? `rgba(255,${180 + 50 * k | 0},${90 + 60 * k | 0},${0.85 * k})` : `rgba(176,128,32,${0.8 * k})`;
+      ctx.shadowColor = `rgba(255,211,107,${0.9 * k})`;
+      ctx.shadowBlur = dark ? 16 : 8;
+      ctx.stroke();
     }
-    raf = parts.length ? requestAnimationFrame(frame) : 0;
+    // núcleo claro en la cabeza de la cola
+    if (pts.length) {
+      const hd = pts[pts.length - 1], k = 1 - (now - hd.t) / LIFE;
+      if (k > 0) {
+        ctx.shadowBlur = dark ? 20 : 10; ctx.shadowColor = 'rgba(255,225,150,.95)';
+        ctx.fillStyle = dark ? `rgba(255,244,214,${k})` : `rgba(176,128,32,${k})`;
+        ctx.beginPath(); ctx.arc(hd.x, hd.y, 2.6 * k + 0.6, 0, 6.2832); ctx.fill();
+      }
+    }
+    raf = pts.length ? requestAnimationFrame(frame) : 0;
     if (!raf) ctx.clearRect(0, 0, w, h);
   }
 
   function onMove(e) {
-    const x = e.clientX, y = e.clientY;
-    if (lx === null) { lx = x; ly = y; }
-    const dx = x - lx, dy = y - ly, dist = Math.hypot(dx, dy);
-    if (dist < 3) return;
-    const steps = Math.min(Math.ceil(dist / 14), 6);
-    for (let i = 1; i <= steps; i++) spawn(lx + dx * i / steps, ly + dy * i / steps, 1);
-    lx = x; ly = y;
+    const last = pts[pts.length - 1];
+    if (last && Math.hypot(e.clientX - last.x, e.clientY - last.y) < 2) return;
+    pts.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+    if (pts.length > MAXPTS) pts.shift();
     if (!raf) raf = requestAnimationFrame(frame);
   }
 
@@ -70,9 +68,8 @@
     resize();
     addEventListener('resize', resize, { passive: true });
     addEventListener('pointermove', e => { if (e.pointerType === 'mouse') onMove(e); }, { passive: true });
-    document.addEventListener('pointerleave', () => { lx = null; });
-    document.addEventListener('visibilitychange', () => { if (document.hidden) { parts.length = 0; lx = null; } });
-    mqReduce.addEventListener('change', e => { if (e.matches) { parts.length = 0; canvas.remove(); } else document.body.appendChild(canvas); });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pts = []; });
+    mqReduce.addEventListener('change', e => { if (e.matches) { pts = []; canvas.remove(); } else document.body.appendChild(canvas); });
   }
   if (document.body) start(); else document.addEventListener('DOMContentLoaded', start);
 })();

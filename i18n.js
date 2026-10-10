@@ -92,6 +92,7 @@
     observer.disconnect();
     try {process(records);} finally {observer.observe(document.documentElement, options);}
   });
+  const missingLocalizedImages = new Set();
   function applyLocale(locale) {
     // Consumir los cambios pendientes mientras aún conocemos el idioma anterior.
     const pending = observer.takeRecords(); observer.disconnect(); process(pending);
@@ -102,7 +103,16 @@
     // Los textos incrustados en fotografías requieren un archivo por idioma.
     document.querySelectorAll('img[data-i18n-image]').forEach(image => {
       const original = image.getAttribute('data-i18n-image');
-      const next = currentLocale === 'es' ? original : original.replace(/([^/]+)\.webp$/, `idiomas/${currentLocale}/$1.png`);
+      let next = currentLocale === 'es' ? original : original.replace(/([^/]+)\.webp$/, `idiomas/${currentLocale}/$1.png`);
+      // Si la versión traducida no existe en el servidor, se conserva la imagen original.
+      if (missingLocalizedImages.has(next)) next = original;
+      if (!image.__i18nImageGuard) {
+        image.__i18nImageGuard = true;
+        image.addEventListener('error', () => {
+          const failed = image.getAttribute('src');
+          if (failed && failed !== original) { missingLocalizedImages.add(failed); image.setAttribute('src', original); }
+        });
+      }
       if (image.getAttribute('src') !== next) image.setAttribute('src', next);
     });
     const picker = document.getElementById('site-language');

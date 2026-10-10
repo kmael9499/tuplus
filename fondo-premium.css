@@ -1,0 +1,59 @@
+/* TUPLUS · fondo premium de la página principal (mismo look que el cotizador).
+   Para quitarlo, borra el <link> a este archivo en index.html. */
+html body{
+  background:
+    radial-gradient(900px 620px at 90% -6%,rgba(214,170,90,.30),transparent 60%),
+    radial-gradient(760px 560px at -8% 32%,rgba(31,86,116,.20),transparent 62%),
+    radial-gradient(720px 520px at 62% 108%,rgba(214,170,90,.18),transparent 62%),
+    linear-gradient(180deg,#fbf9f4 0%,#f3efe6 100%);
+  background-attachment:fixed;
+}
+html[data-theme=dark] body{
+  background:
+    radial-gradient(900px 620px at 90% -6%,rgba(225,195,139,.20),transparent 60%),
+    radial-gradient(760px 560px at -8% 32%,rgba(34,104,140,.28),transparent 62%),
+    radial-gradient(720px 520px at 62% 108%,rgba(225,195,139,.12),transparent 62%),
+    linear-gradient(180deg,#0a1a26 0%,#0c202d 55%,#09171f 100%);
+  background-attachment:fixed;
+}
+/* retícula fina que se desvanece */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(rgba(18,44,61,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(18,44,61,.055) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 25%,#000 15%,transparent 75%);
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 25%,#000 15%,transparent 75%);
+}
+html[data-theme=dark] body::before{
+  background-image:linear-gradient(rgba(225,195,139,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(225,195,139,.06) 1px,transparent 1px);
+}
+@media(max-width:820px){body::before{background-size:40px 40px}}
+
+/* Tema claro: las secciones claras dejan ver el fondo */
+html:not([data-theme=dark]) .site-header{background:rgba(251,249,244,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,rgba(212,176,106,.7),transparent) 1}
+html:not([data-theme=dark]) :is(.ux-hero,.hero,.discipline-strip,.quote-section,.contact-section,.solution-method){background:transparent}
+html:not([data-theme=dark]) :is(.projects-section,.faq-section,.about-section){background:rgba(255,255,255,.45)}
+
+/* Orbes de luz dorada y azul que flotan despacio (ambos temas) */
+body::after{
+  content:"";position:fixed;inset:-12%;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(520px 520px at 88% 4%,rgba(225,190,120,.55),transparent 68%),
+    radial-gradient(580px 580px at 4% 86%,rgba(31,96,130,.40),transparent 68%),
+    radial-gradient(400px 400px at 50% 44%,rgba(225,195,139,.28),transparent 70%);
+  filter:blur(40px);opacity:.55;animation:fp-drift 30s ease-in-out infinite alternate;will-change:transform;
+}
+html[data-theme=dark] body::after{opacity:.75;
+  background:
+    radial-gradient(520px 520px at 88% 4%,rgba(225,195,139,.42),transparent 68%),
+    radial-gradient(580px 580px at 4% 86%,rgba(34,104,140,.45),transparent 68%),
+    radial-gradient(400px 400px at 50% 44%,rgba(225,195,139,.22),transparent 70%);
+}
+@keyframes fp-drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(40px,30px,0) scale(1.1)}}
+@media(max-width:820px){body::after{animation:none;filter:blur(30px)}}
+@media(prefers-reduced-motion:reduce){body::after{animation:none}}
+
+/* Tema oscuro: las secciones dejan ver el fondo */
+html[data-theme=dark] .site-header{background:rgba(10,26,38,.78);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid transparent;border-image:linear-gradient(90deg,transparent,rgba(212,176,106,.7),transparent) 1}
+html[data-theme=dark] :is(.ux-hero,.hero,.discipline-strip,.quote-section,.solution-method,.contact-section){background:transparent}
+html[data-theme=dark] :is(.projects-section,.faq-section,.about-section){background:rgba(12,32,45,.5)}
