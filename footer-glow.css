@@ -1,0 +1,95 @@
+/* Fondo animado del pie de página — paleta TUPLUS (navy + gold) */
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate
+}
+.site-footer::before,
+.site-footer::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -25%;
+  bottom: -25%;
+  z-index: 0;
+  pointer-events:none
+}
+/* Aureolas doradas de fondo que respiran muy despacio */
+.site-footer {
+  background:
+    radial-gradient(60% 85% at 8% 0%, rgba(211,177,107,.15), transparent 65%),
+    radial-gradient(55% 80% at 92% 100%, rgba(211,177,107,.10), transparent 65%),
+    var(--navy-deep)
+}
+html[data-theme="dark"] .site-footer {
+  background:
+    radial-gradient(60% 85% at 8% 0%, rgba(203,177,123,.13), transparent 65%),
+    radial-gradient(55% 80% at 92% 100%, rgba(203,177,123,.09), transparent 65%),
+    #0b151e
+}
+/* Campo de puntos dorados que flotan hacia arriba */
+.site-footer::before {
+  background-image:
+    radial-gradient(circle at 8% 14%, rgba(211,177,107,.85) 0 2px, transparent 2.7px),
+    radial-gradient(circle at 31% 42%, rgba(211,177,107,.55) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 52% 12%, rgba(211,177,107,.9) 0 2.4px, transparent 3.1px),
+    radial-gradient(circle at 74% 33%, rgba(211,177,107,.5) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 91% 66%, rgba(211,177,107,.8) 0 2px, transparent 2.7px),
+    radial-gradient(circle at 17% 78%, rgba(211,177,107,.45) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 44% 88%, rgba(211,177,107,.75) 0 2px, transparent 2.7px),
+    radial-gradient(circle at 66% 61%, rgba(211,177,107,.9) 0 2.4px, transparent 3.1px),
+    radial-gradient(circle at 26% 6%, rgba(211,177,107,.4) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 82% 90%, rgba(211,177,107,.5) 0 1.5px, transparent 2.1px);
+  background-size:420px 380px;
+  background-repeat:repeat;
+  opacity:.75;
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  animation:footer-dots-rise 30s linear infinite, footer-dots-breathe 7s ease-in-out infinite alternate
+}
+/* Segunda capa, más tenue y en diagonal, con puntos claros de la paleta */
+.site-footer::after {
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(220,229,233,.5) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 38% 60%, rgba(211,177,107,.45) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 60% 15%, rgba(248,247,243,.35) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 84% 45%, rgba(211,177,107,.5) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 22% 88%, rgba(248,247,243,.3) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 70% 78%, rgba(211,177,107,.4) 0 1.5px, transparent 2.1px),
+    radial-gradient(circle at 95% 5%, rgba(248,247,243,.28) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 5% 55%, rgba(211,177,107,.35) 0 1.2px, transparent 1.8px);
+  background-size:340px 300px;
+  background-repeat:repeat;
+  opacity:.7;
+  -webkit-mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  mask-image:linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  animation:footer-dots-diagonal 46s linear infinite
+}
+/* El contenido del pie siempre por encima del fondo */
+.site-footer>.container {
+  position:relative;
+  z-index:1
+}
+@keyframes footer-dots-rise {
+  from {background-position:0 0}
+  to {background-position:0 -380px}
+}
+@keyframes footer-dots-diagonal {
+  from {background-position:0 0}
+  to {background-position:340px -300px}
+}
+@keyframes footer-dots-breathe {
+  from {opacity:.55}
+  to {opacity:.9}
+}
+@media (prefers-reduced-motion:reduce) {
+  .site-footer::before,
+  .site-footer::after {
+    animation:none!important
+  }
+}
+html[data-motion="off"] .site-footer::before,
+html[data-motion="off"] .site-footer::after {
+  animation:none!important
+}
