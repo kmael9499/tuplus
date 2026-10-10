@@ -246,6 +246,9 @@ html[data-motion="off"] .reveal-pending {
     animation:none!important;
     transition:none!important
   }
+  .about-scene .ab-core,.about-scene .ab-core img,.about-scene .ab-depth,.about-scene .ab-aura,.about-scene .ab-streak,.about-scene .ab-spark,.about-circle,.about-circle::before,.about-circle::after {
+    animation:none!important
+  }
   .solution-tile:hover img {
     transform:none
   }
@@ -346,6 +349,249 @@ html[data-motion="off"] .reveal-pending {
  @media(max-width:620px) {
   .brand .brand-art {
     width:135px
+  }
+
+}
+  /* ===== Colibrí de la sección "Somos TUplus": escena multicapa (réplica del cotizador) ===== */
+ .about-scene {
+  position:relative;
+  width:300px;
+  height:300px;
+  display:grid;
+  place-items:center;
+  perspective:700px;
+  pointer-events:none;
+  z-index:1
+}
+ .about-scene .ab-aura {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:250px;
+  height:250px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,201,74,.3),rgba(255,201,74,0) 66%);
+  filter:blur(9px);
+  animation:ab-aura 3.8s ease-in-out infinite
+}
+ .about-scene .ab-core,.about-scene .ab-depth {
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:185px;
+  transform-style:preserve-3d;
+  will-change:transform
+}
+ .about-scene .ab-core {
+  transform:translate(-50%,-53%) translateZ(24px) rotateZ(-7deg);
+  animation:ab-flight 4.8s ease-in-out infinite
+}
+ .about-scene .ab-core img {
+  display:block;
+  width:100%;
+  height:auto;
+  filter:saturate(1.4) brightness(1.03) drop-shadow(0 0 6px rgba(255,200,61,.55)) drop-shadow(0 0 20px rgba(255,190,50,.4));
+  animation:ab-pulse 4.5s ease-in-out infinite
+}
+ .about-scene .ab-depth {
+  opacity:.26;
+  mix-blend-mode:screen
+}
+ .about-scene .ab-depth img {
+  display:block;
+  width:100%;
+  height:auto;
+  filter:drop-shadow(0 0 8px rgba(255,190,50,.5))
+}
+ .about-scene .ab-d1 {
+  transform:translate(-50%,-53%) translate3d(6px,5px,6px) rotateZ(-7deg);
+  filter:blur(.6px)
+}
+ .about-scene .ab-d2 {
+  transform:translate(-50%,-53%) translate3d(12px,9px,-2px) rotateZ(-7deg);
+  opacity:.17;
+  filter:blur(1px)
+}
+ .about-scene .ab-d3 {
+  transform:translate(-50%,-53%) translate3d(18px,13px,-10px) rotateZ(-7deg);
+  opacity:.11;
+  filter:blur(1.5px)
+}
+ .about-scene .ab-streak {
+  position:absolute;
+  left:50%;
+  top:50%;
+  height:2px;
+  border-radius:99px;
+  background:linear-gradient(90deg,transparent,rgba(255,196,64,.85),transparent);
+  box-shadow:0 0 16px rgba(255,190,50,.45);
+  transform-origin:0 50%;
+  opacity:.6
+}
+ .about-scene .ab-sta {
+  width:150px;
+  transform:translate(-12%,-78%) rotate(-24deg);
+  animation:ab-streakA 2.2s ease-in-out infinite
+}
+ .about-scene .ab-stb {
+  width:120px;
+  transform:translate(-6%,32%) rotate(18deg);
+  opacity:.32;
+  animation:ab-streakB 2.8s ease-in-out infinite
+}
+ .about-scene .ab-spark {
+  position:absolute;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:#ffd36b;
+  box-shadow:0 0 16px rgba(255,200,61,.85);
+  animation:ab-spark 2.4s ease-in-out infinite
+}
+ .about-scene .ab-s1 {
+  left:calc(50% - 92px);
+  top:calc(50% - 78px)
+}
+ .about-scene .ab-s2 {
+  right:calc(50% - 96px);
+  bottom:calc(50% - 88px);
+  animation-delay:-.8s
+}
+ .about-scene .ab-s3 {
+  right:calc(50% - 74px);
+  top:calc(50% - 100px);
+  width:3px;
+  height:3px;
+  animation-delay:-1.5s
+}
+ .about-scene .ab-s4 {
+  left:calc(50% - 66px);
+  bottom:calc(50% - 104px);
+  width:3px;
+  height:3px;
+  animation-delay:-.4s
+}
+ .about-circle {
+  inset:0;
+  margin:auto;
+  animation:ab-ring 7s ease-in-out infinite
+}
+ .about-circle::before {
+  animation:ab-ring 7s ease-in-out .8s infinite
+}
+ .about-circle::after {
+  animation:ab-ring 7s ease-in-out 1.6s infinite
+}
+ @keyframes ab-aura {
+  0%,100% {
+    transform:translate(-50%,-50%) scale(.94);
+    opacity:.5
+  }
+  50% {
+    transform:translate(-50%,-50%) scale(1.08);
+    opacity:1
+  }
+
+}
+ @keyframes ab-flight {
+  0%,100% {
+    transform:translate(-50%,-53%) translateZ(24px) rotateZ(-7deg) rotateY(-7deg) scale(1)
+  }
+  50% {
+    transform:translate(-50%,-58%) translateZ(46px) rotateZ(-2deg) rotateY(8deg) scale(1.035)
+  }
+
+}
+ @keyframes ab-pulse {
+  0%,100% {
+    filter:saturate(1.4) brightness(1.03) drop-shadow(0 0 5px rgba(255,200,61,.45)) drop-shadow(0 0 16px rgba(255,190,50,.32))
+  }
+  50% {
+    filter:saturate(1.6) brightness(1.16) drop-shadow(0 0 9px rgba(255,212,92,.7)) drop-shadow(0 0 30px rgba(255,190,50,.6))
+  }
+
+}
+ @keyframes ab-streakA {
+  0%,100% {
+    opacity:.12;
+    transform:translate(-12%,-78%) rotate(-24deg) scaleX(.65)
+  }
+  50% {
+    opacity:.85;
+    transform:translate(-12%,-78%) rotate(-24deg) scaleX(1.05)
+  }
+
+}
+ @keyframes ab-streakB {
+  0%,100% {
+    opacity:.14;
+    transform:translate(-6%,32%) rotate(18deg) scaleX(.6)
+  }
+  50% {
+    opacity:.48;
+    transform:translate(-6%,32%) rotate(18deg) scaleX(1.08)
+  }
+
+}
+ @keyframes ab-spark {
+  0%,100% {
+    opacity:.25;
+    transform:scale(.8)
+  }
+  50% {
+    opacity:1;
+    transform:scale(1.35)
+  }
+
+}
+ @keyframes ab-ring {
+  0%,100% {
+    transform:scale(1);
+    opacity:1
+  }
+  50% {
+    transform:scale(1.05);
+    opacity:.6
+  }
+
+}
+  /* Tema claro: brillo más discreto y sin screen de las capas de profundidad */
+ html:not([data-theme="dark"]) .about-scene .ab-core img {
+  filter:drop-shadow(0 3px 8px rgba(160,120,40,.35))
+}
+ html:not([data-theme="dark"]) .about-scene .ab-depth {
+  opacity:.14;
+  mix-blend-mode:normal
+}
+ html:not([data-theme="dark"]) .about-scene .ab-aura {
+  opacity:.55
+}
+  /* El about-circle ahora vive dentro de la escena y se centra con inset:0+margen:auto.
+     Neutralizamos los top: que el style.css responsive le impone desde fuera. */
+ .about-scene .about-circle {
+  top:auto;
+  bottom:auto;
+  left:auto;
+  right:auto;
+  inset:0;
+  margin:auto
+}
+  /* Escala de la escena según viewport (mantiene el colibrí dentro del círculo) */
+ @media(max-width:1100px) {
+  .about-scene {
+    transform:scale(.92)
+  }
+
+}
+ @media(max-width:850px) {
+  .about-scene {
+    transform:scale(.85)
+  }
+
+}
+ @media(max-width:620px) {
+  .about-scene {
+    transform:scale(.8)
   }
 
 }

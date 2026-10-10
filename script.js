@@ -167,7 +167,8 @@
       }
       if (!form.reportValidity()) return;
       const source = id === 'quote-form' ? 'Web TUPLUS / Cotizador' : 'Web TUPLUS / Contacto';
-      const message = [`Hola, soy ${values.name}.`, `Empresa o actividad: ${values.company}`, `Contacto: ${values.contact}`, `País: ${values.country}`, `Preferencia de contacto: ${values.preference}`, '', id === 'quote-form' ? estimateText() : `Solución de interés: ${values.service}`, values.message ? `\nMi proyecto: ${values.message}` : '', `\nOrigen: ${source}`, 'Consentimiento: autorizo el uso de estos datos para atender esta consulta.'].filter(Boolean).join('\n');
+      const extras = [values.budget && values.budget !== 'Por definir' ? `Inversión aproximada: ${values.budget}` : '', values.urgency && values.urgency !== 'Solo estoy explorando' ? `Plazo: ${values.urgency}` : ''].filter(Boolean);
+      const message = [`Hola, soy ${values.name}.`, `Empresa o actividad: ${values.company}`, `Contacto: ${values.contact}`, `País: ${values.country}`, `Preferencia de contacto: ${values.preference}`, '', id === 'quote-form' ? estimateText() : `Solución de interés: ${values.service}`, ...extras, values.message ? `\nMi proyecto: ${values.message}` : '', `\nOrigen: ${source}`, 'Consentimiento: autorizo el uso de estos datos para atender esta consulta.'].filter(Boolean).join('\n');
       try {
         const result = form.querySelector('.form-result');
         result.querySelector('a').href = quote.whatsappUrl(config.whatsapp, message);
