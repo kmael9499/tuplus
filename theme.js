@@ -39,3 +39,18 @@
     apply(preference || (system.matches ? 'dark' : 'light'));
   });
 })();
+
+/* Al recargar, empezar desde arriba en vez de donde se había quedado el scroll.
+   Con «atrás/adelante» o un enlace con #sección, el navegador sigue llevando a su sitio. */
+(() => {
+  'use strict';
+  if (!('scrollRestoration' in history)) return;
+  const reload = performance.getEntriesByType?.('navigation')[0]?.type === 'reload' && !location.hash;
+  history.scrollRestoration = reload ? 'manual' : 'auto';
+  if (!reload) return;
+  // En la primera recarga el navegador ya había decidido restaurar la posición: se deshace mientras carga.
+  const top = () => scrollTo({top: 0, left: 0, behavior: 'instant'});
+  addEventListener('scroll', top);
+  document.addEventListener('DOMContentLoaded', top);
+  addEventListener('load', () => { top(); removeEventListener('scroll', top); });
+})();
