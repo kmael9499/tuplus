@@ -66,6 +66,10 @@
      transform-origin:center;
      pointer-events:none
 }
+  /* Mientras gira solo, carrusel.js coloca las tarjetas en cada fotograma. */
+  .tpl-carousel.tpl-live .tpl-slide  {
+     transition:box-shadow .5s ease
+}
   .tpl-carousel .tpl-slide[data-active="true"]  {
      box-shadow:0 22px 42px #162d3a22
 }

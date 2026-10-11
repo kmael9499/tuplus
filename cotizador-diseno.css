@@ -147,6 +147,9 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 .xd-faq summary::-webkit-details-marker{display:none}
 .xd-faq summary::after{content:"+";flex-shrink:0;font:400 24px/1 "DM Mono",monospace;color:var(--gold-ink);transition:transform .28s}
 .xd-faq details[open] summary::after{transform:rotate(45deg)}
+.xd-faq details.is-closing{border-color:var(--page-line);box-shadow:none}
+.xd-faq details.is-closing summary::after{transform:none}
+.xd-faq details.is-closing p{animation:none;opacity:0;transition:opacity .2s ease}
 .xd-faq p{margin:0;padding:0 24px 22px;font-size:14px;line-height:1.75;color:var(--page-muted);animation:xd-open .35s ease both}
 @keyframes xd-open{from{opacity:0;transform:translateY(-6px)}}
 .xd-faq summary:focus-visible{outline:3px solid #c79b4d;outline-offset:-3px;border-radius:18px}
@@ -201,6 +204,9 @@ html{scroll-behavior:smooth}
 .market-field{position:relative}
 .market-field select,#currencySelect{min-height:48px;transition:border-color .2s,box-shadow .2s}
 .market-field select:focus,#currencySelect:focus{border-color:#d6ac5f;box-shadow:0 0 0 3px rgba(214,172,95,.25);outline:none}
+/* Flecha propia con aire respecto al borde; la bandera queda a su izquierda sin pegarse. */
+.market-field #countrySelect,.market-field #currencySelect{-webkit-appearance:none;appearance:none;padding-left:14px;padding-right:46px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23c79b4d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1.2 1.4 6 6.2l4.8-4.8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-size:12px 8px}
+.market-field #countrySelect{padding-right:90px}
 .xd-flag{position:absolute;right:46px;bottom:15px;width:26px;height:18px;border-radius:4px;object-fit:cover;box-shadow:0 0 0 1px rgba(18,44,61,.18);pointer-events:none}
 .xd-fx{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px}
 .xd-fx button{font:600 11px "DM Mono",monospace;letter-spacing:.06em;padding:9px 13px;border-radius:99px;border:1px solid var(--page-line);background:var(--page);color:var(--page-ink);cursor:pointer;transition:all .2s}
@@ -229,12 +235,19 @@ html{scroll-behavior:smooth}
 
 /* ===== 19. CELULAR: WhatsApp en círculo, botón para subir ===== */
 .floating-whatsapp span:not(.wa-symbol){white-space:nowrap}
+/* Mismo botón redondo de WhatsApp que en la portada (.whatsapp-float de style.css), en cualquier ancho. */
+.floating-whatsapp{position:fixed!important;right:21px!important;bottom:20px!important;left:auto!important;margin:0!important;width:48px!important;height:48px!important;min-height:0;padding:0!important;gap:0;display:grid!important;place-items:center;border-radius:50%;background:#122c3d;border:1px solid #d3b16b90;box-shadow:0 4px 18px #122c3d26;color:#fff}
+html[data-theme="dark"] .floating-whatsapp{background:#254759;border-color:#4d6d7e;color:#edf2f5}
+.floating-whatsapp:hover{background:#294a5a;transform:none}
+.floating-whatsapp span:not(.wa-symbol),.floating-whatsapp i{display:none}
+.floating-whatsapp .wa-symbol{display:grid;place-items:center;line-height:0}
+.floating-whatsapp .wa-symbol svg{width:25px;height:25px}
+@media(max-width:600px){.floating-whatsapp{width:43px!important;height:43px!important;right:13px!important;bottom:14px!important}}
 @media(max-width:700px){
-  .floating-whatsapp{position:fixed!important;right:14px!important;bottom:14px!important;left:auto!important;margin:0!important;width:54px;height:54px;padding:0!important;border-radius:50%;justify-content:center}
-  .floating-whatsapp span:not(.wa-symbol),.floating-whatsapp i{display:none}
   .xd-pricebadge{right:0;top:6%;padding:8px 11px}
   .xd-pricebadge b{font-size:15px}
   .market-field select,#currencySelect{min-height:52px}
+  .xd-flag{bottom:17px}
 }
 .xd-top{position:fixed;left:14px;bottom:14px;z-index:60;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(225,195,139,.55);background:rgba(18,44,61,.92);color:#f6e0ae;cursor:pointer;box-shadow:0 10px 28px rgba(18,44,61,.35);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .3s,transform .3s}
 .xd-top.on{opacity:1;transform:none;pointer-events:auto}

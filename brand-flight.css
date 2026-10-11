@@ -12,3 +12,10 @@
 @media(max-width:1100px){.quote-header .quote-brand .brand-art{width:150px}}
 @media(max-width:620px){.quote-header .quote-brand .brand-art{width:128px}.quote-header .quote-brand .brand-art>img{width:100%;height:auto}}
 @media(max-width:374px){.quote-header .quote-brand .brand-art{width:108px}}
+
+/* Colibrí real de la portada: colibri-vuelo.js reproduce su vuelo al cargar la página. */
+.colibri-vuelo{position:fixed;left:0;top:0;z-index:41;width:960px;height:540px;transform-origin:0 0;opacity:0;pointer-events:none;will-change:transform}
+.colibri-vuelo.is-leaving{opacity:0!important;transition:opacity .8s ease-in-out}
+.site-header .brand-art.colibri-landed .brand-flight{animation:colibri-landed 1.4s ease-out}
+@keyframes colibri-landed{0%,100%{filter:drop-shadow(0 0 0 rgba(212,176,106,0))}35%{filter:drop-shadow(0 0 7px rgba(212,176,106,.85))}}
+@media print{.colibri-vuelo{display:none}}

@@ -1,4 +1,4 @@
-// Carrusel aislado: sin dependencias, sin reproducción automática.
+// Carrusel aislado: sin dependencias. Gira de forma continua; las flechas, los puntos y el gesto lo llevan a una tarjeta.
 document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
   if (carousel.dataset.tplReady === 'true') return;
   carousel.dataset.tplReady = 'true';
@@ -11,7 +11,13 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
   const stage = carousel.querySelector('.tpl-stage');
   const dots = carousel.querySelector('.tpl-dots');
   if (!slides.length) return;
-  let current = Math.min(1, slides.length - 1);
+  const count = slides.length;
+  const SPEED = 1 / 4.5;   // tarjetas por segundo mientras gira solo
+  const JUMP = 480;        // ms que tarda en llegar a la tarjeta elegida
+  const wrap = value => ((value % count) + count) % count;
+  let current = Math.min(1, count - 1);
+  let position = current;  // posición real, con decimales mientras gira
+  let jump = null, labelled = -1;
   const controls = slides.map((slide, index) => {
     const button = document.createElement('button');
     button.type = 'button';
@@ -21,23 +27,40 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
     dots.append(button);
     return button;
   });
-  function show(index) {
-    current = (index + slides.length) % slides.length;
+  // Textos y estados de la tarjeta que está al frente.
+  function label() {
+    labelled = current;
     slides.forEach((slide, i) => {
-      let offset = (i - current + slides.length) % slides.length;
-      if (offset > slides.length / 2) offset -= slides.length;
-      slide.style.setProperty('--offset', offset);
-      slide.style.setProperty('--scale', offset === 0 ? 1 : .86);
-      slide.style.setProperty('--opacity', offset === 0 ? 1 : Math.abs(offset) === 1 ? .62 : .3);
-      slide.style.setProperty('--layer', 3 - Math.abs(offset));
-      slide.dataset.active = String(offset === 0);
-      slide.setAttribute('aria-hidden', String(offset !== 0));
+      slide.dataset.active = String(i === current);
+      slide.setAttribute('aria-hidden', String(i !== current));
       controls[i].setAttribute('aria-current', String(i === current));
+      controls[i].setAttribute('aria-label', `${t('Ver')} ${t(slide.dataset.title)}`);
     });
     setText(carousel.querySelector('.tpl-category'), slides[current].dataset.tplCategory);
     setText(carousel.querySelector('.tpl-name'), slides[current].dataset.title);
-    slides.forEach((slide, i) => controls[i].setAttribute('aria-label', `${t('Ver')} ${t(slide.dataset.title)}`));
-    carousel.querySelector('.tpl-count').textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    carousel.querySelector('.tpl-count').textContent = `${String(current + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+  }
+  // Coloca cada tarjeta según su distancia al frente; la que da la vuelta por detrás lo hace ya invisible.
+  function render() {
+    slides.forEach((slide, i) => {
+      let offset = wrap(i - position);
+      if (offset >= count / 2) offset -= count;
+      const distance = Math.abs(offset);
+      // La tarjeta del frente se mantiene sólida un tramo antes de empezar a atenuarse.
+      const opacity = distance <= 1 ? 1 - .38 * Math.max(0, distance - .3) / .7 : Math.max(.3, .62 - .32 * (distance - 1));
+      slide.style.setProperty('--offset', offset.toFixed(4));
+      slide.style.setProperty('--scale', (1 - .14 * Math.min(1, distance)).toFixed(4));
+      slide.style.setProperty('--opacity', (opacity * Math.min(1, Math.max(0, (count / 2 - distance) * 2))).toFixed(3));
+      slide.style.setProperty('--layer', 100 - Math.round(distance * 10));
+    });
+    current = wrap(Math.round(position));
+    if (current !== labelled) label();
+  }
+  function show(index) {
+    let delta = wrap(index - position);
+    if (delta > count / 2) delta -= count;
+    if (live) jump = {from: position, to: position + delta, start: performance.now()};
+    else { position = wrap(position + delta); render(); }
   }
   carousel.querySelectorAll('[data-tpl-step]').forEach(button => {
     button.addEventListener('click', () => show(current + Number(button.dataset.tplStep)));
@@ -58,6 +81,40 @@ document.querySelectorAll('.tpl-carousel').forEach((carousel) => {
     start = null;
   });
   stage.addEventListener('pointercancel', () => { start = null; });
-  show(current);
-  document.addEventListener('tuplus:language-change', () => show(current));
+  // Giro continuo: solo espera con el dedo o el ratón apretado, con foco de teclado, fuera de pantalla o en otra pestaña.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  let live = false, visible = !('IntersectionObserver' in window), focused = false, frame = 0, last = 0;
+  function tick(now) {
+    frame = requestAnimationFrame(tick);
+    const elapsed = Math.min(50, now - last) / 1000;
+    last = now;
+    if (jump) {
+      const progress = Math.min(1, (now - jump.start) / JUMP);
+      position = jump.from + (jump.to - jump.from) * (1 - Math.pow(1 - progress, 3));
+      if (progress === 1) { position = wrap(jump.to); jump = null; }
+    } else if (!start && !focused) position = wrap(position + SPEED * elapsed);
+    render();
+  }
+  function sync() {
+    const run = !reduce.matches && visible && !document.hidden && count > 1;
+    if (run === live) return;
+    live = run;
+    cancelAnimationFrame(frame);
+    // Sin giro, las tarjetas vuelven a su sitio exacto y se mueven con la transición de CSS.
+    carousel.classList.toggle('tpl-live', live);
+    if (live) { last = performance.now(); frame = requestAnimationFrame(tick); }
+    else if (reduce.matches) { jump = null; position = current; render(); }
+  }
+  // Solo el foco de teclado lo detiene: tras un clic con ratón debe seguir girando.
+  carousel.addEventListener('focusin', event => { focused = event.target.matches(':focus-visible'); });
+  carousel.addEventListener('focusout', event => { focused = carousel.contains(event.relatedTarget) && focused; });
+  document.addEventListener('visibilitychange', sync);
+  reduce.addEventListener('change', sync);
+  if ('IntersectionObserver' in window) new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    sync();
+  }, {threshold: .2}).observe(stage);
+  render();
+  sync();
+  document.addEventListener('tuplus:language-change', label);
 });

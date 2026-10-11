@@ -119,6 +119,12 @@
   border-color:#455966;
   color:var(--ink)
 }
+ :root[data-theme="dark"] label.language-picker select {
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:calc(100% - 13px) 50%,calc(100% - 9px) 50%;
+  background-size:4px 4px,4px 4px;
+  background-repeat:no-repeat
+}
  html[data-theme="dark"] :is(input,textarea)::placeholder {
   color:#9baeba
 }

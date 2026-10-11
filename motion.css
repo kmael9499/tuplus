@@ -372,6 +372,7 @@ html[data-motion="off"] .reveal-pending {
   border-radius:50%;
   background:radial-gradient(circle,rgba(255,201,74,.3),rgba(255,201,74,0) 66%);
   filter:blur(9px);
+  transform:translate(-50%,-50%);
   animation:ab-aura 3.8s ease-in-out infinite
 }
  .about-scene .ab-core,.about-scene .ab-depth {
