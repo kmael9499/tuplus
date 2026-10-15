@@ -65,7 +65,7 @@
   });
   document.querySelectorAll('a[href$="cotizador.html"]').forEach(link => link.addEventListener('click', () => track('quote_cta')));
 
-  // Portafolio: ahora se muestra con el carrusel de carrusel.js (independiente).
+  // Portafolio: se muestra con la escena de proyectos.js (independiente).
   const interest = new URLSearchParams(location.search).get('interes');
   if (Object.hasOwn(serviceNames, interest || '') && document.getElementById('contact-service')) document.getElementById('contact-service').value = serviceNames[interest];
 

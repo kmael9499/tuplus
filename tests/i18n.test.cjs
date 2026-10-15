@@ -9,8 +9,8 @@ async function test(file){
  const picker=document.getElementById('site-language');
  if(picker)Object.defineProperty(picker,'value',{value:'es',writable:true});
  const store=new Map();
- const context=vm.createContext({window,document,Node:window.Node,NodeFilter:{SHOW_TEXT:4},MutationObserver:window.MutationObserver,CustomEvent:window.CustomEvent,localStorage:{getItem:k=>store.get(k),setItem:(k,v)=>store.set(k,v)},matchMedia:()=>({matches:true,addEventListener(){}}),requestAnimationFrame:()=>0,cancelAnimationFrame(){},console});
- for(const script of ['js/i18n-data.js','js/quote-translations.js',...(file==='index.html'?['carrusel.js','redesign.js']:[]),'i18n.js'])vm.runInContext(fs.readFileSync(path.join(base,script),'utf8'),context,{filename:script});
+ const context=vm.createContext({window,document,Node:window.Node,NodeFilter:{SHOW_TEXT:4},MutationObserver:window.MutationObserver,CustomEvent:window.CustomEvent,localStorage:{getItem:k=>store.get(k),setItem:(k,v)=>store.set(k,v)},matchMedia:()=>({matches:true,addEventListener(){}}),requestAnimationFrame:()=>0,cancelAnimationFrame(){},setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},console});
+ for(const script of ['js/i18n-data.js','js/quote-translations.js',...(file==='index.html'?['proyectos.js','redesign.js']:[]),'i18n.js'])vm.runInContext(fs.readFileSync(path.join(base,script),'utf8'),context,{filename:script});
  const api=window.TUPLUS_I18N;
  for(const locale of ['ja','zh','en','zh','ja','es','ja','zh','es']){
   api.setLocale(locale);await pause();
@@ -19,10 +19,9 @@ async function test(file){
   if(file==='index.html'){
    const contact=document.getElementById('contact-title');
    if(locale==='ja'||locale==='zh'){assert.match(contact.textContent,locale==='ja'?/こんにちは/:/你好/);assert.doesNotMatch(contact.textContent,/\ba\b|hola|empiezan/);checks+=2;}
-   for(let step=0;step<6;step++){
-    document.querySelector('[data-tpl-step="1"]').click();await pause();
-    const category=document.querySelector('.tpl-category');assert.equal(category.textContent,api.t(category.getAttribute('data-i18n')));checks++;
-    if(locale==='ja'||locale==='zh'){assert.doesNotMatch(category.textContent,/[a-záéíóú]/i);checks++;}
+   // La escena de proyectos queda traducida por completo.
+   for(const item of document.querySelectorAll('.tp-info .tp-eyebrow,.tp-info h3,.tp-info-text,.tp-info-list li,.tp-final .tp-eyebrow,.tp-final h3,.tp-final p,.tp-final a,.tp-chapters span,.tp-cta')){
+    if(locale==='ja'||locale==='zh'){assert.doesNotMatch(item.textContent.replace(/WhatsApp/g,''),/[a-záéíóú]/i);checks++;}
    }
    for(let step=0;step<3;step++){
     document.querySelector('[data-demo-step="1"]')?.click();await pause();

@@ -11,7 +11,8 @@
   });
  });
  scene.addEventListener('pointerleave',reset);document.addEventListener('tuplus:motion',reset);
- const rawDemos={web:['DISEÑO WEB','Ideas claras.<br>Marcas que<br>dejan huella.','Conoce el estudio ↗','01 — 05'],tienda:['TIENDA VIRTUAL','Objetos únicos.<br>Compras<br>más simples.','Ver colección ↗','02 — 05'],sistema:['SISTEMA DE GESTIÓN','Tu equipo.<br>Tus proyectos.<br>Todo conectado.','Explorar el panel ↗','04 — 05']};
+ // Las cinco vistas del portátil, en el orden de las soluciones. Giran solas una por una.
+ const rawDemos={web:['DISEÑO WEB','Ideas claras.<br>Marcas que<br>dejan huella.','Conoce el estudio ↗','01 — 05'],tienda:['TIENDA VIRTUAL','Objetos únicos.<br>Compras<br>más simples.','Ver colección ↗','02 — 05'],automatizacion:['AUTOMATIZACIÓN','Menos tareas.<br>Más tiempo.<br>Todo fluye.','Ver el flujo ↗','03 — 05'],sistema:['SISTEMA DE GESTIÓN','Tu equipo.<br>Tus proyectos.<br>Todo conectado.','Explorar el panel ↗','04 — 05'],datos:['DATOS Y SEGURIDAD','Datos claros.<br>Decisiones<br>seguras.','Ver el tablero ↗','05 — 05']};
  const t=value=>window.TUPLUS_I18N?.t(value)||value;
  const setText=(element,source,rich=false)=>{
   if(window.TUPLUS_I18N)window.TUPLUS_I18N.setText(element,source,rich);
@@ -43,13 +44,23 @@
   }
   const key=keys[index],values=demos[key];scene.dataset.demo=key;
   setText(root.querySelector('.ux-demo-label'),rawDemos[key][0],false);setText(root.querySelector('.ux-demo-title'),rawDemos[key][1],true);setText(root.querySelector('.ux-demo-cta'),rawDemos[key][2],false);root.querySelector('.ux-demo-bottom span:last-child').textContent=values[3];
-  root.querySelectorAll('[data-demo-choice]').forEach(item=>item.setAttribute('aria-pressed',String(item.dataset.demoChoice===key)));
   animation?.cancel();
   if(moving)animation=body.animate([{opacity:0,transform:`translateX(${direction*18}px)`},{opacity:1,transform:'translateX(0)'}],{duration:320,easing:'cubic-bezier(.2,.65,.3,1)'});
+  schedule();
  }
- root.querySelectorAll('[data-demo-choice]').forEach(button=>button.addEventListener('click',()=>{const next=keys.indexOf(button.dataset.demoChoice);show(next,next>current?1:-1);}));
- root.querySelectorAll('[data-demo-step]').forEach(button=>button.addEventListener('click',()=>{const step=Number(button.dataset.demoStep);show(current+step,step);}));
- root.querySelector('.ux-demo-controls').addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();const step=event.key==='ArrowRight'?1:-1;show(current+step,step);}});
- reduced.addEventListener('change',()=>{if(reduced.matches)animation?.cancel();});
+ // Giro automático y continuo: pasa a la siguiente vista (laptop, celular o tablet) cada DELAY ms.
+ // Solo se detiene fuera de pantalla, en otra pestaña o con movimiento reducido.
+ const DELAY=1500;
+ let timer=0,visible=true;
+ function schedule(){
+  clearTimeout(timer);
+  const run=!reduced.matches&&document.documentElement.dataset.motion!=='off'&&!document.hidden&&visible;
+  if(run)timer=setTimeout(()=>show(current+1,1),DELAY);
+ }
+ document.addEventListener('visibilitychange',schedule);
+ document.addEventListener('tuplus:motion',schedule);
+ if('IntersectionObserver' in window)new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;schedule();},{threshold:.15}).observe(scene);
+ reduced.addEventListener('change',()=>{if(reduced.matches)animation?.cancel();schedule();});
+ schedule();
  document.addEventListener('tuplus:language-change', refreshDemos);
 })();

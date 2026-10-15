@@ -2,7 +2,7 @@
  'use strict';
  const media=matchMedia('(prefers-reduced-motion: reduce)');
  let observer;
- const selectors='.section-heading,.service-card,.solution-tile,.process-grid li,.about-mark,.about-copy,.solution-reference,.solution-method .container,.faq-grid,.contact-copy,.contact-form-card,.tpl-heading,.tpl-stage,.tpl-controls,.tpl-caption,.footer-grid>div';
+ const selectors='.section-heading,.service-card,.solution-tile,.process-grid li,.about-mark,.about-copy,.solution-reference,.solution-method .container,.faq-grid,.contact-copy,.contact-form-card,.footer-grid>div';
  function init(){
   observer?.disconnect();
   document.documentElement.dataset.motion=media.matches?'off':'on';
