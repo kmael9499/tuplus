@@ -1,0 +1,18 @@
+/* TUPLUS · mejoras UX/UI de bajo riesgo (no tocan animaciones ni transiciones).
+   Para revertir: quita el <link> a este archivo en las páginas. */
+
+/* 1) Foco visible con teclado */
+:is(a,button,select,input,textarea,summary,[role="button"]):focus-visible{
+  outline:2px solid #d4b06a;outline-offset:3px;border-radius:8px;
+}
+html[data-theme=dark] :is(a,button,select,input,textarea,summary,[role="button"]):focus-visible{outline-color:#f0d8aa}
+
+/* 2) Texto funcional: mínimo 12 px (etiquetas, enlaces, progreso, chips, formulario) */
+html body :is(.ux-eyebrow,.eyebrow,.tpl-eyebrow,.service-number,.text-link,.solution-strip-label,.side-kicker,.kicker,#progressLabel,#progressPercent,.xt-chip,.pay-box small,.contact-response,.contact-location,.form-note,label,.contact-hint,[id$="-hint"]){font-size:max(12px,1em)}
+
+/* 3) Zonas táctiles de 44 px en pantallas táctiles */
+@media (hover:none),(pointer:coarse),(max-width:820px){
+  :is(.menu-toggle,.theme-toggle,#site-language,#refreshRates,.xt-chip,button.on,.currency-switch button){min-height:44px;min-width:44px}
+  :is(a.text-link,a.contact-direct){display:inline-flex;align-items:center;min-height:44px}
+  .whatsapp-float,.floating-whatsapp{min-width:48px;min-height:48px}
+}
