@@ -84,6 +84,23 @@
   const blend = (a, b, k) => ({x: mix(a.x, b.x, k), y: mix(a.y, b.y, k), s: mix(a.s, b.s, k), r: mix(a.r, b.r, k), ry: mix(a.ry, b.ry, k), o: mix(a.o, b.o, k)});
 
   let active = false, geo = null, travel = 1, top = 0, target = 0, shown = 0, frame = 0, last = 0;
+  // Vista completa: la escena queda en su estado final y deja de estar fija, así al subir no se
+  // rebobina. Vuelve a reproducirse solo si se sube por encima de ella y luego se baja de nuevo.
+  let finished = false;
+  function finish() {
+    if (finished) return;
+    finished = true;
+    const html = document.documentElement, keep = scrollY - travel;
+    html.style.overflowAnchor = 'none';
+    film.style.height = geo.H + 'px';
+    void film.offsetHeight;
+    window.scrollTo({top: Math.max(0, keep), behavior: 'instant'});
+    requestAnimationFrame(() => { html.style.overflowAnchor = ''; });
+  }
+  function rearm() {
+    finished = false; target = shown = 0;
+    measure();
+  }
 
   // Medidas de la escena y de cada pose clave.
   function measure() {
@@ -149,7 +166,7 @@
     geo = {W, H, mobile, focus, peek, beyond, exit, fan, flyout, row, infoTop};
     concepts.forEach(item => { item.height = item.info.offsetHeight; });
     travel = Math.round(innerHeight * (mobile ? .75 : .8) * TOTAL);
-    film.style.height = H + travel + 'px';
+    film.style.height = H + (finished ? 0 : travel) + 'px';
     scrolled();
     shown = target;
     paint();
@@ -245,7 +262,11 @@
 
   function scrolled() {
     if (!active) return;
-    target = clamp((top - film.getBoundingClientRect().top) / travel);
+    if (finished) {
+      // Ya fuera de la vista por debajo (se subió por encima de ella): lista para verse otra vez al bajar.
+      if (film.getBoundingClientRect().top > innerHeight) { rearm(); return; }
+      target = 1;
+    } else target = clamp((top - film.getBoundingClientRect().top) / travel);
     if (!frame) { last = performance.now(); frame = requestAnimationFrame(tick); }
   }
   // El movimiento sigue al scroll con un poco de suavidad, como en la portada de galería.
@@ -256,11 +277,13 @@
     if (Math.abs(target - shown) * travel < .4) shown = target;
     paint();
     frame = shown === target ? 0 : requestAnimationFrame(tick);
+    if (!frame && shown >= 1 && !finished) finish();
   }
 
   // Los nombres de la barra inferior llevan a su concepto.
   chapters.forEach((chapter, index) => chapter.querySelector('button')?.addEventListener('click', () => {
     if (!active) return;
+    if (finished) { finished = false; measure(); }
     const start = film.getBoundingClientRect().top + scrollY - top;
     scrollTo({top: start + (INTRO + index + .5) / TOTAL * travel, behavior: 'smooth'});
   }));
@@ -303,6 +326,7 @@
     if (carry >= 1) {
       const px = Math.floor(carry); carry -= px;
       window.scrollTo({top: scrollY + px, behavior: 'instant'});
+      lastY = scrollY;
     }
   }
   const runAuto = () => {
@@ -311,6 +335,11 @@
   };
   if ('IntersectionObserver' in window) new IntersectionObserver(entries => { inView = entries[0].isIntersecting; runAuto(); }).observe(film);
   window.addEventListener('wheel', event => { if (event.deltaY < 0) pause(2500); }, {passive: true});
+  // Un enlace del menú (o cualquier subida: barra de desplazamiento, scroll suave) no debe
+  // competir con el avance automático, que la devolvería hacia abajo.
+  document.addEventListener('click', event => { if (event.target.closest?.('a[href*="#"]')) pause(3000); }, true);
+  let lastY = scrollY;
+  window.addEventListener('scroll', () => { if (scrollY < lastY - 1) pause(1500); lastY = scrollY; }, {passive: true});
   window.addEventListener('keydown', event => { if (['ArrowUp', 'PageUp', 'Home'].includes(event.key)) pause(2500); });
   window.addEventListener('touchstart', () => { touching = true; }, {passive: true});
   window.addEventListener('touchend', () => { touching = false; pause(1200); }, {passive: true});
