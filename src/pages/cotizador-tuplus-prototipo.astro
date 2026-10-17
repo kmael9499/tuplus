@@ -6,7 +6,7 @@
 <title>Cotizador TUPLUS, prototipo animado</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;600;700&display=swap">
-<style>
+<style is:inline>
 :root{--bg:#f3efe6;--ink:#122c3d;--mut:#586a77;--gold:#b97f0e;--gold2:#e6b43c;--card:rgba(255,255,255,.72);--line:rgba(18,44,61,.14);--glow:rgba(214,160,40,.4);--bar:rgba(243,239,230,.9)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1a26;--ink:#f4ecd8;--mut:#9db0bd;--gold:#f2c14e;--gold2:#ffe08f;--card:rgba(255,255,255,.05);--line:rgba(242,193,78,.2);--glow:rgba(242,193,78,.5);--bar:rgba(10,26,38,.88)}}
 :root[data-theme="dark"]{--bg:#0a1a26;--ink:#f4ecd8;--mut:#9db0bd;--gold:#f2c14e;--gold2:#ffe08f;--card:rgba(255,255,255,.05);--line:rgba(242,193,78,.2);--glow:rgba(242,193,78,.5);--bar:rgba(10,26,38,.88)}
@@ -91,7 +91,7 @@ input[type=range]{width:100%;max-width:520px;accent-color:var(--gold);margin-top
 <div><div class="lbl">Plazo aproximado</div><strong id="plazo">Elige un tipo de web</strong></div>
 <label class="sw"><input type="checkbox" id="igv"> Ver con IGV (18%)</label>
 </div></div>
-<script>
+<script is:inline>
 const T=[{id:'corp',n:'Web corporativa',d:'Presenta tu negocio con confianza',p:1200,t:12,i:'◈'},{id:'land',n:'Landing page',d:'Una página enfocada en convertir',p:600,t:6,i:'◇'},{id:'shop',n:'Tienda virtual',d:'Vende en línea con catálogo y pagos',p:2200,t:20,i:'▣'},{id:'cat',n:'Catálogo digital',d:'Muestra productos y cotiza por WhatsApp',p:1500,t:14,i:'❖'}];
 const F=[{n:'Formulario y WhatsApp',d:'Los clientes te escriben en un toque',p:150,t:1},{n:'SEO básico',d:'Para que Google te encuentre',p:300,t:3},{n:'Varios idiomas',d:'Tu web en más de un idioma',p:400,t:4},{n:'Blog',d:'Publica novedades y artículos',p:350,t:3},{n:'Pagos en línea',d:'Cobra con tarjeta o billetera',p:500,t:5},{n:'Panel de administración',d:'Edita contenido sin programar',p:800,t:7}];
 const D=[{n:'Plantilla pulida',d:'Rápida y limpia',p:0,t:0},{n:'Diseño personalizado',d:'Hecho con tu marca',p:600,t:4},{n:'Diseño premium',d:'Con animaciones a medida',p:1400,t:8}];
