@@ -1,0 +1,12 @@
+/* TUPLUS cotizador: colibrí dorado que cruza la pantalla (aditivo).
+   Vuela por delante de la página, bate las alas, se acerca y se aleja. No bloquea clics.
+   Para desactivarlo, quita los 2 enlaces de cotizador.html. */
+.xv-fly{position:fixed;left:0;top:0;z-index:55;pointer-events:none;opacity:0;will-change:transform,opacity;
+  filter:drop-shadow(0 12px 16px rgba(150,105,20,.28)) drop-shadow(0 0 22px rgba(255,205,80,.55))}
+.xv-fly canvas{display:block}
+.xv-dust{position:fixed;z-index:54;left:0;top:0;width:var(--s,5px);height:var(--s,5px);margin:-2px 0 0 -2px;border-radius:50%;
+  background:radial-gradient(circle,#fff6cf,#ffd36b 55%,rgba(255,200,70,0) 70%);box-shadow:0 0 12px #ffc83d;pointer-events:none;
+  animation:xv-dust var(--t,1100ms) cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes xv-dust{from{opacity:.95;transform:translate(var(--x),var(--y)) scale(1)}to{opacity:0;transform:translate(calc(var(--x) + var(--dx)),calc(var(--y) + var(--dy))) scale(.2)}}
+@media(prefers-reduced-motion:reduce){.xv-fly,.xv-dust{display:none!important}}
+@media print{.xv-fly,.xv-dust{display:none!important}}

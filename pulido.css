@@ -1,0 +1,29 @@
+/* TUPLUS: pulido visual de la página principal (aditivo, solo transiciones y brillos).
+   No cambia tamaños ni posiciones. Para desactivarlo, quita su enlace en index.html. */
+::selection{background:#e1c38b;color:#102c3d}
+html{scrollbar-color:#c9a45e transparent;scrollbar-width:thin}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:linear-gradient(#d9b46b,#b4893a);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+.ux-primary,.nav-quote,.button{transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,background .28s,color .28s}
+.ux-primary:hover,.button-dark:hover,.button-gold:hover,#main-nav .nav-quote:hover{box-shadow:0 16px 36px rgba(211,177,107,.38)}
+.service-card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.service-card:hover{border-color:#d3b16b;box-shadow:0 20px 48px rgba(18,44,61,.16),0 0 0 1px rgba(211,177,107,.4)}
+.service-card .icon-box{transition:transform .35s}
+.service-card:hover .icon-box{transform:translateY(-3px) rotate(-6deg)}
+.solution-tile img{transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.solution-tile:hover img{transform:scale(1.07)}
+.solution-tile>span i{transition:transform .3s}
+.solution-tile:hover>span i{transform:translate(3px,-3px)}
+.process-grid li{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.process-grid li:hover{transform:translateY(-5px)}
+.about-stat,.about-values li{transition:transform .3s,box-shadow .3s}
+.about-stat:hover,.about-values li:hover{transform:translateY(-3px)}
+.faq-list details{transition:border-color .3s}
+.faq-list details[open]{border-color:#d3b16b}
+.text-link{transition:color .25s,gap .25s}
+.text-link:hover{gap:24px}
+.contact-form-card{transition:box-shadow .35s}
+.contact-form-card:focus-within{box-shadow:0 24px 60px rgba(18,44,61,.14),0 0 0 1px rgba(211,177,107,.45)}
+.whatsapp-float{animation:xp-pulse 3.8s ease-in-out infinite}
+@keyframes xp-pulse{0%,100%{box-shadow:0 4px 18px #122c3d26,0 0 0 0 rgba(211,177,107,0)}50%{box-shadow:0 4px 18px #122c3d26,0 0 0 11px rgba(211,177,107,.16)}}
+@media(prefers-reduced-motion:reduce){.whatsapp-float{animation:none}.solution-tile:hover img,.service-card:hover .icon-box,.process-grid li:hover{transform:none}}
