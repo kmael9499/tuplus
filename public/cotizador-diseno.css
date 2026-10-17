@@ -68,7 +68,8 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 .steps .step>span{position:relative;z-index:1}
 .steps .step:not(.active):not(.completed)>span{background:#0f2737}
 .steps .step.active>span{box-shadow:0 0 0 4px rgba(225,195,139,.14),0 0 24px rgba(225,195,139,.6)}
-.steps .step.completed>span{background:rgba(225,195,139,.14)}
+.steps .step.completed>span{background:#2e434d}
+@media(max-width:850px){.steps::before,.steps::after{display:none}}
 
 /* ===== 4. TÍTULOS ===== */
 .quote-layout .view-heading h2{
@@ -161,7 +162,8 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 /* ===== 11. COLUMNA IZQUIERDA: pasos y tarjeta "Precio transparente" fijos juntos (ya no se superponen) ===== */
 @media(min-width:821px){
   .xd-side{position:sticky;top:108px}
-  .xd-side .steps,.xd-side .side-mini{position:static!important;top:auto!important}
+  .xd-side .steps{position:relative!important;top:auto!important}
+  .xd-side .side-mini{position:static!important;top:auto!important}
   .xd-side .side-mini{margin-top:26px}
 }
 @media(max-width:820px){.xd-side{display:contents}}
