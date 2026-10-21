@@ -42,6 +42,8 @@
 <link rel="stylesheet" href="cotizador-vuelo.css?v=20261016-1"/><link rel="stylesheet" href="pulido.css?v=20261016-1"/>
 <!-- Tablet y celular: debe ir SIEMPRE al final, después de los demás CSS -->
 <link rel="stylesheet" href="cotizador-tablet.css?v=20261018-1"/>
+<!-- Campo de cupón del paso 5 -->
+<link rel="stylesheet" href="cotizador-cupon.css?v=20261021-1"/>
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -240,6 +242,17 @@
                   <span class="currency-tag" id="summaryCurrencyTag" translate="no">PEN</span>
                 </div>
                 <div class="summary-lines" id="summaryLines"></div>
+                <div class="coupon-box" id="couponBox">
+                  <label class="coupon-label" for="couponInput">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg>
+                    ¿Tienes un cupón de descuento?
+                  </label>
+                  <div class="coupon-row">
+                    <input id="couponInput" class="coupon-input" type="text" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe tu código" aria-describedby="couponMsg">
+                    <button id="couponBtn" class="coupon-btn" type="button">Aplicar</button>
+                  </div>
+                  <p class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></p>
+                </div>
                 <div class="summary-note">Estimación orientativa. La moneda cambia la visualización; el importe final, impuestos y alcance se confirman en la propuesta.</div>
                 <div class="pay-box" id="payBox">
                   <span class="kicker">PAGAR AHORA</span>
@@ -341,5 +354,6 @@
 <script is:inline src="neon-trail.js?v=20261012-1" defer></script><script is:inline src="cotizador-extras.js?v=20261010-1" defer></script><script is:inline src="cotizador-colibri.js?v=20261011-1" defer></script><script is:inline src="faq.js?v=20261011-1" defer></script>
 <script is:inline src="lang-flags.js?v=20261015-1" defer></script>
 <script is:inline src="cotizador-vuelo.js?v=20261016-1" defer></script>
+<script is:inline src="cotizador-cupon.js?v=20261021-1" defer></script>
 </body>
 </html>
