@@ -55,9 +55,6 @@
   K('t_speed', 'Ajustes para que la web cargue más rápido en celular.', 'Tweaks so the site loads faster on mobile.', '优化设置，让网站在手机上加载更快。', 'Настройки, чтобы сайт быстрее загружался на телефоне.', 'Ajustes para o site carregar mais rápido no celular.', 'Réglages pour que le site charge plus vite sur mobile.', 'スマホでの表示を速くする調整。', 'Optimierungen für schnelleres Laden auf dem Handy.');
   K('t_security', 'Buenas prácticas para proteger tu web y tus datos.', 'Best practices to protect your site and your data.', '保护网站与数据的最佳实践。', 'Лучшие практики защиты сайта и данных.', 'Boas práticas para proteger seu site e seus dados.', 'Bonnes pratiques pour protéger votre site et vos données.', 'サイトとデータを守るためのベストプラクティス。', 'Bewährte Verfahren zum Schutz von Website und Daten.');
 
-  K('propL', 'Propuesta', 'Proposal', '报价单', 'Предложение', 'Proposta', 'Proposition', '提案書', 'Angebot');
-  K('issued', 'Emitida el', 'Issued on', '签发日期：', 'Дата выдачи:', 'Emitida em', 'Émise le', '発行日：', 'Ausgestellt am');
-  K('valid', 'Válida hasta el', 'Valid until', '有效期至：', 'Действительно до:', 'Válida até', 'Valable jusqu’au', '有効期限：', 'Gültig bis');
   K('tr1', 'Sin compromiso', 'No commitment', '无需承诺', 'Без обязательств', 'Sem compromisso', 'Sans engagement', 'ご契約の義務なし', 'Unverbindlich');
   K('tr1d', 'Tu cotización no te obliga a nada.', 'Your quote doesn’t commit you to anything.', '报价不会让您承担任何义务。', 'Расчёт ни к чему вас не обязывает.', 'Sua cotação não obriga você a nada.', 'Votre devis ne vous engage à rien.', 'お見積りに契約の義務はありません。', 'Ihr Angebot verpflichtet Sie zu nichts.');
   K('tr2', 'Respuesta por WhatsApp', 'Reply via WhatsApp', '通过 WhatsApp 回复', 'Ответ в WhatsApp', 'Resposta pelo WhatsApp', 'Réponse par WhatsApp', 'WhatsAppで返信', 'Antwort per WhatsApp');
@@ -89,12 +86,11 @@
   K('faq5q', '¿Cómo pago?', 'How do I pay?', '如何付款？', 'Как оплатить?', 'Como pago?', 'Comment payer ?', '支払い方法は？', 'Wie bezahle ich?');
   K('faq5a', 'En el paso 5 verás las opciones de pago disponibles, y siempre puedes coordinar por WhatsApp. Confirmamos tu pago por el mismo chat.', 'In step 5 you will see the available payment options, and you can always arrange it via WhatsApp. We confirm your payment in the same chat.', '在第 5 步可看到可用的付款方式，也可随时通过 WhatsApp 协调。我们会在同一对话中确认付款。', 'На шаге 5 вы увидите доступные способы оплаты, а договориться можно и через WhatsApp. Оплату подтверждаем в том же чате.', 'Na etapa 5 você verá as opções de pagamento disponíveis e sempre pode combinar pelo WhatsApp. Confirmamos o pagamento no mesmo chat.', 'À l’étape 5, vous verrez les moyens de paiement disponibles, et vous pouvez toujours convenir par WhatsApp. Nous confirmons le paiement dans le même chat.', 'ステップ5で利用可能な支払い方法が表示され、WhatsAppでの調整も可能です。支払いは同じチャットで確認します。', 'In Schritt 5 sehen Sie die verfügbaren Zahlungsoptionen; Sie können auch jederzeit per WhatsApp klären. Die Zahlung bestätigen wir im selben Chat.');
 
-  let reChips = () => {}, reProposal = () => {}, reHero = () => {};
+  let reChips = () => {}, reHero = () => {};
 
   const onLang = () => {
     applyI18n();
     reChips();
-    reProposal();
     reHero();
     const t = $('.xd-top');
     if (t) t.setAttribute('aria-label', x('toTop'));
@@ -458,47 +454,7 @@
     addEventListener('scroll', hide, { passive: true });
   }
 
-  /* 10. Encabezado de propuesta (paso 5) y franja de confianza */
-  function initProposal() {
-    const grid = $('.summary-view .summary-grid');
-    if (!grid) return;
-
-    let no = '';
-
-    try {
-      no = localStorage.getItem('tuplusQuoteNo') || '';
-    } catch {
-      /* sin guardado */
-    }
-
-    if (!no) {
-      no = 'TP-' + String(Date.now()).slice(-5);
-      try {
-        localStorage.setItem('tuplusQuoteNo', no);
-      } catch {
-        /* sin guardado */
-      }
-    }
-
-    const box = document.createElement('div');
-    box.className = 'xd-proposal';
-    grid.insertAdjacentElement('beforebegin', box);
-
-    const today = new Date(), until = new Date(today.getTime() + 15 * 864e5);
-
-    reProposal = () => {
-      const f = d => d.toLocaleDateString(LOCALES[lang()], {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric'
-      });
-
-      box.innerHTML = `<div><small>${x('propL')}</small><b>${no}</b></div><div class="xd-r">${x('issued')} ${f(today)}<br>${x('valid')} ${f(until)}</div>`;
-    };
-
-    reProposal();
-  }
-
+  /* 10. Franja de confianza */
   function initTrust() {
     const form = $('#quoteForm');
     if (!form) return;
@@ -712,7 +668,6 @@
     initPresets,
     initChips,
     initTips,
-    initProposal,
     initTrust,
     initHero,
     initTopBtn,

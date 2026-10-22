@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const base = path.resolve(__dirname, '..');
+const base = path.resolve(__dirname, '..', 'dist');
 
 function element() {
   const attributes = new Map();
@@ -38,7 +38,7 @@ const context = vm.createContext({
   matchMedia: () => ({matches: true, addEventListener() {}}),
   addEventListener() {}, requestAnimationFrame: callback => callback()
 });
-for (const file of ['config.js', 'quote-core.js', 'script.js']) {
+for (const file of ['js/config.js', 'js/quote-core.js', 'js/script.js']) {
   assert.doesNotThrow(() => vm.runInContext(fs.readFileSync(path.join(base, file), 'utf8'), context, {filename: file}));
 }
 menu.dispatch('click');
@@ -62,5 +62,5 @@ for (const file of pages) {
 }
 const quotePage = fs.readFileSync(path.join(base, 'cotizador.html'), 'utf8');
 assert.match(quotePage, /cotizador\.js\?v=/);
-assert.doesNotMatch(quotePage, /src="(?:\.\/)?script\.js/);
+assert.doesNotMatch(quotePage, /src="(?:\.\/)?js\/script\.js/);
 console.log('OK: inicio sin campos del cotizador, menú móvil, Escape, WhatsApp y scripts de las 9 páginas.');

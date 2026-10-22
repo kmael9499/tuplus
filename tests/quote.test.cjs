@@ -1,11 +1,11 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const base=require('node:path').resolve(__dirname,'..')+'/';
+const base=require('node:path').resolve(__dirname,'..','public')+'/';
 const store=new Map(), elements=new Map();
 const document={documentElement:{lang:'es'},querySelector(selector){if(!elements.has(selector))elements.set(selector,{textContent:'',innerHTML:'',value:'',checked:false});return elements.get(selector)}};
 const context=vm.createContext({window:{},document,Intl,Date,setTimeout,clearTimeout,AbortController,console,localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)}});
-for(const name of ['config.js','countries.js','currencies.js','js/i18n-data.js','js/quote-translations.js'])vm.runInContext(fs.readFileSync(base+name,'utf8'),context);
+for(const name of ['js/config.js','js/countries.js','js/currencies.js','js/i18n-data.js','js/quote-translations.js'])vm.runInContext(fs.readFileSync(base+name,'utf8'),context);
 vm.runInContext(`window.TUPLUS_I18N={locale:'es',t:x=>x};`,context);
-const source=fs.readFileSync(base+'cotizador.js','utf8');
+const source=fs.readFileSync(base+'js/cotizador.js','utf8');
 vm.runInContext(source.slice(0,source.indexOf('$("#quoteForm").addEventListener')),context);
 const run=s=>vm.runInContext(s,context);
 let checks=0;

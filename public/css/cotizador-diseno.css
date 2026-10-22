@@ -68,7 +68,7 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 .steps .step>span{position:relative;z-index:1}
 .steps .step:not(.active):not(.completed)>span{background:#0f2737}
 .steps .step.active>span{box-shadow:0 0 0 4px rgba(225,195,139,.14),0 0 24px rgba(225,195,139,.6)}
-.steps .step.completed>span{background:rgba(225,195,139,.14)}
+.steps .step.completed>span{background:linear-gradient(rgba(225,195,139,.14),rgba(225,195,139,.14)),#0f2737}
 
 /* ===== 4. TÍTULOS ===== */
 .quote-layout .view-heading h2{
@@ -102,17 +102,13 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 .quote-layout .primary-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.6) 50%,transparent 64%);transform:translateX(-130%);animation:xd-sweep 4.2s ease-in-out infinite}
 @keyframes xd-sweep{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
 
-/* ===== 7. PROPUESTA Y CONFIANZA (los crea cotizador-extras.js) ===== */
-.xd-proposal{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:14px 18px;border:1px solid rgba(225,195,139,.38);border-radius:16px;background:linear-gradient(120deg,rgba(225,195,139,.16),rgba(225,195,139,.03))}
-.xd-proposal small{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#cfb581}
-.xd-proposal b{display:block;margin-top:2px;font:600 18px "DM Mono",monospace;color:#f0d8aa}
-.xd-proposal .xd-r{text-align:right;font-size:12px;color:#d3dce1;line-height:1.5}
+/* ===== 7. CONFIANZA (los crea cotizador-extras.js) ===== */
 .xd-trust{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px}
 .xd-trust>div{padding:14px 16px;border:1px solid rgba(225,195,139,.22);border-radius:14px;background:rgba(255,255,255,.03)}
 .xd-trust b{display:block;font-size:13px;color:#f0d8aa}
 .xd-trust b::before{content:"\2713";margin-right:8px;color:#e1c38b}
 .xd-trust small{display:block;margin-top:4px;font-size:11px;line-height:1.5;color:#bacbd6}
-@media(max-width:700px){.xd-trust{grid-template-columns:1fr}.xd-proposal .xd-r{text-align:left}}
+@media(max-width:700px){.xd-trust{grid-template-columns:1fr}}
 
 
 
@@ -161,7 +157,8 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 /* ===== 11. COLUMNA IZQUIERDA: pasos y tarjeta "Precio transparente" fijos juntos (ya no se superponen) ===== */
 @media(min-width:821px){
   .xd-side{position:sticky;top:108px}
-  .xd-side .steps,.xd-side .side-mini{position:static!important;top:auto!important}
+  .xd-side .steps{position:relative!important;top:auto!important}
+  .xd-side .side-mini{position:static!important;top:auto!important}
   .xd-side .side-mini{margin-top:26px}
 }
 @media(max-width:820px){.xd-side{display:contents}}
