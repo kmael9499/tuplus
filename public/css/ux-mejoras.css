@@ -16,3 +16,12 @@ html body :is(.ux-eyebrow,.eyebrow,.tpl-eyebrow,.service-number,.text-link,.solu
   :is(a.text-link,a.contact-direct){display:inline-flex;align-items:center;min-height:44px}
   .whatsapp-float,.floating-whatsapp{min-width:48px;min-height:48px}
 }
+
+/* Listas desplegables (select): opciones legibles en tema oscuro y claro.
+   Sin esto, el navegador dibuja la lista con fondo blanco y hereda la letra clara del tema oscuro. */
+html[data-theme=dark] select{color-scheme:dark}
+html[data-theme=dark] select option,html[data-theme=dark] select optgroup{background-color:#0e2535;color:#e7edf1}
+html[data-theme=dark] select option:disabled{color:#8fa3b0}
+html:not([data-theme=dark]) select{color-scheme:light}
+html:not([data-theme=dark]) select option,html:not([data-theme=dark]) select optgroup{background-color:#fffdf8;color:#122c3d}
+html:not([data-theme=dark]) select option:disabled{color:#6b7c86}
