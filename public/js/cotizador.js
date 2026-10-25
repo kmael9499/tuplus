@@ -122,9 +122,11 @@ function updateCurrencyUI(){
   const select=$("#currencySelect");
   for(const option of select.options) option.textContent=`${option.value} · ${fx.name(option.value)}`;
   select.value=code;
+  const countryCollator=new Intl.Collator(window.TUPLUS_I18N?.locale||document.documentElement.lang||'es',{sensitivity:'base'});
   for(const id of ['countrySelect','pais']){
     const picker=$('#'+id);
     for(const option of picker.options)option.textContent=countries.name(option.value);
+    Array.from(picker.options).sort((a,b)=>countryCollator.compare(a.textContent.trim(),b.textContent.trim())).forEach(option=>picker.append(option));
     picker.value=state.country;
   }
   $('#countryCurrencyHint').textContent=t(state.currencyManual?'Moneda elegida manualmente. Cambiar de país vuelve a ajustar la moneda.':'La moneda se ajusta al país que elijas.');
