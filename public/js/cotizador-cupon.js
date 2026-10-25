@@ -1,7 +1,6 @@
-/* TUPLUS cotizador: campo de cupón (solo interfaz).
-   Valida el formato, muestra el estado y permite quitar el código.
-   Todavía NO calcula descuentos: cuando exista esa lógica, escucha el evento
-   "tuplus:coupon" (abajo) o conecta aquí la validación real. */
+/* TUPLUS cotizador: campo de cupón.
+   Valida el código con el backend (POST /api/cupones/validar) y avisa a
+   cotizador.js con el evento "tuplus:coupon" para recalcular el total. */
 (function () {
   'use strict';
 
@@ -29,6 +28,10 @@
     input.focus();
   }
 
+  function apiBase() {
+    return String((window.TUPLUS_CONFIG && window.TUPLUS_CONFIG.apiUrl) || '').replace(/\/+$/, '');
+  }
+
   function apply() {
     var code = input.value.replace(/\s+/g, '').toUpperCase();
 
@@ -36,16 +39,36 @@
     if (!/^[A-Z0-9_-]{3,30}$/.test(code)) {
       return fail('Usa solo letras, números y guiones (mínimo 3 caracteres).');
     }
+    if (!apiBase()) return fail('Los cupones no están disponibles por ahora.');
 
     input.value = code;
-    input.readOnly = true;
-    box.classList.add('is-applied');
-    btn.textContent = 'Quitar';
-    btn.setAttribute('aria-label', 'Quitar el cupón ' + code);
-    setState('is-ok', 'Código ' + code + ' recibido.');
+    btn.disabled = true;
+    setState('', 'Comprobando…');
 
-    // TODO: validar el cupón y recalcular el total.
-    document.dispatchEvent(new CustomEvent('tuplus:coupon', { detail: { code: code } }));
+    // El total en USD sin descuento; el servidor decide si el código vale
+    var subtotal = typeof subtotalUsd === 'function' ? subtotalUsd() : 0;
+    fetch(apiBase() + '/api/cupones/validar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ codigo: code, subtotal: subtotal })
+    })
+      .then(function (r) { return r.json().then(function (d) { return { status: r.status, d: d }; }); })
+      .then(function (res) {
+        btn.disabled = false;
+        if (!res.d || !res.d.valido) return fail((res.d && res.d.mensaje) || 'No se pudo comprobar el código.');
+        input.readOnly = true;
+        box.classList.add('is-applied');
+        btn.textContent = 'Quitar';
+        btn.setAttribute('aria-label', 'Quitar el cupón ' + code);
+        setState('is-ok', res.d.mensaje || 'Cupón aplicado.');
+        document.dispatchEvent(new CustomEvent('tuplus:coupon', {
+          detail: { code: res.d.cupon.codigo, tipo: res.d.cupon.tipo, valor: res.d.cupon.valor }
+        }));
+      })
+      .catch(function () {
+        btn.disabled = false;
+        fail('No pudimos comprobar el código. Inténtalo de nuevo.');
+      });
   }
 
   function clear() {

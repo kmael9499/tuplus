@@ -57,9 +57,27 @@ function subtotal(){
   if(state.hosting) sum += 120;
   return Math.round(sum);
 }
-function grandTotal(){
+/* Descuentos: cupón y descuento por fecha NO se suman, se aplica el mayor.
+   Las reglas finales las valida el backend; aquí solo se muestra el efecto. */
+function subtotalUsd(){ return subtotal(); }
+const promo = { coupon: null, campaign: null };
+function promoAmount(p, sub){
+  if(!p) return 0;
+  const v = Number(p.valor);
+  if(!(v > 0) || !(sub > 0)) return 0;
+  const raw = p.tipo === 'porcentaje' ? sub * Math.min(v, 100) / 100 : Math.min(v, sub);
+  return Math.round(raw * 100) / 100;
+}
+function discountInfo(){
   const sub = subtotal();
-  return state.tax ? Math.round(sub * 1.18) : sub;
+  const dCoupon = promoAmount(promo.coupon, sub), dCampaign = promoAmount(promo.campaign, sub);
+  if(promo.coupon && dCoupon >= dCampaign && dCoupon > 0) return { origin: 'cupon', label: promo.coupon.codigo, amount: dCoupon };
+  if(promo.campaign && dCampaign > 0) return { origin: 'campana', label: promo.campaign.nombre, amount: dCampaign };
+  return { origin: null, label: '', amount: 0 };
+}
+function grandTotal(){
+  const net = Math.max(0, subtotal() - discountInfo().amount);
+  return state.tax ? Math.round(net * 1.18) : Math.round(net);
 }
 function range(){
   const t = grandTotal();
@@ -190,7 +208,9 @@ function renderSummary(){
     ["Pack Cloud anual", state.hosting?money(120):"—"],
   ];
   rows.push(["Entrega estimada", deliveryDays()]);
-  if(state.tax) rows.push(["IGV 18%", money(Math.round(sub*.18))]);
+  const disc = discountInfo();
+  if(disc.amount) rows.push([`Descuento · ${disc.label}`, `−${money(disc.amount)}`]);
+  if(state.tax) rows.push(["IGV 18%", money(Math.round((sub-disc.amount)*.18))]);
   $("#summaryLines").innerHTML=rows.map(([a,b])=>`<div class="summary-line"><span>${t(a)}</span><strong>${t(b)}</strong></div>`).join("");
 }
 function toast(msg){
@@ -222,7 +242,8 @@ function quoteText(){
     line('Contenido profesional',t(state.contentPro?'Sí':'No')),line('Funciones',selected),
     line('Diseño',t(designs[state.design].label)),line('Soporte',t(supports[state.support].label)),
     line('Entrega prioritaria',t(state.rush?'Sí':'No')),line('Pack Cloud anual',t(state.hosting?'Sí':'No')),
-    line('IGV',t(state.tax?'CON IGV':'SIN IGV')),line('Entrega estimada',deliveryDays()),'',
+    line('IGV',t(state.tax?'CON IGV':'SIN IGV')),line('Entrega estimada',deliveryDays()),
+    ...(discountInfo().amount?[line('Descuento · '+discountInfo().label,'−'+money(discountInfo().amount))]:[]),'',
     line('Cambio de referencia',`1 USD = ${fx.rates[state.currency].rate} ${state.currency} (${fx.rates[state.currency].date})`),
     line('INVERSIÓN ESTIMADA',money(grandTotal())),line('Rango orientativo',`${money(r.min)} — ${money(r.max)}`),'',
     line('Tu nombre',$("#nombre").value.trim()),line('Empresa o actividad',$("#empresa").value.trim()),
@@ -241,17 +262,22 @@ function downloadTxt(){
   a.href=url; a.download=`tuplus-cotizacion-${state.project}.txt`; a.click(); URL.revokeObjectURL(url);
   toast("Resumen descargado.");
 }
+function apiBase(){ return String(window.TUPLUS_CONFIG.apiUrl || '').replace(/\/+$/,''); }
 function sendToBackend(){
   if(!window.TUPLUS_CONFIG.quoteBackendEnabled) return;
-  // Optional PHP endpoint. The UI remains functional even on static hosting.
+  const api = apiBase();
+  const disc = discountInfo();
   try{
     const payload={
       nombre:$("#nombre").value.trim(), email:$("#email").value.trim(), telefono:$("#telefono").value.trim(),
       proyecto:catalog[state.project].label,paginas:state.pages,contenido_pro:state.contentPro,moneda:state.currency,total_usd:grandTotal(),total_mostrado:money(grandTotal()),
       pais:state.country,consentimiento:$("#consentimiento").checked,cambio:`${fx.rates[state.currency].rate} (${fx.rates[state.currency].date})`,funciones:[...state.features],diseno:designs[state.design].label,soporte:supports[state.support].label,
-      prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:grandTotal(),notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`
+      prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:grandTotal(),notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`,
+      cupon:promo.coupon?promo.coupon.codigo:'',descuento:disc.amount,campana:disc.origin==='campana'?disc.label:''
     };
-    fetch("procesar_cotizacion.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(async response=>{const result=await response.json();if(!response.ok||result.status!=="success")throw new Error("save");}).catch(()=>toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."));
+    // Con apiUrl se usa la API Node; sin ella, el PHP anterior.
+    const url = api ? api+"/api/cotizaciones" : "procesar_cotizacion.php";
+    fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(async response=>{const result=await response.json();if(!response.ok||(result.status!=="success"&&result.estado!=="correcto"))throw new Error("save");}).catch(()=>toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."));
   }catch{}
 }
 $("#quoteForm").addEventListener("submit",e=>e.preventDefault());
@@ -357,4 +383,27 @@ if(stage && matchMedia("(pointer:fine)").matches && !matchMedia("(prefers-reduce
     scene.style.transform=`translate3d(${x*10}px,${y*8}px,0) rotateX(${y*-7}deg) rotateY(${x*9}deg)`;
   });
   stage.addEventListener("pointerleave",()=>{stage.querySelector(".scene").style.transform="";});
+}
+
+/* ---- Descuentos conectados al panel (solo si config.js define apiUrl) ---- */
+function renderPromoBanner(){
+  const box = document.getElementById('couponBox');
+  if(!box) return;
+  let el = document.getElementById('promoBanner');
+  const c = promo.campaign;
+  if(!c){ if(el) el.remove(); return; }
+  if(!el){ el = document.createElement('p'); el.id = 'promoBanner'; el.className = 'promo-banner'; el.setAttribute('role','status'); box.parentNode.insertBefore(el, box); }
+  const val = c.tipo === 'porcentaje' ? c.valor + '%' : '$' + c.valor + ' USD';
+  el.textContent = (c.mensaje || c.nombre) + ' (−' + val + ' aplicado automáticamente)';
+}
+function refreshPromo(){ renderPromoBanner(); sync(); if(state.step===5) renderSummary(); }
+document.addEventListener('tuplus:coupon', e => {
+  const d = e.detail || {};
+  promo.coupon = d.code && d.tipo ? { codigo: d.code, tipo: d.tipo, valor: d.valor } : null;
+  refreshPromo();
+});
+if(apiBase()){
+  fetch(apiBase()+'/api/descuentos/activo').then(r=>r.json()).then(r=>{
+    if(r && r.campana){ promo.campaign = r.campana; refreshPromo(); }
+  }).catch(()=>{});
 }

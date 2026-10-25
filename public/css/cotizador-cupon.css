@@ -95,3 +95,11 @@
 }
 
 @media print{.coupon-box{display:none!important}}
+
+/* Aviso del descuento por fecha (sale solo si hay uno en curso) */
+.promo-banner{
+  margin:16px 0 0;padding:10px 14px;
+  border:1px solid #e1c38b66;border-radius:12px;
+  background:#e1c38b1a;color:#e4cfaa;
+  font-size:13px;font-weight:600;line-height:1.4;
+}
