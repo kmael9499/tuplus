@@ -49,4 +49,12 @@ run('load()');eq(run('state.country'),'PE');eq(run('state.currency'),'PEN');eq(r
 run('setCountry("CL");setCountry("INVALID")');eq(run('state.country'),'CL');eq(run('state.currency'),'CLP');
 store.set('tuplusQuote','{invalid');run('load()');eq(run('state.currency'),'CLP');
 run('window.TUPLUS_I18N.locale="ja"');eq(run('countries.name("PE")'),'ペルー');
+// Descuentos: cupón y descuento por fecha no se suman, gana el mayor; sin descuento el total no cambia
+run(`Object.assign(state,{project:'website',pages:5,contentPro:false,design:'clean',support:'30',rush:false,hosting:false,tax:false});state.features=new Set();`);
+const base0=run('grandTotal()');
+run(`promo.campaign={nombre:'Navidad',tipo:'porcentaje',valor:15};`);eq(run('grandTotal()'),Math.round(base0-base0*0.15));
+run(`promo.coupon={codigo:'X10',tipo:'porcentaje',valor:10};`);eq(run('discountInfo().origin'),'campana');
+run(`promo.coupon={codigo:'X30',tipo:'porcentaje',valor:30};`);eq(run('discountInfo().origin'),'cupon');eq(run('discountInfo().amount'),Math.round(base0*30)/100);
+run(`promo.coupon={codigo:'GRANDE',tipo:'monto',valor:99999};`);eq(run('grandTotal()'),0);
+run(`promo.coupon=null;promo.campaign=null;`);eq(run('grandTotal()'),base0);
 console.log(`${checks} comprobaciones correctas: tarifas originales, extras, IGV, 20 monedas, 27 opciones de país, moneda automática/manual, migración, persistencia, datos inválidos, resumen, WhatsApp y 7 traducciones.`);
