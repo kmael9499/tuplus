@@ -266,7 +266,8 @@ function downloadTxt(){
 }
 function apiBase(){ return String(window.TUPLUS_CONFIG.apiUrl || '').replace(/\/+$/,''); }
 function sendToBackend(){
-  if(!window.TUPLUS_CONFIG.quoteBackendEnabled) return;
+  // Devuelve una promesa: true = guardado, false = falló, null = guardado desactivado en config.
+  if(!window.TUPLUS_CONFIG.quoteBackendEnabled) return Promise.resolve(null);
   const api = apiBase();
   const disc = discountInfo();
   try{
@@ -279,8 +280,17 @@ function sendToBackend(){
     };
     // Con apiUrl se usa la API Node; sin ella, el PHP anterior.
     const url = api ? api+"/api/cotizaciones" : "procesar_cotizacion.php";
-    fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)}).then(async response=>{const result=await response.json();if(!response.ok||(result.status!=="success"&&result.estado!=="correcto"))throw new Error("save");}).catch(()=>toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."));
-  }catch{}
+    const ctrl = new AbortController();
+    const timer = setTimeout(()=>ctrl.abort(), 12000); // si el servidor no responde en 12 s, se considera fallo
+    return fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:ctrl.signal})
+      .then(async response=>{
+        const result=await response.json();
+        if(!response.ok||(result.status!=="success"&&result.estado!=="correcto")) throw new Error("save");
+        return true;
+      })
+      .catch(()=>{ toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."); return false; })
+      .finally(()=>clearTimeout(timer));
+  }catch{ return Promise.resolve(false); }
 }
 $("#quoteForm").addEventListener("submit",e=>e.preventDefault());
 for(const code of Object.keys(currencyMeta)){
@@ -314,7 +324,15 @@ $$(".step").forEach(el=>el.addEventListener("click",()=>go(Number(el.dataset.ste
 $("#nextBtn").addEventListener("click",()=>{if(state.step<5){reached=Math.max(reached,state.step+1);go(state.step+1);}else go(1);});
 $("#backBtn").addEventListener("click",()=>go(state.step-1));
 ["nombre","empresa","pais","email","telefono"].forEach(id=>{$("#"+id).addEventListener("input",renderPercent);$("#"+id).addEventListener("change",renderPercent);});
-$("#whatsappBtn").addEventListener("click",()=>{if(!validateContact(true))return; sendToBackend(); window.open(whatsappUrl(),"_blank","noopener"); toast("Abriendo WhatsApp con tu cotización.");});
+$("#whatsappBtn").addEventListener("click",async()=>{
+  if(!validateContact(true))return;
+  const win=window.open("","_blank"); // se abre dentro del clic para que el navegador no lo bloquee
+  toast("Guardando tu cotización...");
+  const saved=await sendToBackend();
+  const url=whatsappUrl();
+  if(win){win.opener=null;win.location.href=url;}else{window.location.href=url;}
+  if(saved!==false) toast("Abriendo WhatsApp con tu cotización.");
+});
 $("#downloadBtn").addEventListener("click",downloadTxt);
 $("#printBtn").addEventListener("click",()=>window.print());
 
