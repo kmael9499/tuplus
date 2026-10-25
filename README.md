@@ -27,7 +27,10 @@ public/                 Se copia tal cual a dist/
   js/                   Scripts (js/soluciones/ = páginas de soluciones)
   imagenes/             Imágenes de soluciones y logotipos (marca/)
   colibri.png           Colibrí de la marca (se usa en casi todas las páginas)
-backend/                PHP + MySQL opcional (no corre en GitHub Pages)
+backend/                API (Node + Express y PHP) y base MySQL. Ver backend/README.md
+  node/                 API en Node.js + Express
+  php/                  Versión anterior en PHP
+  database/             database.sql
 scripts/                Utilidades de mantenimiento
 tests/                  Tests en Node (leen dist/ y public/)
 docs/                   Notas de cambios y verificaciones anteriores
@@ -47,13 +50,15 @@ Las páginas cargan CSS y JS con rutas relativas y `?v=FECHA` para renovar la ca
 | Textos propios del cotizador traducidos | `public/js/quote-translations.js` |
 | Tema claro/oscuro | `public/js/theme.js`, `public/css/theme.css` |
 
-## Backend opcional (PHP + MySQL)
+## Backend (Node + Express / PHP + MySQL)
 
-`public/js/cotizador.js` intenta enviar la cotización a `procesar_cotizacion.php`. Si falla, el cotizador sigue funcionando (WhatsApp y descarga). Para usarlo en un hosting con PHP:
+Todo está en `backend/` y se explica en `backend/README.md`. Resumen:
 
-1. Crea la base con `backend/database.sql`.
-2. Define `AZZIZ_DB_HOST`, `AZZIZ_DB_USER`, `AZZIZ_DB_PASS` y `AZZIZ_DB_NAME`.
-3. Sube los archivos de `backend/` junto a `cotizador.html`. `admin.php` muestra las solicitudes.
+- **Node + Express** (`backend/node`): `cd backend/node`, `npm install`, copia `.env.example` como `.env` con tus datos de MySQL y `npm start`. Ruta principal: `POST /api/cotizaciones`.
+- **PHP** (`backend/php`): versión anterior para hosting con PHP.
+- **Base de datos** (`backend/database/database.sql`): la usan las dos versiones.
+
+`public/js/cotizador.js` todavía envía la cotización a `procesar_cotizacion.php`, y solo si `quoteBackendEnabled` es `true` en `public/js/config.js`. Si falla, el cotizador sigue funcionando (WhatsApp y descarga). Ningún backend corre en GitHub Pages.
 
 ## Pendientes conocidos
 
