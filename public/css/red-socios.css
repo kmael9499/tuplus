@@ -30,6 +30,7 @@ html[data-theme="dark"] .partner-hero-card{background:rgba(19,37,49,.8)}
 .territory-layout>div:first-child>p:not(.partner-eyebrow){max-width:540px}
 .territory-label{display:block;font-size:.9rem;font-weight:650;color:var(--partner-ink);margin:20px 0 7px}
 .territory-layout select,.partners-page input:not([type=checkbox]):not([type=hidden]),.partners-page select,.partners-page textarea{display:block;width:100%;min-height:48px;padding:11px 13px;border:1px solid #aeb8bd;border-radius:6px;background:#fff;color:#263c49;font:inherit}
+#country-select{position:relative;z-index:2;cursor:pointer;pointer-events:auto;appearance:auto}
 html[data-theme="dark"] .territory-layout select,html[data-theme="dark"] .partners-page input:not([type=checkbox]):not([type=hidden]),html[data-theme="dark"] .partners-page select,html[data-theme="dark"] .partners-page textarea{background:#182a36;color:#e1e8ed;border-color:#52636d}
 .territory-result{padding:clamp(26px,4vw,42px);border-radius:14px;border:1px solid rgba(18,44,61,.13);background:#fff;box-shadow:0 16px 40px rgba(18,44,61,.06)}
 html[data-theme="dark"] .territory-result{background:#152733}
