@@ -1,5 +1,18 @@
 /* TUPLUS — estilos de los caminos de clientes y socios. */
 
+/* Protección general: ninguna página se desborda de lado con ningún zoom. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
 /* Camino partners: conserva el estilo que hereda de .nav-quote. */
 .site-header .nav-socios {
   display: inline-flex;
@@ -16,6 +29,19 @@
 /* Red de socios permanece en una sola línea. */
 .site-header .partner-nav-link {
   white-space: nowrap;
+}
+
+/* Menú compacto para TODOS los tamaños de escritorio (cualquier zoom). */
+@media (min-width: 851px) {
+  .site-header .container { width: min(1500px, 100% - 48px) !important; }
+  .site-header .nav-wrap { gap: 10px !important; }
+  .site-header .brand .brand-art { width: 116px !important; }
+  .site-header #main-nav { gap: 12px !important; flex-wrap: nowrap !important; }
+  .site-header #main-nav > a { font-size: 11px !important; white-space: nowrap !important; }
+  .site-header #main-nav .nav-quote { padding: 10px 11px !important; gap: 8px !important; }
+  .site-header .language-picker select { min-width: 82px !important; max-width: 86px !important; font-size: 10px !important; }
+  .site-header .theme-toggle { font-size: 0 !important; padding: 8px !important; }
+  .site-header .theme-toggle span { font-size: 20px !important; }
 }
 
 /* Camino clientes: botón Contratar. */
@@ -65,4 +91,51 @@
 .sc-card p {
   margin: 0;
   opacity: 0.8;
+}
+/* Botón dorado: Red de Socios Comerciales */
+.site-header #main-nav > a.nav-socios {
+  background: linear-gradient(135deg, #f2d98f 0%, #d3b16b 100%) !important;
+  border: 1px solid #c4a057 !important;
+  border-radius: 6px !important;
+  color: #122c3d !important;
+  font-weight: 700 !important;
+  padding: 10px 14px !important;
+  box-shadow: 0 2px 8px rgba(211, 177, 107, 0.35) !important;
+}
+
+.site-header #main-nav > a.nav-socios:hover {
+  filter: brightness(1.06);
+  background: linear-gradient(135deg, #f2d98f 0%, #d3b16b 100%) !important;
+  color: #122c3d !important;
+}
+
+.site-header #main-nav > a.nav-socios::after {
+  display: none !important;
+}
+/* Menú de celular: botones dorados, uno debajo del otro */
+@media (max-width: 850px) {
+  .site-header #main-nav.open {
+    gap: 10px !important;
+    padding: 20px 20px 28px !important;
+  }
+
+  .site-header #main-nav.open > a.nav-quote,
+  .site-header #main-nav.open > a.nav-socios,
+  .site-header #main-nav.open > a.partner-nav-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 18px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #122c3d !important;
+    background: linear-gradient(135deg, #f2d98f 0%, #d3b16b 100%) !important;
+    border: 1px solid #c4a057 !important;
+    border-radius: 8px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
 }
