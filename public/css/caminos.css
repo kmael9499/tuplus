@@ -1,0 +1,68 @@
+/* TUPLUS — estilos de los caminos de clientes y socios. */
+
+/* Camino partners: conserva el estilo que hereda de .nav-quote. */
+.site-header .nav-socios {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.site-header .nav-socios .nav-ico {
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+/* Red de socios permanece en una sola línea. */
+.site-header .partner-nav-link {
+  white-space: nowrap;
+}
+
+/* Camino clientes: botón Contratar. */
+.btn-contratar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 10px;
+  background: #122c3d;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-contratar:hover {
+  filter: brightness(1.15);
+}
+
+.sv-contratar {
+  margin-top: 1.5rem;
+}
+
+/* Tarjetas de la página de socios comerciales. */
+.sc-section {
+  padding: 2rem 0 4rem;
+}
+
+.sc-cards {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.sc-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  background: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.sc-card h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.sc-card p {
+  margin: 0;
+  opacity: 0.8;
+}
