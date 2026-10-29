@@ -333,8 +333,281 @@ $("#whatsappBtn").addEventListener("click",async()=>{
   if(win){win.opener=null;win.location.href=url;}else{window.location.href=url;}
   if(saved!==false) toast("Abriendo WhatsApp con tu cotización.");
 });
-$("#downloadBtn").addEventListener("click",downloadTxt);
-$("#printBtn").addEventListener("click",()=>window.print());
+document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  try {
+    const jsPDFClass = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+    if (!jsPDFClass) {
+      alert("Error: jsPDF no esta cargado.");
+      return;
+    }
+
+    const doc = new jsPDFClass({
+      orientation: "p",
+      unit: "mm",
+      format: "a4"
+    });
+
+    const total = Number(typeof grandTotal === "function" ? grandTotal() : (grandTotal || 0));
+    const subtotal = (total / 1.18).toFixed(2);
+    const igv = (total - subtotal).toFixed(2);
+    const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
+    const servicio = (typeof catalog !== "undefined" && typeof state !== "undefined" && catalog?.[state?.project]?.label) || "Servicio Web Especializado";
+
+    const pintarHeader = (titulo) => {
+      doc.setFillColor(15, 23, 42); 
+      doc.rect(0, 0, 210, 20, "F");
+      doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(11);
+      doc.text("TUPLUS SOLUCIONES", 14, 13);
+      doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(203, 213, 225);
+      doc.text(titulo, 196, 13, { align: "right" });
+    };
+
+    
+    pintarHeader("RESUMEN EJECUTIVO (1/2)");
+
+    const nombreCliente = document.getElementById("nombre")?.value?.trim() || "Particular";
+    const empresaCliente = document.getElementById("empresa")?.value?.trim() || "—";
+
+    doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(10);
+    doc.text(`Cliente: ${nombreCliente}`, 14, 30);
+    doc.text(`Empresa: ${empresaCliente}`, 14, 36);
+    doc.text(`Fecha: ${new Date().toLocaleDateString("es-PE")}`, 196, 30, { align: "right" });
+
+    
+    let y = 44;
+    doc.setFillColor(15, 23, 42);
+    doc.rect(14, y, 182, 8, "F");
+    doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9.5);
+    doc.text("Concepto", 18, y + 5.5);
+    doc.text("Modalidad", 95, y + 5.5);
+    doc.text("Total", 192, y + 5.5, { align: "right" });
+
+    
+    const filas = [
+      { c1: servicio, c2: "Desarrollo & Despliegue", c3: `${moneda} ${subtotal}`, isTotal: false },
+      { c1: "Subtotal (Base Imponible)", c2: "—", c3: `${moneda} ${subtotal}`, isTotal: false },
+      { c1: "IGV (18%)", c2: "—", c3: `${moneda} ${igv}`, isTotal: false },
+      { c1: "TOTAL ESTIMADO", c2: "—", c3: `${moneda} ${total.toFixed(2)}`, isTotal: true }
+    ];
+
+    y += 8;
+    filas.forEach((f) => {
+      if (f.isTotal) {
+        doc.setFillColor(15, 23, 42);
+        doc.rect(14, y, 182, 8, "F");
+        doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9.5);
+      } else {
+        doc.setFillColor(248, 250, 252);
+        doc.rect(14, y, 182, 8, "F");
+        doc.setDrawColor(226, 232, 240);
+        doc.line(14, y + 8, 196, y + 8);
+        doc.setTextColor(15, 23, 42).setFont("helvetica", "normal").setFontSize(9);
+      }
+      doc.text(f.c1, 18, y + 5.5);
+      doc.text(f.c2, 95, y + 5.5);
+      doc.text(f.c3, 192, y + 5.5, { align: "right" });
+      y += 8;
+    });
+
+    
+    const yBar = y + 14;
+    doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(15, 23, 42);
+    doc.text("Distribución de Inversión (Neto vs IGV):", 14, yBar);
+    doc.setFillColor(37, 99, 235);
+    doc.rect(14, yBar + 4, 155, 6, "F");
+    doc.setFillColor(203, 213, 225);
+    doc.rect(169, yBar + 4, 27, 6, "F");
+
+    
+    doc.addPage();
+    pintarHeader("HOJA DE RUTA Y PRÓXIMOS PASOS (2/2)");
+
+    let y2 = 30;
+    
+    doc.setFillColor(37, 99, 235);
+    doc.rect(14, y2, 182, 8, "F");
+    doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9);
+    doc.text("Fase", 18, y2 + 5.5);
+    doc.text("Descripción del Entregable", 65, y2 + 5.5);
+
+    const fases = [
+      ["1. Planificación & Diseño", "Estructura, diseño responsive y definición de contenidos."],
+      ["2. Desarrollo & Código", "Maquetación funcional, lógica e interactividad."],
+      ["3. Pruebas & Calidad", "Pruebas multidispositivo, rendimiento y revisión final."],
+      ["4. Publicación", "Configuración de hosting, dominio y despliegue."]
+    ];
+
+    y2 += 8;
+    fases.forEach(([fase, desc]) => {
+      doc.setFillColor(248, 250, 252);
+      doc.rect(14, y2, 182, 8, "F");
+      doc.setDrawColor(226, 232, 240);
+      doc.line(14, y2 + 8, 196, y2 + 8);
+      doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(8.5);
+      doc.text(fase, 18, y2 + 5.5);
+      doc.setFont("helvetica", "normal").setTextColor(71, 85, 105);
+      doc.text(desc, 65, y2 + 5.5);
+      y2 += 8;
+    });
+
+    const yPasos = y2 + 14;
+    doc.setFont("helvetica", "bold").setFontSize(10).setTextColor(15, 23, 42);
+    doc.text("Próximos Pasos para Iniciar:", 14, yPasos);
+    doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(71, 85, 105);
+    doc.text("1. Confirmar la aceptación formal de esta cotización.", 14, yPasos + 7);
+    doc.text("2. Compartir logotipo y material gráfico de la empresa.", 14, yPasos + 13);
+    doc.text("3. Agendar reunión.", 14, yPasos + 19);
+
+    
+    doc.save(`Resumen_Cotizacion_${nombreCliente}.pdf`);
+
+  } catch (err) {
+    console.error("Error al generar PDF:", err);
+    alert("Error al generar: " + (err?.message || err));
+  }
+});
+
+
+(document.getElementById("printBtn") || document.querySelector("#printBtn"))?.addEventListener("click", () => {
+  const jsPDFClass = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+  if (!jsPDFClass) {
+    alert("Error: jsPDF no está cargado.");
+    return;
+  }
+
+  const doc = new jsPDFClass({
+    orientation: "p",
+    unit: "mm",
+    format: "a4"
+  });
+
+  const total = Number(typeof grandTotal === "function" ? grandTotal() : (grandTotal || 0));
+  const subtotal = (total / 1.18).toFixed(2);
+  const igv = (total - subtotal).toFixed(2);
+  const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
+  const numDoc = "F001-" + Math.floor(100000 + Math.random() * 900000);
+
+  
+  doc.setFillColor(15, 23, 42); 
+  doc.rect(0, 0, 210, 28, "F");
+  doc.setFillColor(37, 99, 235); 
+  doc.rect(0, 28, 210, 1.5, "F");
+
+  
+  doc.setFillColor(255, 255, 255);
+  doc.roundedRect(14, 5, 48, 18, 2, 2, "F");
+
+  const logo = document.querySelector(".brand-light") || document.querySelector("header img") || document.querySelector(".bird-core img");
+  if (logo && logo.complete && logo.naturalWidth > 0) {
+    try {
+      doc.addImage(logo, "PNG", 16, 7, 44, 14);
+    } catch (e) {
+      console.warn("Logo no cargo:", e);
+    }
+  }
+
+  
+  doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(13);
+  doc.text("TUPLUS SOLUCIONES", 70, 14);
+  doc.setFont("helvetica", "normal").setFontSize(8.5).setTextColor(203, 213, 225);
+  doc.text("Servicios Digitales & Desarrollo de Software", 70, 20);
+
+  
+  const yCard = 37;
+  doc.setFillColor(248, 250, 252); 
+  doc.roundedRect(14, yCard, 182, 25, 2, 2, "F");
+
+  const nombreCliente = document.getElementById("nombre")?.value?.trim() || "Particular";
+  const empresaCliente = document.getElementById("empresa")?.value?.trim() || "—";
+  const fechaHoy = new Date().toLocaleDateString("es-PE");
+
+  doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9);
+  doc.text(`COMPROBANTE: ${numDoc}`, 20, yCard + 7);
+  doc.text(`FECHA: ${fechaHoy}`, 190, yCard + 7, { align: "right" });
+
+  doc.text("Cliente / Partner:", 20, yCard + 14);
+  doc.setFont("helvetica", "normal").setTextColor(71, 85, 105);
+  doc.text(nombreCliente, 58, yCard + 14);
+
+  doc.setFont("helvetica", "bold").setTextColor(15, 23, 42);
+  doc.text("Empresa / Razón Social:", 20, yCard + 20);
+  doc.setFont("helvetica", "normal").setTextColor(71, 85, 105);
+  doc.text(empresaCliente, 68, yCard + 20);
+
+  
+  let servicio = (typeof catalog !== "undefined" && typeof state !== "undefined" && catalog?.[state?.project]?.label) || "Servicio Web Especializado";
+  if (servicio.toLowerCase().includes("landing")) {
+    servicio = "Diseño y Desarrollo Web";
+  } else if (servicio.toLowerCase().includes("corporativo")) {
+    servicio = "Desarrollo Web - Sitio Corporativo Profesional";
+  }
+
+  let yTable = 68;
+
+  
+  doc.setFillColor(15, 23, 42);
+  doc.rect(14, yTable, 182, 9, "F");
+  doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9.5);
+  doc.text("Concepto", 18, yTable + 6);
+  doc.text("Cantidad", 120, yTable + 6, { align: "center" });
+  doc.text("Precio", 152, yTable + 6, { align: "right" });
+  doc.text("Total", 192, yTable + 6, { align: "right" });
+
+  
+  yTable += 9;
+  doc.setFillColor(255, 255, 255);
+  doc.rect(14, yTable, 182, 10, "F");
+  doc.setDrawColor(241, 245, 249);
+  doc.line(14, yTable + 10, 196, yTable + 10);
+
+  doc.setTextColor(51, 65, 85).setFont("helvetica", "normal").setFontSize(9);
+  doc.text(servicio, 18, yTable + 6.5);
+  doc.text("1", 120, yTable + 6.5, { align: "center" });
+  doc.text(`${moneda} ${subtotal}`, 152, yTable + 6.5, { align: "right" });
+  doc.text(`${moneda} ${subtotal}`, 192, yTable + 6.5, { align: "right" });
+
+ 
+  yTable += 10;
+  doc.setFillColor(255, 255, 255);
+  doc.rect(14, yTable, 182, 10, "F");
+  doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9.5);
+  doc.text("Subtotal", 18, yTable + 6.5);
+  doc.text(`${moneda} ${subtotal}`, 192, yTable + 6.5, { align: "right" });
+
+  
+  yTable += 10;
+  doc.setFillColor(255, 255, 255);
+  doc.rect(14, yTable, 182, 10, "F");
+  doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9.5);
+  doc.text("IGV (18%)", 18, yTable + 6.5);
+  doc.text(`${moneda} ${igv}`, 192, yTable + 6.5, { align: "right" });
+
+  
+  yTable += 10;
+  doc.setFillColor(15, 23, 42);
+  doc.rect(14, yTable, 182, 10, "F");
+  doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9.5);
+  doc.text("TOTAL A PAGAR", 18, yTable + 6.5);
+  doc.text(`${moneda} ${total.toFixed(2)}`, 192, yTable + 6.5, { align: "right" });
+
+  
+  const terminosY = yTable + 18;
+
+  doc.setFillColor(248, 250, 252);
+  doc.roundedRect(14, terminosY, 182, 22, 2, 2, "F");
+
+  doc.setFont("helvetica", "bold").setFontSize(8.5).setTextColor(15, 23, 42);
+  doc.text("Información Adicional:", 18, terminosY + 6);
+
+  doc.setFont("helvetica", "normal").setFontSize(8).setTextColor(100, 116, 139);
+  doc.text("• Gracias por confiar en nosotros para el desarrollo de este proyecto.", 18, terminosY + 11);
+  doc.text("• Para consultas, avances de proyecto o soporte, por WhatsApp.", 18, terminosY + 16);
+
+  
+  window.open(URL.createObjectURL(doc.output("blob")), "_blank");
+});
 
 /* ---- Pagos: pasarela y crypto ---- */
 const payCfg=(window.TUPLUS_CONFIG&&window.TUPLUS_CONFIG.payments)||{};
