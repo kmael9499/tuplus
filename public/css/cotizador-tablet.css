@@ -1,0 +1,98 @@
+/* TUPLUS cotizador: arreglo para tablet y celular (aditivo).
+   En pantallas de hasta 1100 px apila el texto, el colibrí y el cuadro de moneda
+   para que no se encimen. Debe cargarse DESPUÉS de los demás CSS del cotizador.
+   Para desactivarlo, quita su enlace en cotizador.html. */
+
+@media (max-width: 1100px) {
+  /* Una sola columna: texto arriba, colibrí y moneda debajo */
+  .hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 28px !important;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* El escenario fluye debajo del texto, sin salirse hacia él */
+  .hero-stage {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0 !important;
+    margin: 0 auto;
+    z-index: 1;
+  }
+
+  /* El colibrí ocupa su propio espacio y no tapa el texto ni el cuadro de moneda */
+  .hummingbird-scene {
+    position: relative !important;
+    width: min(100%, 420px) !important;
+    height: clamp(220px, 46vw, 340px) !important;
+    margin: 0 auto !important;
+    flex: 0 0 auto;
+  }
+
+  /* El cuadro de país y moneda queda centrado, completo y por encima */
+  .currency-control {
+    position: relative !important;
+    z-index: 3;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 560px;
+    margin: 0 auto !important;
+    box-sizing: border-box;
+  }
+
+  .currency-control .market-field,
+  .currency-control select {
+    max-width: 100%;
+  }
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+  .hummingbird-scene {
+    height: clamp(180px, 56vw, 260px) !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero,
+  .hero-stage {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  .currency-control {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    margin-top: 24px !important;
+  }
+
+  .stage-caption {
+    position: static !important;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .hummingbird-scene {
+    height: clamp(160px, 32vw, 230px) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hummingbird-scene {
+    height: 150px !important;
+  }
+}

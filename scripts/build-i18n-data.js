@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const frontend = path.resolve(__dirname, '..');
+const frontend = path.resolve(__dirname, '..', 'public');
 const sourcePath = path.join(frontend, 'js', 'i18n-translations.json');
 const outputPath = path.join(frontend, 'js', 'i18n-data.js');
 const translations = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));

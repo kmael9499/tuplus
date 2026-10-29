@@ -231,7 +231,7 @@ html:not([data-theme="dark"]) body .ab2 .ab2-values svg{color:var(--gold-ink)}
 .fq2-panel{overflow:hidden;border:1px solid var(--v2-line-hi);border-radius:28px;background:var(--v2-panel);box-shadow:var(--v2-shadow),0 0 90px var(--v2-glow)}
 .fq2-top,.ct2-phone-top{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--v2-line);background:rgba(220,188,125,.06)}
 .fq2-top b,.ct2-phone-top b{font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--ink)}
-.fq2-avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;border:1px solid rgba(220,188,125,.6);background:url("colibri.png") center/68% no-repeat,radial-gradient(circle,#173a52,#0a1a26)}
+.fq2-avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;border:1px solid rgba(220,188,125,.6);background:url("../colibri.png") center/68% no-repeat,radial-gradient(circle,#173a52,#0a1a26)}
 .fq2-online{width:8px;height:8px;border-radius:50%;background:#4fd18b;box-shadow:0 0 0 4px rgba(79,209,139,.18)}
 .fq2-menu{display:flex;gap:4px;margin-left:auto}
 .fq2-menu i{width:4px;height:4px;border-radius:50%;background:var(--v2-muted)}
@@ -249,7 +249,7 @@ html:not([data-theme="dark"]) body .ab2 .ab2-values svg{color:var(--gold-ink)}
  border:1px solid rgba(255,255,255,.08);border-radius:20px 20px 20px 5px;background:rgba(255,255,255,.06);color:var(--v2-text);font-size:14px;line-height:1.75}
 html:not([data-theme="dark"]) body .fq2 .faq-list details p{background:#f4efe4;border-color:rgba(158,116,46,.15)}
 :root body .fq2 .faq-list details p::before{content:"";position:absolute;left:-50px;bottom:0;width:36px;height:36px;border-radius:50%;
- border:1px solid rgba(220,188,125,.6);background:url("colibri.png") center/66% no-repeat,radial-gradient(circle,#173a52,#0a1a26)}
+ border:1px solid rgba(220,188,125,.6);background:url("../colibri.png") center/66% no-repeat,radial-gradient(circle,#173a52,#0a1a26)}
 
 /* ============ 05 / CONTACTO ============ */
 :root body .ct2 .ct2-panel{position:relative;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(32px,5vw,64px);align-items:start;

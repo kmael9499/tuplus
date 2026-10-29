@@ -1,11 +1,11 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
-const base=require('node:path').resolve(__dirname,'..')+'/';
+const base=require('node:path').resolve(__dirname,'..','public')+'/';
 const store=new Map(), elements=new Map();
 const document={documentElement:{lang:'es'},querySelector(selector){if(!elements.has(selector))elements.set(selector,{textContent:'',innerHTML:'',value:'',checked:false});return elements.get(selector)}};
 const context=vm.createContext({window:{},document,Intl,Date,setTimeout,clearTimeout,AbortController,console,localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)}});
-for(const name of ['config.js','countries.js','currencies.js','js/i18n-data.js','js/quote-translations.js'])vm.runInContext(fs.readFileSync(base+name,'utf8'),context);
+for(const name of ['js/config.js','js/countries.js','js/currencies.js','js/i18n-data.js','js/quote-translations.js'])vm.runInContext(fs.readFileSync(base+name,'utf8'),context);
 vm.runInContext(`window.TUPLUS_I18N={locale:'es',t:x=>x};`,context);
-const source=fs.readFileSync(base+'cotizador.js','utf8');
+const source=fs.readFileSync(base+'js/cotizador.js','utf8');
 vm.runInContext(source.slice(0,source.indexOf('$("#quoteForm").addEventListener')),context);
 const run=s=>vm.runInContext(s,context);
 let checks=0;
@@ -49,4 +49,12 @@ run('load()');eq(run('state.country'),'PE');eq(run('state.currency'),'PEN');eq(r
 run('setCountry("CL");setCountry("INVALID")');eq(run('state.country'),'CL');eq(run('state.currency'),'CLP');
 store.set('tuplusQuote','{invalid');run('load()');eq(run('state.currency'),'CLP');
 run('window.TUPLUS_I18N.locale="ja"');eq(run('countries.name("PE")'),'ペルー');
+// Descuentos: cupón y descuento por fecha no se suman, gana el mayor; sin descuento el total no cambia
+run(`Object.assign(state,{project:'website',pages:5,contentPro:false,design:'clean',support:'30',rush:false,hosting:false,tax:false});state.features=new Set();`);
+const base0=run('grandTotal()');
+run(`promo.campaign={nombre:'Navidad',tipo:'porcentaje',valor:15};`);eq(run('grandTotal()'),Math.round(base0-base0*0.15));
+run(`promo.coupon={codigo:'X10',tipo:'porcentaje',valor:10};`);eq(run('discountInfo().origin'),'campana');
+run(`promo.coupon={codigo:'X30',tipo:'porcentaje',valor:30};`);eq(run('discountInfo().origin'),'cupon');eq(run('discountInfo().amount'),Math.round(base0*30)/100);
+run(`promo.coupon={codigo:'GRANDE',tipo:'monto',valor:99999};`);eq(run('grandTotal()'),0);
+run(`promo.coupon=null;promo.campaign=null;`);eq(run('grandTotal()'),base0);
 console.log(`${checks} comprobaciones correctas: tarifas originales, extras, IGV, 20 monedas, 27 opciones de país, moneda automática/manual, migración, persistencia, datos inválidos, resumen, WhatsApp y 7 traducciones.`);

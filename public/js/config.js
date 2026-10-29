@@ -1,6 +1,8 @@
 /* Configuración comercial centralizada. Validar tarifas y canal antes de publicar. */
 window.TUPLUS_CONFIG = Object.freeze({
-  quoteBackendEnabled: false, // Activar solo con PHP/MySQL configurados.
+  quoteBackendEnabled: true, // Guarda cotizaciones y valida cupones en el panel ERP.
+  // Panel ERP (Render). Sin esta URL la web funciona igual, sin cupones ni descuentos por fecha.
+  apiUrl: 'https://tuplusadminpanel.onrender.com',
   whatsapp: '51916828870',
   // Pagos: completa estos datos antes de publicar.
   payments: {
