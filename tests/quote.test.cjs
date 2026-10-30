@@ -28,7 +28,7 @@ store.set('tuplusQuote',JSON.stringify({project:'<invalid>',features:['<script>'
 run('load()');eq(run('state.pages'),20);eq(run('state.currency'),'PEN');eq(run('state.features.size'),1);assert.ok(Number.isFinite(run('grandTotal()')));checks++;
 for(const [id,value]of Object.entries({nombre:'Prueba',empresa:'Negocio',pais:'PE',email:'prueba@example.com',telefono:'+51 900000000',mensajeCliente:'Texto con & y ñ'}))document.querySelector('#'+id).value=value;
 run('state.currency="EUR"');const quote=run('quoteText()');assert.ok(quote.includes('EUR')&&quote.includes('Perú')&&quote.includes('IGV'));checks++;
-eq(new URL(run('whatsappUrl()')).searchParams.get('text'),quote);
+eq(new URL(run('whatsappUrl()')).searchParams.get('text'),run('whatsappMessage()'));
 for(const locale of ['en','pt','fr','de','ru','zh','ja']){
  run(`window.TUPLUS_I18N.t=x=>window.TUPLUS_TRANSLATIONS['${locale}'][x]||x;`);
  run('renderSummary()');assert.ok(!elements.get('#summaryPriceLabel').textContent.includes('INVERSIÓN ESTIMADA'));checks++;

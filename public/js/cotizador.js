@@ -254,8 +254,19 @@ function quoteText(){
     t('La cifra es orientativa y se confirma al validar el alcance final.')
   ].join('\n');
 }
+function whatsappMessage(){
+  const nombre = $("#nombre").value.trim();
+  const proyecto = catalog[state.project].label;
+  const total = money(grandTotal());
+  return [
+    `Hola TUPLUS, armé una cotización para ${proyecto}.`,
+    `Inversión estimada: ${total}.`,
+    nombre ? `Soy ${nombre}.` : '',
+    '¿Podemos conversar para afinar el alcance y la propuesta final?'
+  ].filter(Boolean).join('\n');
+}
 function whatsappUrl(){
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText())}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage())}`;
 }
 function downloadTxt(){
   if(!validateContact()) return;
