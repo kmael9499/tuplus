@@ -18,10 +18,31 @@
   <link rel="stylesheet" href="css/caminos.css?v=3" />
 
   <link rel="stylesheet" href="css/red-socios-3d.css?v=20261029-7" />
+  <link rel="stylesheet" href="css/socios-pulido.css?v=3" />
+    <link rel="stylesheet" href="css/colibri.css?v=2" />
   <script is:inline src="js/theme.js?v=20261011-2"></script>
   <script is:inline defer src="js/encabezado.js?v=20261028-1"></script>
+    <script is:inline defer src="js/socios-3d.js?v=1"></script>
 </head>
 <body class="partners-page">
+       <style is:inline>
+    .cb-png{position:relative;width:100%;filter:drop-shadow(0 0 8px rgba(240,217,156,.55)) drop-shadow(0 10px 12px rgba(0,0,0,.2));animation:cb-cab 1.6s ease-in-out infinite alternate}
+    .cb-png img{display:block;width:100%;height:auto}
+    .cb-png .cb-ala-png{position:absolute;left:0;top:0;clip-path:polygon(0 0,49% 0,49% 52%,35% 57%,22% 53%,0 40%);transform-origin:48% 40%;animation:cb-bat .16s ease-in-out infinite alternate}
+    .cb-png .cb-cuerpo-png{clip-path:polygon(49% 0,100% 0,100% 100%,0 100%,0 40%,22% 53%,35% 57%,49% 52%)}
+    @keyframes cb-bat{from{transform:rotate(-14deg)}to{transform:rotate(24deg)}}
+    @keyframes cb-cab{from{rotate:-4deg}to{rotate:4deg}}
+  </style>
+  <div class="colibri-vuelo" aria-hidden="true"><div class="colibri-ola"><div class="cb-png"><img class="cb-cuerpo-png" src="colibri.png" alt=""><img class="cb-ala-png" src="colibri.png" alt=""></div></div></div>
+    <style is:inline>
+    .colibri-vuelo.colibri-vuelo-2{top:28vh;--cw:clamp(80px,9vw,130px);animation-delay:11s}
+    .colibri-vuelo-2 .colibri-ola{animation-delay:-1.6s}
+    .cb-png.cb-azul{filter:drop-shadow(0 0 6px rgba(240,217,156,.45)) drop-shadow(0 8px 10px rgba(18,44,61,.3))}
+    .cb-azul .cb-cuerpo-az{position:relative;clip-path:polygon(49% 0,100% 0,100% 100%,0 100%,0 40%,22% 53%,35% 57%,49% 52%)}
+    .cb-azul .cb-cuerpo-az img{display:block;width:100%;height:auto;opacity:0}
+    .cb-azul .cb-cuerpo-az::before{content:"";position:absolute;inset:0;background:#122c3d;-webkit-mask:url(colibri.png) center/100% 100% no-repeat;mask:url(colibri.png) center/100% 100% no-repeat}
+  </style>
+  <div class="colibri-vuelo colibri-vuelo-2" aria-hidden="true"><div class="colibri-ola"><div class="cb-png cb-azul"><div class="cb-cuerpo-az"><img src="colibri.png" alt=""></div><img class="cb-ala-png" src="colibri.png" alt=""></div></div></div>
   <!-- Filtro selectivo del logo para modo oscuro: aclara las partes azul marino sin convertir el pájaro dorado en blanco. -->
   <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;pointer-events:none" xmlns="http://www.w3.org/2000/svg">
     <defs>
