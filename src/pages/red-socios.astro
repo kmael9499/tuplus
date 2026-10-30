@@ -1,206 +1,606 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Red de Socios Comerciales | TUPLUS</title>
-  <meta name="description" content="Conoce la Red de Socios Comerciales de TUPLUS, revisa la disponibilidad en tu territorio y completa tu postulación." />
-  <meta name="theme-color" content="#122c3d" />
-  <meta property="og:title" content="Red de Socios Comerciales | TUPLUS" />
-  <meta property="og:description" content="Crezcamos juntos. Revisa los requisitos, beneficios y disponibilidad territorial de la Red de Socios Comerciales TUPLUS." />
-  <meta property="og:type" content="website" />
-  <link rel="icon" href="imagenes/marca/simbolo-oscuro.png" />
-  <link rel="stylesheet" href="css/style.css?v=20261011-4" />
-  <link rel="stylesheet" href="css/encabezado.css?v=20261028-1" />
-  <link rel="stylesheet" href="css/theme.css?v=20261011-2" />
-  <link rel="stylesheet" href="css/red-socios.css?v=20261028-5" />
-  <link rel="stylesheet" href="css/cta-buttons.css?v=20261028-2" />
-  <script is:inline src="js/theme.js?v=20261011-2"></script>
-  <script is:inline defer src="js/encabezado.js?v=20261028-1"></script>
-  <script is:inline defer src="js/red-socios.js?v=20261028-3"></script>
-</head>
-<body class="partners-page">
-  <svg aria-hidden="true" focusable="false" height="0" style="position:absolute;pointer-events:none" width="0" xmlns="http://www.w3.org/2000/svg"><defs><filter id="brand-night-filter" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 -3 -3 0 2" result="navyMask"/><feComposite in="navyMask" in2="SourceGraphic" operator="in" result="clippedMask"/><feFlood flood-color="#f1f1f1" result="lightInk"/><feComposite in="lightInk" in2="clippedMask" operator="in" result="lightNavy"/><feComposite in="lightNavy" in2="SourceGraphic" operator="over"/></filter></defs></svg>
-  <a class="skip" href="#contenido">Saltar al contenido</a>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html" aria-label="TUPLUS, inicio"><span class="brand-art"><img class="brand-light" src="imagenes/marca/logo-claro.png" alt="TUPLUS" width="2172" height="724"><img class="brand-dark" src="imagenes/marca/logo-claro.png" alt="TUPLUS" width="2172" height="724"></span></a>
-      <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span></button>
-      <nav id="main-nav" aria-label="Navegación principal">
-        <a href="index.html">Servicios para clientes</a>
-        <a class="nav-quote" aria-current="page" href="red-socios.html">Red de socios <span aria-hidden="true">↗</span></a>
-      </nav>
-      <button class="theme-toggle" type="button" aria-label="Modo oscuro" aria-pressed="false"><span aria-hidden="true">☾</span> Tema</button>
-    </div>
-  </header>
-  <button class="menu-overlay" type="button" aria-label="Cerrar menú" hidden></button>
-  <main id="contenido" tabindex="-1">
-    <section class="partner-hero section">
-      <div class="container partner-hero-grid">
-        <div>
-          <p class="partner-eyebrow">TUPLUS · RED DE SOCIOS COMERCIALES</p>
-          <h1>Crezcamos <em>juntos.</em></h1>
-          <p class="partner-lead">Conectamos con profesionales y empresas que quieren acercar soluciones digitales a más negocios de su comunidad.</p>
-          <a class="partner-button" href="#territorio">Revisar mi territorio <span aria-hidden="true">↓</span></a>
-        </div>
-        <aside class="partner-hero-card">
-          <span class="partner-card-icon" aria-hidden="true">✳</span>
-          <h2>Primero, dinos dónde quieres participar</h2>
-          <p>Consulta la disponibilidad de tu territorio y completa tu postulación en ocho pasos.</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="application.62">Postulación Partner | TUPLUS</title>
+    <meta
+      name="description"
+      content="Prepara tu perfil profesional para la Red Partner de TUPLUS."
+    />
+    <meta name="theme-color" content="#122c3d" />
+    <meta property="og:title" content="Red de Socios Comerciales | TUPLUS" />
+    <meta
+      property="og:description"
+      content="Prepara tu perfil profesional para la Red Partner de TUPLUS."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="imagenes/marca/simbolo-oscuro.png" />
+    <link rel="stylesheet" href="css/style.css?v=20261011-4" />
+    <link rel="stylesheet" href="css/encabezado.css?v=20261028-1" />
+    <link rel="stylesheet" href="css/theme.css?v=20261011-2" />
+    <link rel="stylesheet" href="css/red-socios.css?v=20261028-5" />
+    <link rel="stylesheet" href="css/cta-buttons.css?v=20261028-2" />
+    <script is:inline src="js/theme.js?v=20261011-2"></script>
+    <script is:inline defer src="js/encabezado.js?v=20261028-1"></script>
+    <link rel="stylesheet" href="css/partner-application.css?v=8" />
+    <script is:inline defer src="js/i18n-data.js?v=20261015-3"></script>
+    <script
+      is:inline
+      defer
+      src="js/partner-application-translations.js?v=10"
+    ></script>
+    <script is:inline defer src="js/partner-territory.js?v=9"></script><script is:inline defer src="js/i18n.js?v=9"></script>
+    <script is:inline defer src="js/partner-application.js?v=10"></script>
+  </head>
+  <body class="partners-page partner-application">
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      height="0"
+      style="position: absolute; pointer-events: none"
+      width="0"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <filter
+          id="brand-night-filter"
+          color-interpolation-filters="sRGB"
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+        >
+          <feColorMatrix
+            in="SourceGraphic"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 -3 -3 0 2"
+            result="navyMask"
+          />
+          <feComposite
+            in="navyMask"
+            in2="SourceGraphic"
+            operator="in"
+            result="clippedMask"
+          />
+          <feFlood flood-color="#f1f1f1" result="lightInk" />
+          <feComposite
+            in="lightInk"
+            in2="clippedMask"
+            operator="in"
+            result="lightNavy"
+          />
+          <feComposite in="lightNavy" in2="SourceGraphic" operator="over" />
+        </filter>
+      </defs>
+    </svg>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="index.html" aria-label="TUPLUS, inicio"
+          ><span class="brand-art"
+            ><img
+              class="brand-light"
+              src="imagenes/marca/logo-claro.png"
+              alt="TUPLUS"
+              width="2172"
+              height="724" /><img
+              class="brand-dark"
+              src="imagenes/marca/logo-claro.png"
+              alt="TUPLUS"
+              width="2172"
+              height="724" /></span
+        ></a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-controls="main-nav"
+          aria-expanded="false"
+          aria-label="Abrir menú"
+        >
+          <span></span><span></span>
+        </button>
+        <nav id="main-nav" aria-label="Navegación principal">
+          <a href="index.html">Servicios para clientes</a>
+          <a href="partner.html">Conoce la Red Partner</a>
+          <a class="nav-quote" aria-current="page" href="red-socios.html"
+            >Red de socios <span aria-hidden="true">↗</span></a
+          >
+        </nav>
+        <label class="language-picker" translate="no"
+          ><span class="sr-only">Idioma del sitio</span
+          ><select id="site-language" aria-label="Idioma del sitio">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="zh">简体中文</option>
+            <option value="ru">Русский</option>
+            <option value="pt">Português</option>
+            <option value="fr">Français</option>
+            <option value="ja">日本語</option>
+            <option value="de">Deutsch</option>
+          </select></label
+        ><button
+          class="theme-toggle"
+          type="button"
+          aria-label="Modo oscuro"
+          aria-pressed="false"
+        >
+          <span aria-hidden="true">☾</span> Tema
+        </button>
+      </div>
+    </header>
+    <button
+      class="menu-overlay"
+      type="button"
+      aria-label="Cerrar menú"
+      hidden
+    ></button>
+    <main id="contenido" tabindex="-1">
+      <section class="pa-intro container">
+        <p class="partner-eyebrow">TUPLUS · PARTNER</p>
+        <h1 data-i18n="application.0">Tu próxima etapa empieza aquí.</h1>
+        <p data-i18n="application.1">
+          Cuéntanos quién eres, qué mercado conoces y cómo te gustaría crecer
+          con TUPLUS.
+        </p>
+      </section>
+      <span id="territorio"></span>
+      <section id="postulacion" class="container pa-layout">
+        <aside class="pa-sidebar">
+          <img src="colibri.png" alt="" width="64" height="64" />
+          <h2 data-i18n="application.59">Tu ruta hacia la Red Partner</h2>
+          <ol>
+            <li>
+              <button type="button" data-go="0">
+                <span>01</span><span data-i18n="application.2">Perfil</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-go="1" disabled>
+                <span>02</span><span data-i18n="application.3">Mercado</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-go="2" disabled>
+                <span>03</span
+                ><span data-i18n="application.4">Plan comercial</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" data-go="3" disabled>
+                <span>04</span><span data-i18n="application.5">Revisión</span>
+              </button>
+            </li>
+          </ol>
+          <p data-i18n="application.60">
+            Una conversación empieza con un buen perfil.
+          </p>
+          <a href="partner.html">← Red Partner</a>
         </aside>
-      </div>
-    </section>
-
-    <section class="partner-section partner-territory" id="territorio" aria-labelledby="territory-title">
-      <div class="container territory-layout">
-        <div>
-          <p class="partner-eyebrow">DISPONIBILIDAD</p>
-          <h2 id="territory-title">¿Dónde quieres crecer?</h2>
-          <p>Elige un territorio para conocer su estado y saber si puedes iniciar tu postulación.</p>
-          <label class="territory-label" for="country-select">País</label>
-          <select id="country-select" name="territoryCountry" form="partner-form" required>
-            <option value="">Selecciona un país</option>
-            <option value="AG" data-api-name="Antigua and Barbuda">Antigua y Barbuda</option>
-            <option value="AR" data-api-name="Argentina">Argentina</option>
-            <option value="BS" data-api-name="Bahamas">Bahamas</option>
-            <option value="BB" data-api-name="Barbados">Barbados</option>
-            <option value="BZ" data-api-name="Belize">Belice</option>
-            <option value="BO" data-api-name="Bolivia">Bolivia</option>
-            <option value="BR" data-api-name="Brazil">Brasil</option>
-            <option value="CA" data-api-name="Canada">Canadá</option>
-            <option value="CL" data-api-name="Chile">Chile</option>
-            <option value="CO" data-api-name="Colombia">Colombia</option>
-            <option value="CR" data-api-name="Costa Rica">Costa Rica</option>
-            <option value="CU" data-api-name="Cuba">Cuba</option>
-            <option value="DM" data-api-name="Dominica">Dominica</option>
-            <option value="DO" data-api-name="Dominican Republic">República Dominicana</option>
-            <option value="EC" data-api-name="Ecuador">Ecuador</option>
-            <option value="SV" data-api-name="El Salvador">El Salvador</option>
-            <option value="US" data-api-name="United States">Estados Unidos</option>
-            <option value="GD" data-api-name="Grenada">Granada</option>
-            <option value="GT" data-api-name="Guatemala">Guatemala</option>
-            <option value="GY" data-api-name="Guyana">Guyana</option>
-            <option value="HT" data-api-name="Haiti">Haití</option>
-            <option value="HN" data-api-name="Honduras">Honduras</option>
-            <option value="JM" data-api-name="Jamaica">Jamaica</option>
-            <option value="MX" data-api-name="Mexico">México</option>
-            <option value="NI" data-api-name="Nicaragua">Nicaragua</option>
-            <option value="PA" data-api-name="Panama">Panamá</option>
-            <option value="PY" data-api-name="Paraguay">Paraguay</option>
-            <option value="PE" data-api-name="Peru">Perú</option>
-            <option value="KN" data-api-name="Saint Kitts and Nevis">San Cristóbal y Nieves</option>
-            <option value="VC" data-api-name="Saint Vincent and the Grenadines">San Vicente y las Granadinas</option>
-            <option value="LC" data-api-name="Saint Lucia">Santa Lucía</option>
-            <option value="SR" data-api-name="Suriname">Surinam</option>
-            <option value="TT" data-api-name="Trinidad and Tobago">Trinidad y Tobago</option>
-            <option value="UY" data-api-name="Uruguay">Uruguay</option>
-            <option value="VE" data-api-name="Venezuela">Venezuela</option>
-          </select>
-          <label class="territory-label" for="territory-select">Ciudad</label>
-          <input id="territory-select" name="territory" form="partner-form" list="city-options" autocomplete="address-level2" placeholder="Primero selecciona un país" disabled required>
-          <datalist id="city-options"></datalist>
-          <p class="city-load-status" id="city-load-status" role="status" aria-live="polite">Selecciona un país para cargar sus ciudades.</p>
-        </div>
-        <div class="territory-result" id="territory-result" aria-live="polite" aria-atomic="true">
-          <span class="territory-status status-open" id="territory-status">Abierta</span>
-          <h3 id="territory-result-title">Lima</h3>
-          <p id="territory-result-copy">Puedes postularte ahora.</p>
-          <a class="partner-button" id="start-application" href="#postulacion">Iniciar postulación <span aria-hidden="true">→</span></a>
-        </div>
-      </div>
-      <div class="container territory-legend" aria-label="Significado de estados">
-        <span><i class="legend-dot status-open"></i>Abierta</span>
-        <span><i class="legend-dot status-limited"></i>Cupos limitados</span>
-        <span><i class="legend-dot status-future"></i>Futura</span>
-        <span><i class="legend-dot status-closed"></i>Cerrada</span>
-        <span><i class="legend-dot status-unavailable"></i>No disponible</span>
-      </div>
-    </section>
-
-    <section class="partner-section application-section" id="postulacion" aria-labelledby="application-title">
-      <div class="container application-shell">
-        <div class="application-heading">
-          <p class="partner-eyebrow">TU POSTULACIÓN</p>
-          <h2 id="application-title">Empecemos por conocerte.</h2>
-        </div>
         <form id="partner-form" novalidate>
-          <div class="stepper" aria-label="Progreso de postulación">
-            <span id="step-count">Paso 1 de 8</span>
-            <div class="progress-track" role="progressbar" aria-label="Avance de la postulación" aria-valuemin="1" aria-valuemax="8" aria-valuenow="1" id="progress"><span></span></div>
+          <div class="pa-progress">
+            <progress
+              id="pa-progress"
+              max="4"
+              value="1"
+              aria-label="Progreso"
+            ></progress
+            ><span id="pa-count" aria-live="polite">01 / 04</span>
           </div>
-          <div class="step-panel" data-step="0" aria-labelledby="step-title-0">
-            <h3 id="step-title-0" tabindex="-1">Datos básicos</h3><p>Cuéntanos cómo podemos comunicarnos contigo.</p>
-            <div class="form-grid">
-              <label>Nombre y apellido <input name="name" autocomplete="name" required maxlength="120"></label>
-              <label>Correo electrónico <input name="email" type="email" autocomplete="email" required maxlength="254"></label>
-              <label>Teléfono <input name="phone" type="tel" autocomplete="tel" required maxlength="40"></label>
-            </div>
-          </div>
-          <div class="step-panel" data-step="1" aria-labelledby="step-title-1" hidden>
-            <h3 id="step-title-1" tabindex="-1">Documentos</h3><p>Ingresa tu documento de identidad y adjunta una foto de cada lado.</p>
-            <div class="form-grid">
-              <label id="dni-label" for="dni-number">DNI <input id="dni-number" name="dniNumber" data-sensitive="true" autocomplete="off" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="8 dígitos" required></label>
-              <label id="ruc-field" for="ruc-number">RUC (opcional) <input id="ruc-number" name="rucNumber" data-sensitive="true" autocomplete="off" inputmode="numeric" maxlength="11" pattern="[0-9]{11}" placeholder="11 dígitos"></label>
-            </div>
-            <div class="document-upload-grid">
-              <div class="document-upload">
-                <label for="dni-front">Foto delantera del documento</label>
-                <input id="dni-front" name="dniFront" data-sensitive="true" type="file" accept="image/jpeg,image/png,image/webp" required>
-                <small>JPG, PNG o WebP · hasta 5 MB</small>
-                <span class="document-file-name" id="dni-front-name" aria-live="polite"></span>
-                <button class="document-remove" id="dni-front-remove" type="button" hidden>Eliminar foto</button>
-              </div>
-              <div class="document-upload">
-                <label for="dni-back">Foto posterior del documento</label>
-                <input id="dni-back" name="dniBack" data-sensitive="true" type="file" accept="image/jpeg,image/png,image/webp" required>
-                <small>JPG, PNG o WebP · hasta 5 MB</small>
-                <span class="document-file-name" id="dni-back-name" aria-live="polite"></span>
-                <button class="document-remove" id="dni-back-remove" type="button" hidden>Eliminar foto</button>
+          <p data-i18n="application.50">Los campos con * son obligatorios.</p>
+          <section class="pa-panel" data-panel="0" aria-labelledby="pa-title-0">
+            <div class="pa-panel-head">
+              <span class="pa-index" aria-hidden="true">01</span>
+              <div>
+                <h2 tabindex="-1" id="pa-title-0" data-i18n="application.2">
+                  Perfil
+                </h2>
+                <p data-i18n="application.51">
+                  Completa tu perfil profesional y tus datos de contacto.
+                </p>
               </div>
             </div>
-            <div class="document-previews" id="document-previews" aria-label="Vista previa de documentos"></div>
+            <div class="pa-fields">
+              <label class="pa-field"
+                ><span data-i18n="application.6">Nombre y apellido</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="fullName"
+                  type="text"
+                  autocomplete="name"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"
+                ><span data-i18n="application.7">Correo electrónico</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"
+                ><span data-i18n="application.8"
+                  >Teléfono con código de país</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"
+                ><span data-i18n="application.9">Participas como</span
+                ><b aria-hidden="true">*</b
+                ><select name="profile" required>
+                  <option value="" data-i18n="application.32">
+                    Selecciona una opción
+                  </option>
+                  <option value="independent" data-i18n="application.10">
+                    Profesional independiente
+                  </option>
+                  <option value="company" data-i18n="application.11">
+                    Empresa o agencia
+                  </option>
+                </select></label
+              >
+              <div class="pa-company" hidden>
+                <label class="pa-field"
+                  ><span data-i18n="application.12"
+                    >Empresa / nombre comercial</span
+                  ><b aria-hidden="true">*</b
+                  ><input
+                    name="company"
+                    type="text"
+                    autocomplete="organization"
+                    disabled
+                    required
+                    maxlength="160"
+                /></label>
+              </div>
+              <label class="pa-field"
+                ><span data-i18n="application.13">Cargo o especialidad</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="role"
+                  type="text"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"
+                ><span data-i18n="application.14"
+                  >Web o LinkedIn (opcional)</span
+                ><input
+                  name="website"
+                  type="url"
+                  autocomplete="url"
+                  maxlength="160"
+              /></label>
+            </div>
+          </section>
+          <section
+            class="pa-panel"
+            data-panel="1"
+            hidden
+            aria-labelledby="pa-title-1"
+          >
+            <div class="pa-panel-head">
+              <span class="pa-index" aria-hidden="true">02</span>
+              <div>
+                <h2 tabindex="-1" id="pa-title-1" data-i18n="application.3">
+                  Mercado
+                </h2>
+                <p data-i18n="application.52">
+                  Describe tu mercado, experiencia y las soluciones que te
+                  interesan.
+                </p>
+              </div>
+            </div>
+            <div class="pa-fields">
+              <label class="pa-field"
+                ><span data-i18n="application.15">País de operación</span
+                ><b aria-hidden="true">*</b
+                ><select name="country" required>
+                  <option value="" data-i18n="application.32">
+                    Selecciona una opción
+                  </option>
+                  <option translate="no" value="PE">Perú</option>
+                  <option translate="no" value="PT">Portugal</option>
+                  <option translate="no" value="ES">España</option>
+                  <option translate="no" value="JP">Japón</option>
+                  <option translate="no" value="US">Estados Unidos</option>
+                  <option translate="no" value="DE">Alemania</option>
+                  <option value="other" data-i18n="application.57">
+                    Otro país
+                  </option>
+                </select></label
+              >
+              <div class="pa-other" hidden>
+                <label class="pa-field"
+                  ><span data-i18n="application.58">Indica el país</span
+                  ><b aria-hidden="true">*</b
+                  ><input
+                    name="otherCountry"
+                    type="text"
+                    disabled
+                    required
+                    maxlength="160"
+                /></label>
+              </div>
+              <label class="pa-field"
+                ><span data-i18n="territory.city">Ciudad</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="city"
+                  type="text"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"><span data-i18n="territory.region">Región / provincia (opcional)</span><input name="region" maxlength="100" autocomplete="address-level1"/></label><label class="pa-field"
+                ><span data-i18n="application.17">Sector de tus clientes</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="sector"
+                  type="text"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"
+                ><span data-i18n="application.18"
+                  >Años de experiencia comercial</span
+                ><b aria-hidden="true">*</b
+                ><select name="experience" required>
+                  <option value="" data-i18n="application.32">
+                    Selecciona una opción
+                  </option>
+                  <option value="0" data-i18n="application.33">
+                    Sin experiencia
+                  </option>
+                  <option value="under1" data-i18n="application.34">
+                    Menos de 1 año
+                  </option>
+                  <option value="1-3" data-i18n="application.35">
+                    1–3 años
+                  </option>
+                  <option value="4-7" data-i18n="application.36">
+                    4–7 años
+                  </option>
+                  <option value="7+" data-i18n="application.37">
+                    Más de 7 años
+                  </option>
+                </select></label
+              ><label class="pa-field"
+                ><span data-i18n="application.19"
+                  >Clientes activos aproximados</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="clients"
+                  type="number"
+                  min="0"
+                  max="100000"
+                  step="1"
+                  required
+                  maxlength="160"
+              /></label>
+              <fieldset class="pa-solutions pa-wide">
+                <legend>
+                  <span data-i18n="application.20"
+                    >Soluciones que quieres ofrecer</span
+                  >
+                  *
+                </legend>
+                <div class="pa-choices">
+                  <label
+                    ><input type="checkbox" name="solutions" value="21" /><span
+                      data-i18n="application.21"
+                      >Web y comercio digital</span
+                    ><span aria-hidden="true">↗</span></label
+                  ><label
+                    ><input type="checkbox" name="solutions" value="22" /><span
+                      data-i18n="application.22"
+                      >Automatización y sistemas</span
+                    ><span aria-hidden="true">↗</span></label
+                  ><label
+                    ><input type="checkbox" name="solutions" value="23" /><span
+                      data-i18n="application.23"
+                      >Seguridad y datos</span
+                    ><span aria-hidden="true">↗</span></label
+                  >
+                </div>
+              </fieldset>
+            </div>
+          </section>
+          <section
+            class="pa-panel"
+            data-panel="2"
+            hidden
+            aria-labelledby="pa-title-2"
+          >
+            <div class="pa-panel-head">
+              <span class="pa-index" aria-hidden="true">03</span>
+              <div>
+                <h2 tabindex="-1" id="pa-title-2" data-i18n="application.4">
+                  Plan comercial
+                </h2>
+                <p data-i18n="application.53">
+                  Define tu disponibilidad y cómo desarrollarías tu actividad.
+                </p>
+              </div>
+            </div>
+            <div class="pa-fields">
+              <label class="pa-field"
+                ><span data-i18n="application.28">Nivel de interés</span
+                ><b aria-hidden="true">*</b
+                ><select name="level" required>
+                  <option value="" data-i18n="application.32">
+                    Selecciona una opción
+                  </option>
+                  <option value="basic" data-i18n="application.29">
+                    Básico
+                  </option>
+                  <option value="advanced" data-i18n="application.30">
+                    Avanzado
+                  </option>
+                  <option value="master" data-i18n="application.31">
+                    Master
+                  </option>
+                </select></label
+              ><label class="pa-field"
+                ><span data-i18n="application.26"
+                  >Horas disponibles por semana</span
+                ><b aria-hidden="true">*</b
+                ><input
+                  name="hours"
+                  type="number"
+                  min="1"
+                  max="80"
+                  step="1"
+                  required
+                  maxlength="160" /></label
+              ><label class="pa-field"
+                ><span data-i18n="application.27">¿Cuándo podrías empezar?</span
+                ><b aria-hidden="true">*</b
+                ><select name="start" required>
+                  <option value="" data-i18n="application.32">
+                    Selecciona una opción
+                  </option>
+                  <option value="30" data-i18n="application.38">
+                    En 30 días
+                  </option>
+                  <option value="60" data-i18n="application.39">
+                    En 60 días
+                  </option>
+                  <option value="90" data-i18n="application.40">
+                    En 90 días
+                  </option>
+                  <option value="unknown" data-i18n="application.41">
+                    Aún por definir
+                  </option>
+                </select></label
+              >
+              <p class="pa-hint">
+                <span data-i18n="application.61"
+                  >La selección de un nivel expresa tu interés; está sujeta a
+                  evaluación.</span
+                >
+              </p>
+              <label class="pa-field pa-wide"
+                ><span data-i18n="application.25"
+                  >¿Cómo conseguirías tus primeros clientes?</span
+                ><b aria-hidden="true">*</b
+                ><textarea
+                  name="strategy"
+                  rows="4"
+                  required
+                  minlength="20"
+                  maxlength="1200"
+                ></textarea></label
+              ><label class="pa-field pa-wide"
+                ><span data-i18n="application.24"
+                  >Objetivo de los primeros 90 días</span
+                ><b aria-hidden="true">*</b
+                ><textarea
+                  name="goal"
+                  rows="4"
+                  required
+                  minlength="20"
+                  maxlength="1200"
+                ></textarea>
+              </label>
+            </div>
+          </section>
+          <section
+            class="pa-panel"
+            data-panel="3"
+            hidden
+            aria-labelledby="pa-title-3"
+          >
+            <div class="pa-panel-head">
+              <span class="pa-index" aria-hidden="true">04</span>
+              <div>
+                <h2 tabindex="-1" id="pa-title-3" data-i18n="application.5">
+                  Revisión
+                </h2>
+                <p data-i18n="application.54">
+                  Revisa cada sección antes de preparar tu resumen.
+                </p>
+              </div>
+            </div>
+            <div class="pa-fields">
+              <div id="pa-review" class="pa-wide"></div>
+              <label class="pa-consent pa-wide"
+                ><input type="checkbox" name="confirmed" required /><span
+                  data-i18n="application.47"
+                  >Revisé la información y confirmo que es correcta.</span
+                ></label
+              >
+              <p
+                id="pa-result"
+                class="pa-wide"
+                role="status"
+                hidden
+                data-i18n="application.48"
+              >
+                Resumen preparado. Esta vista previa no envía tu postulación.
+              </p>
+            </div>
+          </section>
+          <p id="pa-error" role="alert" hidden data-i18n="application.56">
+            Comprueba los campos señalados.
+          </p>
+          <div class="pa-actions">
+            <button id="pa-back" type="button" hidden>
+              <span data-i18n="application.42">Anterior</span></button
+            ><button id="pa-next" type="button" class="partner-button">
+              <span data-i18n="application.43">Continuar</span> →</button
+            ><button id="pa-finish" type="submit" class="partner-button" hidden>
+              <span data-i18n="application.44">Preparar resumen</span> ✓
+            </button>
           </div>
-          <div class="step-panel" data-step="2" aria-labelledby="step-title-2" hidden>
-            <h3 id="step-title-2" tabindex="-1">Referencias comerciales</h3><p>Comparte una referencia profesional que podamos contactar con tu autorización.</p>
-            <div class="form-grid"><label>Nombre de la referencia <input name="referenceName" maxlength="120" required></label><label>Empresa o relación profesional <input name="referenceRelation" maxlength="120" required></label><label>Correo o teléfono de la referencia <input name="referenceContact" maxlength="254" required></label></div>
-            <label class="check-card"><input type="checkbox" name="referenceConsent" value="yes" required><span>Confirmo que tengo autorización para compartir estos datos de contacto.</span></label>
-          </div>
-          <div class="step-panel" data-step="3" aria-labelledby="step-title-3" hidden>
-            <h3 id="step-title-3" tabindex="-1">Experiencia</h3><p>Cuéntanos sobre tu trayectoria y el tipo de clientes con quienes trabajas.</p>
-            <div class="form-grid"><label>Años de experiencia <select name="experienceYears" required><option value="">Elige una opción</option><option>Menos de 1 año</option><option>1 a 3 años</option><option>4 a 7 años</option><option>Más de 7 años</option></select></label><label>Sector principal <input name="experienceSector" maxlength="100" required></label></div>
-            <label>Describe brevemente tu experiencia <textarea name="experienceDetails" rows="4" maxlength="1200" required></textarea></label>
-          </div>
-          <div class="step-panel" data-step="4" aria-labelledby="step-title-4" hidden>
-            <h3 id="step-title-4" tabindex="-1">Tu interés</h3><p>¿Qué te motiva a formar parte de la Red de Socios Comerciales?</p>
-            <label>Cuéntanos <textarea name="interest" rows="5" maxlength="1500" required></textarea></label>
-            <label>¿Qué soluciones te interesan? <select name="solutionsInterest" required><option value="">Elige una opción</option><option>Diseño web y comercio digital</option><option>Automatización y sistemas</option><option>Seguridad y datos</option><option>Todas las anteriores</option></select></label>
-          </div>
-          <div class="step-panel" data-step="5" aria-labelledby="step-title-5" hidden>
-            <h3 id="step-title-5" tabindex="-1">Datos bancarios</h3><p>Los datos bancarios no se solicitan en esta postulación inicial ni se guardan en este navegador.</p>
-            <div class="secure-info"><strong>Si avanzas en la evaluación</strong><span>El equipo te explicará las condiciones y te indicará un canal seguro si se requiere información de pago.</span></div>
-            <label class="check-card"><input type="checkbox" name="bankInfoNotice" value="yes" required><span>Entiendo que no debo escribir números de cuenta en este formulario.</span></label>
-          </div>
-          <div class="step-panel" data-step="6" aria-labelledby="step-title-6" hidden>
-            <h3 id="step-title-6" tabindex="-1">Revisa tus datos</h3><p>Confirma que la información sea correcta antes de continuar.</p>
-            <dl class="review-list" id="review-list"></dl>
-            <label class="check-card"><input type="checkbox" name="reviewConfirmed" value="yes" required><span>Revisé la información y confirmo que es correcta.</span></label>
-          </div>
-          <div class="step-panel" data-step="7" aria-labelledby="step-title-7" hidden>
-            <h3 id="step-title-7" tabindex="-1">Confirmación</h3><p>En esta versión de revisión, el envío está desactivado. Tu avance sigue guardado en este dispositivo.</p>
-            <div class="secure-info"><strong>La postulación todavía no se enviará</strong><span>Cuando el equipo conecte un sistema seguro de recepción, este paso confirmará el envío y te mostrará un número de seguimiento.</span></div>
-            <label class="check-card"><input type="checkbox" name="submissionNotice" value="yes" required><span>Acepto la revisión</span></label>
-            <div id="submission-result" role="status" aria-live="polite"></div>
-          </div>
-          <div class="form-actions">
-            <button class="button button-quiet" id="back-step" type="button" hidden>← Anterior</button>
-            <span class="action-spacer"></span>
-            <button class="partner-button" id="next-step" type="button">Continuar <span aria-hidden="true">→</span></button>
-            <button class="partner-button" id="finish-demo" type="button" hidden>Finalizar revisión <span aria-hidden="true">✓</span></button>
-          </div>
+          <p data-i18n="application.49">
+            Vista previa · tus respuestas no se envían ni se guardan al cerrar
+            la página.
+          </p>
+          <a class="pa-privacy" href="privacidad.html"
+            >Privacidad y uso del sitio</a
+          ><noscript>Activa JavaScript para completar el formulario.</noscript>
         </form>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <a class="brand" href="index.html" aria-label="TUPLUS, inicio"
+              ><img
+                class="partner-footer-logo"
+                src="imagenes/marca/logo-claro.png"
+                alt="TUPLUS"
+                width="2172"
+                height="724"
+            /></a>
+            <p>
+              Ideas que avanzan.<br />
+              Tecnología que conecta.
+            </p>
+          </div>
+          <div>
+            <h2>Explora</h2>
+            <a href="index.html">Servicios para clientes</a>
+          </div>
+          <div>
+            <h2>Red de socios</h2>
+            <a href="partner.html#territorios">Territorios</a
+            ><a href="#postulacion">Postularme</a>
+          </div>
+          <div>
+            <h2>Información</h2>
+            <a href="privacidad.html">Privacidad y uso del sitio</a
+            ><span class="footer-note">Versión para revisión</span>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 TUPLUS · 7CANALES MARKETING DIGITAL S.R.L.</span
+          ><a href="#contenido">Volver arriba ↑</a>
+        </div>
       </div>
-    </section>
-  </main>
-  <footer class="site-footer"><div class="container"><div class="footer-grid"><div><a class="brand" href="index.html" aria-label="TUPLUS, inicio"><img class="partner-footer-logo" src="imagenes/marca/logo-claro.png" alt="TUPLUS" width="2172" height="724"></a><p>Ideas que avanzan.<br> Tecnología que conecta.</p></div><div><h2>Explora</h2><a href="index.html">Servicios para clientes</a></div><div><h2>Red de socios</h2><a href="#territorio">Disponibilidad territorial</a><a href="#postulacion">Postularme</a></div><div><h2>Información</h2><a href="privacidad.html">Privacidad y uso del sitio</a><span class="footer-note">Versión para revisión</span></div></div><div class="footer-bottom"><span>© 2026 TUPLUS · 7CANALES MARKETING DIGITAL S.R.L.</span><a href="#contenido">Volver arriba ↑</a></div></div></footer>
-</body>
+    </footer>
+  </body>
 </html>

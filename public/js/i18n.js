@@ -25,6 +25,8 @@
   const translate = source => dictionaries[currentLocale]?.[normalize(source)] ?? dictionaries.es?.[normalize(source)] ?? source;
   function canonical(value, previous) {
     const text = normalize(value);
+    // Punctuation is not a translation key: reverse lookup may match code fragments.
+    if (!/[\p{L}\p{N}]/u.test(text)) return text;
     if (previous && (text === previous.source || text === normalize(previous.rendered))) return previous.source;
     if (sources.has(text)) return text;
     const candidates = reverse.get(text);
