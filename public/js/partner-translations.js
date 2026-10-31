@@ -944,3 +944,22 @@
   for (const [locale, entries] of Object.entries(dictionaries))
     Object.assign((window.TUPLUS_TRANSLATIONS[locale] ||= {}), entries);
 })();
+
+(() => {
+  const faq = {
+    es: ["¿Puedo enviar una postulación?", "El formulario envía la postulación a la API de TUPLUS. Para recibir solicitudes en producción, AdminPanel debe desplegar la ruta correspondiente.", "Formulario conectado · recepción pendiente del despliegue de AdminPanel"],
+    en: ["Can I submit an application?", "The form sends applications to the TUPLUS API. AdminPanel must deploy the corresponding route to receive applications in production.", "Form connected · receipt depends on the AdminPanel deployment"],
+    pt: ["Posso enviar uma candidatura?", "O formulário envia candidaturas à API da TUPLUS. Para receber solicitações em produção, o AdminPanel precisa implantar a rota correspondente.", "Formulário conectado · recebimento depende da implantação do AdminPanel"],
+    fr: ["Puis-je envoyer une candidature ?", "Le formulaire envoie les candidatures à l’API de TUPLUS. AdminPanel doit déployer la route correspondante pour les recevoir en production.", "Formulaire connecté · réception après déploiement d’AdminPanel"],
+    de: ["Kann ich eine Bewerbung senden?", "Das Formular sendet Bewerbungen an die TUPLUS-API. AdminPanel muss die entsprechende Route bereitstellen, damit Bewerbungen in der Produktion eingehen.", "Formular verbunden · Eingang nach Bereitstellung durch AdminPanel"],
+    ja: ["応募を送信できますか？", "フォームは応募内容をTUPLUS APIに送信します。本番環境で受け付けるには、AdminPanelで対応するルートをデプロイする必要があります。", "フォーム接続済み・AdminPanelのデプロイ後に受付開始"],
+    zh: ["可以提交申请吗？", "表单会将申请发送到 TUPLUS API。要在生产环境接收申请，AdminPanel 必须部署对应路由。", "表单已连接 · AdminPanel 部署后接收"],
+    ru: ["Можно отправить заявку?", "Форма отправляет заявки в API TUPLUS. Для приема заявок в production AdminPanel должен развернуть соответствующий маршрут.", "Форма подключена · прием после развертывания AdminPanel"]
+  };
+  for (const [locale, [question, answer, note]] of Object.entries(faq)) {
+    const dict = (window.TUPLUS_TRANSLATIONS[locale] ||= {});
+    dict["partner.q4"] = question;
+    dict["partner.a4"] = answer;
+    dict["partner.footerNote"] = note;
+  }
+})();

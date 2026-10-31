@@ -23,15 +23,16 @@
     <link rel="stylesheet" href="css/cta-buttons.css?v=20261028-2" />
     <script is:inline src="js/theme.js?v=20261011-2"></script>
     <script is:inline defer src="js/encabezado.js?v=20261028-1"></script>
-    <link rel="stylesheet" href="css/partner-application.css?v=8" />
+    <script is:inline src="js/config.js?v=20261031-1"></script>
+    <link rel="stylesheet" href="css/partner-application.css?v=9" />
     <script is:inline defer src="js/i18n-data.js?v=20261015-3"></script>
     <script
       is:inline
       defer
-      src="js/partner-application-translations.js?v=10"
+      src="js/partner-application-translations.js?v=11"
     ></script>
     <script is:inline defer src="js/partner-territory.js?v=12"></script><script is:inline defer src="js/i18n.js?v=9"></script>
-    <script is:inline defer src="js/partner-application.js?v=11"></script>
+    <script is:inline defer src="js/partner-application.js?v=12"></script>
     <link rel="stylesheet" href="css/partner-territory.css?v=12" />
     <link rel="stylesheet" href="css/partner-footer.css?v=1" />
     <script is:inline defer src="js/partner-footer.js?v=1"></script>
@@ -391,17 +392,17 @@
                 </legend>
                 <div class="pa-choices">
                   <label
-                    ><input type="checkbox" name="solutions" value="21" /><span
+                    ><input type="checkbox" name="solutions" value="web-commerce" /><span
                       data-i18n="application.21"
                       >Web y comercio digital</span
                     ><span aria-hidden="true">↗</span></label
                   ><label
-                    ><input type="checkbox" name="solutions" value="22" /><span
+                    ><input type="checkbox" name="solutions" value="automation-systems" /><span
                       data-i18n="application.22"
                       >Automatización y sistemas</span
                     ><span aria-hidden="true">↗</span></label
                   ><label
-                    ><input type="checkbox" name="solutions" value="23" /><span
+                    ><input type="checkbox" name="solutions" value="security-data" /><span
                       data-i18n="application.23"
                       >Seguridad y datos</span
                     ><span aria-hidden="true">↗</span></label
@@ -530,36 +531,36 @@
               <div id="pa-review" class="pa-wide"></div>
               <label class="pa-consent pa-wide"
                 ><input type="checkbox" name="confirmed" required /><span
-                  data-i18n="application.47"
-                  >Revisé la información y confirmo que es correcta.</span
-                ></label
+                  data-i18n="application.consent"
+                  >Confirmo que la información es correcta y autorizo su envío y tratamiento para evaluar mi postulación.</span
+                > <a href="privacidad.html" data-i18n="application.privacyLink">Aviso de privacidad</a></label
               >
               <p
                 id="pa-result"
                 class="pa-wide"
                 role="status"
+                aria-live="polite"
                 hidden
-                data-i18n="application.48"
               >
-                Resumen preparado. Esta vista previa no envía tu postulación.
+                Postulación recibida correctamente.
               </p>
             </div>
           </section>
           <p id="pa-error" role="alert" hidden data-i18n="application.56">
             Comprueba los campos señalados.
           </p>
+          <p id="pa-submit-error" class="pa-wide" role="alert" hidden></p>
           <div class="pa-actions">
             <button id="pa-back" type="button" hidden>
               <span data-i18n="application.42">Anterior</span></button
             ><button id="pa-next" type="button" class="partner-button">
               <span data-i18n="application.43">Continuar</span> →</button
             ><button id="pa-finish" type="submit" class="partner-button" hidden>
-              <span data-i18n="application.44">Preparar resumen</span> ✓
+              <span data-i18n="application.submit">Enviar postulación</span> ✓
             </button>
           </div>
-          <p data-i18n="application.49">
-            Vista previa · tus respuestas no se envían ni se guardan al cerrar
-            la página.
+          <p data-i18n="application.privacySubmission">
+            Al enviar, tus respuestas se transmiten al AdminPanel y se almacenan para evaluar la postulación. Los plazos de conservación y demás condiciones están pendientes de revisión antes de publicar.
           </p>
           <a class="pa-privacy" href="privacidad.html"
             >Privacidad y uso del sitio</a

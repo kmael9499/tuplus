@@ -297,7 +297,8 @@
 .pa-field [aria-invalid="true"] {
   border-color: #bd6868 !important;
 }
-#pa-error {
+#pa-error,
+#pa-submit-error {
   color: #b54848 !important;
 }
 #pa-result {

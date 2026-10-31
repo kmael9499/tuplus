@@ -5,7 +5,7 @@
   const panels = [...form.querySelectorAll("[data-panel]")];
   const buttons = [...document.querySelectorAll("[data-go]")];
   const field = (name) => form.querySelector(`[name="${name}"]`);
-  const t = (n) => window.TUPLUS_I18N?.t("application." + n) || "";
+  const t = (n) => window.TUPLUS_I18N?.t(typeof n === "string" ? (n.startsWith("application.") ? n : "application." + n) : "application." + n) || "";
   const back = document.querySelector("#pa-back"),
     next = document.querySelector("#pa-next"),
     finish = document.querySelector("#pa-finish"),
@@ -85,7 +85,7 @@
         dd.textContent =
           el.name === "solutions"
             ? [...panel.querySelectorAll('[name="solutions"]:checked')]
-                .map((c) => t(Number(c.value)))
+                .map((c) => t(c.querySelector("[data-i18n]")?.getAttribute("data-i18n") || Number(c.value)))
                 .join(", ")
             : el.tagName === "SELECT"
               ? el.selectedOptions[0]?.textContent
@@ -127,15 +127,54 @@
   );
   form.addEventListener("change", () => {
     conditional();
-    document.querySelector("#pa-result").hidden = true;
+    result.hidden = true;
+    submitError.hidden = true;
   });
   form.addEventListener("input", (e) => {
     e.target.setCustomValidity?.("");
     e.target.removeAttribute("aria-invalid");
-    document.querySelector("#pa-result").hidden = true;
+    result.hidden = true;
+    submitError.hidden = true;
   });
-  form.addEventListener("submit", (e) => {
+  let submitting = false;
+  const result = document.querySelector("#pa-result");
+  const submitError = document.querySelector("#pa-submit-error");
+  const finishLabel = finish.querySelector("[data-i18n]");
+  function submitUrl() {
+    const base = String(window.TUPLUS_CONFIG?.apiUrl || "").trim()
+      .replace(/\/+$/, "")
+      .replace(/\/api$/i, "");
+    return base ? `${base}/api/postulaciones/partners` : "";
+  }
+  function applicationPayload() {
+    const value = (name) => field(name).value.trim();
+    return {
+      fullName: value("fullName"),
+      email: value("email"),
+      phone: value("phone"),
+      profile: value("profile"),
+      company: field("profile").value === "company" ? value("company") : "",
+      role: value("role"),
+      website: value("website"),
+      country: value("country"),
+      otherCountry: field("country").value === "other" ? value("otherCountry") : "",
+      city: value("city"),
+      region: value("region"),
+      sector: value("sector"),
+      experience: value("experience"),
+      clients: Number(value("clients")),
+      solutions: [...form.querySelectorAll('[name="solutions"]:checked')].map((el) => el.value),
+      level: value("level"),
+      hours: Number(value("hours")),
+      start: value("start"),
+      strategy: value("strategy"),
+      goal: value("goal"),
+      confirmed: true,
+    };
+  }
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (submitting) return;
     if (step < 3) {
       if (valid(step)) show(step + 1);
       return;
@@ -147,8 +186,48 @@
         return;
       }
     }
+    if (!field("confirmed").checked) return;
+    show(3, false);
     review();
-    document.querySelector("#pa-result").hidden = false;
+    result.hidden = true;
+    submitError.hidden = true;
+    const url = submitUrl();
+    if (!url) {
+      submitError.textContent = t("application.errorNetwork");
+      submitError.hidden = false;
+      return;
+    }
+    submitting = true;
+    finish.disabled = true;
+    finishLabel.textContent = t("application.loading");
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(applicationPayload()),
+        signal: controller.signal,
+      });
+      if (response.status === 400) throw new Error("bad-request");
+      if (response.status === 429) throw new Error("rate-limit");
+      if (response.status >= 500) throw new Error("server");
+      if (!response.ok) throw new Error("server");
+      result.textContent = t("application.success");
+      result.hidden = false;
+    } catch (err) {
+      const key = err.message === "bad-request" ? "application.error400"
+        : err.message === "rate-limit" ? "application.error429"
+        : err.message === "server" ? "application.errorServer"
+        : "application.errorNetwork";
+      submitError.textContent = t(key);
+      submitError.hidden = false;
+    } finally {
+      clearTimeout(timeout);
+      submitting = false;
+      finish.disabled = false;
+      finishLabel.textContent = t("application.submit");
+    }
   });
   function countryLabels() {
     const names = new Intl.DisplayNames([window.TUPLUS_I18N?.locale || "es"], {type: "region"});
