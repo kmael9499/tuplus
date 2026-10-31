@@ -12,5 +12,10 @@ export default defineConfig({
         '/api': { target: 'http://localhost:8080', changeOrigin: false },
       },
     },
+    preview: {
+      proxy: {
+        '/api': { target: 'http://localhost:8080', changeOrigin: false },
+      },
+    },
   },
 });
