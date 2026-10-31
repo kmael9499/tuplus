@@ -1,0 +1,79 @@
+/* Detalles compartidos: ritmo, profundidad y movimiento discreto. */
+.site-header{box-shadow:0 4px 25px #122c3d06}.site-header .brand img{object-fit:contain}.hero{position:relative}.hero::before{content:"";position:absolute;width:42vw;height:42vw;right:0;top:-12vw;background:radial-gradient(circle,#d3b16b15,transparent 70%);pointer-events:none}.hero-copy{position:relative;z-index:1}.hero-copy>p,.hero-copy>h1,.hero-actions{animation:intro-in .65s ease-out both}.hero-copy>h1{animation-delay:.06s}.hero-copy>.hero-lead{animation-delay:.14s}.hero-actions{animation-delay:.2s}.hero-visual{animation:visual-in .9s ease-out both}.floating-label{animation:float-label 7s ease-in-out infinite}.mini-dashboard{animation:float-dashboard 8s ease-in-out infinite}.visual-orbit{animation:orbit-turn 55s linear infinite}.button{position:relative;overflow:hidden;transition:transform .22s,box-shadow .22s,background .22s}.button::after{content:"";position:absolute;inset:-50% auto -50% -70%;width:35%;background:linear-gradient(90deg,transparent,#ffffff24,transparent);transform:skew(-20deg);transition:left .6s;pointer-events:none}.button:hover::after{left:130%}.button:hover{box-shadow:0 10px 26px #122c3d16;transform:translateY(-2px)}.service-card,.project-card{transition:transform .3s,box-shadow .3s,border-color .3s}.service-card:hover{transform:translateY(-7px);box-shadow:0 22px 48px #122c3d12;border-color:#bb9653}.service-card .icon-box{transition:background .3s,transform .3s}.service-card:hover .icon-box{transform:rotate(-7deg);background:#d3b16b24}.project-card .project-art{transition:box-shadow .3s,transform .3s}.project-card:hover .project-art{box-shadow:0 20px 40px #122c3d19;transform:translateY(-5px)}.project-info .text-link span,.service-card .text-link span{display:inline-block;transition:transform .25s}.project-card:hover .text-link span,.service-card:hover .text-link span{transform:translate(3px,-3px)}.process-grid li{position:relative}.process-grid li::before{content:"";position:absolute;left:0;top:-2px;height:3px;width:38px;background:var(--gold);transition:width .5s}.process-grid li:hover::before{width:100%}.faq-list details[open] p{animation:intro-in .25s ease-out}.contact-form-card:focus-within{box-shadow:0 18px 48px #122c3d12}.solution-reference{transition:box-shadow .3s;box-shadow:0 15px 35px #122c3d07}.solution-reference:hover{box-shadow:0 22px 45px #122c3d14}.site-footer a{transition:color .2s}.site-footer a:hover{color:var(--gold)}
+@keyframes intro-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}@keyframes visual-in{from{opacity:0;transform:translateY(25px) scale(.98)}to{opacity:1;transform:none}}@keyframes float-label{50%{transform:translateY(-5px)}}@keyframes float-dashboard{50%{translate:0 -7px}}@keyframes orbit-turn{to{rotate:360deg}}
+@media(min-width:851px) and (max-width:1100px){.nav-wrap{gap:12px}.nav-wrap>.brand{font-size:19px}.nav-wrap>.brand img{width:33px;height:33px}#main-nav{gap:14px}#main-nav>a{font-size:11px}.language-picker select{max-width:86px}.theme-toggle{min-width:44px;font-size:0}.theme-toggle span{font-size:20px}.brand-art{max-width:110px}}
+@media(max-width:600px){.language-picker select{max-width:86px}.site-header .brand{font-size:20px}.site-header .brand>img{width:32px;height:32px}.theme-toggle{min-width:38px;padding:6px;font-size:0}.theme-toggle span{font-size:18px}.nav-wrap{gap:8px}.service-card:hover{transform:none}.hero::before{width:90vw;height:90vw}.mini-dashboard,.floating-label{animation:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal-pending{opacity:1!important;transform:none!important}}
+
+/* ===== Mejoras de diseño · secciones Somos TUplus, FAQ y Contacto ===== */
+
+/* -- Acento dorado en el eyebrow de estas secciones -- */
+.about-copy .eyebrow::before,.faq-grid .eyebrow::before,.contact-copy .eyebrow::before{content:"";display:inline-block;width:22px;height:1px;background:var(--gold);vertical-align:middle;margin-right:10px;opacity:.7}
+
+/* -- Somos TUplus: enlace con flecha animada y mejor ritmo -- */
+.about-copy .text-link{position:relative;display:inline-block;margin-top:14px;padding-bottom:3px}
+.about-copy .text-link::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .35s ease}
+.about-copy .text-link:hover::after{width:100%}
+.about-mark>span{position:relative;padding-top:2px}
+.about-mark>span::before{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%);width:16px;height:1px;background:var(--gold);opacity:.55}
+
+/* -- FAQ: tarjetas con hover, índice numérico y toggle redondo -- */
+.faq-list details{border-bottom:1px solid var(--line);padding:0 0 19px;margin-bottom:20px;transition:background .3s ease}
+.faq-list summary{position:relative;padding:6px 8px;margin:-6px -8px;border-radius:10px;transition:color .25s ease,background .25s ease;font-size:15px;align-items:center}
+.faq-list summary:hover{background:#d3b16b0f;color:var(--gold-ink)}
+.faq-list summary::after{content:"+";width:32px;height:32px;flex-shrink:0;display:grid;place-items:center;border:1px solid #d3b16b55;border-radius:50%;font-size:20px;line-height:1;font-weight:300;color:var(--gold-ink);transition:transform .3s ease,background .3s ease,border-color .3s ease}
+.faq-list summary:hover::after{border-color:var(--gold)}
+.faq-list details[open] summary::after{content:"−";background:#d3b16b1f;transform:rotate(180deg)}
+.faq-list details p{font-size:13.5px;margin:16px 46px 0 8px;line-height:1.85;color:var(--muted)}
+.faq-list details p{transition:opacity .2s ease}
+.faq-list details.is-closing p{opacity:0}
+.faq-list details.is-closing summary::after{content:"+";background:none;transform:none}
+.faq-grid>div:first-child{position:relative}
+.faq-grid>div:first-child::after{content:"";position:absolute;left:0;bottom:-4px;width:46px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* -- Contacto: light-contrast.css ya pule la tarjeta, inputs y foco (tema claro).
+      Aquí solo lo que no choca con esa cascada. -- */
+.contact-location{margin-top:34px}
+.contact-location .status-dot{box-shadow:0 0 0 4px #d3b16b22}
+
+/* -- Ajustes responsive de las mejoras -- */
+@media(max-width:620px){
+  .faq-list details p{margin-right:8px}
+  .faq-list summary{font-size:14.5px}
+}
+
+/* ===== Contadores y valores · Somos TUplus ===== */
+.about-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px;margin:30px 0 8px;padding-top:26px;border-top:1px solid var(--line)}
+.about-stat strong{display:flex;align-items:baseline;gap:2px;font-size:38px;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--navy)}
+.about-stat strong i{font-style:normal;font-size:20px;font-weight:700;color:var(--gold-ink)}
+html[data-theme="dark"] .about-stat strong{color:var(--ink)}
+.about-stat>span{display:block;margin-top:6px;font-size:10.5px;line-height:1.4;color:var(--muted)}
+.about-values{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:14px}
+.about-values li{display:flex;gap:12px;align-items:flex-start}
+.about-values svg{width:20px;height:20px;flex-shrink:0;margin-top:1px;color:var(--gold-ink)}
+.about-values b{display:block;font-size:12.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.about-values small{display:block;margin-top:2px;font-size:11.5px;line-height:1.5;color:var(--muted)}
+@media(max-width:620px){
+  .about-stat strong{font-size:32px}
+  .about-stats{gap:16px 16px}
+}
+
+/* ===== Badge de tiempo de respuesta · Contacto ===== */
+.contact-response{display:flex;width:fit-content;gap:9px;align-items:center;margin-top:16px;padding:8px 14px;border:1px solid #d3b16b4d;border-radius:999px;background:#d3b16b12;font-size:10.5px;font-weight:600;color:var(--ink)}
+.contact-response .status-dot{background:var(--gold);box-shadow:0 0 0 4px #d3b16b22;animation:ab-spark 2.2s ease-in-out infinite}
+.contact-location{margin-top:14px}
+
+/* ===== Validación en vivo · Contacto ===== */
+.contact-form-card label{position:relative}
+.contact-form-card label.is-valid :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-color:#4c8a5a;box-shadow:0 0 0 3px #4c8a5a1f}
+.contact-form-card label.is-invalid :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border-color:#b0492b;box-shadow:0 0 0 3px #b0492b1f}
+.contact-form-card label.is-valid::after{content:"✓";position:absolute;right:12px;top:30px;font-size:12px;color:#4c8a5a;pointer-events:none}
+.contact-form-card label.is-invalid::after{content:"!";position:absolute;right:12px;top:30px;width:15px;height:15px;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;background:#b0492b;border-radius:50%;pointer-events:none}
+/* En tema claro los campos ya tienen fondo propio; en oscuro igual pero más suave */
+html[data-theme="dark"] .contact-form-card label.is-valid :is(input:not([type=checkbox]):not([type=radio]),select,textarea){box-shadow:0 0 0 3px #4c8a5a33}
+html[data-theme="dark"] .contact-form-card label.is-invalid :is(input:not([type=checkbox]):not([type=radio]),select,textarea){box-shadow:0 0 0 3px #b0492b33}
+
+/* Desplegables del formulario de contacto: flecha propia con aire respecto al borde. */
+/* Los dos id hacen falta para ganar a las reglas de color de cada tema, que reinician el fondo. */
+html #contacto #contact-form select{-webkit-appearance:none;appearance:none;padding-right:44px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23a17a35' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1.2 1.4 6 6.2l4.8-4.8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;background-size:12px 8px}
+html[data-theme="dark"] #contacto #contact-form select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23d6b06a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1.2 1.4 6 6.2l4.8-4.8'/%3E%3C/svg%3E")}

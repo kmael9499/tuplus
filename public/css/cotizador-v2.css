@@ -1,0 +1,207 @@
+/* Cotizador: "Antes de cotizar" como chat de TUPLUS (mismo lenguaje que las preguntas de la portada)
+   y llamado final en dos columnas con una cotización animada. Solo diseño; los textos siguen en
+   sus elementos [data-xd], que cotizador-extras.js traduce. */
+body .xd2-faq,body .xd2-cta{
+ --x2-gold:#dcbc7d;--x2-gold-2:#b88a45;
+ --x2-line:rgba(220,188,125,.22);--x2-line-hi:rgba(220,188,125,.6);--x2-glow:rgba(220,188,125,.14);
+ --x2-num:linear-gradient(180deg,#f6e3b8 8%,#c4934a 92%);
+ --x2-panel:linear-gradient(165deg,rgba(18,42,58,.92),rgba(10,24,34,.94));
+ --x2-bubble:rgba(255,255,255,.06);--x2-text:#d5e0e7;
+ --x2-shadow:0 30px 80px rgba(0,0,0,.3)}
+html:not([data-theme="dark"]) body .xd2-faq{
+ --x2-line:rgba(158,116,46,.22);--x2-line-hi:rgba(158,116,46,.5);--x2-glow:rgba(212,176,106,.18);
+ --x2-num:linear-gradient(180deg,#d4a95b 5%,#7f5a1c 95%);
+ --x2-panel:linear-gradient(165deg,rgba(255,255,255,.95),rgba(250,246,237,.92));
+ --x2-bubble:#f4efe4;--x2-text:#24394a;--x2-shadow:0 30px 70px rgba(18,44,61,.1)}
+
+/* ===== Antes de cotizar ===== */
+body .xd2-faq{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:clamp(30px,5vw,70px);align-items:start}
+.xd2-intro{position:sticky;top:120px}
+body .xd2-faq .xd2-intro h2{margin:14px 0 0;font-size:clamp(34px,4.4vw,58px);line-height:1.02;letter-spacing:-.045em;
+ font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;background:var(--x2-num);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.1em}
+.xd2-deco{position:relative;height:200px;max-width:320px;margin-top:38px}
+.xd2-deco i{position:absolute;border-radius:24px;border:1px solid var(--x2-line)}
+.xd2-deco i:nth-child(1){left:0;top:20px;width:70%;height:92px;border-bottom-left-radius:6px;background:var(--x2-panel);box-shadow:var(--x2-shadow);animation:xd2-float 6s ease-in-out infinite}
+.xd2-deco i:nth-child(2){right:0;top:112px;width:46%;height:58px;border-color:transparent;border-bottom-right-radius:6px;animation:xd2-float 6s 1.5s ease-in-out infinite;
+ background:radial-gradient(circle,#13222e 0 3px,transparent 4px) 30% 50%/20px 20px no-repeat,radial-gradient(circle,#13222e 0 3px,transparent 4px) 50% 50%/20px 20px no-repeat,radial-gradient(circle,#13222e 0 3px,transparent 4px) 70% 50%/20px 20px no-repeat,linear-gradient(135deg,#ecd29b,#c49650)}
+.xd2-deco b{position:absolute;left:28px;top:26px;font:italic 400 76px/1 Georgia,serif;background:var(--x2-num);-webkit-background-clip:text;background-clip:text;color:transparent;animation:xd2-float 6s ease-in-out infinite}
+@keyframes xd2-float{50%{transform:translateY(-8px)}}
+.xd2-panel{overflow:hidden;border:1px solid var(--x2-line-hi);border-radius:28px;background:var(--x2-panel);box-shadow:var(--x2-shadow),0 0 90px var(--x2-glow)}
+.xd2-top{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--x2-line);background:rgba(220,188,125,.06)}
+.xd2-top b{font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--page-ink)}
+.xd2-avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;border:1px solid rgba(220,188,125,.6);background:url("../colibri.png") center/68% no-repeat,radial-gradient(circle,#173a52,#0a1a26)}
+.xd2-online{width:8px;height:8px;border-radius:50%;background:#4fd18b;box-shadow:0 0 0 4px rgba(79,209,139,.18)}
+.xd2-menu{display:flex;gap:4px;margin-left:auto}
+.xd2-menu i{width:4px;height:4px;border-radius:50%;background:var(--page-muted)}
+.xd2-thread{display:flex;flex-direction:column;gap:16px;padding:28px 24px 26px;background:radial-gradient(60% 40% at 100% 0%,rgba(220,188,125,.07),transparent 70%)}
+body .xd2-faq .xd2-thread details{margin:0;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible}
+body .xd2-faq .xd2-thread details:hover,body .xd2-faq .xd2-thread details[open]{border:0;box-shadow:none}
+body .xd2-faq .xd2-thread summary{display:flex;align-items:center;justify-content:flex-start;gap:14px;width:fit-content;max-width:90%;margin:0 0 0 auto;padding:14px 18px;
+ border:1px solid var(--x2-line-hi);border-radius:20px 20px 5px 20px;background:rgba(220,188,125,.07);color:var(--page-ink);
+ font-size:15px;font-weight:600;line-height:1.4;transition:background .3s,transform .3s,box-shadow .3s}
+body .xd2-faq .xd2-thread summary:hover{transform:translateX(-4px);background:rgba(220,188,125,.14)}
+body .xd2-faq .xd2-thread summary::after{display:grid;place-items:center;width:26px;height:26px;border:1px solid var(--x2-line-hi);border-radius:50%;font:300 18px/1 "Segoe UI",sans-serif;color:var(--gold-ink)}
+body .xd2-faq .xd2-thread details[open] summary{background:linear-gradient(135deg,#ecd29b,#c49650);border-color:transparent;color:#13222e;box-shadow:0 12px 30px rgba(201,154,78,.25)}
+body .xd2-faq .xd2-thread details[open] summary::after{color:#13222e;border-color:rgba(19,34,46,.35);background:rgba(19,34,46,.08)}
+body .xd2-faq .xd2-thread summary:focus-visible{outline:3px solid #c79b4d;outline-offset:3px;border-radius:20px 20px 5px 20px}
+body .xd2-faq .xd2-thread details p{position:relative;width:fit-content;max-width:84%;margin:14px 0 4px 54px;padding:15px 18px;
+ border:1px solid rgba(255,255,255,.08);border-radius:20px 20px 20px 5px;background:var(--x2-bubble);color:var(--x2-text);font-size:14px;line-height:1.75}
+html:not([data-theme="dark"]) body .xd2-faq .xd2-thread details p{border-color:rgba(158,116,46,.15)}
+body .xd2-faq .xd2-thread details p::before{content:"";position:absolute;left:-50px;bottom:0;width:36px;height:36px;border-radius:50%;
+ border:1px solid rgba(220,188,125,.6);background:url("../colibri.png") center/66% no-repeat,radial-gradient(circle,#173a52,#0a1a26)}
+
+/* ===== ¿Listo para tener tu web? ===== */
+body .xd2-cta .xd-cta-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,60px);align-items:center;text-align:left;
+ padding:clamp(34px,5vw,64px);border-radius:34px;border:1px solid transparent;
+ background:radial-gradient(60% 80% at 100% 0%,rgba(225,195,139,.22),transparent 70%) padding-box,
+  linear-gradient(rgba(220,188,125,.05) 1px,transparent 1px) 0 0/34px 34px padding-box,linear-gradient(90deg,rgba(220,188,125,.05) 1px,transparent 1px) 0 0/34px 34px padding-box,
+  linear-gradient(160deg,#143246,#0a1c28) padding-box,
+  linear-gradient(135deg,rgba(236,210,155,.8),rgba(236,210,155,.08) 35%,rgba(236,210,155,.05) 65%,rgba(236,210,155,.55)) border-box;
+ box-shadow:0 60px 120px rgba(0,0,0,.35),0 0 120px rgba(220,188,125,.1)}
+body .xd2-cta h2{margin:0 0 16px;font-size:clamp(34px,4.6vw,62px);line-height:1.02;letter-spacing:-.045em}
+body .xd2-cta p{margin:0 0 32px;max-width:460px;font-size:16px;color:#c1cbd1}
+body .xd2-cta .xd-cta-btn{display:inline-flex;align-items:center;gap:14px;padding:18px 30px;font-size:15px}
+body .xd2-cta .xd-cta-btn::before{content:"";order:2;width:30px;height:30px;border-radius:50%;flex-shrink:0;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e6c98d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7M9 7h8v8'/%3E%3C/svg%3E") center/16px no-repeat,#102c3d;transition:transform .25s}
+body .xd2-cta .xd-cta-btn:hover::before{transform:rotate(45deg)}
+/* Cotización ilustrada */
+.xd2-cta-art{position:relative;display:grid;place-items:center;min-height:330px}
+.xd2-orbit{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.xd2-orbit i{position:absolute;width:300px;aspect-ratio:1;border-radius:50%;border:1px solid rgba(220,188,125,.25)}
+.xd2-orbit i:nth-child(2){width:400px;border-color:rgba(220,188,125,.12);border-style:dashed;animation:xd2-spin 40s linear infinite}
+.xd2-orbit i:nth-child(1)::after{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:#dcbc7d;box-shadow:0 0 14px #dcbc7d}
+.xd2-orbit i:nth-child(1){animation:xd2-spin 14s linear infinite}
+@keyframes xd2-spin{to{transform:rotate(360deg)}}
+.xd2-quote{position:relative;z-index:1;display:flex;flex-direction:column;gap:13px;width:min(320px,100%);padding:20px;border-radius:22px;
+ border:1px solid rgba(220,188,125,.35);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.03));
+ box-shadow:0 30px 70px rgba(0,0,0,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:rotate(-3deg);animation:xd2-float 7s ease-in-out infinite}
+.xd2-quote i,.xd2-quote b,.xd2-quote em{display:block}
+.xd2-quote-top{display:flex;align-items:center;gap:6px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.xd2-quote-top i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+.xd2-quote-top i:first-child{background:#dcbc7d}
+.xd2-quote-top span{width:46%;height:10px;margin-left:10px;border-radius:5px;background:rgba(255,255,255,.12)}
+.xd2-steps{display:flex;gap:6px}
+.xd2-steps i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.1);animation:xd2-step 6s infinite}
+.xd2-steps i:nth-child(2){animation-delay:.5s}.xd2-steps i:nth-child(3){animation-delay:1s}.xd2-steps i:nth-child(4){animation-delay:1.5s}.xd2-steps i:nth-child(5){animation-delay:2s}
+@keyframes xd2-step{0%,8%{background:rgba(255,255,255,.1)}15%,85%{background:#dcbc7d;box-shadow:0 0 8px rgba(220,188,125,.6)}100%{background:rgba(255,255,255,.1)}}
+.xd2-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.05)}
+.xd2-row i{flex:1;height:7px;border-radius:4px;background:rgba(255,255,255,.18)}
+.xd2-row em{width:38px;height:7px;border-radius:4px;background:rgba(220,188,125,.55)}
+.xd2-row:nth-of-type(4) i{flex:.7}.xd2-row:nth-of-type(5) i{flex:.85}
+.xd2-check{position:relative;width:18px;height:18px;flex-shrink:0;border-radius:5px;background:linear-gradient(135deg,#ecd29b,#c49650)}
+.xd2-check::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:9px;border:solid #13222e;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.xd2-total{display:flex;align-items:center;justify-content:space-between;margin-top:4px;padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(236,210,155,.25),rgba(184,138,69,.15));border:1px solid rgba(220,188,125,.4)}
+.xd2-total i{width:40%;height:8px;border-radius:4px;background:rgba(255,255,255,.3)}
+.xd2-total b{width:76px;height:20px;border-radius:6px;background:linear-gradient(90deg,#f6e3b8,#c4934a);box-shadow:0 0 18px rgba(220,188,125,.5);animation:xd2-pulse 2.4s ease-in-out infinite}
+@keyframes xd2-pulse{50%{box-shadow:0 0 30px rgba(220,188,125,.85)}}
+.xd2-bird{position:absolute;z-index:2;right:4%;top:2%;width:110px;height:auto;filter:drop-shadow(0 0 22px rgba(220,188,125,.6));animation:xd2-hover 4.5s ease-in-out infinite}
+@keyframes xd2-hover{0%,100%{transform:translate(0,0) rotate(-4deg)}50%{transform:translate(-8px,-12px) rotate(3deg)}}
+
+@media (max-width:900px){
+ body .xd2-faq{grid-template-columns:1fr}
+ .xd2-intro{position:static}
+ .xd2-deco{display:none}
+ body .xd2-cta .xd-cta-in{grid-template-columns:1fr;text-align:center}
+ body .xd2-cta p{margin-inline:auto}
+ .xd2-cta-art{min-height:300px}
+}
+@media (max-width:600px){
+ .xd2-thread{padding:20px 14px}
+ body .xd2-faq .xd2-thread details p{margin-left:46px;max-width:calc(100% - 46px)}
+ body .xd2-faq .xd2-thread details p::before{left:-44px;width:32px;height:32px}
+ .xd2-orbit i{width:240px}.xd2-orbit i:nth-child(2){width:300px}
+ .xd2-bird{width:80px}
+}
+@media (prefers-reduced-motion:reduce){
+ .xd2-deco *,.xd2-orbit i,.xd2-quote,.xd2-steps i,.xd2-total b,.xd2-bird{animation:none!important}
+ .xd2-steps i{background:#dcbc7d}
+}
+
+/* ===== Cómo funciona: tres pasos con pantallas animadas ===== */
+@property --xd3-n{syntax:"<integer>";inherits:false;initial-value:0}
+body .xd3-how{--x3-line:rgba(220,188,125,.25);--x3-line-hi:rgba(220,188,125,.65);--x3-num:linear-gradient(180deg,#f6e3b8 8%,#c4934a 92%);position:relative}
+html:not([data-theme="dark"]) body .xd3-how{--x3-line:rgba(158,116,46,.22);--x3-line-hi:rgba(158,116,46,.55);--x3-num:linear-gradient(180deg,#d4a95b 5%,#7f5a1c 95%)}
+body .xd3-how>h2{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;font-size:clamp(34px,4.4vw,58px);line-height:1.04;letter-spacing:-.04em;
+ background:var(--x3-num);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.1em;margin-bottom:40px}
+body .xd3-how .xd-how-grid{position:relative;gap:24px;align-items:start}
+/* Hilo dorado que une los pasos, con una luz que lo recorre */
+body .xd3-how .xd-how-grid::before{content:"";position:absolute;left:8%;right:8%;top:118px;height:2px;border-radius:2px;z-index:0;
+ background:linear-gradient(90deg,transparent,var(--x3-line-hi) 15%,var(--x3-line-hi) 85%,transparent)}
+body .xd3-how .xd-how-grid::after{content:"";position:absolute;top:113px;left:8%;width:12px;height:12px;border-radius:50%;z-index:0;background:#f3d9a0;
+ box-shadow:0 0 0 5px rgba(220,188,125,.2),0 0 22px #dcbc7d;animation:xd3-run 6s ease-in-out infinite}
+@keyframes xd3-run{0%{left:8%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:92%;opacity:0}}
+body .xd3-how .xd-how-grid li{z-index:1;overflow:hidden;padding:16px 16px 28px;border:1px solid var(--x3-line);border-radius:26px}
+body .xd3-how .xd-how-grid li:nth-child(2){margin-top:36px}
+body .xd3-how .xd-how-grid li:not(:last-child)::after{content:none}
+body .xd3-how .xd-how-grid li:hover{border-color:var(--x3-line-hi)}
+/* Número grande de fondo */
+body .xd3-how .xd-how-grid li>i{position:absolute;right:18px;bottom:-14px;z-index:-1;display:block;width:auto;height:auto;background:none;box-shadow:none;border-radius:0;
+ font:italic 400 130px/1 Georgia,serif;color:transparent;-webkit-text-stroke:1px var(--x3-line-hi);opacity:.55;transition:opacity .35s,transform .35s}
+body .xd3-how .xd-how-grid li:hover>i{opacity:.9;transform:translateY(-6px)}
+body .xd3-how .xd-how-grid li>b{margin:24px 12px 8px;font-size:20px}
+body .xd3-how .xd-how-grid li>p{margin:0 12px;max-width:34ch}
+/* Pantalla de cada paso */
+.xd3-art{position:relative;height:200px;overflow:hidden;border-radius:18px;border:1px solid rgba(220,188,125,.28);
+ background:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px) 0 0/24px 24px,
+  radial-gradient(70% 70% at 80% 0%,rgba(220,188,125,.18),transparent 70%),linear-gradient(160deg,#143246,#0a1a26);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 40px rgba(10,26,38,.25)}
+/* Anula los estilos genéricos de .xd-how-grid i / b dentro de las ilustraciones */
+.xd3-art i,.xd3-art b,.xd3-art em,.xd3-art small{display:block;width:auto;height:auto;margin:0;padding:0;border-radius:0;background:none;box-shadow:none;font:inherit;font-style:normal;color:inherit;letter-spacing:normal}
+/* 01: opciones que se eligen */
+.xd3-a1{display:flex;flex-direction:column;gap:11px;padding:22px 22px 0}
+.xd3-opt{display:flex;align-items:center;gap:10px;width:62%;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.05);animation:xd3-pick 6s infinite}
+.xd3-opt b{width:14px;height:14px;flex-shrink:0;border-radius:50%;border:2px solid rgba(255,255,255,.3);animation:xd3-radio 6s infinite}
+.xd3-opt i{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.2)}
+.xd3-opt:nth-child(2) i{flex:.7}
+.xd3-opt:nth-child(2),.xd3-opt:nth-child(2) b{animation-delay:1.2s}
+.xd3-opt:nth-child(3),.xd3-opt:nth-child(3) b{animation-delay:2.4s}
+@keyframes xd3-pick{0%,10%,40%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.05)}15%,35%{border-color:rgba(220,188,125,.7);background:rgba(220,188,125,.14)}}
+@keyframes xd3-radio{0%,10%,40%,100%{background:transparent;border-color:rgba(255,255,255,.3)}15%,35%{background:#dcbc7d;border-color:#dcbc7d;box-shadow:inset 0 0 0 3px #143246}}
+.xd3-chips{display:flex;gap:6px;margin-top:2px}
+.xd3-chips i{width:42px;height:16px;border-radius:8px;border:1px solid rgba(220,188,125,.4);background:rgba(220,188,125,.08)}
+.xd3-chips i:nth-child(2){border-color:transparent;background:linear-gradient(135deg,#ecd29b,#c49650)}
+.xd3-toggle{position:absolute;right:22px;top:26px;width:46px;height:26px;border-radius:13px;background:rgba(255,255,255,.12);animation:xd3-tog 6s infinite}
+.xd3-toggle::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:xd3-knob 6s infinite}
+@keyframes xd3-tog{0%,55%{background:rgba(255,255,255,.12)}62%,95%{background:#d4ad66}100%{background:rgba(255,255,255,.12)}}
+@keyframes xd3-knob{0%,55%{transform:none}62%,95%{transform:translateX(20px)}100%{transform:none}}
+.xd3-cursor{position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(220,188,125,.35),0 3px 10px rgba(0,0,0,.4);animation:xd3-cur 6s ease-in-out infinite}
+@keyframes xd3-cur{0%{left:20%;top:30%}15%{left:16%;top:22%}30%{left:18%;top:46%}40%{left:16%;top:66%}58%{left:84%;top:18%}75%{left:60%;top:88%}100%{left:20%;top:30%}}
+/* 02: el total sube al instante */
+.xd3-a2{display:flex;flex-direction:column;justify-content:center;padding:22px}
+.xd3-price{display:flex;align-items:flex-start;gap:4px;line-height:1}
+.xd3-price small{margin-top:6px;font-size:22px;color:#dcbc7d}
+.xd3-price b{font:700 54px/1 "Segoe UI",sans-serif;letter-spacing:-.04em;counter-reset:xd3 var(--xd3-n);animation:xd3-count 6s cubic-bezier(.2,.7,.2,1) infinite;
+ background:linear-gradient(180deg,#fff3d6,#d9b46b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.xd3-price b::after{content:counter(xd3)}
+@keyframes xd3-count{0%{--xd3-n:0}45%,100%{--xd3-n:295}}
+.xd3-bars{display:flex;align-items:flex-end;gap:7px;height:62px;margin-top:16px;max-width:72%}
+.xd3-bars i{flex:1;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#ecd29b,#a67734);transform-origin:bottom;animation:xd3-bar 6s ease-in-out infinite}
+.xd3-bars i:nth-child(1){height:35%}.xd3-bars i:nth-child(2){height:55%;animation-delay:.1s}.xd3-bars i:nth-child(3){height:45%;animation-delay:.2s}
+.xd3-bars i:nth-child(4){height:75%;animation-delay:.3s}.xd3-bars i:nth-child(5){height:62%;animation-delay:.4s}.xd3-bars i:nth-child(6){height:100%;animation-delay:.5s;box-shadow:0 0 16px rgba(220,188,125,.6)}
+@keyframes xd3-bar{0%{transform:scaleY(.1)}40%,92%{transform:scaleY(1)}100%{transform:scaleY(.1)}}
+.xd3-coins{position:absolute;right:18px;top:18px;display:flex;flex-direction:column;gap:7px}
+.xd3-art .xd3-coins i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(220,188,125,.5);background:rgba(220,188,125,.1);color:#f0d9a6;font:600 11px/1 "Segoe UI",sans-serif;animation:xd3-coin 6s infinite}
+.xd3-coins i:nth-child(2){animation-delay:2s}.xd3-coins i:nth-child(3){animation-delay:4s}
+@keyframes xd3-coin{0%,25%{background:#d4ad66;color:#13222e;box-shadow:0 0 14px rgba(220,188,125,.6)}33%,100%{background:rgba(220,188,125,.1);color:#f0d9a6;box-shadow:none}}
+/* 03: el resumen viaja por WhatsApp */
+.xd3-a3{display:flex;align-items:center;justify-content:center;gap:16px;padding:20px}
+.xd3-doc{display:flex;flex-direction:column;gap:7px;width:84px;padding:14px 12px;border-radius:12px;background:#f4ead6;box-shadow:0 10px 24px rgba(0,0,0,.35);animation:xd3-doc 6s ease-in-out infinite}
+.xd3-doc i{height:6px;border-radius:3px;background:rgba(19,34,46,.25)}
+.xd3-doc i:first-child{width:60%;background:#c49650}.xd3-doc i:last-child{width:70%}
+@keyframes xd3-doc{0%,10%{transform:none;opacity:1}40%{transform:translate(70px,-20px) scale(.4) rotate(12deg);opacity:0}41%,85%{transform:none;opacity:0}100%{opacity:1}}
+.xd3-msg{position:relative;display:flex;flex-direction:column;gap:7px;width:120px;padding:14px 14px 22px;border-radius:16px 16px 4px 16px;background:#0f5a48;box-shadow:0 10px 24px rgba(0,0,0,.35);animation:xd3-msg 6s ease-in-out infinite}
+.xd3-msg i{height:6px;border-radius:3px;background:rgba(255,255,255,.5)}.xd3-msg i+i{width:65%}
+.xd3-msg em{position:absolute;right:10px;bottom:5px;font-size:10px;letter-spacing:-2px;color:rgba(255,255,255,.45);animation:xd3-read 6s infinite}
+@keyframes xd3-msg{0%,38%{opacity:0;transform:translateY(16px) scale(.9)}48%,92%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes xd3-read{0%,62%{color:rgba(255,255,255,.45)}70%,100%{color:#5fc8f2}}
+.xd3-send{position:absolute;right:16px;bottom:16px;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#ecd29b,#c49650);color:#13222e;font-size:13px;animation:xd3-pulse 6s infinite}
+@keyframes xd3-pulse{0%,30%,50%,100%{box-shadow:0 0 0 0 rgba(220,188,125,.6)}38%{box-shadow:0 0 0 12px rgba(220,188,125,0)}}
+@media (max-width:820px){
+ body .xd3-how .xd-how-grid::before,body .xd3-how .xd-how-grid::after{display:none}
+ body .xd3-how .xd-how-grid li:nth-child(2){margin-top:0}
+}
+@media (prefers-reduced-motion:reduce){
+ .xd3-art *,.xd3-art *::after,body .xd3-how .xd-how-grid::after{animation:none!important}
+ .xd3-price b{--xd3-n:295}
+ .xd3-msg{opacity:1}
+}

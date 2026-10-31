@@ -1,0 +1,79 @@
+/* TUPLUS portada: línea de avance + botón "volver arriba" (réplica del cotizador).
+   Aditivo: para desactivarlo, quita el <link> y el <script> en index.html. */
+
+/* Línea dorada de avance, arriba de la página */
+.xd-scroll {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 10000;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #b8893a, #ffd45c 70%, #fff1b8);
+  box-shadow: 0 0 10px rgba(255, 200, 61, .55);
+  will-change: transform;
+}
+
+/* Botón circular. Sube el valor de --xd-top-bottom si se encima con el WhatsApp flotante */
+.xd-top {
+  --xd-top-bottom: 96px;
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right, 0px));
+  bottom: calc(var(--xd-top-bottom) + env(safe-area-inset-bottom, 0px));
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(225, 195, 139, .55);
+  background: rgba(11, 34, 48, .72);
+  color: #e1c38b;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .28);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(.92);
+  transition: opacity .25s, transform .25s, visibility .25s, border-color .2s, color .2s;
+  z-index: 10000;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.xd-top.on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.xd-top svg { width: 18px; height: 18px; }
+
+@media (hover: hover) and (pointer: fine) {
+  .xd-top.on:hover {
+    border-color: #ffd45c;
+    color: #ffd45c;
+    transform: translateY(-2px);
+  }
+}
+
+.xd-top:active { transform: scale(.94); }
+.xd-top:focus-visible { outline: 2px solid #ffd45c; outline-offset: 3px; }
+
+/* Tablet: zona táctil más grande */
+@media (min-width: 768px) and (max-width: 1180px) {
+  .xd-top { width: 56px; height: 56px; }
+  .xd-top svg { width: 22px; height: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xd-top { transition: none; }
+}
+
+@media print {
+  .xd-scroll, .xd-top { display: none !important; }
+}

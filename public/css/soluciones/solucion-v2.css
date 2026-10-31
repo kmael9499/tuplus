@@ -1,0 +1,74 @@
+/* Páginas de solución: rediseño de "Tu punto de partida", "Del diagnóstico a la entrega" y
+   "Antes de empezar". Mismo contenido; solo cambia el diseño. Se carga después de solucion.css. */
+:root body .sl-page{
+ --s2-gold:#dcbc7d;--s2-gold-2:#b88a45;--s2-muted:#a3b5c1;--s2-text:#d5e0e7;
+ --s2-card:rgba(255,255,255,.045);--s2-card-2:rgba(255,255,255,.012);
+ --s2-line:rgba(220,188,125,.2);--s2-line-hi:rgba(220,188,125,.6);--s2-glow:rgba(220,188,125,.14);
+ --s2-num:linear-gradient(180deg,#f6e3b8 8%,#c4934a 92%);
+ --s2-panel:linear-gradient(165deg,rgba(15,36,51,.9),rgba(8,20,30,.94));
+ --s2-shadow:0 30px 80px rgba(0,0,0,.32)}
+html:not([data-theme="dark"]) body .sl-page{
+ --s2-muted:#5a6a74;--s2-text:#24394a;
+ --s2-card:rgba(255,255,255,.85);--s2-card-2:rgba(255,255,255,.6);
+ --s2-line:rgba(158,116,46,.2);--s2-line-hi:rgba(158,116,46,.5);--s2-glow:rgba(212,176,106,.18);
+ --s2-num:linear-gradient(180deg,#d4a95b 5%,#7f5a1c 95%);
+ --s2-panel:linear-gradient(165deg,rgba(255,255,255,.95),rgba(250,246,237,.92));
+ --s2-shadow:0 30px 70px rgba(18,44,61,.1)}
+
+/* ============ Tu punto de partida ============ */
+:root body .sl-page .sl-fit{position:relative;isolation:isolate;overflow:hidden;padding-block:clamp(80px,9vw,120px)}
+:root body .sl-page .sl-fit::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background:radial-gradient(40% 55% at 8% 20%,var(--s2-glow),transparent 70%),radial-gradient(35% 50% at 95% 90%,rgba(40,110,150,.12),transparent 70%)}
+:root body .sl-page .sl-fit-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:22px 22px;align-items:stretch}
+:root body .sl-page .sl-fit-grid>div:last-child{display:contents}
+:root body .sl-page .sl-fit-grid>div:first-child{grid-column:1/8;grid-row:1;align-self:center;padding-right:clamp(0px,3vw,40px)}
+:root body .sl-page .sl-fit-grid>div:first-child h2{font-size:clamp(36px,4.4vw,60px);line-height:1.03;letter-spacing:-.04em;margin-bottom:22px}
+:root body .sl-page .sl-fit .lead{font-size:clamp(16px,1.4vw,19px);line-height:1.65;color:var(--s2-muted);max-width:540px}
+/* Qué recibe tu negocio: tarjeta destacada */
+:root body .sl-page .sl-receive{grid-column:8/13;grid-row:1;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:250px;
+ padding:clamp(24px,3vw,34px);border:1px solid transparent;border-radius:26px;
+ background:radial-gradient(80% 70% at 100% 0%,rgba(220,188,125,.28),transparent 65%) padding-box,linear-gradient(160deg,#143246,#0a1a26) padding-box,
+  linear-gradient(135deg,rgba(236,210,155,.85),rgba(236,210,155,.1) 45%,rgba(236,210,155,.55)) border-box;
+ box-shadow:var(--s2-shadow),0 0 70px var(--s2-glow)}
+:root body .sl-page .sl-receive::before{content:"";position:absolute;left:clamp(24px,3vw,34px);top:clamp(24px,3vw,34px);width:54px;height:54px;border-radius:16px;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2313222e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z'/%3E%3C/svg%3E") center/26px no-repeat,
+ linear-gradient(135deg,#ecd29b,#c49650);box-shadow:0 10px 30px rgba(201,154,78,.4)}
+:root body .sl-page .sl-receive::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(220,188,125,.25);box-shadow:0 0 0 30px rgba(220,188,125,.05),0 0 0 60px rgba(220,188,125,.03)}
+:root body .sl-page .sl-receive h3{position:relative;margin:80px 0 10px;font-size:clamp(19px,1.7vw,22px);color:#f4ead6}
+:root body .sl-page .sl-receive p{position:relative;margin:0;font-size:15px;line-height:1.7;color:#c4d1d9}
+/* Qué podemos trabajar contigo */
+:root body .sl-page .sl-fit-title{grid-column:1/-1;grid-row:2;display:flex;align-items:center;gap:16px;margin:34px 0 4px;font-size:15px!important;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink)}
+:root body .sl-page .sl-fit-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--s2-line-hi),transparent)}
+:root body .sl-page .sl-caps{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:0}
+:root body .sl-page .sl-caps li{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:0;min-height:200px;padding:26px 26px 28px;
+ border:1px solid var(--s2-line);border-radius:24px;background:radial-gradient(90% 70% at 0 0,var(--s2-glow),transparent 60%),linear-gradient(180deg,var(--s2-card),var(--s2-card-2));
+ font-weight:600;translate:none;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s}
+:root body .sl-page .sl-caps li:hover{translate:none;transform:translateY(-6px);border-color:var(--s2-line-hi);box-shadow:var(--s2-shadow),0 0 50px var(--s2-glow)}
+:root body .sl-page .sl-cap-icon{width:48px;height:48px;border-radius:15px;background:linear-gradient(135deg,#ecd29b,#c49650);color:#13222e;box-shadow:0 10px 26px rgba(201,154,78,.35)}
+:root body .sl-page .sl-cap-icon svg{width:22px;height:22px;stroke-width:2.4}
+:root body .sl-page .sl-caps b{position:absolute;right:20px;bottom:-12px;font:italic 400 96px/1 Georgia,serif;letter-spacing:0;color:transparent;-webkit-text-stroke:1px var(--s2-line-hi);opacity:.6;transition:opacity .35s,transform .35s}
+:root body .sl-page .sl-caps li:hover b{opacity:1;transform:translateY(-6px)}
+:root body .sl-page .sl-caps li>span:last-child{position:relative;margin-top:auto;padding-top:34px;max-width:85%;font-size:clamp(16px,1.4vw,19px);line-height:1.35;font-weight:650;letter-spacing:-.01em;color:var(--ink)}
+
+/* "Del diagnóstico a la entrega" tiene su propio archivo: solucion-pasos.css */
+
+/* ============ Antes de empezar (columna izquierda; cada formato está en solucion-extra.css) ============ */
+:root body .sl-page .faq-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(34px,6vw,80px);align-items:start}
+:root body .sl-page .faq-grid>div:first-child h2{font-size:clamp(34px,4.2vw,56px);line-height:1.04;letter-spacing:-.04em}
+:root body .sl-page .faq-grid>div:first-child::after{content:none}
+:root body .sl-page .faq-grid .button{display:inline-flex;align-items:center;min-height:52px;margin-top:28px;padding:14px 26px;border:0;border-radius:999px;
+ background:linear-gradient(115deg,#efd7a2,#c99a50 60%,#a67734);color:#13222e;font-weight:750;box-shadow:0 16px 40px rgba(201,154,78,.3);transition:transform .25s,box-shadow .25s}
+:root body .sl-page .faq-grid .button:hover{transform:translateY(-2px);color:#13222e;box-shadow:0 22px 50px rgba(201,154,78,.42)}
+
+/* ============ Adaptación ============ */
+@media (max-width:900px){
+ :root body .sl-page .sl-fit-grid>div:first-child,:root body .sl-page .sl-receive{grid-column:1/-1;grid-row:auto}
+ :root body .sl-page .sl-fit-title,:root body .sl-page .sl-caps{grid-row:auto}
+ :root body .sl-page .sl-fit-grid>div:first-child{order:1}:root body .sl-page .sl-receive{order:2}:root body .sl-page .sl-fit-title{order:3}:root body .sl-page .sl-caps{order:4}
+ :root body .sl-page .sl-caps{grid-template-columns:1fr}
+ :root body .sl-page .sl-caps li{min-height:0}
+ :root body .sl-page .faq-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+ :root body .sl-page .sl-caps li{transition:none}
+}

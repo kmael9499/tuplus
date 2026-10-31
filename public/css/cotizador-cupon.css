@@ -1,0 +1,105 @@
+/* TUPLUS cotizador: campo de cupón del paso 5 (aditivo, solo estilos de .coupon-box).
+   Usa los mismos dorados, el mismo azul y los mismos bordes que la tarjeta de resumen.
+   Para desactivarlo, quita su enlace en cotizador.astro. */
+
+.coupon-box{
+  margin:16px 0 4px;
+  padding:16px;
+  border:1px solid #c7a66b55;
+  border-radius:14px;
+  background:linear-gradient(135deg,#e1c38b0f,#e1c38b03);
+  transition:border-color .25s,box-shadow .25s;
+}
+.coupon-box:focus-within{border-color:#e1c38b99;box-shadow:0 0 0 3px #e1c38b12}
+
+.coupon-label{
+  display:flex;align-items:center;gap:8px;
+  margin:0 0 10px;
+  font-size:12px;font-weight:700;letter-spacing:.01em;
+  color:#e4cfaa;
+}
+.coupon-label svg{flex:none;color:#e1c38b}
+
+.coupon-row{display:flex;gap:8px}
+
+/* Campo con borde punteado, como un cupón recortable */
+.coupon-input{
+  flex:1;min-width:0;min-height:46px;
+  padding:10px 14px;
+  border:1px dashed #e1c38b73;
+  border-radius:12px;
+  background:#0e2737;
+  color:#f3f3ed;
+  font:600 13px "DM Mono",ui-monospace,monospace;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  transition:border-color .2s,box-shadow .2s,opacity .2s;
+}
+.coupon-input::placeholder{
+  color:#99adba;
+  font:400 13px "Segoe UI",Manrope,system-ui,sans-serif;
+  letter-spacing:.01em;
+  text-transform:none;
+}
+.coupon-input:focus{border-style:solid;border-color:#e1c38b;box-shadow:0 0 0 3px #e1c38b1f}
+.coupon-input:read-only{opacity:.85;cursor:default}
+
+.coupon-btn{
+  flex:none;min-height:46px;
+  padding:0 20px;
+  border:1px solid #e1c38b;
+  border-radius:12px;
+  background:#e1c38b;
+  color:#102c3d;
+  font:700 13px "Segoe UI",Manrope,system-ui,sans-serif;
+  cursor:pointer;
+  transition:transform .15s,background .2s,color .2s,box-shadow .2s;
+}
+.coupon-btn:hover{background:#eed2a0;box-shadow:0 8px 18px #0003}
+.coupon-btn:active{transform:scale(.97)}
+
+.coupon-msg{
+  margin:9px 0 0;
+  font-size:11px;line-height:1.5;
+  color:#bbcbd5;
+}
+.coupon-msg:empty{margin:0}
+
+/* Estados */
+.coupon-box.is-ok{border-color:#8fcfae80}
+.coupon-box.is-ok .coupon-input{border-style:solid;border-color:#8fcfae}
+.coupon-box.is-ok .coupon-msg{color:#bfe3cf}
+.coupon-box.is-ok .coupon-msg::before{content:"✓ "}
+
+.coupon-box.is-error{border-color:#e59a8f80}
+.coupon-box.is-error .coupon-input{border-style:solid;border-color:#e59a8f}
+.coupon-box.is-error .coupon-msg{color:#f2b3aa}
+.coupon-box.is-error .coupon-msg::before{content:"! "}
+
+.coupon-box.is-applied .coupon-btn{background:transparent;color:#f0d8aa}
+.coupon-box.is-applied .coupon-btn:hover{background:#e1c38b1a;box-shadow:none}
+
+.coupon-box.is-shake{animation:coupon-shake .38s}
+@keyframes coupon-shake{
+  20%{transform:translateX(-5px)}
+  40%{transform:translateX(5px)}
+  60%{transform:translateX(-3px)}
+  80%{transform:translateX(3px)}
+}
+
+/* Celular: el botón baja y ocupa todo el ancho; 16px evita el zoom automático de iOS */
+@media (max-width:620px){
+  .coupon-row{flex-direction:column}
+  .coupon-input{font-size:16px}
+  .coupon-btn{width:100%}
+}
+
+@media print{.coupon-box{display:none!important}}
+
+/* Aviso del descuento por fecha (sale solo si hay uno en curso) */
+.promo-banner{
+  margin:16px 0 0;padding:10px 14px;
+  border:1px solid #e1c38b66;border-radius:12px;
+  background:#e1c38b1a;color:#e4cfaa;
+  font-size:13px;font-weight:600;line-height:1.4;
+}
