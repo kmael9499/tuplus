@@ -99,12 +99,12 @@
       "partner.q3": "¿Cómo paso de Básico a Master?",
       "partner.a3":
         "Los criterios de ascenso y permanencia se definirán en las condiciones del programa. No hay metas automáticas publicadas.",
-      "partner.q4": "¿La postulación ya está habilitada?",
+      "partner.q4": "¿Puedo enviar una postulación?",
       "partner.a4":
-        "Puedes recorrer el formulario de revisión. El envío está desactivado y completar los pasos no equivale a una solicitud recibida por TUPLUS.",
+        "Sí. La API de postulaciones está desplegada. El formulario confirma la recepción solo cuando recibe una respuesta exitosa.",
       "partner.next": "Tu siguiente conexión empieza aquí.",
       "partner.application": "Conocer la postulación",
-      "partner.footerNote": "Versión para revisión · Envío desactivado",
+      "partner.footerNote": "Formulario conectado · API de postulaciones disponible",
       "partner.info": "Información",
       "partner.play": "Activar giro",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -217,12 +217,12 @@
       "partner.q3": "How do I move from Basic to Master?",
       "partner.a3":
         "Progression and retention criteria will be defined in the program terms. No automatic targets have been published.",
-      "partner.q4": "Can I submit an application yet?",
+      "partner.q4": "Can I submit an application?",
       "partner.a4":
-        "You can explore the review form. Submission is disabled; completing the steps does not send an application to TUPLUS.",
+        "Yes. The application API is deployed. The form confirms receipt only after it receives a successful response.",
       "partner.next": "Your next connection starts here.",
       "partner.application": "Explore the application",
-      "partner.footerNote": "Review version · Submission disabled",
+      "partner.footerNote": "Form connected · Application API available",
       "partner.info": "Information",
       "partner.play": "Start rotation",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -323,12 +323,12 @@
       "partner.q3": "如何从基础级升至 Master？",
       "partner.a3":
         "升级及保级标准将在计划条款中确定，目前没有公布自动晋级目标。",
-      "partner.q4": "现在可以提交申请吗？",
+      "partner.q4": "可以提交申请吗？",
       "partner.a4":
-        "可以体验审核表单，但提交功能未启用。完成步骤不代表 TUPLUS 已收到申请。",
+        "可以。申请 API 已部署。只有收到成功响应后，表单才会确认已收到申请。",
       "partner.next": "你的下一次连接，从这里开始。",
       "partner.application": "了解申请流程",
-      "partner.footerNote": "审核版本 · 提交功能未启用",
+      "partner.footerNote": "表单已连接 · 申请 API 可用",
       "partner.info": "信息",
       "partner.play": "开始旋转",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -442,12 +442,12 @@
       "partner.q3": "Как перейти с базового уровня на Master?",
       "partner.a3":
         "Критерии повышения и сохранения уровня будут указаны в условиях программы. Автоматические цели не опубликованы.",
-      "partner.q4": "Уже можно отправить заявку?",
+      "partner.q4": "Можно отправить заявку?",
       "partner.a4":
-        "Можно ознакомиться с тестовой формой. Отправка отключена: прохождение шагов не означает получения заявки TUPLUS.",
+        "Да. API заявок развернут. Форма подтверждает получение только после успешного ответа сервера.",
       "partner.next": "Ваша следующая связь начинается здесь.",
       "partner.application": "Ознакомиться с заявкой",
-      "partner.footerNote": "Тестовая версия · Отправка отключена",
+      "partner.footerNote": "Форма подключена · API заявок доступен",
       "partner.info": "Информация",
       "partner.play": "Запустить вращение",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -561,12 +561,12 @@
       "partner.q3": "Como passo de Básico para Master?",
       "partner.a3":
         "Os critérios de progressão e permanência serão definidos nas condições. Não há metas automáticas publicadas.",
-      "partner.q4": "Já posso enviar a candidatura?",
+      "partner.q4": "Posso enviar uma candidatura?",
       "partner.a4":
-        "Você pode explorar o formulário de revisão. O envio está desativado; concluir as etapas não envia uma candidatura à TUPLUS.",
+        "Sim. A API de candidaturas está implantada. O formulário confirma o recebimento somente após uma resposta de sucesso.",
       "partner.next": "Sua próxima conexão começa aqui.",
       "partner.application": "Conhecer a candidatura",
-      "partner.footerNote": "Versão de revisão · Envio desativado",
+      "partner.footerNote": "Formulário conectado · API de candidaturas disponível",
       "partner.info": "Informações",
       "partner.play": "Iniciar rotação",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -682,12 +682,12 @@
       "partner.q3": "Comment passer du niveau Initial à Master ?",
       "partner.a3":
         "Les critères de progression et de maintien seront définis dans les conditions du programme. Aucun objectif automatique n’est publié.",
-      "partner.q4": "Peut-on déjà envoyer une candidature ?",
+      "partner.q4": "Puis-je envoyer une candidature ?",
       "partner.a4":
-        "Vous pouvez parcourir le formulaire de démonstration. L’envoi est désactivé : terminer les étapes ne transmet aucune candidature à TUPLUS.",
+        "Oui. L’API de candidature est déployée. Le formulaire confirme la réception uniquement après une réponse positive.",
       "partner.next": "Votre prochaine connexion commence ici.",
       "partner.application": "Découvrir la candidature",
-      "partner.footerNote": "Version de démonstration · Envoi désactivé",
+      "partner.footerNote": "Formulaire connecté · API de candidature disponible",
       "partner.info": "Informations",
       "partner.play": "Activer la rotation",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -798,12 +798,12 @@
       "partner.q3": "ベーシックからMasterへ進むには？",
       "partner.a3":
         "昇格・維持条件はプログラムの規定で定められます。自動昇格の目標は公開されていません。",
-      "partner.q4": "今すぐ応募を送信できますか？",
+      "partner.q4": "応募を送信できますか？",
       "partner.a4":
-        "確認用フォームをご覧いただけます。送信機能は無効で、入力を完了してもTUPLUSには届きません。",
+        "はい。応募受付APIはデプロイ済みです。フォームは成功応答を受け取った場合にのみ受付を確認します。",
       "partner.next": "次のつながりは、ここから。",
       "partner.application": "応募手順を見る",
-      "partner.footerNote": "確認用バージョン・送信は無効",
+      "partner.footerNote": "フォーム接続済み・応募受付API利用可能",
       "partner.info": "ご案内",
       "partner.play": "回転を開始",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -918,12 +918,12 @@
       "partner.q3": "Wie steige ich von Basis zu Master auf?",
       "partner.a3":
         "Aufstiegs- und Verbleibskriterien werden in den Programmbedingungen definiert. Automatische Zielvorgaben sind nicht veröffentlicht.",
-      "partner.q4": "Kann ich schon eine Bewerbung einreichen?",
+      "partner.q4": "Kann ich eine Bewerbung senden?",
       "partner.a4":
-        "Sie können das Testformular durchgehen. Der Versand ist deaktiviert; das Ausfüllen übermittelt keine Bewerbung an TUPLUS.",
+        "Ja. Die Bewerbungs-API ist bereitgestellt. Das Formular bestätigt den Eingang erst nach einer erfolgreichen Serverantwort.",
       "partner.next": "Ihre nächste Verbindung beginnt hier.",
       "partner.application": "Bewerbung ansehen",
-      "partner.footerNote": "Prüfversion · Versand deaktiviert",
+      "partner.footerNote": "Formular verbunden · Bewerbungs-API verfügbar",
       "partner.info": "Informationen",
       "partner.play": "Drehung starten",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -943,23 +943,4 @@
   window.TUPLUS_TRANSLATIONS ||= {};
   for (const [locale, entries] of Object.entries(dictionaries))
     Object.assign((window.TUPLUS_TRANSLATIONS[locale] ||= {}), entries);
-})();
-
-(() => {
-  const faq = {
-    es: ["¿Puedo enviar una postulación?", "El formulario envía la postulación a la API de TUPLUS. Para recibir solicitudes en producción, AdminPanel debe desplegar la ruta correspondiente.", "Formulario conectado · recepción pendiente del despliegue de AdminPanel"],
-    en: ["Can I submit an application?", "The form sends applications to the TUPLUS API. AdminPanel must deploy the corresponding route to receive applications in production.", "Form connected · receipt depends on the AdminPanel deployment"],
-    pt: ["Posso enviar uma candidatura?", "O formulário envia candidaturas à API da TUPLUS. Para receber solicitações em produção, o AdminPanel precisa implantar a rota correspondente.", "Formulário conectado · recebimento depende da implantação do AdminPanel"],
-    fr: ["Puis-je envoyer une candidature ?", "Le formulaire envoie les candidatures à l’API de TUPLUS. AdminPanel doit déployer la route correspondante pour les recevoir en production.", "Formulaire connecté · réception après déploiement d’AdminPanel"],
-    de: ["Kann ich eine Bewerbung senden?", "Das Formular sendet Bewerbungen an die TUPLUS-API. AdminPanel muss die entsprechende Route bereitstellen, damit Bewerbungen in der Produktion eingehen.", "Formular verbunden · Eingang nach Bereitstellung durch AdminPanel"],
-    ja: ["応募を送信できますか？", "フォームは応募内容をTUPLUS APIに送信します。本番環境で受け付けるには、AdminPanelで対応するルートをデプロイする必要があります。", "フォーム接続済み・AdminPanelのデプロイ後に受付開始"],
-    zh: ["可以提交申请吗？", "表单会将申请发送到 TUPLUS API。要在生产环境接收申请，AdminPanel 必须部署对应路由。", "表单已连接 · AdminPanel 部署后接收"],
-    ru: ["Можно отправить заявку?", "Форма отправляет заявки в API TUPLUS. Для приема заявок в production AdminPanel должен развернуть соответствующий маршрут.", "Форма подключена · прием после развертывания AdminPanel"]
-  };
-  for (const [locale, [question, answer, note]] of Object.entries(faq)) {
-    const dict = (window.TUPLUS_TRANSLATIONS[locale] ||= {});
-    dict["partner.q4"] = question;
-    dict["partner.a4"] = answer;
-    dict["partner.footerNote"] = note;
-  }
 })();
