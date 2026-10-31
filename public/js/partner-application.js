@@ -85,7 +85,7 @@
         dd.textContent =
           el.name === "solutions"
             ? [...panel.querySelectorAll('[name="solutions"]:checked')]
-                .map((c) => t(c.querySelector("[data-i18n]")?.getAttribute("data-i18n") || Number(c.value)))
+                .map((c) => t(c.closest("label")?.querySelector("[data-i18n]")?.getAttribute("data-i18n") || Number(c.value)))
                 .join(", ")
             : el.tagName === "SELECT"
               ? el.selectedOptions[0]?.textContent

@@ -26,7 +26,7 @@ click('#pa-next');assert.equal(shown(),'0');field('company').value='Empresa de p
 for(const [n,v] of Object.entries({country:'other',city:'Ciudad de prueba',sector:'Comercio',experience:'1-3',clients:'4'}))field(n).value=v;
 field('country').dispatchEvent(new window.Event('change',{bubbles:true}));assert.equal(field('otherCountry').disabled,false);click('#pa-next');assert.equal(shown(),'1');field('otherCountry').value='Chile';click('#pa-next');assert.equal(shown(),'1');field('solutions').value='web-commerce';field('solutions').checked=true;field('solutions').setAttribute('checked','');click('#pa-next');assert.equal(shown(),'1');field('country').value='PE';field('city').value='Lima';field('country').dispatchEvent(new window.Event('change',{bubbles:true}));click('#pa-next');assert.equal(shown(),'2');
 for(const [n,v] of Object.entries({level:'advanced',hours:'10',start:'30',strategy:'Visitar negocios y presentar soluciones digitales.',goal:'Conseguir tres clientes durante los primeros meses.'}))field(n).value=v;
-click('#pa-next');assert.equal(shown(),'3');assert.match(document.querySelector('#pa-review').textContent,/Empresa de prueba/);
+click('#pa-next');assert.equal(shown(),'3');assert.match(document.querySelector('#pa-review').textContent,/Empresa de prueba/);assert.match(document.querySelector('#pa-review').textContent,/Web y comercio digital/);assert.doesNotMatch(document.querySelector('#pa-review').textContent,/application\.NaN/);
 let combinations=0;
 for(const locale of ['es','en','zh','ru','pt','fr','ja','de']){
  window.TUPLUS_I18N.setLocale(locale);
