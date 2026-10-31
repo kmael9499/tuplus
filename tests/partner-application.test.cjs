@@ -1,6 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {parseHTML}=require('linkedom');
 const {window}=parseHTML(fs.readFileSync('dist/red-socios.html','utf8')), {document}=window;
+Object.defineProperty(window,'location',{configurable:true,value:{hostname:'localhost',origin:'http://localhost:4321'}});
 const field=n=>document.querySelector(`[name="${n}"]`);
 // linkedom has no constraint-validation engine: emulate validity only for flow tests.
 for(const el of document.querySelectorAll('input,select,textarea')){
@@ -12,6 +13,9 @@ const storage=new Map();
 const requests=[];let nextResponse={ok:true,status:201},nextFailure=null;
 const context=vm.createContext({history:{},matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener(){},window,document,Node:window.Node,NodeFilter:{SHOW_TEXT:4},MutationObserver:window.MutationObserver,CustomEvent:window.CustomEvent,URLSearchParams,location:{search:"?country=PE&city=Lima&region=Lima"},localStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{requests.push([url,options]);if(nextFailure){const err=nextFailure;nextFailure=null;throw err;}return nextResponse;},AbortController,setTimeout,clearTimeout,console});
 for(const file of ['theme.js','config.js','i18n-data.js','partner-application-translations.js','partner-territory.js','i18n.js','partner-application.js'])vm.runInContext(fs.readFileSync('public/js/'+file,'utf8'),context);
+const localConfigContext=vm.createContext({window:{location:{hostname:'localhost',origin:'http://localhost:4321'}}});
+vm.runInContext(fs.readFileSync('public/js/config.js','utf8'),localConfigContext);
+assert.equal(localConfigContext.window.TUPLUS_CONFIG.apiUrl,'http://localhost:4321','local development must target the same-origin API proxy');
 document.dispatchEvent(new window.Event('DOMContentLoaded'));
 const click=id=>document.querySelector(id).click();
 const shown=()=>document.querySelector('.pa-panel:not([hidden])').getAttribute('data-panel');
@@ -47,7 +51,7 @@ console.log('OK: '+combinations+' estados: 8 idiomas × 2 temas × 4 etapas, sin
 async function simulateSubmit(){
  field('confirmed').checked=false;formSubmit();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(requests.length,0,'must not send without consent');
  field('confirmed').checked=true;formSubmit();await new Promise(resolve=>setTimeout(resolve,0));
- assert.equal(requests.length,1);assert.equal(requests[0][0],'https://tuplusadminpanel.onrender.com/api/postulaciones/partners');
+ assert.equal(requests.length,1);assert.equal(requests[0][0],'http://localhost:4321/api/postulaciones/partners');
  assert.equal(requests[0][1].method,'POST');assert.equal(requests[0][1].headers['Content-Type'],'application/json');
  const payload=JSON.parse(requests[0][1].body);
  assert.deepEqual(Object.keys(payload),['fullName','email','phone','profile','company','role','website','country','otherCountry','city','region','sector','experience','clients','solutions','level','hours','start','strategy','goal','confirmed']);
@@ -60,7 +64,7 @@ async function simulateSubmit(){
  nextFailure=new TypeError('simulated network failure');formSubmit();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(document.querySelector('#pa-result').hidden,true);assert.equal(requests.length,4);
  assert.equal(document.querySelector('input[type="file"]'),null);assert.equal(document.querySelector('#country-select'),null);
  assert.ok(!fs.readFileSync('dist/partner.html','utf8').includes('Natural Earth ?? 1:110m'));
- console.log('OK: '+combinations+' UI states and simulated submission success, consent gate, payload, 400, 429, and network failure; no production request made.');
+ console.log('OK: '+combinations+' UI states and mocked fetch response handling (no database write), consent gate, payload, 400, 429, and network failure; no production request made.');
 }
 simulateSubmit().catch(err=>{console.error(err);process.exitCode=1;});
 function formSubmit(){document.querySelector('form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));}

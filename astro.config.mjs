@@ -6,4 +6,11 @@ export default defineConfig({
   build: { format: 'file' },
   compressHTML: false,
   server: { host: true, port: 4321 },
+  vite: {
+    server: {
+      proxy: {
+        '/api': { target: 'http://localhost:8080', changeOrigin: false },
+      },
+    },
+  },
 });

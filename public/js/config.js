@@ -1,8 +1,12 @@
 /* Configuración comercial centralizada. Validar tarifas y canal antes de publicar. */
+const TUPLUS_LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
+const TUPLUS_LOCAL_API = TUPLUS_LOCAL_HOSTS.has(window.location?.hostname)
+  ? window.location.origin
+  : '';
 window.TUPLUS_CONFIG = Object.freeze({
   quoteBackendEnabled: true, // Guarda cotizaciones y valida cupones en el panel ERP.
   // Panel ERP (Render). Sin esta URL la web funciona igual, sin cupones ni descuentos por fecha.
-  apiUrl: 'https://tuplusadminpanel.onrender.com',
+  apiUrl: TUPLUS_LOCAL_API || 'https://tuplusadminpanel.onrender.com',
   whatsapp: '51916828870',
   // Pagos: completa estos datos antes de publicar.
   payments: {
