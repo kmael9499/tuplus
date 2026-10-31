@@ -68,7 +68,7 @@
       !query && filter.value === "all";
     document.getElementById("pp-map-empty").hidden = ids.length > 0;
     document.querySelector(".pp-country-info").hidden = ids.length === 0;
-    document.getElementById("pp-map-cta").hidden = ids.length === 0;
+    // The territory form owns its action state independently of map search results.
     window.TUPLUS_GLOBE?.filter(ids);
     if (ids.length)
       showCountry(ids.includes(selected) ? selected : ids[0], focusGlobe);

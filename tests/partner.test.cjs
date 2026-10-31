@@ -91,6 +91,25 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
         document.querySelector(".theme-toggle").click();
       assert.equal(document.documentElement.dataset.theme, theme);
       checks++;
+      for (const [country,city,state,enabled] of [['PE','  LÍMA  ','open',true],['ES','Madrid','limited',true],['PT','Lisboa','future',false],['US','Boston','closed',false],['DE','Berlin','unavailable',false],['ES','Madrid','limited',true],['PE','','open',false]]) {
+        const countryInput=document.getElementById('pp-territory-country'), cityInput=document.getElementById('pp-territory-city');
+        countryInput.value=country;countryInput.dispatchEvent(new window.Event('change'));cityInput.value=city;cityInput.dispatchEvent(new window.Event('input'));
+        const availability=territoryForm.querySelector('.territory-availability');
+        assert.equal(availability.dataset.state,state);
+        assert.equal(availability.querySelector('.territory-availability-badge').textContent,dict[locale]['territory.status.'+state]);
+        assert.equal(document.getElementById('pp-map-cta').disabled,!enabled);
+        ctx.location.href='unchanged';territoryForm.dispatchEvent(new window.Event('submit',{cancelable:true}));
+        if(enabled)assert.ok(ctx.location.href.startsWith('red-socios.html?'));else assert.equal(ctx.location.href,'unchanged');
+        checks+=4;
+      }
+      for(const id of Object.keys(data)) {
+        const card=document.querySelector('[data-territory="'+id+'"]');card.click();
+        assert.equal(card.getAttribute('aria-pressed'),'true');
+        assert.equal(document.getElementById('pp-territory-country').value,id);
+        assert.equal(globeCalls.country,id);
+        assert.equal(document.getElementById('pp-map-cta').hidden,!['PE','ES'].includes(id));
+        assert.equal(card.querySelector('.territory-card-status').textContent,dict[locale]['territory.status.'+card.dataset.state]);checks+=5;
+      }
       for (const id of Object.keys(data)) {
         document
           .querySelector('.pp-globe-country-list [data-country="' + id + '"]')
@@ -140,7 +159,7 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
     region.dispatchEvent(new window.Event("change"));
     await pause();
     assert.equal(document.getElementById("pp-map-empty").hidden, false);
-    assert.equal(document.getElementById("pp-map-cta").hidden, true);
+    assert.ok(document.querySelector(".territory-cards"));
     assert.equal(globeCalls.ids.length, 0);
     checks += 3;
     document.getElementById("pp-clear-search").click();

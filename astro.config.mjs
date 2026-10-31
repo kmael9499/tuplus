@@ -5,4 +5,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   build: { format: 'file' },
   compressHTML: false,
+  server: { host: true, port: 4321 },
 });

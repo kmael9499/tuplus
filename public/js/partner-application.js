@@ -37,6 +37,10 @@
       !controls.some((el) => el.name === "solutions" && el.checked)
     )
       controls.find((el) => el.name === "solutions").setCustomValidity(t(55));
+    if (index === 1 && !window.TUPLUS_TERRITORY.canApply(field('country').value, field('city').value)) {
+      const state = window.TUPLUS_TERRITORY.resolve(field('country').value, field('city').value);
+      field('city').setCustomValidity(window.TUPLUS_I18N.t('territory.status.' + state + 'Copy'));
+    }
     controls.forEach((el) => {
       const ok = el.checkValidity();
       el.setAttribute("aria-invalid", String(!ok));

@@ -19,7 +19,7 @@ for(const [n,v] of Object.entries({fullName:'Prueba',email:'test@example.com',ph
 field('profile').dispatchEvent(new window.Event('change',{bubbles:true}));assert.equal(field('company').disabled,false);
 click('#pa-next');assert.equal(shown(),'0');field('company').value='Empresa de prueba';click('#pa-next');assert.equal(shown(),'1');
 for(const [n,v] of Object.entries({country:'other',city:'Ciudad de prueba',sector:'Comercio',experience:'1-3',clients:'4'}))field(n).value=v;
-field('country').dispatchEvent(new window.Event('change',{bubbles:true}));assert.equal(field('otherCountry').disabled,false);click('#pa-next');assert.equal(shown(),'1');field('otherCountry').value='Chile';click('#pa-next');assert.equal(shown(),'1');field('solutions').checked=true;click('#pa-next');assert.equal(shown(),'2');
+field('country').dispatchEvent(new window.Event('change',{bubbles:true}));assert.equal(field('otherCountry').disabled,false);click('#pa-next');assert.equal(shown(),'1');field('otherCountry').value='Chile';click('#pa-next');assert.equal(shown(),'1');field('solutions').checked=true;click('#pa-next');assert.equal(shown(),'1');field('country').value='PE';field('city').value='Lima';field('country').dispatchEvent(new window.Event('change',{bubbles:true}));click('#pa-next');assert.equal(shown(),'2');
 for(const [n,v] of Object.entries({level:'advanced',hours:'10',start:'30',strategy:'Visitar negocios y presentar soluciones digitales.',goal:'Conseguir tres clientes durante los primeros meses.'}))field(n).value=v;
 click('#pa-next');assert.equal(shown(),'3');assert.match(document.querySelector('#pa-review').textContent,/Empresa de prueba/);
 let combinations=0;
@@ -32,13 +32,13 @@ for(const locale of ['es','en','zh','ru','pt','fr','ja','de']){
   for(let step=0;step<4;step++){
    click('[data-go="'+step+'"]');assert.equal(shown(),String(step));
    for(const el of document.querySelectorAll('[data-i18n]'))assert.equal(el.textContent,window.TUPLUS_TRANSLATIONS[locale][el.getAttribute('data-i18n')],locale+' '+theme+' '+el.getAttribute('data-i18n'));
-   for(const [name,value] of Object.entries({fullName:'Prueba',email:'test@example.com',company:'Empresa de prueba',city:'Ciudad de prueba',region:'Lima',otherCountry:'Chile',level:'advanced',hours:'10'}))assert.equal(field(name).value,value);
+   for(const [name,value] of Object.entries({fullName:'Prueba',email:'test@example.com',company:'Empresa de prueba',city:'Lima',region:'Lima',otherCountry:'Chile',level:'advanced',hours:'10'}))assert.equal(field(name).value,value);
    assert.ok(!document.querySelector('main').textContent.includes('estimateText()'));
    assert.equal(document.querySelectorAll('.pa-panel:not([hidden])').length,1);
    combinations++;
   }
-  assert.match(document.querySelector('#pa-review').textContent,/Chile/);
-  assert.match(document.querySelector('#pa-review').textContent,/Ciudad de prueba/);
+  assert.match(document.querySelector('#pa-review').textContent,/Lima/);
+  assert.match(document.querySelector('#pa-review').textContent,/Lima/);
   assert.equal(document.querySelector('#pa-review h3').textContent,window.TUPLUS_TRANSLATIONS[locale]['application.2']);
  }
 }
