@@ -11,7 +11,8 @@ const apiProxy = {
 // Mantiene las mismas URLs que el sitio actual (index.html, cotizador.html, soluciones/web.html…)
 // y el HTML tal cual, sin comprimir.
 export default defineConfig({
-  build: { format: 'file' },
+  // El sitio se publica en una subcarpeta (/tuplus/): una ruta /_astro/ daría 404, por eso el CSS va incrustado.
+  build: { format: 'file', inlineStylesheets: 'always' },
   compressHTML: false,
   server: { host: true, port: 4321 },
   vite: {
