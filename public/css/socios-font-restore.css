@@ -1,0 +1,5 @@
+﻿/* Unifica todos los elementos tipográficos con la familia base de la portada. */
+html body.partners-page,
+html body.partners-page :where(*) {
+  font-family: "Segoe UI", Arial, sans-serif !important;
+}

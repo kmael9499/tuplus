@@ -1,0 +1,223 @@
+﻿/* Explorador territorial en una sola superficie continua. */
+.partner-public .pp-territory-explorer {
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb,var(--pp-gold) 25%,var(--pp-line));
+  border-radius: 20px;
+  background: var(--pp-surface);
+  box-shadow: 0 28px 70px rgba(4,18,28,.2);
+}
+.partner-public .pp-map-tools {
+  padding: 18px clamp(18px,2.4vw,28px) 14px;
+  gap: 10px 18px;
+  border-bottom: 1px solid color-mix(in srgb,var(--pp-line) 72%,transparent);
+  background: transparent;
+}
+.partner-public .pp-map-tools label { gap: 7px; }
+.partner-public .pp-map-tools :is(input,select) {
+  min-height: 44px;
+  border-radius: 8px;
+  background: color-mix(in srgb,var(--pp-bg) 72%,var(--pp-surface));
+  transition: border-color .18s,box-shadow .18s;
+}
+.partner-public .pp-map-tools :is(input,select):focus {
+  border-color: var(--pp-gold); outline: 0;
+  box-shadow: 0 0 0 3px color-mix(in srgb,var(--pp-gold) 16%,transparent);
+}
+.partner-public .pp-result-count { align-items:center; padding-top:0; }
+.partner-public .pp-world-map {
+  background: radial-gradient(ellipse at 50% 47%,color-mix(in srgb,var(--pp-accent) 8%,var(--pp-map)),var(--pp-surface));
+}
+.partner-public .pp-map-panel {
+  justify-content: flex-start;
+  padding: clamp(22px,3vw,36px);
+  background: transparent;
+}
+.partner-public .pp-country-list {
+  gap: 0 18px;
+  margin: 0 0 20px;
+}
+.partner-public .pp-country-list button {
+  min-height: 54px;
+  gap: 10px;
+  padding: 8px 6px;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb,var(--pp-line) 68%,transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--pp-muted);
+  transition: color .16s,border-color .16s,background .16s;
+}
+.partner-public .pp-country-list button:hover {
+  border-color: color-mix(in srgb,var(--pp-gold) 65%,var(--pp-line));
+  background: color-mix(in srgb,var(--pp-gold) 5%,transparent);
+  color: var(--pp-ink);
+}
+.partner-public .pp-country-list button[aria-pressed="true"] {
+  border-color: var(--pp-gold);
+  background: transparent;
+  color: var(--pp-ink);
+  box-shadow: inset 2px 0 0 var(--pp-gold);
+  padding-left: 11px;
+}
+.partner-public .pp-country-code {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 26px;
+  flex: 0 0 30px;
+  border: 1px solid color-mix(in srgb,var(--pp-line) 80%,transparent);
+  border-radius: 7px;
+  color: var(--pp-gold);
+  font-size: .62rem;
+  font-weight: 750;
+}
+.partner-public .pp-country-info {
+  padding: 0 0 18px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.partner-public .pp-country-info .pp-eyebrow { margin-bottom: 7px; }
+.partner-public .pp-country-info h3 { margin-bottom: 8px; font-size: clamp(1.45rem,2.2vw,2rem); }
+.partner-public .pp-country-info p { margin: 10px 0 14px; }
+.partner-public .pp-country-info .pp-status { padding: 4px 9px; }
+.partner-public .pp-territory-form {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 18px 0 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb,var(--pp-line) 76%,transparent);
+  border-radius: 0;
+  background: transparent;
+}
+.partner-public .pp-territory-form h3 { margin: 0; font-size: 1.06rem; }
+.partner-public .pp-territory-form label { gap: 6px; color: var(--pp-muted); font-size: .76rem; }
+.partner-public .pp-territory-form :is(input,select) {
+  box-sizing: border-box;
+  width: 100%; min-height: 43px; padding: 10px 12px;
+  border: 1px solid var(--pp-line); border-radius: 8px;
+  color: var(--pp-ink); background: color-mix(in srgb,var(--pp-bg) 72%,var(--pp-surface));
+  font: inherit; transition: border-color .18s,box-shadow .18s;
+}
+.partner-public .pp-territory-form select { appearance:none; padding-right:78px; }
+.partner-public .pp-territory-form :is(input,select):focus {
+  border-color:var(--pp-gold); outline:0;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--pp-gold) 15%,transparent);
+}
+.partner-public .pp-territory-form .territory-availability {
+  margin: 2px 0 0;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb,var(--pp-line) 72%,transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--pp-ink);
+}
+.partner-public .pp-territory-form .territory-availability > strong { margin-bottom: 8px; }
+.partner-public .pp-territory-form .territory-availability-badge { padding: 4px 9px; }
+.partner-public .pp-territory-form .territory-availability [role="status"] p { margin: 8px 0; font-size:.8rem; }
+.partner-public .pp-territory-form .pp-button {
+  min-height: 43px; border:0; border-radius:8px;
+  background:linear-gradient(135deg,#f2d99e,#d6ac5f); color:#122c3d;
+  font-weight:750; box-shadow:none; transition:filter .16s,transform .16s;
+}
+.partner-public .pp-territory-form .pp-button:hover { filter:brightness(1.06); transform:translateY(-1px); }
+.partner-public .pa-country-control { position:relative; display:block; }
+.partner-public .pa-country-control select { padding-right:82px!important; }
+.partner-public .pa-country-flag {
+  position:absolute; top:50%; right:40px; width:25px; height:17px;
+  object-fit:cover; border-radius:3px; box-shadow:0 0 0 1px rgba(18,44,61,.2);
+  transform:translateY(-30%); pointer-events:none;
+}
+.partner-public .pa-country-flag[hidden] { display:none; }
+html[data-theme="dark"] .partner-public .pp-map-tools :is(input,select),
+html[data-theme="dark"] .partner-public .pp-territory-form :is(input,select) { color:#e7edf1; }
+html[data-theme="dark"] .partner-public .pp-map-tools option,
+html[data-theme="dark"] .partner-public .pp-territory-form option { color:#e7edf1; background:#102634; }
+html[data-theme="dark"] .partner-public .pp-territory-form .territory-availability {
+  background:transparent; color:#e1e8ed; border-color:color-mix(in srgb,var(--pp-line) 72%,transparent);
+}
+@media(max-width:760px) {
+  .partner-public .pp-map-panel { padding:20px; }
+  .partner-public .pp-world-map { padding:16px 10px; }
+}
+@media(max-width:420px) {
+  .partner-public .pp-country-list { gap:0 12px; }
+  .partner-public .pp-country-list button { min-height:50px; padding-inline:3px; font-size:.73rem; }
+  .partner-public .pp-country-info { padding-bottom:14px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .partner-public .pp-map-tools :is(input,select),.partner-public .pp-country-list button,.partner-public .pp-territory-form :is(input,select,.pp-button) { transition:none; }
+  .partner-public .pp-territory-form .pp-button:hover { transform:none; }
+}
+/* Selector y disponibilidad se leen como una sola ficha, con aire y jerarquía. */
+.partner-public .pp-territory-form {
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb,var(--pp-gold) 24%,var(--pp-line));
+  border-radius: 13px;
+  background: color-mix(in srgb,var(--pp-bg) 56%,var(--pp-surface));
+}
+.partner-public .pp-territory-form h3 {
+  margin-bottom: 2px;
+  font-size: 1.05rem;
+  letter-spacing: -.02em;
+}
+.partner-public .pp-territory-form .territory-availability {
+  display: grid;
+  grid-template-columns: minmax(0,1fr);
+  gap: 7px;
+  margin: 3px 0 0;
+  padding: 12px 0 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb,var(--pp-line) 55%,transparent);
+  background: transparent;
+}
+.partner-public .pp-territory-form .territory-demo {
+  margin: 0 !important;
+  color: var(--pp-gold) !important;
+  font-size: .61rem !important;
+  font-weight: 700;
+  letter-spacing: .11em !important;
+  text-transform: uppercase;
+}
+.partner-public .pp-territory-form .territory-selected-name {
+  margin: 0 !important;
+  color: var(--pp-ink);
+  font-size: 1.28rem !important;
+  line-height: 1.2;
+}
+.partner-public .pp-territory-form .territory-availability [role="status"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 10px;
+}
+.partner-public .pp-territory-form .territory-availability-badge {
+  padding: 4px 9px;
+  border: 1px solid color-mix(in srgb,var(--pp-gold) 23%,var(--pp-line));
+  background: color-mix(in srgb,var(--pp-gold) 10%,var(--pp-surface));
+  color: var(--pp-ink);
+  font-size: .68rem;
+}
+.partner-public .pp-territory-form .territory-availability [role="status"] p {
+  flex: 1 1 180px;
+  margin: 0;
+  color: var(--pp-muted);
+  font-size: .74rem;
+  line-height: 1.5;
+}
+.partner-public .pp-territory-form .territory-alternative {
+  justify-self: start;
+  margin: 0;
+  padding: 2px 0;
+  border-bottom-color: color-mix(in srgb,var(--pp-gold) 55%,transparent);
+  color: var(--pp-gold);
+  font-size: .74rem;
+  font-weight: 650;
+}
+@media(max-width:420px) {
+  .partner-public .pp-territory-form { padding: 14px; }
+  .partner-public .pp-territory-form .territory-availability [role="status"] { align-items: flex-start; }
+}

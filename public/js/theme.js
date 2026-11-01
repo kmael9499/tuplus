@@ -6,6 +6,10 @@
   let preference = null;
   try { preference = localStorage.getItem(key); } catch {}
   if (!['light', 'dark'].includes(preference)) preference = null;
+  const pageDefault = document.documentElement.dataset.defaultTheme;
+  const defaultTheme = () => ['light', 'dark'].includes(pageDefault)
+    ? pageDefault
+    : (system.matches ? 'dark' : 'light');
   const translate = value => window.TUPLUS_I18N?.t(value) || value;
   function apply(theme) {
     document.documentElement.dataset.theme = theme;
@@ -20,7 +24,7 @@
       button.querySelector('span').textContent = dark ? '☀' : '☾';
     }
   }
-  apply(preference || (system.matches ? 'dark' : 'light'));
+  apply(preference || defaultTheme());
   document.addEventListener('DOMContentLoaded', () => {
     apply(document.documentElement.dataset.theme);
     document.querySelector('.theme-toggle')?.addEventListener('click', () => {
@@ -31,12 +35,12 @@
   });
   document.addEventListener('tuplus:language-change', () => apply(document.documentElement.dataset.theme));
   system.addEventListener('change', () => {
-    if (!preference) apply(system.matches ? 'dark' : 'light');
+    if (!preference) apply(defaultTheme());
   });
   addEventListener('storage', event => {
     if (event.key !== key && event.key !== null) return;
     preference = ['dark', 'light'].includes(event.newValue) ? event.newValue : null;
-    apply(preference || (system.matches ? 'dark' : 'light'));
+    apply(preference || defaultTheme());
   });
 })();
 

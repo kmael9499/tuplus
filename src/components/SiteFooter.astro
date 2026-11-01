@@ -1,0 +1,68 @@
+---
+import '../styles/site-footer.css';
+
+interface Props {
+  base?: string;
+  top?: string;
+}
+
+const { base = '', top = '#contenido' } = Astro.props;
+---
+
+<footer class="site-footer tuplus-footer">
+  <svg class="tf-filter" aria-hidden="true" focusable="false" width="0" height="0">
+    <defs>
+      <filter id="footer-brand-filter" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+        <feColorMatrix in="SourceGraphic" result="navyMask" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 -3 -3 0 2" />
+        <feComposite in="navyMask" in2="SourceGraphic" operator="in" result="clippedMask" />
+        <feFlood flood-color="#f1f1f1" result="lightInk" />
+        <feComposite in="lightInk" in2="clippedMask" operator="in" result="lightNavy" />
+        <feComposite in="lightNavy" in2="SourceGraphic" operator="over" />
+      </filter>
+    </defs>
+  </svg>
+  <div class="tf-container">
+    <div class="tf-grid">
+      <div class="tf-identity">
+        <a class="tf-brand" href={`${base}index.html#inicio`} aria-label="TUPLUS, inicio">
+          <img src={`${base}imagenes/marca/logo-claro.png`} alt="TUPLUS" width="2172" height="724" loading="lazy" decoding="async" />
+        </a>
+        <p>Ideas que avanzan.<br />Tecnología que conecta.</p>
+        <span class="tf-region">Desde Latinoamérica, para tu negocio.</span>
+      </div>
+      <div class="tf-column">
+        <h2>Explora</h2>
+        <a href={`${base}index.html#proyectos`}>Conceptos de proyectos</a>
+        <a href={`${base}index.html#proceso`}>Cómo trabajamos</a>
+        <a href={`${base}cotizador.html`}>Cotizador web</a>
+        <a href={`${base}socios-comerciales.html`}>Red de Socios Comerciales</a>
+        <a href={`${base}index.html#contacto`}>Contacto</a>
+      </div>
+      <div class="tf-column">
+        <h2>Soluciones</h2>
+        <a href={`${base}soluciones/web.html`}>Diseño web</a>
+        <a href={`${base}soluciones/commerce.html`}>Tiendas virtuales</a>
+        <a href={`${base}soluciones/automation.html`}>Automatización</a>
+        <a href={`${base}soluciones/systems.html`}>Sistemas a medida</a>
+        <a href={`${base}soluciones/data-security.html`}>Datos y seguridad</a>
+      </div>
+      <div class="tf-column">
+        <h2 translate="no">Red Partner</h2>
+        <a href={`${base}partner.html`}>Conocer la red</a>
+        <a href={`${base}partner.html#territorios`}>Territorios</a>
+        <a href={`${base}partner.html#niveles`}>Niveles de colaboración</a>
+        <a href={`${base}red-socios.html#postulacion`}>Postularme</a>
+      </div>
+      <div class="tf-column">
+        <h2>Conversemos</h2>
+        <a data-whatsapp href="https://wa.me/51916828870" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+        <a href={`${base}privacidad.html`}>Privacidad y uso del sitio</a>
+        <span class="tf-note">Versión para revisión</span>
+      </div>
+    </div>
+    <div class="tf-bottom">
+      <span>© 2026 TUPLUS · 7CANALES MARKETING DIGITAL S.R.L.</span>
+      <a href={top}>Volver arriba ↑</a>
+    </div>
+  </div>
+</footer>

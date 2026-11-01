@@ -1,5 +1,10 @@
 {
   "en": {
+    "Conocer la red": "Discover the network",
+    "Territorios": "Territories",
+    "Niveles de colaboración": "Partnership levels",
+    "Postularme": "Apply to join",
+    "Red de Socios Comerciales": "Business Partner Network",
     "Activa JavaScript para usar el cotizador. También puedes": "Activate JavaScript to use the quote. You can also",
     ")} / ${String(slides.length).padStart(2,": ")} / ${String(slides.length).padStart(2,",
     "Datos y seguridad": "Data and security",
@@ -820,6 +825,11 @@
     "¿La tienen en maceta grande?": "Do you have it in a large pot?"
   },
   "zh": {
+    "Conocer la red": "了解合作网络",
+    "Territorios": "合作区域",
+    "Niveles de colaboración": "合作级别",
+    "Postularme": "申请加入",
+    "Red de Socios Comerciales": "商业合作伙伴网络",
     "Activa JavaScript para usar el cotizador. También puedes": "激活 JavaScript 以使用报价。您还可以提前",
     ")} / ${String(slides.length).padStart(2,": ")} / ${String(slides.length).padStart(2,",
     "Datos y seguridad": "数据和安全",
@@ -1624,6 +1634,11 @@
     "¿La tienen en maceta grande?": "有大盆的吗？"
   },
   "ru": {
+    "Conocer la red": "Узнать о сети",
+    "Territorios": "Территории",
+    "Niveles de colaboración": "Уровни сотрудничества",
+    "Postularme": "Подать заявку",
+    "Red de Socios Comerciales": "Сеть деловых партнёров",
     "Activa JavaScript para usar el cotizador. También puedes": "Активируйте JavaScript, чтобы использовать цитату. Вы также можете",
     ")} / ${String(slides.length).padStart(2,": ")} / ${String(slides.length).padStart(2,",
     "Datos y seguridad": "Данные и безопасность",
@@ -2411,6 +2426,11 @@
     "¿La tienen en maceta grande?": "Есть в большом горшке?"
   },
   "pt": {
+    "Conocer la red": "Conhecer a rede",
+    "Territorios": "Territórios",
+    "Niveles de colaboración": "Níveis de parceria",
+    "Postularme": "Candidatar-me",
+    "Red de Socios Comerciales": "Rede de Parceiros Comerciais",
     "Activa JavaScript para usar el cotizador. También puedes": "Ativar JavaScript para usar a cotação. Você também pode Atividade da equipe",
     ")} / ${String(slides.length).padStart(2,": ")} / ${String(slides.length).padStart(2,",
     "Datos y seguridad": "Dados e segurança",
@@ -3198,6 +3218,11 @@
     "¿La tienen en maceta grande?": "Vocês têm em vaso grande?"
   },
   "fr": {
+    "Conocer la red": "Découvrir le réseau",
+    "Territorios": "Territoires",
+    "Niveles de colaboración": "Niveaux de partenariat",
+    "Postularme": "Postuler",
+    "Red de Socios Comerciales": "Réseau de partenaires commerciaux",
     "Activa JavaScript para usar el cotizador. También puedes": "Activer JavaScript pour utiliser le devis. Vous pouvez également effectuer l'activité d'équipe",
     ")} / ${String(slides.length).padStart(2,": ")} / ${String(slides.length).padStart(2,",
     "Datos y seguridad": "Données et sécurité",
@@ -3985,6 +4010,11 @@
     "¿La tienen en maceta grande?": "Vous l’avez en grand pot ?"
   },
   "ja": {
+    "Conocer la red": "ネットワークについて",
+    "Territorios": "対象地域",
+    "Niveles de colaboración": "パートナーシップのレベル",
+    "Postularme": "参加を申し込む",
+    "Red de Socios Comerciales": "ビジネスパートナーネットワーク",
     "Activa JavaScript para usar el cotizador. También puedes": "引用を使用するには JavaScript を有効にしてください。",
     ")} / ${String(slides.length).padStart(2,": ")} / ${String(slides.length).padStart(2,",
     "Datos y seguridad": "データとセキュリティ",
@@ -4789,6 +4819,11 @@
     "¿La tienen en maceta grande?": "大きい鉢はありますか？"
   },
   "de": {
+    "Conocer la red": "Netzwerk kennenlernen",
+    "Territorios": "Regionen",
+    "Niveles de colaboración": "Partnerschaftsstufen",
+    "Postularme": "Jetzt bewerben",
+    "Red de Socios Comerciales": "Geschäftspartnernetzwerk",
     "Activa JavaScript para usar el cotizador. También puedes": "JavaScript aktivieren, um das Zitat zu verwenden. Sie können auch",
     ")} / ${String(slides.length).padStart(2,": ").pop() ||.",
     "Datos y seguridad": "Daten und Sicherheit",
@@ -5576,6 +5611,11 @@
     "¿La tienen en maceta grande?": "Gibt es die im großen Topf?"
   },
   "es": {
+    "Conocer la red": "Conocer la red",
+    "Territorios": "Territorios",
+    "Niveles de colaboración": "Niveles de colaboración",
+    "Postularme": "Postularme",
+    "Red de Socios Comerciales": "Red de Socios Comerciales",
     "contact.heading": "Las buenas ideas<br>empiezan con un <em>hola.</em>",
     "projects.heading": "Así podría verse<br>tu próximo <em>proyecto.</em>",
     "Paso {step} de {total}": "Paso {step} de {total}"

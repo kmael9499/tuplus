@@ -2,7 +2,7 @@
 .partner-public {
   --pp-bg: #fbfaf7;
   --pp-surface: #fff;
-  --pp-tint: #f1f1eb;
+  --pp-tint: rgba(255, 255, 255, .45);
   --pp-ink: #122c3d;
   --pp-muted: #526670;
   --pp-line: #d5ddd9;
@@ -19,7 +19,7 @@
 html[data-theme="dark"] .partner-public {
   --pp-bg: #0c1a24;
   --pp-surface: #132936;
-  --pp-tint: #10232e;
+  --pp-tint: rgba(12, 32, 45, .5);
   --pp-ink: #e8eef0;
   --pp-muted: #afc1ca;
   --pp-line: #2d4653;
@@ -31,7 +31,8 @@ html[data-theme="dark"] .partner-public {
   --pp-shadow: 0 24px 70px #0003;
 }
 .partner-public main {
-  background: var(--pp-bg);
+  /* Let the shared home background show through the page. */
+  background: transparent;
   color: var(--pp-ink);
 }
 .partner-public main *,
@@ -89,11 +90,7 @@ html[data-theme="dark"] .partner-public {
   position: relative;
   overflow: hidden;
   padding: clamp(60px, 7vw, 110px) 0 70px;
-  background: radial-gradient(
-    ellipse at 80% 40%,
-    color-mix(in srgb, var(--pp-accent) 14%, transparent),
-    transparent 60%
-  );
+  background: transparent;
 }
 .partner-public .pp-hero-grid {
   display: grid;
