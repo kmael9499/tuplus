@@ -27,11 +27,11 @@
       "partner.countryUS": "Estados Unidos",
       "partner.countryDE": "Alemania",
       "partner.network": "La red",
-      "partner.connection": "Una conexión que abre posibilidades.",
+      "partner.connection": "Una conexión que <em>abre posibilidades.</em>",
       "partner.about":
         "Profesionales y empresas que conocen su comunidad y acercan las soluciones de TUPLUS a nuevos negocios. Tú identificas la oportunidad; juntos exploramos el siguiente paso.",
       "partner.benefits": "Beneficios",
-      "partner.value": "Más herramientas para crecer.",
+      "partner.value": "Más herramientas <em>para crecer.</em>",
       "partner.commission": "Comisiones",
       "partner.commissionText":
         "Reconocimiento por las oportunidades comerciales que generes.",
@@ -42,7 +42,7 @@
       "partner.supportText":
         "Materiales comerciales y orientación para dar el siguiente paso.",
       "partner.requirements": "Requisitos",
-      "partner.prepare": "¿Qué necesitas para empezar?",
+      "partner.prepare": "¿Qué necesitas <em>para empezar?</em>",
       "partner.profile": "Tu perfil profesional",
       "partner.profileText": "Experiencia, sector y soluciones de interés.",
       "partner.reference": "Una referencia comercial",
@@ -51,7 +51,7 @@
       "partner.territoryReqText":
         "Explora los países de la red y consulta tu territorio.",
       "partner.levels": "Niveles",
-      "partner.path": "Un camino a tu medida.",
+      "partner.path": "Un camino <em>a tu medida.</em>",
       "partner.conditions": "Comisiones, rangos y límites",
       "partner.conditionsText":
         "Programa en revisión: beneficios, porcentajes, metas, pagos, cupos y exclusividad requieren confirmación de TUPLUS. El 5–15% es solo un ejemplo, no una comisión vigente. Postular no reserva un territorio.",
@@ -70,7 +70,7 @@
       "partner.levelNote":
         "Esta elección expresa tu interés. El nivel final se confirma durante la evaluación.",
       "partner.territories": "Territorios",
-      "partner.mapTitle": "Una red sin fronteras.",
+      "partner.mapTitle": "Una red <em>sin fronteras.</em>",
       "partner.mapIntro": "Explora los países que ya forman parte de TUPLUS.",
       "partner.search": "Buscar país",
       "partner.filter": "Región",
@@ -89,7 +89,7 @@
       "partner.worldNote":
         "Los colibríes representan los seis países confirmados de la red; no indican cupos disponibles.",
       "partner.faq": "Preguntas frecuentes",
-      "partner.faqTitle": "Lo esencial, resuelto.",
+      "partner.faqTitle": "Lo esencial, <em>resuelto.</em>",
       "partner.q1": "¿Necesito experiencia técnica?",
       "partner.a1":
         "La postulación pregunta por tu experiencia comercial y sector. El proyecto no exige una certificación técnica específica.",
@@ -102,9 +102,7 @@
       "partner.q4": "¿Puedo enviar una postulación?",
       "partner.a4":
         "Sí. La API de postulaciones está desplegada. El formulario confirma la recepción solo cuando recibe una respuesta exitosa.",
-      "partner.next": "Tu siguiente conexión empieza aquí.",
       "partner.application": "Conocer la postulación",
-      "partner.footerNote": "Formulario conectado · API de postulaciones disponible",
       "partner.info": "Información",
       "partner.play": "Activar giro",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -146,11 +144,11 @@
       "partner.countryUS": "United States",
       "partner.countryDE": "Germany",
       "partner.network": "The network",
-      "partner.connection": "A connection that opens possibilities.",
+      "partner.connection": "A connection that <em>opens possibilities.</em>",
       "partner.about":
         "Professionals and companies who know their communities and bring TUPLUS solutions to new businesses. You identify the opportunity; together we explore the next step.",
       "partner.benefits": "Benefits",
-      "partner.value": "More tools to grow.",
+      "partner.value": "More tools <em>to grow.</em>",
       "partner.commission": "Commissions",
       "partner.commissionText":
         "Rewards for the business opportunities you generate.",
@@ -160,7 +158,7 @@
       "partner.support": "Team support",
       "partner.supportText": "Sales materials and guidance for your next step.",
       "partner.requirements": "Requirements",
-      "partner.prepare": "What do you need to get started?",
+      "partner.prepare": "What do you need <em>to get started?</em>",
       "partner.profile": "Your professional profile",
       "partner.profileText": "Experience, sector and solutions of interest.",
       "partner.reference": "A business reference",
@@ -169,7 +167,7 @@
       "partner.territoryReqText":
         "Explore the network countries and ask about your territory.",
       "partner.levels": "Levels",
-      "partner.path": "A path shaped around you.",
+      "partner.path": "A path <em>shaped around you.</em>",
       "partner.conditions": "Commissions, levels and limits",
       "partner.conditionsText":
         "Program under review: benefits, rates, targets, payments, places and exclusivity require confirmation by TUPLUS. The 5–15% range is only an example, not a current commission. Applying does not reserve a territory.",
@@ -188,7 +186,7 @@
       "partner.levelNote":
         "This choice expresses your interest. The final level is confirmed during evaluation.",
       "partner.territories": "Territories",
-      "partner.mapTitle": "A network without borders.",
+      "partner.mapTitle": "A network <em>without borders.</em>",
       "partner.mapIntro": "Explore the countries already part of TUPLUS.",
       "partner.search": "Search countries",
       "partner.filter": "Region",
@@ -207,7 +205,7 @@
       "partner.worldNote":
         "Hummingbirds mark the six confirmed network countries; they do not indicate available places.",
       "partner.faq": "Frequently asked questions",
-      "partner.faqTitle": "The essentials, answered.",
+      "partner.faqTitle": "The essentials, <em>answered.</em>",
       "partner.q1": "Do I need technical experience?",
       "partner.a1":
         "The application asks about your commercial experience and sector. The project does not require a specific technical certification.",
@@ -220,9 +218,7 @@
       "partner.q4": "Can I submit an application?",
       "partner.a4":
         "Yes. The application API is deployed. The form confirms receipt only after it receives a successful response.",
-      "partner.next": "Your next connection starts here.",
       "partner.application": "Explore the application",
-      "partner.footerNote": "Form connected · Application API available",
       "partner.info": "Information",
       "partner.play": "Start rotation",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -262,11 +258,11 @@
       "partner.countryUS": "美国",
       "partner.countryDE": "德国",
       "partner.network": "伙伴网络",
-      "partner.connection": "连接，开启更多可能。",
+      "partner.connection": "连接，<em>开启更多可能。</em>",
       "partner.about":
         "熟悉本地社区的专业人士与企业，将 TUPLUS 解决方案带给更多商家。你发现机遇，我们一起探索下一步。",
       "partner.benefits": "权益",
-      "partner.value": "更多工具，助力成长。",
+      "partner.value": "更多工具，<em>助力成长。</em>",
       "partner.commission": "佣金",
       "partner.commissionText": "为你创造的商业机会提供回报。",
       "partner.training": "专属培训",
@@ -274,7 +270,7 @@
       "partner.support": "团队支持",
       "partner.supportText": "销售资料与指导，助你迈出下一步。",
       "partner.requirements": "参加要求",
-      "partner.prepare": "开始前需要准备什么？",
+      "partner.prepare": "开始前<em>需要准备什么？</em>",
       "partner.profile": "你的专业背景",
       "partner.profileText": "经验、行业及感兴趣的解决方案。",
       "partner.reference": "一位商业推荐人",
@@ -282,7 +278,7 @@
       "partner.territoryReq": "待探索的区域",
       "partner.territoryReqText": "探索网络国家并咨询你的区域。",
       "partner.levels": "等级",
-      "partner.path": "适合你的成长之路。",
+      "partner.path": "适合你的<em>成长之路。</em>",
       "partner.conditions": "佣金、等级与限制",
       "partner.conditionsText":
         "计划正在审核中：权益、比例、目标、付款、名额和独家权利需由 TUPLUS 确认。5–15% 仅为示例，并非现行佣金。申请不代表预留区域。",
@@ -297,7 +293,7 @@
       "partner.selectedLevel": "你感兴趣的等级",
       "partner.levelNote": "此选择仅表示你的意向，最终等级将在评估中确认。",
       "partner.territories": "区域",
-      "partner.mapTitle": "跨越国界的网络。",
+      "partner.mapTitle": "跨越国界的<em>网络。</em>",
       "partner.mapIntro": "探索已经加入 TUPLUS 的国家。",
       "partner.search": "搜索国家",
       "partner.filter": "地区",
@@ -315,7 +311,7 @@
       "partner.otherCity": "其他国家？查看申请流程",
       "partner.worldNote": "蜂鸟代表已确认的六个网络国家，并不表示仍有名额。",
       "partner.faq": "常见问题",
-      "partner.faqTitle": "关键问题，清晰解答。",
+      "partner.faqTitle": "关键问题，<em>清晰解答。</em>",
       "partner.q1": "需要技术经验吗？",
       "partner.a1": "申请会询问商业经验及所属行业，项目未要求特定技术认证。",
       "partner.q2": "有入会费用吗？",
@@ -326,9 +322,7 @@
       "partner.q4": "可以提交申请吗？",
       "partner.a4":
         "可以。申请 API 已部署。只有收到成功响应后，表单才会确认已收到申请。",
-      "partner.next": "你的下一次连接，从这里开始。",
       "partner.application": "了解申请流程",
-      "partner.footerNote": "表单已连接 · 申请 API 可用",
       "partner.info": "信息",
       "partner.play": "开始旋转",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -370,11 +364,11 @@
       "partner.countryUS": "США",
       "partner.countryDE": "Германия",
       "partner.network": "О сети",
-      "partner.connection": "Связь, открывающая возможности.",
+      "partner.connection": "Связь, <em>открывающая возможности.</em>",
       "partner.about":
         "Специалисты и компании, знающие свой регион, знакомят бизнес с решениями TUPLUS. Вы находите возможность, вместе мы намечаем следующий шаг.",
       "partner.benefits": "Преимущества",
-      "partner.value": "Больше возможностей для роста.",
+      "partner.value": "Больше возможностей <em>для роста.</em>",
       "partner.commission": "Комиссии",
       "partner.commissionText":
         "Вознаграждение за привлечённые коммерческие возможности.",
@@ -385,7 +379,7 @@
       "partner.supportText":
         "Коммерческие материалы и помощь на следующем этапе.",
       "partner.requirements": "Требования",
-      "partner.prepare": "Что нужно для начала?",
+      "partner.prepare": "Что нужно <em>для начала?</em>",
       "partner.profile": "Профессиональный профиль",
       "partner.profileText": "Опыт, отрасль и интересующие решения.",
       "partner.reference": "Деловая рекомендация",
@@ -394,7 +388,7 @@
       "partner.territoryReqText":
         "Ознакомьтесь со странами сети и уточните свой регион.",
       "partner.levels": "Уровни",
-      "partner.path": "Ваш путь развития.",
+      "partner.path": "Ваш <em>путь развития.</em>",
       "partner.conditions": "Комиссии, уровни и ограничения",
       "partner.conditionsText":
         "Программа на рассмотрении: преимущества, ставки, цели, выплаты, места и эксклюзивность должен подтвердить TUPLUS. 5–15% — лишь пример, не действующая комиссия. Заявка не резервирует регион.",
@@ -413,7 +407,7 @@
       "partner.levelNote":
         "Выбор отражает ваш интерес. Итоговый уровень подтверждается при оценке.",
       "partner.territories": "Регионы",
-      "partner.mapTitle": "Сеть без границ.",
+      "partner.mapTitle": "Сеть <em>без границ.</em>",
       "partner.mapIntro": "Откройте страны, уже входящие в сеть TUPLUS.",
       "partner.search": "Поиск страны",
       "partner.filter": "Регион",
@@ -432,7 +426,7 @@
       "partner.worldNote":
         "Колибри отмечают шесть подтверждённых стран сети, а не наличие свободных мест.",
       "partner.faq": "Частые вопросы",
-      "partner.faqTitle": "Ответы на главное.",
+      "partner.faqTitle": "Ответы <em>на главное.</em>",
       "partner.q1": "Нужен ли технический опыт?",
       "partner.a1":
         "В заявке спрашивают о коммерческом опыте и отрасли. Проект не требует конкретного технического сертификата.",
@@ -445,9 +439,7 @@
       "partner.q4": "Можно отправить заявку?",
       "partner.a4":
         "Да. API заявок развернут. Форма подтверждает получение только после успешного ответа сервера.",
-      "partner.next": "Ваша следующая связь начинается здесь.",
       "partner.application": "Ознакомиться с заявкой",
-      "partner.footerNote": "Форма подключена · API заявок доступен",
       "partner.info": "Информация",
       "partner.play": "Запустить вращение",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -489,11 +481,11 @@
       "partner.countryUS": "Estados Unidos",
       "partner.countryDE": "Alemanha",
       "partner.network": "A rede",
-      "partner.connection": "Uma conexão que abre possibilidades.",
+      "partner.connection": "Uma conexão que <em>abre possibilidades.</em>",
       "partner.about":
         "Profissionais e empresas que conhecem sua comunidade e levam as soluções TUPLUS a novos negócios. Você identifica a oportunidade; juntos exploramos o próximo passo.",
       "partner.benefits": "Benefícios",
-      "partner.value": "Mais ferramentas para crescer.",
+      "partner.value": "Mais ferramentas <em>para crescer.</em>",
       "partner.commission": "Comissões",
       "partner.commissionText":
         "Reconhecimento pelas oportunidades comerciais que você gerar.",
@@ -504,7 +496,7 @@
       "partner.supportText":
         "Materiais comerciais e orientação para o próximo passo.",
       "partner.requirements": "Requisitos",
-      "partner.prepare": "O que você precisa para começar?",
+      "partner.prepare": "O que você precisa <em>para começar?</em>",
       "partner.profile": "Seu perfil profissional",
       "partner.profileText": "Experiência, setor e soluções de interesse.",
       "partner.reference": "Uma referência comercial",
@@ -513,7 +505,7 @@
       "partner.territoryReqText":
         "Explore os países da rede e consulte seu território.",
       "partner.levels": "Níveis",
-      "partner.path": "Um caminho à sua medida.",
+      "partner.path": "Um caminho <em>à sua medida.</em>",
       "partner.conditions": "Comissões, níveis e limites",
       "partner.conditionsText":
         "Programa em revisão: benefícios, percentuais, metas, pagamentos, vagas e exclusividade dependem da confirmação da TUPLUS. 5–15% é apenas um exemplo, não uma comissão vigente. A candidatura não reserva território.",
@@ -532,7 +524,7 @@
       "partner.levelNote":
         "Esta escolha expressa seu interesse. O nível final é confirmado durante a avaliação.",
       "partner.territories": "Territórios",
-      "partner.mapTitle": "Uma rede sem fronteiras.",
+      "partner.mapTitle": "Uma rede <em>sem fronteiras.</em>",
       "partner.mapIntro": "Explore os países que já fazem parte da TUPLUS.",
       "partner.search": "Buscar país",
       "partner.filter": "Região",
@@ -551,7 +543,7 @@
       "partner.worldNote":
         "Os beija-flores indicam os seis países confirmados da rede, não vagas disponíveis.",
       "partner.faq": "Perguntas frequentes",
-      "partner.faqTitle": "O essencial, esclarecido.",
+      "partner.faqTitle": "O essencial, <em>esclarecido.</em>",
       "partner.q1": "Preciso de experiência técnica?",
       "partner.a1":
         "A candidatura pergunta sobre sua experiência comercial e setor. O projeto não exige certificação técnica específica.",
@@ -564,9 +556,7 @@
       "partner.q4": "Posso enviar uma candidatura?",
       "partner.a4":
         "Sim. A API de candidaturas está implantada. O formulário confirma o recebimento somente após uma resposta de sucesso.",
-      "partner.next": "Sua próxima conexão começa aqui.",
       "partner.application": "Conhecer a candidatura",
-      "partner.footerNote": "Formulário conectado · API de candidaturas disponível",
       "partner.info": "Informações",
       "partner.play": "Iniciar rotação",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -608,11 +598,11 @@
       "partner.countryUS": "États-Unis",
       "partner.countryDE": "Allemagne",
       "partner.network": "Le réseau",
-      "partner.connection": "Une connexion qui ouvre des possibilités.",
+      "partner.connection": "Une connexion qui <em>ouvre des possibilités.</em>",
       "partner.about":
         "Des professionnels et entreprises proches de leur communauté présentent les solutions TUPLUS à de nouveaux clients. Vous repérez une opportunité ; ensemble, nous préparons la suite.",
       "partner.benefits": "Avantages",
-      "partner.value": "Plus de moyens pour grandir.",
+      "partner.value": "Plus de moyens <em>pour grandir.</em>",
       "partner.commission": "Commissions",
       "partner.commissionText":
         "Une rémunération pour les opportunités commerciales apportées.",
@@ -623,7 +613,7 @@
       "partner.supportText":
         "Des supports commerciaux et des conseils pour avancer.",
       "partner.requirements": "Conditions",
-      "partner.prepare": "Que faut-il pour commencer ?",
+      "partner.prepare": "Que faut-il <em>pour commencer ?</em>",
       "partner.profile": "Votre profil professionnel",
       "partner.profileText":
         "Expérience, secteur et solutions qui vous intéressent.",
@@ -634,7 +624,7 @@
       "partner.territoryReqText":
         "Explorez les pays du réseau et renseignez-vous sur votre territoire.",
       "partner.levels": "Niveaux",
-      "partner.path": "Un parcours à votre mesure.",
+      "partner.path": "Un parcours <em>à votre mesure.</em>",
       "partner.conditions": "Commissions, niveaux et limites",
       "partner.conditionsText":
         "Programme en cours de validation : avantages, taux, objectifs, paiements, places et exclusivité doivent être confirmés par TUPLUS. La fourchette de 5–15 % est un exemple, pas une commission en vigueur. Une candidature ne réserve aucun territoire.",
@@ -653,7 +643,7 @@
       "partner.levelNote":
         "Ce choix exprime votre intérêt. Le niveau final sera confirmé lors de l’évaluation.",
       "partner.territories": "Territoires",
-      "partner.mapTitle": "Un réseau sans frontières.",
+      "partner.mapTitle": "Un réseau <em>sans frontières.</em>",
       "partner.mapIntro": "Découvrez les pays qui font déjà partie de TUPLUS.",
       "partner.search": "Rechercher un pays",
       "partner.filter": "Région",
@@ -672,7 +662,7 @@
       "partner.worldNote":
         "Les colibris indiquent les six pays confirmés du réseau, pas des places disponibles.",
       "partner.faq": "Questions fréquentes",
-      "partner.faqTitle": "L’essentiel, en clair.",
+      "partner.faqTitle": "L’essentiel, <em>en clair.</em>",
       "partner.q1": "Faut-il une expérience technique ?",
       "partner.a1":
         "La candidature porte sur votre expérience commerciale et votre secteur. Le projet n’exige pas de certification technique précise.",
@@ -685,9 +675,7 @@
       "partner.q4": "Puis-je envoyer une candidature ?",
       "partner.a4":
         "Oui. L’API de candidature est déployée. Le formulaire confirme la réception uniquement après une réponse positive.",
-      "partner.next": "Votre prochaine connexion commence ici.",
       "partner.application": "Découvrir la candidature",
-      "partner.footerNote": "Formulaire connecté · API de candidature disponible",
       "partner.info": "Informations",
       "partner.play": "Activer la rotation",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -729,11 +717,11 @@
       "partner.countryUS": "アメリカ",
       "partner.countryDE": "ドイツ",
       "partner.network": "ネットワーク",
-      "partner.connection": "つながりが、新しい可能性を開く。",
+      "partner.connection": "つながりが、<em>新しい可能性を開く。</em>",
       "partner.about":
         "地域をよく知る専門家や企業が、TUPLUSのソリューションを新しいビジネスへ届けます。機会を見つけ、ともに次の一歩を考えます。",
       "partner.benefits": "特典",
-      "partner.value": "成長を支える力。",
+      "partner.value": "成長を<em>支える力。</em>",
       "partner.commission": "コミッション",
       "partner.commissionText": "生み出したビジネス機会に応じた報酬。",
       "partner.training": "専用トレーニング",
@@ -742,7 +730,7 @@
       "partner.support": "チームのサポート",
       "partner.supportText": "営業資料と次の一歩に向けたガイダンス。",
       "partner.requirements": "参加条件",
-      "partner.prepare": "参加に必要なものは？",
+      "partner.prepare": "参加に<em>必要なものは？</em>",
       "partner.profile": "専門分野のプロフィール",
       "partner.profileText": "経験、業種、関心のあるソリューション。",
       "partner.reference": "ビジネス上の推薦者",
@@ -751,7 +739,7 @@
       "partner.territoryReqText":
         "ネットワークの国々を見て、活動地域をご確認ください。",
       "partner.levels": "ランク",
-      "partner.path": "あなたに合った成長の道。",
+      "partner.path": "あなたに合った<em>成長の道。</em>",
       "partner.conditions": "コミッション・ランク・制限",
       "partner.conditionsText":
         "プログラムは検討中です。特典、料率、目標、支払い、定員、独占権はTUPLUSによる確認が必要です。5–15%は例であり、現行の料率ではありません。応募しても地域は確保されません。",
@@ -769,7 +757,7 @@
       "partner.levelNote":
         "この選択は希望を示すものです。最終的なランクは審査で確認されます。",
       "partner.territories": "対象地域",
-      "partner.mapTitle": "国境を越えるネットワーク。",
+      "partner.mapTitle": "国境を越える<em>ネットワーク。</em>",
       "partner.mapIntro": "すでにTUPLUSに参加している国を探索。",
       "partner.search": "国を検索",
       "partner.filter": "地域",
@@ -788,7 +776,7 @@
       "partner.worldNote":
         "ハチドリは確認済みの6か国を示し、募集枠の有無を表すものではありません。",
       "partner.faq": "よくある質問",
-      "partner.faqTitle": "知りたいことを、簡潔に。",
+      "partner.faqTitle": "知りたいことを、<em>簡潔に。</em>",
       "partner.q1": "技術経験は必要ですか？",
       "partner.a1":
         "応募では営業経験や業種をお伺いします。特定の技術資格は求められていません。",
@@ -801,9 +789,7 @@
       "partner.q4": "応募を送信できますか？",
       "partner.a4":
         "はい。応募受付APIはデプロイ済みです。フォームは成功応答を受け取った場合にのみ受付を確認します。",
-      "partner.next": "次のつながりは、ここから。",
       "partner.application": "応募手順を見る",
-      "partner.footerNote": "フォーム接続済み・応募受付API利用可能",
       "partner.info": "ご案内",
       "partner.play": "回転を開始",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":
@@ -845,11 +831,11 @@
       "partner.countryUS": "Vereinigte Staaten",
       "partner.countryDE": "Deutschland",
       "partner.network": "Das Netzwerk",
-      "partner.connection": "Eine Verbindung voller Möglichkeiten.",
+      "partner.connection": "Eine Verbindung <em>voller Möglichkeiten.</em>",
       "partner.about":
         "Fachleute und Unternehmen bringen TUPLUS-Lösungen in ihre Region. Sie erkennen die Chance; gemeinsam planen wir den nächsten Schritt.",
       "partner.benefits": "Vorteile",
-      "partner.value": "Mehr Möglichkeiten zum Wachsen.",
+      "partner.value": "Mehr Möglichkeiten <em>zum Wachsen.</em>",
       "partner.commission": "Provisionen",
       "partner.commissionText":
         "Vergütung für die von Ihnen geschaffenen Geschäftschancen.",
@@ -860,7 +846,7 @@
       "partner.supportText":
         "Vertriebsmaterialien und Orientierung für den nächsten Schritt.",
       "partner.requirements": "Voraussetzungen",
-      "partner.prepare": "Was brauchen Sie für den Start?",
+      "partner.prepare": "Was brauchen Sie <em>für den Start?</em>",
       "partner.profile": "Ihr berufliches Profil",
       "partner.profileText": "Erfahrung, Branche und interessante Lösungen.",
       "partner.reference": "Eine geschäftliche Referenz",
@@ -869,7 +855,7 @@
       "partner.territoryReqText":
         "Entdecken Sie die Netzwerkländer und fragen Sie nach Ihrem Gebiet.",
       "partner.levels": "Stufen",
-      "partner.path": "Ein Weg, der zu Ihnen passt.",
+      "partner.path": "Ein Weg, <em>der zu Ihnen passt.</em>",
       "partner.conditions": "Provisionen, Stufen und Grenzen",
       "partner.conditionsText":
         "Programm in Prüfung: Vorteile, Sätze, Ziele, Zahlungen, Plätze und Exklusivität müssen von TUPLUS bestätigt werden. 5–15 % ist nur ein Beispiel, kein geltender Provisionssatz. Eine Bewerbung reserviert kein Gebiet.",
@@ -888,7 +874,7 @@
       "partner.levelNote":
         "Diese Auswahl zeigt Ihr Interesse. Die endgültige Stufe wird bei der Prüfung bestätigt.",
       "partner.territories": "Gebiete",
-      "partner.mapTitle": "Ein Netzwerk ohne Grenzen.",
+      "partner.mapTitle": "Ein Netzwerk <em>ohne Grenzen.</em>",
       "partner.mapIntro":
         "Entdecken Sie die Länder, die bereits zu TUPLUS gehören.",
       "partner.search": "Land suchen",
@@ -908,7 +894,7 @@
       "partner.worldNote":
         "Kolibris markieren die sechs bestätigten Netzwerkländer, keine freien Plätze.",
       "partner.faq": "Häufige Fragen",
-      "partner.faqTitle": "Das Wichtigste, geklärt.",
+      "partner.faqTitle": "Das Wichtigste, <em>geklärt.</em>",
       "partner.q1": "Brauche ich technische Erfahrung?",
       "partner.a1":
         "Die Bewerbung fragt nach Vertriebserfahrung und Branche. Ein bestimmtes technisches Zertifikat wird nicht verlangt.",
@@ -921,9 +907,7 @@
       "partner.q4": "Kann ich eine Bewerbung senden?",
       "partner.a4":
         "Ja. Die Bewerbungs-API ist bereitgestellt. Das Formular bestätigt den Eingang erst nach einer erfolgreichen Serverantwort.",
-      "partner.next": "Ihre nächste Verbindung beginnt hier.",
       "partner.application": "Bewerbung ansehen",
-      "partner.footerNote": "Formular verbunden · Bewerbungs-API verfügbar",
       "partner.info": "Informationen",
       "partner.play": "Drehung starten",
       "Conoce la Red Partner de TUPLUS: beneficios, requisitos, niveles y territorios.":

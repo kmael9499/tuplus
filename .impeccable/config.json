@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/pages/partner.astro"
+        ],
+        "createdAt": "2026-11-01T15:12:50.072Z",
+        "reason": "agent triage: .pa-country-flag starts hidden with no src on purpose; public/js/partner-country-flag.js sets src when a country is chosen"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "public/css/partners-home.css"
+        ],
+        "createdAt": "2026-11-01T15:34:57.991Z",
+        "reason": "agent triage: line 26 is the fixed 3px scroll progress bar at the top of the page, not a card border"
+      }
+    ]
+  }
+}

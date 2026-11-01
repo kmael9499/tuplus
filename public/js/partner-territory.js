@@ -55,7 +55,7 @@
         if(isExplorer && previous!==country.value){city.value='';form.querySelector('[name=region]').value='';previous=country.value;}
         const state=resolve(country.value);block.dataset.state=state;
         const locale=window.TUPLUS_I18N.locale,names=new Intl.DisplayNames([locale],{type:'region'});
-        heading.textContent=Object.hasOwn(states,country.value)?names.of(country.value):window.TUPLUS_I18N.t('application.57');
+        heading.textContent=!country.value?'':Object.hasOwn(states,country.value)?names.of(country.value):window.TUPLUS_I18N.t('application.57');
         text(badge,'status.'+state);text(copy,'status.'+state+'Copy');
         if(cards){
           for(const button of cards.children){button.setAttribute('aria-pressed',String(button.dataset.territory===country.value));button.querySelector('strong').textContent=names.of(button.dataset.territory);button.querySelector('.territory-card-check').textContent=button.dataset.territory===country.value?'✓':'↗';}
@@ -78,9 +78,13 @@
       for(const el of [city,other]){el.setCustomValidity(!el.disabled&&!el.value.trim()?window.TUPLUS_I18N.t('application.56'):'');}
       if(!form.reportValidity())return;
       if(!canApply(country.value,city.value))return;
-      const params=new URLSearchParams({country:country.value,city:city.value.trim(),region:region.value.trim()});
-      if(!other.disabled)params.set('otherCountry',other.value.trim());
-      location.href='red-socios.html?'+params.toString()+'#postulacion';
+      const application=document.querySelector('#partner-form');
+      const values={country:country.value,city:city.value.trim(),region:region.value.trim(),otherCountry:other.disabled?'':other.value.trim()};
+      for(const [name,value] of Object.entries(values))application.querySelector('[name="'+name+'"]').value=value;
+      application.querySelector('[name=country]').dispatchEvent(new Event('change',{bubbles:true}));
+      const smooth=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.querySelector('#postulacion').scrollIntoView?.({behavior:smooth?'smooth':'auto'});
+      application.querySelector('.pa-panel:not([hidden]) h2')?.focus({preventScroll:true});
     });
     form.addEventListener('input',e=>e.target.setCustomValidity?.(''));
   });

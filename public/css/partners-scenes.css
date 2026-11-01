@@ -1,0 +1,639 @@
+/* Red Partner: las piezas ilustrativas de Beneficios, Niveles y Requisitos.
+   Son decorativas y no llevan datos reales. Todo se ve completo sin animación;
+   el movimiento corre solo mientras la sección está en pantalla (.pm-live). */
+
+/* ---------- Beneficios ---------- */
+@media (min-width: 1001px) {
+  :root body.partner-public .pp-benefits { grid-template-columns: 1.3fr 1fr 1fr; }
+}
+:root body.partner-public .pp-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 14px;
+  align-content: start;
+  padding: 0 28px 28px;
+}
+:root body.partner-public .pp-card > svg {
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  padding: 9px;
+  border: 1px solid var(--pm-line-hi);
+  border-radius: 13px;
+  background: linear-gradient(145deg, var(--pm-glow), transparent);
+}
+.partner-public .pp-card > h3 { margin: 0; }
+.partner-public .pp-card > p { grid-column: 1 / -1; margin: 14px 0 0; }
+.pp-scene {
+  position: relative;
+  grid-column: 1 / -1;
+  display: flex;
+  height: 148px;
+  margin: 0 -28px 24px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--pm-line);
+  background: radial-gradient(70% 90% at 80% 0%, var(--pm-glow), transparent 72%);
+}
+/* Barras que suben y una línea que las acompaña. */
+.pp-scene-chart {
+  align-items: flex-end;
+  gap: 7%;
+  padding: 22px 28px 0;
+  background:
+    linear-gradient(var(--pm-line) 1px, transparent 1px) 0 0 / 100% 37px,
+    radial-gradient(70% 90% at 80% 0%, var(--pm-glow), transparent 72%);
+}
+.pp-scene-chart i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 7px 7px 0 0;
+  background: linear-gradient(180deg, #ecd29b, rgba(196, 150, 80, .28));
+  transform-origin: 50% 100%;
+}
+.pp-scene-chart i:last-of-type { box-shadow: 0 0 28px rgba(236, 210, 155, .4); }
+:root body.partner-public .pp-card .pp-scene-chart svg { position: absolute; inset: 14px 28px 0; width: calc(100% - 56px); height: calc(100% - 14px); margin: 0; overflow: visible; }
+.pp-scene-chart path { stroke: var(--pm-gold); stroke-linecap: round; stroke-width: 2; vector-effect: non-scaling-stroke; }
+/* Lecciones que se van completando. */
+.pp-scene-course { flex-direction: column; justify-content: center; gap: 13px; padding: 0 28px; }
+.pp-scene-course span { display: flex; align-items: center; gap: 12px; }
+.pp-scene-course b {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--pm-line-hi);
+  border-radius: 50%;
+  background: var(--pm-glow);
+}
+:root body.partner-public .pp-card .pp-scene-course b svg { width: 12px; height: 12px; margin: 0; fill: none; stroke: var(--pm-gold); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.pp-scene-course u {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--pm-line);
+  text-decoration: none;
+}
+.pp-scene-course u::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c49650, #ecd29b);
+  transform: scaleX(var(--w));
+  transform-origin: 0 50%;
+}
+/* Una conversación con el equipo. */
+.pp-scene-chat { flex-direction: column; justify-content: center; gap: 10px; padding: 0 22px; }
+.pp-scene-chat > span { display: flex; align-items: flex-end; gap: 8px; }
+.pp-scene-chat .fq2-avatar { width: 30px; height: 30px; }
+.pp-bubble { display: grid; gap: 5px; padding: 10px 12px; border-radius: 13px; }
+.pp-bubble i { display: block; height: 4px; border-radius: 2px; background: currentColor; opacity: .55; }
+.pp-bubble-me { width: 62%; margin-left: auto; border-bottom-right-radius: 3px; background: linear-gradient(135deg, #ecd29b, #c49650); color: #13222e; }
+.pp-bubble-me i:nth-child(2) { width: 60%; }
+.pp-bubble-us { flex: 1; max-width: 72%; border: 1px solid var(--pm-line); border-bottom-left-radius: 3px; background: var(--pm-glow); color: var(--pm-gold); }
+.pp-bubble-us i:nth-child(2) { width: 74%; }
+@media (hover: hover) and (pointer: fine) {
+  :root body.partner-public .pp-card:hover > svg { transform: translateY(-2px) rotate(-5deg); }
+}
+
+/* ---------- Niveles: el recorrido, con el colibrí en el nivel elegido ---------- */
+.partner-public .pp-level-layout { position: relative; }
+.partner-public .pp-level-layout > .pp-route { max-width: none; }
+@media (min-width: 1001px) {
+  .partner-public .pp-level-layout > .pp-reveal:nth-child(2) { max-width: min(700px, 58%); }
+}
+.pp-route { display: none; }
+@media (min-width: 1001px) {
+  .pp-route {
+    position: absolute;
+    top: 6px;
+    right: 0;
+    display: block;
+    width: min(38%, 460px);
+    aspect-ratio: 460 / 190;
+  }
+}
+.pp-route svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.pp-route-track { fill: none; stroke: var(--pm-line-hi); stroke-dasharray: 2 7; stroke-linecap: round; stroke-width: 1.6; }
+.pp-route-done { fill: none; stroke: var(--pm-gold); stroke-dasharray: 1; stroke-dashoffset: var(--pm-route, 1); stroke-linecap: round; stroke-width: 2.4; }
+.pp-route-node { fill: var(--pp-bg); stroke: var(--pm-line-hi); stroke-width: 1.6; transition: fill .3s ease, stroke .3s ease; }
+.pp-route-node.is-on { fill: var(--pm-gold); stroke: var(--pm-gold); }
+.pp-route-label {
+  position: absolute;
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: var(--pp-muted);
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transform: translate(-50%, 10px);
+  transition: color .25s ease;
+}
+.pp-route-label.is-on { color: var(--pm-gold); }
+.pp-route-label:first-of-type { transform: translate(-30%, 10px); }
+.pp-route-label:last-of-type { padding-inline: 0; transform: translate(-16px, 10px); }
+.partner-public .pp-level-title { margin-top: 12px; }
+
+/* ---------- Niveles: la red crece con cada nivel ---------- */
+.pp-level-scene {
+  display: block;
+  margin: 14px 0 6px;
+  padding: 8px 0;
+  border-block: 1px solid var(--pm-line);
+}
+.pp-level-scene svg { display: block; width: 100%; height: 92px; overflow: visible; }
+.pp-lv-line { stroke: var(--pm-line-hi); stroke-width: 1.3; transition: stroke .25s ease; }
+.pp-lv-link { stroke: var(--pm-line-hi); stroke-dasharray: 3 6; stroke-linecap: round; stroke-width: 1.6; }
+.pp-lv-leaf { fill: var(--pm-line-hi); transform-box: fill-box; transform-origin: center; transition: fill .25s ease; }
+.pp-lv-hub { fill: var(--pp-surface); stroke: var(--pm-line-hi); stroke-width: 1.6; transition: fill .25s ease, stroke .25s ease; }
+.pp-level-choice:has(input:checked) .pp-lv-line { stroke: var(--pm-gold); }
+.pp-level-choice:has(input:checked) .pp-lv-link { stroke: var(--pm-gold); }
+.pp-level-choice:has(input:checked) .pp-lv-leaf { fill: var(--pm-gold); }
+.pp-level-choice:has(input:checked) .pp-lv-hub { fill: var(--pm-gold); stroke: var(--pm-gold); }
+
+/* ---------- Requisitos: lista que se completa, con una pieza por fila ---------- */
+:root body.partner-public #requisitos { overflow: clip; padding-block: clamp(56px, 6vw, 84px); }
+@media (max-width: 1000px) {
+  .pp-req-panel::before { display: none; }
+}
+.pp-req-panel { position: relative; }
+.pp-req-panel::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 118%;
+  aspect-ratio: 1;
+  border: 1px dashed var(--pm-line);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+.pp-req-badge {
+  position: absolute;
+  top: -26px;
+  right: 34px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #173a52, #0a1a26);
+  box-shadow: 0 14px 30px rgba(0, 15, 24, .3);
+}
+.pp-req-badge img { width: 62%; height: auto; }
+.pp-req-badge::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 62%, #ecd29b 86%, transparent);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+}
+:root body.partner-public #requisitos .pp-steps li {
+  position: relative;
+  padding: 26px 12px;
+  border: 0;
+  border-radius: 16px;
+  transition: background .25s ease;
+}
+:root body.partner-public #requisitos .pp-steps li > div { flex: 1; min-width: 0; }
+/* Línea que une cada paso con el siguiente. */
+:root body.partner-public #requisitos .pp-steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: calc(50% + 27px);
+  bottom: calc(-50% + 27px);
+  left: 38px;
+  width: 2px;
+  background: linear-gradient(180deg, #ecd29b, #c49650);
+  transform-origin: 50% 0;
+}
+.pp-req-scene { position: relative; flex: 0 0 96px; height: 58px; }
+.pp-req-scene svg { display: block; width: 100%; height: 100%; overflow: visible; fill: none; }
+.pp-req-ink { stroke: var(--pm-gold); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
+.pp-req-soft { stroke: var(--pm-line-hi); stroke-linecap: round; stroke-width: 1.3; }
+.pp-req-fill { fill: var(--pm-gold); }
+.pp-req-bar { stroke: var(--pm-gold); stroke-linecap: round; stroke-width: 5; stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (max-width: 620px) {
+  .pp-req-scene { display: none; }
+}
+@media (hover: hover) and (pointer: fine) {
+  :root body.partner-public #requisitos .pp-steps li:hover { background: var(--pm-glow); }
+}
+/* Secuencia de entrada: pendiente → completado, una sola vez. */
+.pp-steps.pm-seq-wait .pp-step-number { background: transparent !important; box-shadow: inset 0 0 0 1px var(--pm-line-hi) !important; color: var(--pm-gold) !important; }
+.pp-steps.pm-seq-wait li::after { transform: scaleY(0); }
+.pp-steps.pm-seq-go li::after { transition: transform .5s var(--pm-ease); transition-delay: calc(var(--pm-i) * .55s + .25s); }
+.pp-steps.pm-seq-go .pp-step-number { animation: pm-step-on .5s var(--pm-ease) backwards; animation-delay: calc(var(--pm-i) * .55s); }
+#requisitos .pp-button { position: relative; overflow: hidden; }
+#requisitos .pm-seq-done-sweep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .55) 50%, transparent 65%);
+  pointer-events: none;
+  transform: translateX(-100%);
+  animation: pm-sweep-once 1s var(--pm-ease) forwards;
+}
+
+/* ---------- Movimiento ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .pm-live .pp-scene-chart i { animation: pm-bar 4.5s var(--pm-ease) infinite; animation-delay: calc(var(--i) * .12s); }
+  .pm-live .pp-scene-chart svg { animation: pm-wipe 4.5s var(--pm-ease) infinite; }
+  .pm-live .pp-scene-course u::after { animation: pm-lesson 5s var(--pm-ease) infinite; animation-delay: calc(var(--i) * .5s); }
+  .pm-live .pp-scene-course b svg { animation: pm-tick 5s var(--pm-ease) infinite; animation-delay: calc(var(--i) * .5s); }
+  .pm-live .pp-bubble-me { animation: pm-chat-a 6s var(--pm-ease) infinite; }
+  .pm-live .pp-bubble-us { animation: pm-chat-b 6s var(--pm-ease) infinite; }
+  .pm-live .pp-route-bird { animation: pm-hover 1.8s ease-in-out infinite alternate; }
+  .pm-live .pp-level-choice:has(input:checked) .pp-lv-link { animation: pm-flow 1.6s linear infinite; }
+  .pm-live .pp-level-choice:has(input:checked) .pp-lv-leaf { animation: pm-leaf 2.4s ease-in-out infinite; animation-delay: calc(var(--i) * .16s); }
+  .pm-live .pp-req-badge::before { animation: pm-spin 6s linear infinite; }
+  .pm-live.pp-req-panel::before { animation: pm-spin 60s linear infinite; }
+  .pm-live.pp-req-panel .pp-req-badge { animation: pm-hover 3s ease-in-out infinite alternate; }
+  .pm-live.pp-req-panel .pp-req-bar { animation: pm-line 5s var(--pm-ease) infinite; }
+  .pm-live.pp-req-panel .pp-req-travel { animation: pm-req-travel 3s ease-in-out infinite; }
+  .pm-live.pp-req-panel .pp-req-ping { animation: pm-req-ping 2.2s var(--pm-ease) infinite; transform-box: fill-box; transform-origin: center; }
+}
+@keyframes pm-bar { 0% { transform: scaleY(.12); } 42%, 100% { transform: none; } }
+@keyframes pm-wipe { 0%, 8% { clip-path: inset(-10% 100% -10% -10%); } 55%, 100% { clip-path: inset(-10% -10% -10% -10%); } }
+@keyframes pm-line { 0%, 8% { stroke-dashoffset: 1; } 55%, 100% { stroke-dashoffset: 0; } }
+@keyframes pm-lesson { 0% { transform: scaleX(0); } 40%, 100% { transform: scaleX(var(--w, 1)); } }
+@keyframes pm-tick { 0%, 30% { opacity: 0; transform: scale(.6); } 42%, 100% { opacity: 1; transform: none; } }
+@keyframes pm-chat-a { 0%, 4% { opacity: 0; transform: translateY(8px); } 14%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes pm-chat-b { 0%, 26% { opacity: 0; transform: translateY(8px); } 38%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes pm-hover { from { translate: 0 -3px; } to { translate: 0 3px; } }
+@keyframes pm-leaf { 50% { transform: scale(1.45); } }
+@keyframes pm-step-on { from { opacity: .3; transform: scale(.8); } }
+@keyframes pm-sweep-once { to { transform: translateX(100%); } }
+@keyframes pm-req-travel { 0% { transform: translateX(0); opacity: 0; } 15%, 85% { opacity: 1; } 100% { transform: translateX(44px); opacity: 0; } }
+@keyframes pm-req-ping { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.5); } }
+
+/* ---------- Territorios: colores de estado en un solo lugar ---------- */
+.partner-public :is(.territory-card, .territory-availability, .pp-globe-chip) { --st: #8a5f0c; }
+.partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="open"] { --st: #1f7a4d; }
+.partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="future"] { --st: #2f5f96; }
+.partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="closed"] { --st: #a83a55; }
+.partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="unavailable"] { --st: #56666f; }
+html[data-theme="dark"] .partner-public :is(.territory-card, .territory-availability, .pp-globe-chip) { --st: #e1b44f; }
+html[data-theme="dark"] .partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="open"] { --st: #4fd18b; }
+html[data-theme="dark"] .partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="future"] { --st: #8bb8ea; }
+html[data-theme="dark"] .partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="closed"] { --st: #ea8499; }
+html[data-theme="dark"] .partner-public :is(.territory-card, .territory-availability, .pp-globe-chip)[data-state="unavailable"] { --st: #a3b5c1; }
+
+/* ---------- Territorios: el panel ---------- */
+:root body.partner-public .pp-territory-explorer {
+  border: 1px solid transparent;
+  background:
+    var(--pm-panel) padding-box,
+    linear-gradient(135deg, rgba(236, 210, 155, .7), rgba(236, 210, 155, .08) 35%, rgba(236, 210, 155, .05) 65%, rgba(236, 210, 155, .5)) border-box;
+}
+:root body.partner-public .pp-map-tools {
+  padding: 20px clamp(20px, 2.6vw, 32px);
+  border-bottom: 1px solid var(--pm-line);
+  background: linear-gradient(180deg, var(--pm-glow), transparent);
+}
+@media (min-width: 761px) {
+  :root body.partner-public .pp-map-tools {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+    align-items: end;
+  }
+  :root body.partner-public .pp-map-tools .pp-result-count {
+    grid-column: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    min-height: 50px;
+    margin: 0;
+    padding: 4px 16px;
+    border: 1px solid var(--pm-line);
+    border-radius: 13px;
+  }
+}
+:root body.partner-public .pp-result-count strong { color: var(--pm-gold); font-size: 1rem; font-variant-numeric: tabular-nums; }
+
+/* ---------- Territorios: el globo en su órbita ---------- */
+:root body.partner-public .pp-territory-explorer { overflow: clip; }
+:root body.partner-public .pp-world-map {
+  position: relative;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: flex-start;
+  overflow: clip;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 24% 72%, var(--pm-gold), transparent),
+    radial-gradient(1.5px 1.5px at 84% 12%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 92% 58%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 8% 48%, var(--pm-gold), transparent),
+    radial-gradient(1.5px 1.5px at 70% 92%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 40% 8%, var(--pm-gold), transparent),
+    radial-gradient(60% 50% at 50% 44%, var(--pm-glow), transparent 75%);
+}
+.partner-public .pp-world-map .pp-globe { isolation: isolate; width: 100%; margin-inline: auto; }
+@media (min-width: 761px) {
+  /* El globo acompaña mientras la ficha del territorio crece. */
+  .partner-public .pp-world-map .pp-globe {
+    position: sticky;
+    top: 100px;
+    max-width: min(100%, max(420px, calc(100vh - 250px)));
+  }
+}
+.partner-public .pp-world-map .pp-globe::before,
+.partner-public .pp-world-map .pp-globe::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.partner-public .pp-world-map .pp-globe::before { border: 1px dashed var(--pm-line-hi); opacity: .55; }
+.partner-public .pp-world-map .pp-globe::after {
+  background: conic-gradient(from 0deg, transparent 0 74%, #ecd29b 96%, transparent);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+}
+/* Ficha flotante con el país elegido. */
+.pp-globe-chip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid var(--pm-line-hi);
+  border-radius: 999px;
+  background: var(--pm-panel);
+  box-shadow: 0 12px 30px rgba(0, 15, 24, .22);
+  color: var(--pp-ink);
+  font-size: .78rem;
+  pointer-events: none;
+  transition: opacity .25s ease, transform .35s var(--pm-ease);
+}
+.pp-globe-chip[hidden] { display: flex !important; opacity: 0; transform: translateY(-6px) scale(.97); }
+.pp-globe-chip img { width: 24px; height: 16px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px rgba(0, 15, 24, .2); }
+.pp-globe-chip b { font-weight: 600; }
+.pp-globe-chip span { display: inline-flex; align-items: center; gap: 6px; color: var(--st); font-size: .72rem; }
+.pp-globe-chip span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+/* ---------- Territorios: tarjetas de país ---------- */
+:root body.partner-public .territory-catalog h3 { margin-bottom: 6px; font-size: clamp(1.4rem, 2vw, 1.75rem); font-weight: 600; }
+:root body.partner-public .territory-cards { gap: 12px; }
+:root body.partner-public .territory-card {
+  position: relative;
+  border: 1px solid var(--pm-line);
+  border-radius: 16px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .012));
+  transition: translate .25s var(--pm-ease), border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+html:not([data-theme="dark"]) body.partner-public .territory-card { background: #fff; }
+:root body.partner-public .territory-country-symbol {
+  overflow: hidden;
+  border-color: var(--pm-line);
+  border-radius: 9px;
+}
+:root body.partner-public .territory-country-symbol.has-flag {
+  width: 36px;
+  height: 26px;
+  flex: 0 0 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(0, 15, 24, .22), 0 5px 12px rgba(0, 15, 24, .2);
+  font-size: 0;
+}
+.territory-country-symbol img { display: block; width: 100%; height: 100%; object-fit: cover; }
+:root body.partner-public .territory-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--st) 14%, transparent);
+  color: var(--st);
+  font-size: .72rem;
+  font-weight: 600;
+}
+:root body.partner-public .territory-card-status::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin: 0;
+  border-radius: 50%;
+  background: currentColor;
+}
+:root body.partner-public .territory-card-check {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: var(--pm-gold);
+  font-size: .7rem;
+  transition: background .2s ease, color .2s ease;
+}
+:root body.partner-public .territory-card[aria-pressed="true"] {
+  border-color: var(--pm-gold);
+  background: linear-gradient(135deg, var(--pm-glow), transparent 80%);
+  box-shadow: 0 14px 34px rgba(0, 15, 24, .2), 0 0 34px var(--pm-glow);
+  translate: 0 -2px;
+}
+:root body.partner-public .territory-card[aria-pressed="true"] .territory-card-check {
+  background: linear-gradient(135deg, #ecd29b, #c49650);
+  color: #13222e;
+}
+.partner-public .territory-card:active { scale: .985; }
+
+/* ---------- Territorios: la ficha del territorio ---------- */
+:root body.partner-public .pp-territory-form {
+  gap: 12px;
+  margin-top: 4px;
+  padding: 20px;
+  border-color: var(--pm-line-hi);
+  border-radius: 20px;
+  background: linear-gradient(160deg, var(--pm-glow), transparent 60%);
+  box-shadow: 0 18px 44px rgba(0, 15, 24, .14);
+}
+:root body.partner-public .pp-territory-form h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+:root body.partner-public .pp-territory-form h3::before {
+  content: "";
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--pm-line-hi);
+  border-radius: 50%;
+  background: url("../colibri.png") center / 66% no-repeat, radial-gradient(circle, #173a52, #0a1a26);
+}
+:root body.partner-public .pp-territory-form .territory-availability { gap: 10px; padding-top: 14px; border-top-color: var(--pm-line); }
+:root body.partner-public .pp-territory-form .territory-availability [role="status"] {
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--st) 35%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--st) 9%, transparent);
+  transition: background .25s ease, border-color .25s ease;
+}
+:root body.partner-public .pp-territory-form .territory-availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: color-mix(in srgb, var(--st) 18%, transparent);
+  color: var(--st);
+  font-weight: 700;
+}
+:root body.partner-public .pp-territory-form .territory-availability-badge::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+:root body.partner-public .pp-territory-form .pp-button { min-height: 50px; border-radius: 13px; }
+html:not([data-theme="dark"]) body.partner-public .pp-territory-form :is(input, select) { background-color: #fff; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pm-live.pp-world-map .pp-globe::before { animation: pm-spin 90s linear infinite; }
+  .pm-live.pp-world-map .pp-globe::after { animation: pm-spin 14s linear infinite; }
+  .pm-live .territory-card[data-state="open"] .territory-card-status::before { animation: pm-beat 2s ease-out infinite; }
+}
+@keyframes pm-beat {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--st) 55%, transparent); }
+  100% { box-shadow: 0 0 0 7px transparent; }
+}
+@media (hover: hover) and (pointer: fine) {
+  :root body.partner-public .territory-card:not([aria-pressed="true"]):hover { border-color: var(--pm-line-hi); box-shadow: 0 10px 26px rgba(0, 15, 24, .14); }
+}
+@media (max-width: 760px) {
+  .pp-globe-chip { font-size: .74rem; }
+}
+
+/* ---------- Portada: el globo con el mismo lenguaje que Territorios ---------- */
+.partner-public .pp-world-hero {
+  background:
+    radial-gradient(1.5px 1.5px at 8% 14%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 18% 58%, var(--pm-gold), transparent),
+    radial-gradient(1.5px 1.5px at 90% 10%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 96% 46%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 4% 38%, var(--pm-gold), transparent),
+    radial-gradient(1.5px 1.5px at 86% 66%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 30% 6%, var(--pm-gold), transparent),
+    radial-gradient(1px 1px at 72% 4%, var(--pm-gold), transparent),
+    radial-gradient(55% 42% at 50% 40%, var(--pm-glow), transparent 75%);
+}
+.partner-public .pp-world-hero .pp-globe-stage::before,
+.partner-public .pp-world-hero .pp-globe-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.partner-public .pp-world-hero .pp-globe-stage::before {
+  border: 1px dashed var(--pm-line-hi);
+  background: none;
+  box-shadow: none;
+  opacity: .55;
+}
+.partner-public .pp-world-hero .pp-globe-stage::after {
+  background: conic-gradient(from 0deg, transparent 0 74%, #ecd29b 96%, transparent);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+}
+/* Países: una rejilla pareja, con bandera. */
+:root body.partner-public .pp-world-hero .pp-globe-country-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: min(100%, 480px);
+  max-width: none;
+  margin: 14px auto 0;
+}
+:root body.partner-public .pp-world-hero .pp-globe-country-list button {
+  justify-content: flex-start;
+  gap: 9px;
+  width: 100%;
+  min-height: 42px;
+  padding: 7px 12px 7px 9px;
+  border-color: var(--pm-line);
+  background: linear-gradient(150deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .012));
+  color: var(--pp-ink);
+  font-size: .74rem;
+  transition: translate .25s var(--pm-ease), border-color .25s ease, background .25s ease, box-shadow .25s ease;
+}
+html:not([data-theme="dark"]) body.partner-public .pp-world-hero .pp-globe-country-list button { background: #fff; }
+:root body.partner-public .pp-world-hero .pp-globe-country-list button[aria-pressed="true"] {
+  border-color: var(--pm-gold);
+  background: linear-gradient(135deg, var(--pm-glow), transparent 85%);
+  box-shadow: 0 10px 26px rgba(0, 15, 24, .18), 0 0 26px var(--pm-glow);
+  translate: 0 -1px;
+}
+.partner-public .pp-globe-country-list button:active { scale: .97; }
+.partner-public .pp-country-code.has-flag {
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 17px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px rgba(0, 15, 24, .22);
+  font-size: 0;
+  opacity: 1;
+}
+.partner-public .pp-country-code img { display: block; width: 100%; height: 100%; object-fit: cover; }
+:root body.partner-public .pp-world-hero .pp-globe-controls button {
+  border-color: var(--pm-line);
+  transition: border-color .2s ease, color .2s ease;
+}
+/* El colibrí del país elegido emite una onda dorada, en los dos globos. */
+.partner-public .pp-globe-pin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid #ecd29b;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  :root body.partner-public .pp-world-hero .pp-globe-country-list button:not([aria-pressed="true"]):hover { border-color: var(--pm-line-hi); translate: 0 -1px; }
+  :root body.partner-public .pp-world-hero .pp-globe-controls button:hover { border-color: var(--pm-gold); color: var(--pm-gold); }
+}
+@media (max-width: 480px) {
+  :root body.partner-public .pp-world-hero .pp-globe-country-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pp-world-hero .pp-globe { animation: pm-globe-in 1s var(--pm-ease) backwards .1s; }
+  .pm-live.pp-world-hero .pp-globe-stage::before { animation: pm-spin 90s linear infinite; }
+  .pm-live.pp-world-hero .pp-globe-stage::after { animation: pm-spin 14s linear infinite; }
+  :is(.pm-live.pp-world-hero, .pm-live.pp-world-map) .pp-globe-pin[aria-pressed="true"]::after { animation: pm-pin-wave 2.4s var(--pm-ease) infinite; }
+}
+@keyframes pm-globe-in { from { opacity: 0; scale: .96; } }
+@keyframes pm-pin-wave { 0% { opacity: .85; transform: scale(.85); } 100% { opacity: 0; transform: scale(2.1); } }

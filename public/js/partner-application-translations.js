@@ -1,7 +1,7 @@
 (() => {
   const rows = {
     es: [
-      "Tu próxima etapa empieza aquí.",
+      "Tu próxima etapa <em>empieza aquí.</em>",
       "Cuéntanos quién eres, qué mercado conoces y cómo te gustaría crecer con TUPLUS.",
       "Perfil",
       "Mercado",
@@ -66,7 +66,7 @@
       "Postulación Partner | TUPLUS",
     ],
     en: [
-      "Your next chapter starts here.",
+      "Your next chapter <em>starts here.</em>",
       "Tell us who you are, which market you know and how you would like to grow with TUPLUS.",
       "Profile",
       "Market",
@@ -131,7 +131,7 @@
       "Partner application | TUPLUS",
     ],
     pt: [
-      "Sua próxima etapa começa aqui.",
+      "Sua próxima etapa <em>começa aqui.</em>",
       "Conte quem você é, qual mercado conhece e como gostaria de crescer com a TUPLUS.",
       "Perfil",
       "Mercado",
@@ -196,7 +196,7 @@
       "Candidatura Partner | TUPLUS",
     ],
     fr: [
-      "Votre prochaine étape commence ici.",
+      "Votre prochaine étape <em>commence ici.</em>",
       "Présentez votre profil, votre marché et vos ambitions avec TUPLUS.",
       "Profil",
       "Marché",
@@ -261,7 +261,7 @@
       "Candidature Partner | TUPLUS",
     ],
     de: [
-      "Ihr nächster Schritt beginnt hier.",
+      "Ihr nächster Schritt <em>beginnt hier.</em>",
       "Beschreiben Sie Ihr Profil, Ihren Markt und Ihre Ziele mit TUPLUS.",
       "Profil",
       "Markt",
@@ -326,7 +326,7 @@
       "Partner-Bewerbung | TUPLUS",
     ],
     ja: [
-      "次のステップはここから。",
+      "次のステップは<em>ここから。</em>",
       "あなたの専門性、市場、TUPLUSとともに実現したい目標を教えてください。",
       "プロフィール",
       "市場",
@@ -391,7 +391,7 @@
       "パートナー応募 | TUPLUS",
     ],
     zh: [
-      "下一段旅程，从这里开始。",
+      "下一段旅程，<em>从这里开始。</em>",
       "告诉我们您的背景、熟悉的市场以及与TUPLUS共同发展的目标。",
       "个人资料",
       "市场",
@@ -456,7 +456,7 @@
       "合作伙伴申请 | TUPLUS",
     ],
     ru: [
-      "Ваш следующий шаг начинается здесь.",
+      "Ваш следующий шаг <em>начинается здесь.</em>",
       "Расскажите о себе, своём рынке и целях сотрудничества с TUPLUS.",
       "Профиль",
       "Рынок",

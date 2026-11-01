@@ -1,7 +1,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {parseHTML}=require('linkedom');
 const script=fs.readFileSync('public/js/partner-footer.js','utf8');
-for(const page of ['partner','red-socios']) {
+for(const page of ['partner']) {
   const {window}=parseHTML(fs.readFileSync('dist/'+page+'.html','utf8')),{document}=window;
   let intersection,preferenceChanged;
   const media={matches:false,addEventListener(_,fn){preferenceChanged=fn;}};

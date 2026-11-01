@@ -1,5 +1,7 @@
 ---
 import SiteFooter from '../components/SiteFooter.astro';
+import ColibriVuelo from '../components/ColibriVuelo.astro';
+import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 ---
 <!doctype html>
 <html lang="es" data-default-theme="dark">
@@ -25,31 +27,27 @@ import SiteFooter from '../components/SiteFooter.astro';
     <link rel="stylesheet" href="css/colibri.css?v=2" />
   <script is:inline src="js/theme.js?v=20261031-1"></script>
   <script is:inline defer src="js/encabezado.js?v=20261028-1"></script>
-    <script is:inline defer src="js/socios-3d.js?v=1"></script>
+    <script is:inline defer src="js/socios-3d.js?v=2"></script>
   <link rel="stylesheet" href="css/fondo-premium.css?v=20261012-2" />
   <link rel="stylesheet" href="css/partners-background.css?v=20261031-1" />
   <link rel="stylesheet" href="css/socios-form.css?v=20261031-1" />
   <link rel="stylesheet" href="css/socios-font-restore.css?v=20261031-1" />
+  <link rel="stylesheet" href="css/secciones-v2.css?v=20261016-5" />
+  <link rel="stylesheet" href="css/lang-flags.css?v=20261015-1" />
+  <script is:inline defer src="js/i18n-data.js?v=20261031-footer-2"></script>
+  <script is:inline defer src="js/socios-translations.js?v=1"></script>
+  <script is:inline defer src="js/i18n.js?v=9"></script>
+  <script is:inline defer src="js/lang-flags.js?v=20261015-1"></script>
+  <link rel="stylesheet" href="css/home-extras.css?v=20261017-1" />
+  <script is:inline defer src="js/home-extras.js?v=20261017-1"></script>
+  <link rel="stylesheet" href="css/partners-home.css?v=4" />
+  <link rel="stylesheet" href="css/partners-sections.css?v=6" />
+  <link rel="stylesheet" href="css/socios-scenes.css?v=3" />
+  <script is:inline defer src="js/faq.js?v=20261011-1"></script>
+  <script is:inline defer src="js/partners-motion.js?v=8"></script>
 </head>
 <body class="partners-page partners-shared-background">
-       <style is:inline>
-    .cb-png{position:relative;width:100%;filter:drop-shadow(0 0 8px rgba(240,217,156,.55)) drop-shadow(0 10px 12px rgba(0,0,0,.2));animation:cb-cab 1.6s ease-in-out infinite alternate}
-    .cb-png img{display:block;width:100%;height:auto}
-    .cb-png .cb-ala-png{position:absolute;left:0;top:0;clip-path:polygon(0 0,49% 0,49% 52%,35% 57%,22% 53%,0 40%);transform-origin:48% 40%;animation:cb-bat .16s ease-in-out infinite alternate}
-    .cb-png .cb-cuerpo-png{clip-path:polygon(49% 0,100% 0,100% 100%,0 100%,0 40%,22% 53%,35% 57%,49% 52%)}
-    @keyframes cb-bat{from{transform:rotate(-14deg)}to{transform:rotate(24deg)}}
-    @keyframes cb-cab{from{rotate:-4deg}to{rotate:4deg}}
-  </style>
-  <div class="colibri-vuelo" aria-hidden="true"><div class="colibri-ola"><div class="cb-png"><img class="cb-cuerpo-png" src="colibri.png" alt=""><img class="cb-ala-png" src="colibri.png" alt=""></div></div></div>
-    <style is:inline>
-    .colibri-vuelo.colibri-vuelo-2{top:28vh;--cw:clamp(80px,9vw,130px);animation-delay:11s}
-    .colibri-vuelo-2 .colibri-ola{animation-delay:-1.6s}
-    .cb-png.cb-azul{filter:drop-shadow(0 0 6px rgba(240,217,156,.45)) drop-shadow(0 8px 10px rgba(18,44,61,.3))}
-    .cb-azul .cb-cuerpo-az{position:relative;clip-path:polygon(49% 0,100% 0,100% 100%,0 100%,0 40%,22% 53%,35% 57%,49% 52%)}
-    .cb-azul .cb-cuerpo-az img{display:block;width:100%;height:auto;opacity:0}
-    .cb-azul .cb-cuerpo-az::before{content:"";position:absolute;inset:0;background:#122c3d;-webkit-mask:url(colibri.png) center/100% 100% no-repeat;mask:url(colibri.png) center/100% 100% no-repeat}
-  </style>
-  <div class="colibri-vuelo colibri-vuelo-2" aria-hidden="true"><div class="colibri-ola"><div class="cb-png cb-azul"><div class="cb-cuerpo-az"><img src="colibri.png" alt=""></div><img class="cb-ala-png" src="colibri.png" alt=""></div></div></div>
+  <ColibriVuelo />
   <!-- Filtro selectivo del logo para modo oscuro: aclara las partes azul marino sin convertir el pájaro dorado en blanco. -->
   <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;pointer-events:none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -69,9 +67,10 @@ import SiteFooter from '../components/SiteFooter.astro';
       <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span></button>
       <nav id="main-nav" aria-label="Navegación principal">
         <a href="index.html">Servicios para clientes</a>
-        <a class="nav-quote" href="#postular">Postularme <span aria-hidden="true">↘</span></a>
-        <a class="nav-socios" href="partner.html"><svg class="nav-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18" r="2.3"/><circle cx="19" cy="18" r="2.3"/><path d="M12 7.3v4.2M12 11.5 6.2 16M12 11.5l5.8 4.5"/></svg>Conoce la Red Partner <span aria-hidden="true">↗</span></a>
+        <a href="partner.html">Conoce la Red Partner</a>
+        <a class="nav-quote" href="#postular">Postularme <span aria-hidden="true">↗</span></a>
       </nav>
+      <label class="language-picker" translate="no"><span class="sr-only">Idioma del sitio</span><select id="site-language" aria-label="Idioma del sitio"><option value="es">Español</option><option value="en">English</option><option value="zh">简体中文</option><option value="ru">Русский</option><option value="pt">Português</option><option value="fr">Français</option><option value="ja">日本語</option><option value="de">Deutsch</option></select></label>
       <button class="theme-toggle" type="button" aria-label="Modo oscuro" aria-pressed="false"><span aria-hidden="true">☾</span> Tema</button>
     </div>
   </header>
@@ -99,6 +98,8 @@ import SiteFooter from '../components/SiteFooter.astro';
         </div>
 
         <div class="sc-dashboard-preview" aria-label="Vista de demostración de un panel de oportunidades comerciales">
+          <div class="sc-float sc-float-a" aria-hidden="true"><span class="fq2-avatar"></span><span><b>Una conexión más</b><small>Ejemplo ilustrativo</small></span></div>
+          <div class="sc-float sc-float-b" aria-hidden="true"><span class="sc-float-mark"><svg viewBox="0 0 24 24"><path d="m5 12.500 4.500 4.500L19 7.500"/></svg></span><span><b>Mensaje listo</b><small>Tú decides cuándo enviarlo</small></span></div>
           <div class="sc-dashboard-window">
             <div class="sc-app-topbar">
               <div class="sc-window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -160,31 +161,31 @@ import SiteFooter from '../components/SiteFooter.astro';
 
     <section class="sc-block sc-solutions-block" id="soluciones" aria-labelledby="sc-sol-title">
       <div class="container">
-        <div class="sc-head sc-head-centered"><p class="partner-eyebrow">LO QUE PUEDES OFRECER</p><h2 id="sc-sol-title">Cinco soluciones para acercar a tus clientes.</h2><p>Un socio comercial conecta negocios con las soluciones de TUPLUS.</p></div>
+        <div class="sc-head sc-head-centered"><p class="partner-eyebrow">LO QUE PUEDES OFRECER</p><h2 id="sc-sol-title">Cinco soluciones para <em>acercar a tus clientes.</em></h2><p>Un socio comercial conecta negocios con las soluciones de TUPLUS.</p></div>
         <div class="sc-cards sc-solution-grid">
-          <a class="sc-card sc-link sc-solution-card" href="soluciones/web.html"><span class="sc-solution-number">01</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01M7 13h4M7 16h8"/></svg></span><h3>Diseño web</h3><p>Sitios corporativos y páginas de campaña.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
-          <a class="sc-card sc-link sc-solution-card" href="soluciones/commerce.html"><span class="sc-solution-number">02</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></span><h3>Tiendas virtuales</h3><p>Catálogos y tiendas para vender en línea.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
-          <a class="sc-card sc-link sc-solution-card" href="soluciones/automation.html"><span class="sc-solution-number">03</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="4.5"/><path d="m10 12 1.3 1.3L14.5 10"/></svg></span><h3>Automatización</h3><p>Procesos y herramientas conectados.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
-          <a class="sc-card sc-link sc-solution-card" href="soluciones/systems.html"><span class="sc-solution-number">04</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg></span><h3>Sistemas a medida</h3><p>Paneles y módulos para cada negocio.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
-          <a class="sc-card sc-link sc-solution-card" href="soluciones/data-security.html"><span class="sc-solution-number">05</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><h3>Datos y seguridad</h3><p>Analítica, protección y continuidad.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
+          <a class="sc-card sc-link sc-solution-card" href="soluciones/web.html"><span class="sc-solution-media" aria-hidden="true"><img src="imagenes/web.webp" alt="" width="1200" height="800" loading="lazy" decoding="async" /></span><span class="sc-solution-number">01</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01M7 13h4M7 16h8"/></svg></span><h3>Diseño web</h3><p>Sitios corporativos y páginas de campaña.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
+          <a class="sc-card sc-link sc-solution-card" href="soluciones/commerce.html"><span class="sc-solution-media" aria-hidden="true"><img src="imagenes/commerce.webp" alt="" width="1200" height="800" loading="lazy" decoding="async" /></span><span class="sc-solution-number">02</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.5L22 8H6"/><circle cx="10" cy="20" r="1.2"/><circle cx="18" cy="20" r="1.2"/></svg></span><h3>Tiendas virtuales</h3><p>Catálogos y tiendas para vender en línea.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
+          <a class="sc-card sc-link sc-solution-card" href="soluciones/automation.html"><span class="sc-solution-media" aria-hidden="true"><img src="imagenes/automation.webp" alt="" width="1200" height="800" loading="lazy" decoding="async" /></span><span class="sc-solution-number">03</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="4.5"/><path d="m10 12 1.3 1.3L14.5 10"/></svg></span><h3>Automatización</h3><p>Procesos y herramientas conectados.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
+          <a class="sc-card sc-link sc-solution-card" href="soluciones/systems.html"><span class="sc-solution-media" aria-hidden="true"><img src="imagenes/systems.webp" alt="" width="1200" height="800" loading="lazy" decoding="async" /></span><span class="sc-solution-number">04</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg></span><h3>Sistemas a medida</h3><p>Paneles y módulos para cada negocio.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
+          <a class="sc-card sc-link sc-solution-card" href="soluciones/data-security.html"><span class="sc-solution-media" aria-hidden="true"><img src="imagenes/data-security.webp" alt="" width="1200" height="800" loading="lazy" decoding="async" /></span><span class="sc-solution-number">05</span><span class="sc-solution-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><h3>Datos y seguridad</h3><p>Analítica, protección y continuidad.</p><span class="sc-more">Ver solución <span aria-hidden="true">↗</span></span></a>
         </div>
       </div>
     </section>
 
     <section class="sc-block sc-process-block" id="como-funciona" aria-labelledby="sc-how-title">
-      <div class="container"><div class="sc-head"><p class="partner-eyebrow">CÓMO FUNCIONA</p><h2 id="sc-how-title">Tres pasos para empezar.</h2><p>Un proceso sencillo para dar el primer paso y conversar con nuestro equipo.</p></div>
-        <ol class="sc-steps sc-steps-3d"><li><span class="sc-step-tag">PASO 01</span><h3>Cuéntanos de ti</h3><p>Completa el formulario de esta página con tus datos y cómo llegarías a tus clientes.</p><span class="sc-step-arrow" aria-hidden="true">↘</span></li><li><span class="sc-step-tag">PASO 02</span><h3>Revisa tu mensaje</h3><p>Se abre WhatsApp con tus datos ya escritos. Tú decides si lo envías.</p><span class="sc-step-arrow" aria-hidden="true">↗</span></li><li><span class="sc-step-tag">PASO 03</span><h3>El equipo te responde</h3><p>Revisamos tu información y te indicamos los siguientes pasos.</p><span class="sc-step-arrow" aria-hidden="true">✦</span></li></ol>
+      <div class="container"><div class="sc-head"><p class="partner-eyebrow">CÓMO FUNCIONA</p><h2 id="sc-how-title">Tres pasos <em>para empezar.</em></h2><p>Un proceso sencillo para dar el primer paso y conversar con nuestro equipo.</p></div>
+        <ol class="sc-steps sc-steps-3d"><li><span class="sc-step-tag">PASO 01</span><h3>Cuéntanos de ti</h3><p>Completa el formulario de esta página con tus datos y cómo llegarías a tus clientes.</p><span class="sc-step-scene sc-scene-form" aria-hidden="true"><i></i><i></i><i></i></span><span class="sc-step-link" aria-hidden="true"></span></li><li><span class="sc-step-tag">PASO 02</span><h3>Revisa tu mensaje</h3><p>Se abre WhatsApp con tus datos ya escritos. Tú decides si lo envías.</p><span class="sc-step-scene" aria-hidden="true"><span class="sc-scene-bubble"><i></i><i></i><svg viewBox="0 0 16 9"><path d="m1 5 2.5 2.5L8 2M6.5 6.5 7.5 7.5 13 2"/></svg></span></span><span class="sc-step-link" aria-hidden="true"></span></li><li><span class="sc-step-tag">PASO 03</span><h3>El equipo te responde</h3><p>Revisamos tu información y te indicamos los siguientes pasos.</p><span class="sc-step-scene sc-scene-reply" aria-hidden="true"><span class="fq2-avatar"></span><span class="sc-scene-dots"><i></i><i></i><i></i></span></span></li></ol>
       </div>
     </section>
 
-    <section class="sc-block sc-who-block" aria-labelledby="sc-who-title"><div class="container sc-who-panel"><div class="sc-who-mark" aria-hidden="true">✳</div><div class="sc-who-copy"><p class="partner-eyebrow">QUIÉN PUEDE UNIRSE</p><h2 id="sc-who-title">Profesionales y empresas con ganas de conectar.</h2><p>Personas y empresas que quieren llevar soluciones digitales a más negocios de su comunidad.</p></div><div class="sc-who-badge"><span>Tu experiencia</span><b>+ TUPLUS</b><span>Nuevas oportunidades</span></div></div></section>
+    <section class="sc-block sc-who-block" aria-labelledby="sc-who-title"><div class="container sc-who-panel"><div class="sc-who-mark" aria-hidden="true"><img src="colibri.png" alt="" width="64" height="64" /></div><div class="sc-who-copy"><p class="partner-eyebrow">QUIÉN PUEDE UNIRSE</p><h2 id="sc-who-title">Profesionales y empresas <em>con ganas de conectar.</em></h2><p>Personas y empresas que quieren llevar soluciones digitales a más negocios de su comunidad.</p></div><div class="sc-who-badge"><span>Tu experiencia</span><b>+ TUPLUS</b><span>Nuevas oportunidades</span></div></div></section>
 
     <section class="sc-block sc-requirements-block" id="requisitos" aria-labelledby="sc-req-title">
       <div class="container sc-requirements-layout">
         <div class="sc-requirements-top">
           <div class="sc-requirements-copy">
             <p class="partner-eyebrow">ANTES DE POSTULAR</p>
-            <h2 id="sc-req-title">Prepara tu próxima oportunidad.</h2>
+            <h2 id="sc-req-title">Prepara tu <em>próxima oportunidad.</em></h2>
             <p class="sc-requirements-lead">Solo necesitamos conocerte un poco, saber desde dónde participarías y entender cómo te gustaría conectar negocios con soluciones TUPLUS.</p>
             <div class="sc-req-trust-row" aria-label="Información del proceso">
               <span><i aria-hidden="true">✓</i> Datos básicos</span>
@@ -236,11 +237,11 @@ import SiteFooter from '../components/SiteFooter.astro';
       </div>
     </section>
 
-    <section class="sc-block sc-faq-block" id="preguntas" aria-labelledby="sc-faq-title">
-      <div class="container sc-faq">
-        <div class="sc-faq-intro">
+    <section class="section faq-section fq2 sc-fq" id="preguntas" aria-labelledby="sc-faq-title">
+      <div class="container faq-grid">
+        <div class="fq2-intro">
           <p class="partner-eyebrow">PREGUNTAS FRECUENTES</p>
-          <h2 id="sc-faq-title">¿Tienes dudas antes de postular?</h2>
+          <h2 id="sc-faq-title">¿Tienes dudas <em>antes de postular?</em></h2>
           <p>Te contamos lo esencial para que sepas qué completar y qué ocurre con tu información.</p>
           <div class="sc-faq-help-card">
             <span class="sc-faq-help-icon" aria-hidden="true">?</span>
@@ -249,18 +250,22 @@ import SiteFooter from '../components/SiteFooter.astro';
           </div>
           <div class="sc-faq-mini-note"><span aria-hidden="true">✓</span> Revisas el mensaje antes de enviarlo.</div>
         </div>
-        <div class="sc-faq-list" aria-label="Respuestas a preguntas frecuentes">
-          <details class="sc-q" open><summary><span class="sc-q-number">01</span><span class="sc-q-title">¿Qué es un socio comercial?</span><span class="sc-q-toggle" aria-hidden="true"></span></summary><div class="sc-q-answer"><p>Es una persona o empresa que conecta posibles clientes con las soluciones de TUPLUS y ayuda a generar oportunidades comerciales.</p></div></details>
-          <details class="sc-q"><summary><span class="sc-q-number">02</span><span class="sc-q-title">¿Tengo que tener una empresa?</span><span class="sc-q-toggle" aria-hidden="true"></span></summary><div class="sc-q-answer"><p>No necesariamente. El formulario contempla profesionales independientes, agencias, empresas y otros perfiles.</p></div></details>
-          <details class="sc-q"><summary><span class="sc-q-number">03</span><span class="sc-q-title">¿Desde qué país puedo postular?</span><span class="sc-q-toggle" aria-hidden="true"></span></summary><div class="sc-q-answer"><p>Selecciona tu país y después la región y ciudad disponibles. Si tu distrito o localidad no aparece, podrás escribirlo manualmente.</p></div></details>
-          <details class="sc-q"><summary><span class="sc-q-number">04</span><span class="sc-q-title">¿Debo subir documentos o datos bancarios?</span><span class="sc-q-toggle" aria-hidden="true"></span></summary><div class="sc-q-answer"><p>No. Este formulario no pide documentos ni números de cuenta bancaria.</p></div></details>
-          <details class="sc-q"><summary><span class="sc-q-number">05</span><span class="sc-q-title">¿Mi postulación se envía automáticamente?</span><span class="sc-q-toggle" aria-hidden="true"></span></summary><div class="sc-q-answer"><p>No. Al terminar se prepara un mensaje en WhatsApp. Tú puedes revisarlo y decides si lo envías.</p></div></details>
-          <details class="sc-q"><summary><span class="sc-q-number">06</span><span class="sc-q-title">¿Qué sucede después?</span><span class="sc-q-toggle" aria-hidden="true"></span></summary><div class="sc-q-answer"><p>El equipo revisará la información y te indicará cuáles son los siguientes pasos.</p></div></details>
+        <div class="fq2-panel">
+          <div class="fq2-top" aria-hidden="true"><span class="fq2-avatar"></span><b translate="no">TUPLUS</b><i class="fq2-online"></i><span class="fq2-menu"><i></i><i></i><i></i></span></div>
+          <div class="faq-list">
+            <details open><summary>¿Qué es un socio comercial?</summary><p>Es una persona o empresa que conecta posibles clientes con las soluciones de TUPLUS y ayuda a generar oportunidades comerciales.</p></details>
+            <details><summary>¿Tengo que tener una empresa?</summary><p>No necesariamente. El formulario contempla profesionales independientes, agencias, empresas y otros perfiles.</p></details>
+            <details><summary>¿Desde qué país puedo postular?</summary><p>Selecciona tu país y después la región y ciudad disponibles. Si tu distrito o localidad no aparece, podrás escribirlo manualmente.</p></details>
+            <details><summary>¿Debo subir documentos o datos bancarios?</summary><p>No. Este formulario no pide documentos ni números de cuenta bancaria.</p></details>
+            <details><summary>¿Mi postulación se envía automáticamente?</summary><p>No. Al terminar se prepara un mensaje en WhatsApp. Tú puedes revisarlo y decides si lo envías.</p></details>
+            <details><summary>¿Qué sucede después?</summary><p>El equipo revisará la información y te indicará cuáles son los siguientes pasos.</p></details>
+          </div>
+          <div class="ct2-compose" aria-hidden="true"><i></i><b translate="no">&#10148;</b></div>
         </div>
       </div>
     </section>
 
-    <section class="sc-block sc-apply-block" id="postular" aria-labelledby="sc-form-title"><div class="container sc-apply-layout"><div class="sc-apply-intro"><p class="partner-eyebrow">TU POSTULACIÓN</p><h2 id="sc-form-title">Demos el siguiente paso.</h2><p>Cuéntanos un poco sobre ti y prepara tu mensaje para nuestro equipo.</p><div class="sc-apply-promise"><span class="sc-promise-icon" aria-hidden="true">✓</span><p><b>Sin complicaciones.</b><br>Revisa el mensaje antes de enviarlo por WhatsApp.</p></div><div class="sc-apply-decoration" aria-hidden="true"><span></span><span></span><span></span></div><div class="sc-network" aria-hidden="true"><svg viewBox="0 0 460 250" fill="none"><path class="sc-network-path" d="M74 126C129 126 125 60 190 60S252 190 316 190s40-64 90-64M74 126c65 0 55 64 116 64s62-64 126-64"/><circle class="sc-network-node sc-network-node-a" cx="74" cy="126" r="25"/><circle class="sc-network-node sc-network-node-b" cx="190" cy="60" r="19"/><circle class="sc-network-node sc-network-node-c" cx="190" cy="190" r="19"/><circle class="sc-network-node sc-network-node-d" cx="316" cy="126" r="25"/><circle class="sc-network-node sc-network-node-e" cx="406" cy="126" r="18"/><circle class="sc-network-pulse" r="5"><animateMotion dur="5s" repeatCount="indefinite" path="M74 126C129 126 125 60 190 60S252 190 316 190s40-64 90-64"/></circle><circle class="sc-network-pulse sc-network-pulse-two" r="4"><animateMotion dur="5s" begin="-2.5s" repeatCount="indefinite" path="M74 126c65 0 55 64 116 64s62-64 126-64"/></circle></svg><span>Ideas que conectan</span></div></div>
+    <section class="sc-block sc-apply-block" id="postular" aria-labelledby="sc-form-title"><div class="container sc-apply-layout"><div class="sc-apply-intro"><p class="partner-eyebrow">TU POSTULACIÓN</p><h2 id="sc-form-title">Demos el <em>siguiente paso.</em></h2><p>Cuéntanos un poco sobre ti y prepara tu mensaje para nuestro equipo.</p><div class="sc-apply-promise"><span class="sc-promise-icon" aria-hidden="true">✓</span><p><b>Sin complicaciones.</b><br>Revisa el mensaje antes de enviarlo por WhatsApp.</p></div><div class="ct2-preview sc-preview" aria-hidden="true"><div class="ct2-phone-top"><span class="fq2-avatar"></span><b translate="no">TUPLUS</b><i class="fq2-online"></i></div><div class="ct2-thread"><div class="ct2-bubble"><strong data-preview="nombre"></strong><span data-preview="empresa"></span><span data-preview="soluciones"></span><span data-preview="mensaje"></span><em class="ct2-ticks" translate="no">&#10003;&#10003;</em></div></div><div class="ct2-compose"><i></i><b translate="no">&#10148;</b></div></div></div>
       <form class="sc-form sc-form-3d" id="sc-form" novalidate>
         <div class="sc-form-heading"><div><span class="sc-form-step">TU PRÓXIMA ALIANZA</span><h3>Conozcamos tu perfil</h3><p>Completa tus datos y cuéntanos cómo te gustaría colaborar.</p></div><span class="sc-form-required">* Campos obligatorios</span></div>
         <fieldset class="sc-form-group"><legend><span>01</span> Tus datos y tu territorio</legend>
@@ -544,8 +549,8 @@ import SiteFooter from '../components/SiteFooter.astro';
         </fieldset>
         <fieldset class="sc-form-group"><legend><span>02</span> Tu propuesta de colaboración</legend>
         <div class="sc-grid">
-        <label><span class="sc-label-title">Tipo de socio <span class="sc-required-star">*</span></span><select name="tipo" required><option value="">Elige una opción</option><option>Profesional independiente</option><option>Agencia o consultora</option><option>Empresa</option><option>Otro</option></select></label>
-        <label><span class="sc-label-title">Soluciones que te interesan <span class="sc-required-star">*</span></span><select name="soluciones" required><option value="">Elige una opción</option><option>Diseño web</option><option>Tiendas virtuales</option><option>Automatización</option><option>Sistemas a medida</option><option>Datos y seguridad</option><option>Todas</option></select></label>
+        <label><span class="sc-label-title">Tipo de socio <span class="sc-required-star">*</span></span><select name="tipo" required><option value="">Elige una opción</option><option value="Profesional independiente">Profesional independiente</option><option value="Agencia o consultora">Agencia o consultora</option><option value="Empresa">Empresa</option><option value="Otro">Otro</option></select></label>
+        <label><span class="sc-label-title">Soluciones que te interesan <span class="sc-required-star">*</span></span><select name="soluciones" required><option value="">Elige una opción</option><option value="Diseño web">Diseño web</option><option value="Tiendas virtuales">Tiendas virtuales</option><option value="Automatización">Automatización</option><option value="Sistemas a medida">Sistemas a medida</option><option value="Datos y seguridad">Datos y seguridad</option><option value="Todas">Todas</option></select></label>
         </div>
         <label><span class="sc-label-title">¿Cómo llegarías a tus clientes? <span class="sc-required-star">*</span></span><textarea name="mensaje" rows="4" maxlength="1000" placeholder="Cuéntanos qué negocios conoces y cómo les presentarías las soluciones de TUPLUS." required></textarea></label>
         </fieldset>
@@ -557,6 +562,7 @@ import SiteFooter from '../components/SiteFooter.astro';
     </div></section>
   </main>
 
+  <WhatsAppFlotante />
   <SiteFooter />
 
   <script is:inline>
@@ -619,6 +625,19 @@ import SiteFooter from '../components/SiteFooter.astro';
         }
         return img;
       }
+      function uiLocale() { return (window.TUPLUS_I18N && window.TUPLUS_I18N.locale) || 'es'; }
+      // El valor de cada opción sigue en español; solo cambia el nombre que se muestra.
+      document.addEventListener('tuplus:language-change', function () {
+        if (!pais) return;
+        var names = new Intl.DisplayNames([uiLocale()], { type: 'region' });
+        Array.from(pais.options).forEach(function (option) {
+          var code = option.getAttribute('data-country-code');
+          if (!code) return;
+          try { option.textContent = uiLocale() === 'es' ? option.value : names.of(code); } catch (e) { option.textContent = option.value; }
+        });
+        renderCountryOptions(countrySearch ? countrySearch.value : '');
+        syncCountryDisplay();
+      });
       function selectedCountryOption() {
         if (!pais || pais.selectedIndex < 0) return null;
         var option = pais.options[pais.selectedIndex];
@@ -647,13 +666,13 @@ import SiteFooter from '../components/SiteFooter.astro';
       }
       function renderCountryOptions(filter) {
         if (!countryOptions || !pais) return;
-        var query = String(filter || '').trim().toLocaleLowerCase('es');
+        var query = String(filter || '').trim().toLocaleLowerCase(uiLocale());
         var entries = Array.from(pais.options).filter(function (option) {
           return option.value && option.getAttribute('data-country-code');
-        }).sort(function (a, b) { return a.textContent.localeCompare(b.textContent, 'es', { sensitivity: 'base' }); });
+        }).sort(function (a, b) { return a.textContent.localeCompare(b.textContent, uiLocale(), { sensitivity: 'base' }); });
         countryOptions.replaceChildren();
         var visible = entries.filter(function (option) {
-          return option.textContent.toLocaleLowerCase('es').includes(query) || option.getAttribute('data-country-code').toLowerCase().includes(query);
+          return option.textContent.toLocaleLowerCase(uiLocale()).includes(query) || option.getAttribute('data-country-code').toLowerCase().includes(query);
         });
         if (!visible.length) {
           var empty = document.createElement('p');

@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "astro build && node tests/site.test.cjs && node tests/quote.test.cjs && node tests/i18n.test.cjs && node tests/partner.test.cjs && node tests/partner-footer.test.cjs && node tests/partner-application.test.cjs"
+    "test": "astro build && node tests/site.test.cjs && node tests/quote.test.cjs && node tests/i18n.test.cjs && node tests/partner.test.cjs && node tests/partner-footer.test.cjs && node tests/partner-application.test.cjs && node tests/socios.test.cjs"
   },
   "dependencies": {
     "astro": "^7.4.0"

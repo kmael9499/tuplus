@@ -418,55 +418,11 @@ html[data-theme="dark"] .partner-public .pp-status[data-state="limited"] {
   font-size: 0.73rem;
   margin: 5px 0 0;
 }
-.partner-public .pp-faq-layout {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 80px;
-}
-.partner-public .pp-faq details {
-  border-bottom: 1px solid var(--pp-line);
-}
-.partner-public .pp-faq summary {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 23px 0;
-  cursor: pointer;
-  font-size: 0.96rem;
-  font-weight: 600;
-  list-style: none;
-  line-height: 1.5;
-}
-.partner-public .pp-faq summary > span:last-child {
-  color: var(--pp-gold);
-  font-size: 1.2rem;
-  flex: none;
-}
 .partner-public summary::-webkit-details-marker {
   display: none;
 }
 .partner-public details[open] summary > span:last-child {
   rotate: 45deg;
-}
-.partner-public .pp-faq p {
-  font-size: 0.88rem;
-  margin: 0 0 24px;
-}
-.partner-public .pp-final {
-  padding: 65px 0;
-  background: var(--pp-tint);
-  border-top: 1px solid var(--pp-line);
-  text-align: center;
-}
-.partner-public .pp-final h2 {
-  max-width: 700px;
-  margin: 0 auto 28px;
-}
-.partner-public .pp-final small {
-  display: block;
-  font-size: 0.7rem;
-  color: var(--pp-muted);
-  margin-top: 20px;
 }
 .partner-public main :is(a, button, summary):focus-visible {
   outline: 3px solid var(--pp-gold);
@@ -530,9 +486,6 @@ html[data-theme="dark"] .partner-public .pp-status[data-state="limited"] {
   .partner-public .pp-step-number {
     font-size: 2rem;
   }
-  .partner-public .pp-faq-layout {
-    gap: 40px;
-  }
 }
 @media (max-width: 760px) {
   .partner-public .pp-hero-grid {
@@ -543,10 +496,6 @@ html[data-theme="dark"] .partner-public .pp-status[data-state="limited"] {
     font-size: clamp(2.7rem, 9vw, 4.4rem);
   }
   .partner-public .pp-about,
-  .partner-public .pp-faq-layout {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
   .partner-public .pp-benefits {
     grid-template-columns: 1fr;
   }

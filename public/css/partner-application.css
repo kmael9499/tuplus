@@ -1,10 +1,7 @@
-.partner-application {
-  background: var(--partner-paper);
-}
 .pa-intro {
   padding-block: 64px 36px;
 }
-.pa-intro h1 {
+.partner-application .pa-intro h2 {
   font-size: clamp(2.4rem, 5vw, 4.4rem);
   max-width: 850px;
   line-height: 1.06;
@@ -24,7 +21,10 @@
   gap: 32px;
   align-items: start;
   padding-bottom: 80px;
-  scroll-margin-top: 110px;
+}
+/* html ya reserva el alto del encabezado fijo con scroll-padding. */
+.partner-public .partner-application[id] {
+  scroll-margin-top: 0;
 }
 .pa-sidebar {
   position: sticky;
@@ -37,7 +37,7 @@
 .pa-sidebar img {
   object-fit: contain;
 }
-.pa-sidebar h2 {
+.partner-application .pa-sidebar h2 {
   font-size: 1.35rem;
   line-height: 1.35;
 }
@@ -143,7 +143,7 @@
   opacity: 0.65;
   font-family: Georgia, serif;
 }
-.pa-panel-head h2 {
+.partner-application .pa-panel-head h2 {
   font-size: 1.65rem;
   margin: 0 0 8px;
   line-height: 1.15;
@@ -267,7 +267,7 @@
   justify-content: space-between;
   gap: 14px;
 }
-.pa-review-section h3 {
+.partner-application .pa-review-section h3 {
   margin: 0;
   font-size: 1rem;
 }

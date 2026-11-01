@@ -1,0 +1,251 @@
+/* Red Partner y Socios Comerciales con el lenguaje de la portada: títulos, preguntas,
+   formularios y movimiento. Se carga al final para mandar sobre los estilos anteriores.
+   Va con partners-motion.js. */
+body.partners-page {
+  --pm-ease: cubic-bezier(.23, 1, .32, 1);
+  --pm-gold: #9e742e;
+  --pm-line: rgba(158, 116, 46, .22);
+  --pm-line-hi: rgba(158, 116, 46, .55);
+  --pm-glow: rgba(212, 176, 106, .2);
+  --pm-num: linear-gradient(180deg, #c99a4b 5%, #7f5a1c 95%);
+  --pm-panel: linear-gradient(165deg, rgba(255, 255, 255, .94), rgba(250, 246, 237, .92));
+  --pm-shadow: 0 30px 70px rgba(18, 44, 61, .1);
+}
+html[data-theme="dark"] body.partners-page {
+  --pm-gold: #dcbc7d;
+  --pm-line: rgba(220, 188, 125, .2);
+  --pm-line-hi: rgba(220, 188, 125, .6);
+  --pm-glow: rgba(220, 188, 125, .14);
+  --pm-num: linear-gradient(180deg, #f6e3b8 8%, #c4934a 92%);
+  --pm-panel: linear-gradient(165deg, rgba(15, 36, 51, .88), rgba(8, 20, 30, .92));
+  --pm-shadow: 0 30px 80px rgba(0, 0, 0, .32);
+}
+
+/* La barra de avance es la de la portada (home-extras). */
+html:has(body.partners-page)::before { display: none; }
+
+/* ---------- Títulos ---------- */
+:root body.partners-page main h1,
+:root body.partners-page .pp-section h2,
+:root body.partners-page .pa-intro h2,
+:root body.partners-page :is(#sc-sol-title, #sc-how-title, #sc-who-title, #sc-req-title, #sc-faq-title, #sc-form-title) {
+  font-weight: 600;
+  letter-spacing: -.035em;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+}
+:root body.partners-page .pp-section h2,
+:root body.partners-page .pa-intro h2,
+:root body.partners-page :is(#sc-sol-title, #sc-how-title, #sc-req-title, #sc-faq-title, #sc-form-title) {
+  font-size: clamp(34px, 4.2vw, 58px);
+  line-height: 1.05;
+}
+:root body.partners-page #sc-who-title {
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.08;
+}
+/* Segunda parte del título en serif dorada, como en la portada. */
+:root body.partners-page main :is(h1, h2) em {
+  padding-right: .08em;
+  background: var(--pm-num);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  -webkit-text-fill-color: transparent;
+}
+:root:is(:lang(zh), :lang(ja)) body.partners-page main :is(h1, h2) em {
+  font-family: inherit !important;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+:root body.partners-page main :is(.pp-eyebrow, .partner-eyebrow),
+:root body.partners-page main .fq2 .fq2-intro > :is(.pp-eyebrow, .partner-eyebrow) {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--pm-gold);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .17em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+:root body.partners-page main :is(.pp-eyebrow, .partner-eyebrow)::before {
+  content: "";
+  flex: 0 0 22px;
+  width: 22px;
+  height: 1px;
+  border-radius: 0;
+  background: currentColor;
+  box-shadow: none;
+  opacity: .8;
+}
+.partners-page .sc-head-centered .partner-eyebrow { justify-content: center; }
+
+/* ---------- Preguntas: el chat de la portada ---------- */
+.partners-page .fq2 { scroll-margin-top: 0; }
+:root body.partners-page .fq2 .fq2-intro h2 { margin: 0 0 18px; }
+.partners-page .fq2 .fq2-intro > p:not(.pp-eyebrow, .partner-eyebrow) { margin: 0 0 22px; line-height: 1.7; }
+.partners-page .faq-list summary { cursor: pointer; list-style: none; }
+.partners-page .faq-list summary::-webkit-details-marker { display: none; }
+.partners-page .faq-list summary > span { min-width: 0; }
+:root body.partners-page .faq-list details[open] summary > span:last-child { rotate: none; }
+.partners-page .faq-list summary::after {
+  content: "+";
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid var(--pm-line-hi);
+  border-radius: 50%;
+  line-height: 1;
+  transition: transform .25s var(--pm-ease), background .25s ease;
+}
+.partners-page .faq-list details[open] summary::after { content: "−"; transform: rotate(180deg); }
+.partners-page .faq-list details > p { transition: opacity .2s ease; }
+.partners-page .faq-list details[open] > p { animation: pm-bubble .34s var(--pm-ease) backwards; }
+.partners-page .faq-list details.is-closing > p { opacity: 0; }
+.partners-page .faq-list details.is-closing summary::after { content: "+"; background: none; transform: none; }
+.partners-page .faq-list summary:focus-visible { outline: 3px solid #c79b4d; outline-offset: 3px; }
+:root body.partners-page .fq2 .faq-list details.is-closing summary {
+  border-color: var(--pm-line-hi);
+  background: rgba(220, 188, 125, .07);
+  box-shadow: none;
+  color: var(--ink);
+}
+@keyframes pm-bubble {
+  from { opacity: 0; transform: translateY(6px) scale(.98); }
+}
+
+/* ---------- Formularios: el acabado del panel de contacto ---------- */
+:root body.partners-page #partner-form,
+:root body.partners-page #sc-form {
+  border: 1px solid transparent;
+  border-radius: 28px;
+  background:
+    var(--pm-panel) padding-box,
+    linear-gradient(135deg, rgba(236, 210, 155, .7), rgba(236, 210, 155, .08) 35%, rgba(236, 210, 155, .05) 65%, rgba(236, 210, 155, .5)) border-box;
+  box-shadow: var(--pm-shadow), 0 0 90px var(--pm-glow);
+}
+:root body.partners-page .pa-sidebar {
+  border-color: var(--pm-line);
+  border-radius: 28px;
+}
+:root body.partners-page :is(
+  .partner-application .pa-field :is(input, select, textarea),
+  #sc-form :is(input:not([type="checkbox"]):not([type="radio"]):not(.sc-country-native), select:not(.sc-country-native), textarea, .sc-country-trigger)
+) {
+  min-height: 50px;
+  border-color: var(--pm-line);
+  border-radius: 13px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+:root body.partners-page .partner-application .pa-field textarea,
+:root body.partners-page #sc-form textarea { min-height: 110px; }
+@media (hover: hover) and (pointer: fine) {
+  :root body.partners-page :is(
+    .partner-application .pa-field :is(input, select, textarea),
+    #sc-form :is(input:not([type="checkbox"]):not([type="radio"]):not(.sc-country-native), select:not(.sc-country-native), textarea, .sc-country-trigger)
+  ):hover { border-color: var(--pm-line-hi); }
+}
+:root body.partners-page :is(
+  .partner-application .pa-field :is(input, select, textarea),
+  #sc-form :is(input:not([type="checkbox"]):not([type="radio"]):not(.sc-country-native), select:not(.sc-country-native), textarea, .sc-country-trigger)
+):focus {
+  border-color: var(--pm-gold);
+  outline: 0;
+  box-shadow: 0 0 0 4px var(--pm-glow);
+}
+/* Mismo aviso en vivo que el formulario de contacto, una vez que se tocó el campo. */
+:root body.partners-page :is(.partner-application .pa-field, #sc-form label) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea):user-valid:not(:focus) {
+  border-color: #4c8a5a;
+  box-shadow: 0 0 0 3px rgba(76, 138, 90, .16);
+}
+:root body.partners-page :is(.partner-application .pa-field, #sc-form label) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea):user-invalid:not(:focus) {
+  border-color: #b0492b;
+  box-shadow: 0 0 0 3px rgba(176, 73, 43, .16);
+}
+html[data-theme="dark"] .partner-application .pa-actions .partner-button { color: #122c3d !important; }
+.partner-application .pa-actions > button:first-child { border-radius: 9px; }
+.partner-application .pa-progress progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #b88a45, #ecd29b);
+  transition: width .4s var(--pm-ease);
+}
+.partner-application .pa-progress progress::-moz-progress-bar { background: linear-gradient(90deg, #b88a45, #ecd29b); }
+.partner-application .pa-sidebar button > span:first-child {
+  transition: background .25s ease, border-color .25s ease, transform .25s var(--pm-ease);
+}
+.partner-application .pa-sidebar button[aria-current="step"] > span:first-child { transform: scale(1.08); }
+.partner-application .pa-panel:not([hidden]) { animation: pm-bubble .32s var(--pm-ease) backwards; }
+
+/* ---------- Tarjetas y botones ---------- */
+.partner-public #beneficios { margin-top: clamp(48px, 6vw, 80px); }
+.partner-public .pp-card > svg { transition: transform .3s var(--pm-ease); }
+@media (hover: hover) and (pointer: fine) {
+  .partner-public .pp-card:hover {
+    border-color: var(--pm-line-hi);
+    box-shadow: var(--pm-shadow), 0 0 40px var(--pm-glow);
+  }
+  .partner-public .pp-card:hover > svg { transform: translateY(-3px) rotate(-5deg); }
+}
+.partners-page :is(.pp-button, .partner-button, .sc-button-primary, .sc-button-quiet, .sc-req-cta):active {
+  transform: scale(.97);
+}
+html[data-theme="dark"] .partners-page .sc-marquee-band {
+  border-block: 1px solid var(--pm-line);
+  background: rgba(10, 26, 38, .55);
+}
+html[data-theme="dark"] .partners-page .sc-marquee-inner { color: #c3d0d8; }
+
+/* ---------- Entradas ---------- */
+.pm-wait,
+.partner-public .pp-reveal-ready:not(.pp-visible) {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.pm-in { animation: pm-rise .7s var(--pm-ease) backwards; animation-delay: var(--pm-delay, 0ms); }
+.partner-public .pp-reveal-ready {
+  transition: opacity .7s var(--pm-ease), transform .7s var(--pm-ease), translate .3s var(--pm-ease), border-color .3s ease, background .25s ease, box-shadow .3s ease;
+  transition-delay: var(--pm-delay, 0ms);
+}
+/* El dorado del título se enfoca un instante después que el resto. */
+:is(.pm-wait, .pp-reveal-ready:not(.pp-visible)) :is(h1, h2) em { opacity: 0; filter: blur(5px); }
+:is(.pm-in, .pp-reveal-ready.pp-visible) :is(h1, h2) em {
+  transition: opacity .8s var(--pm-ease) .18s, filter .8s var(--pm-ease) .18s;
+}
+@keyframes pm-rise {
+  from { opacity: 0; transform: translateY(22px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pp-hero-grid > .pp-reveal > *,
+  .partners-page .sc-hero-copy-next > * {
+    animation: pm-rise .8s var(--pm-ease) backwards;
+  }
+  .pp-hero-grid > .pp-reveal > :nth-child(2),
+  .partners-page .sc-hero-copy-next > :nth-child(2) { animation-delay: 70ms; }
+  .pp-hero-grid > .pp-reveal > :nth-child(3),
+  .partners-page .sc-hero-copy-next > :nth-child(3) { animation-delay: 140ms; }
+  .pp-hero-grid > .pp-reveal > :nth-child(4),
+  .partners-page .sc-hero-copy-next > :nth-child(4) { animation-delay: 210ms; }
+  .pp-hero-grid > .pp-reveal > :nth-child(n + 5),
+  .partners-page .sc-hero-copy-next > :nth-child(n + 5) { animation-delay: 280ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pm-wait,
+  .partner-public .pp-reveal-ready:not(.pp-visible) { opacity: 1; transform: none; }
+  .pm-in,
+  .partners-page .faq-list details[open] > p,
+  .partner-application .pa-panel:not([hidden]) { animation: none; }
+  :is(.pm-wait, .pp-reveal-ready:not(.pp-visible)) :is(h1, h2) em { opacity: 1; filter: none; }
+}
+@media print {
+  .pm-wait { opacity: 1 !important; transform: none !important; }
+}

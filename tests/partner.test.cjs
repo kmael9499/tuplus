@@ -9,7 +9,7 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
   const { window } = parseHTML(
     fs.readFileSync(path.join(base, "partner.html"), "utf8"),
   );
-  const { document } = window; Object.defineProperty(document.getElementById("pp-territory-country"),"value",{value:"",writable:true});
+  const { document } = window; Object.defineProperty(document.getElementById("pp-territory-country"),"value",{value:"",writable:true}); Object.defineProperty(document.querySelector('#partner-form [name="country"]'),"value",{value:"",writable:true});
   const picker = document.getElementById("site-language"),
     region = document.getElementById("pp-region-filter");
   Object.defineProperty(picker, "value", { value: "es", writable: true });
@@ -58,7 +58,10 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
   document.getElementById('pp-territory-city').value='Lima';
   document.getElementById('pp-territory-region').value='Lima';
   territoryForm.dispatchEvent(new window.Event('submit',{cancelable:true}));
-  assert.equal(ctx.location.href,'red-socios.html?country=PE&city=Lima&region=Lima#postulacion');
+  const applicationField=name=>document.querySelector('#partner-form [name="'+name+'"]');
+  assert.equal(ctx.location.href,'');assert.equal(applicationField('country').value,'PE');assert.equal(applicationField('city').value,'Lima');assert.equal(applicationField('region').value,'Lima');
+  assert.equal(document.querySelector('.pp-final'),null);
+  assert.deepEqual([...document.querySelectorAll('main section[id]')].map(el=>el.id),['que-es','niveles','territorios','requisitos','preguntas']);assert.ok(document.getElementById('postulacion'));
   const api = window.TUPLUS_I18N,
     dict = window.TUPLUS_TRANSLATIONS,
     data = window.TUPLUS_PARTNER_COUNTRIES;
@@ -80,6 +83,13 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
     await pause();
     assert.equal(store.get("tuplus-language"), locale); assert.ok(!document.getElementById("pp-selected-level").textContent.includes("estimateText"));
     checks++;
+    for (const node of document.querySelectorAll("[data-i18n-html]")) {
+      const key = node.getAttribute("data-i18n-html");
+      assert.ok(dict[locale][key], locale + ": " + key);
+      assert.equal(node.innerHTML, dict[locale][key]);
+      assert.equal(node.querySelectorAll("em").length, 1, key);
+      checks++;
+    }
     for (const node of document.querySelectorAll("[data-i18n]")) {
       const key = node.getAttribute("data-i18n");
       assert.ok(dict[locale][key], locale + ": " + key);
@@ -98,8 +108,8 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
         assert.equal(availability.dataset.state,state);
         assert.equal(availability.querySelector('.territory-availability-badge').textContent,dict[locale]['territory.status.'+state]);
         assert.equal(document.getElementById('pp-map-cta').disabled,!enabled);
-        ctx.location.href='unchanged';territoryForm.dispatchEvent(new window.Event('submit',{cancelable:true}));
-        if(enabled)assert.ok(ctx.location.href.startsWith('red-socios.html?'));else assert.equal(ctx.location.href,'unchanged');
+        applicationField('city').value='unchanged';territoryForm.dispatchEvent(new window.Event('submit',{cancelable:true}));
+        assert.equal(applicationField('city').value,enabled?city.trim():'unchanged');
         checks+=4;
       }
       for(const id of Object.keys(data)) {
@@ -205,7 +215,7 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
   while ((node = walk.nextNode())) {
     if (
       node.parentElement?.closest(
-        '[translate="no"],[data-i18n],script,style,svg,noscript,[aria-hidden="true"]',
+        '[translate="no"],[data-i18n],[data-i18n-html],script,style,svg,noscript,[aria-hidden="true"]',
       )
     )
       continue;

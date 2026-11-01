@@ -1,8 +1,8 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const {parseHTML}=require('linkedom');
-const {window}=parseHTML(fs.readFileSync('dist/red-socios.html','utf8')), {document}=window;
+const {window}=parseHTML(fs.readFileSync('dist/partner.html','utf8')), {document}=window;
 Object.defineProperty(window,'location',{configurable:true,value:{hostname:'localhost',origin:'http://localhost:4321'}});
-const field=n=>document.querySelector(`[name="${n}"]`);
+const field=n=>document.querySelector(`#partner-form [name="${n}"]`);
 // linkedom has no constraint-validation engine: emulate validity only for flow tests.
 for(const el of document.querySelectorAll('input,select,textarea')){
  Object.defineProperty(el,'value',{value:'',writable:true});
@@ -12,7 +12,7 @@ for(const el of document.querySelectorAll('input,select,textarea')){
 const storage=new Map();
 const requests=[];let nextResponse={ok:true,status:201},nextFailure=null;
 const context=vm.createContext({history:{},matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener(){},window,document,Node:window.Node,NodeFilter:{SHOW_TEXT:4},MutationObserver:window.MutationObserver,CustomEvent:window.CustomEvent,URLSearchParams,location:{search:"?country=PE&city=Lima&region=Lima"},localStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{requests.push([url,options]);if(nextFailure){const err=nextFailure;nextFailure=null;throw err;}return nextResponse;},AbortController,setTimeout,clearTimeout,console});
-for(const file of ['theme.js','config.js','i18n-data.js','partner-application-translations.js','partner-territory.js','i18n.js','partner-application.js'])vm.runInContext(fs.readFileSync('public/js/'+file,'utf8'),context);
+for(const file of ['theme.js','config.js','i18n-data.js','partner-translations.js','partner-application-translations.js','partner-territory.js','i18n.js','partner-application.js'])vm.runInContext(fs.readFileSync('public/js/'+file,'utf8'),context);
 const localConfigContext=vm.createContext({window:{location:{hostname:'localhost',origin:'http://localhost:4321'}}});
 vm.runInContext(fs.readFileSync('public/js/config.js','utf8'),localConfigContext);
 assert.equal(localConfigContext.window.TUPLUS_CONFIG.apiUrl,'http://localhost:4321','local development must target the same-origin API proxy');
@@ -36,9 +36,9 @@ for(const locale of ['es','en','zh','ru','pt','fr','ja','de']){
   assert.equal(document.querySelector('.theme-toggle').getAttribute('aria-pressed'),String(theme==='dark'));
   for(let step=0;step<4;step++){
    click('[data-go="'+step+'"]');assert.equal(shown(),String(step));
-   for(const el of document.querySelectorAll('[data-i18n]'))assert.equal(el.textContent,window.TUPLUS_TRANSLATIONS[locale][el.getAttribute('data-i18n')],locale+' '+theme+' '+el.getAttribute('data-i18n'));
+   for(const el of document.querySelectorAll('.partner-application [data-i18n]'))assert.equal(el.textContent,window.TUPLUS_TRANSLATIONS[locale][el.getAttribute('data-i18n')],locale+' '+theme+' '+el.getAttribute('data-i18n'));
    for(const [name,value] of Object.entries({fullName:'Prueba',email:'test@example.com',company:'Empresa de prueba',city:'Lima',region:'Lima',otherCountry:'Chile',level:'advanced',hours:'10'}))assert.equal(field(name).value,value);
-   assert.ok(!document.querySelector('main').textContent.includes('estimateText()'));
+   assert.ok(!document.querySelector('.partner-application').textContent.includes('estimateText()'));
    assert.equal(document.querySelectorAll('.pa-panel:not([hidden])').length,1);
    combinations++;
   }
@@ -62,9 +62,9 @@ async function simulateSubmit(){
  nextResponse={ok:false,status:400};formSubmit();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(document.querySelector('#pa-result').hidden,true);assert.equal(document.querySelector('#pa-submit-error').hidden,false);assert.equal(requests.length,2);
  nextResponse={ok:false,status:429};formSubmit();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(document.querySelector('#pa-result').hidden,true);assert.equal(requests.length,3);
  nextFailure=new TypeError('simulated network failure');formSubmit();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(document.querySelector('#pa-result').hidden,true);assert.equal(requests.length,4);
- assert.equal(document.querySelector('input[type="file"]'),null);assert.equal(document.querySelector('#country-select'),null);
+ assert.equal(document.querySelector('input[type="file"]'),null);assert.match(fs.readFileSync('dist/red-socios.html','utf8'),/location\.replace\('partner\.html'/);assert.equal(document.querySelector('#country-select'),null);
  assert.ok(!fs.readFileSync('dist/partner.html','utf8').includes('Natural Earth ?? 1:110m'));
  console.log('OK: '+combinations+' UI states and mocked fetch response handling (no database write), consent gate, payload, 400, 429, and network failure; no production request made.');
 }
 simulateSubmit().catch(err=>{console.error(err);process.exitCode=1;});
-function formSubmit(){document.querySelector('form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));}
+function formSubmit(){document.querySelector('#partner-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));}

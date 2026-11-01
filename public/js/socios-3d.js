@@ -51,11 +51,11 @@
   }
 
   all('.sc-solution-card, .sc-steps-3d li, .sc-req-card').forEach(function (card) {
-    tilt(card, 12);
+    tilt(card, 4);
   });
 
   var dashboard = document.querySelector('.sc-dashboard-preview');
-  if (dashboard) tilt(dashboard, 8);
+  if (dashboard) tilt(dashboard, 3);
 
   /* 3. Luz dorada que sigue al mouse en la portada. */
   var hero = document.querySelector('.sc-hero-next');
