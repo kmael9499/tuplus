@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#122c3d" />
+  <title>Acceso seguro | TUPLUS</title>
+  <meta name="description" content="Acceso seguro para integrantes de la Red de Socios Comerciales TUPLUS." />
+  <link rel="icon" href="imagenes/marca/simbolo-oscuro.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/acceso.css" />
+  <script is:inline src="js/theme.js"></script>
+  <script is:inline src="js/auth-config.js"></script>
+  <script is:inline defer src="js/acceso.js"></script>
+</head>
+<body class="access-page">
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <header class="access-header">
+    <a class="brand" href="index.html" aria-label="TUPLUS, inicio"><span class="brand-art"><img class="brand-light" src="imagenes/marca/logo-claro.png" alt="TUPLUS" width="2172" height="724"><img class="brand-dark" src="imagenes/marca/logo-claro.png" alt="TUPLUS" width="2172" height="724"></span></a>
+    <a class="back-link" href="red-socios.html">← Red de socios</a>
+  </header>
+  <main id="contenido" class="access-main" tabindex="-1">
+    <section class="access-card" aria-labelledby="access-title">
+      <span class="access-mark" aria-hidden="true">✳</span>
+      <p class="eyebrow">RED DE SOCIOS COMERCIALES</p>
+      <h1 id="access-title">Qué bueno verte.</h1>
+      <p class="access-intro">Ingresa con la cuenta que te asignó el equipo TUPLUS.</p>
+      <form id="login-form" novalidate>
+        <label for="email">Correo electrónico</label>
+        <input id="email" name="email" type="email" autocomplete="username" required maxlength="254" placeholder="nombre@empresa.com">
+        <label for="password">Contraseña</label>
+        <div class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128" placeholder="Tu contraseña"><button type="button" id="toggle-password" aria-label="Mostrar contraseña" aria-pressed="false">Mostrar</button></div>
+        <button class="forgot-link" id="forgot-open" type="button">¿Olvidaste tu contraseña?</button>
+        <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
+        <button class="button button-dark full-width" id="login-submit" type="submit">Ingresar <span aria-hidden="true">→</span></button>
+      </form>
+      <form id="mfa-form" hidden novalidate>
+        <p class="mfa-hint">Por seguridad, enviamos un código de verificación al correo de Dirección.</p>
+        <label for="code">Código de 6 dígitos</label>
+        <input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required placeholder="000000">
+        <p class="form-message" id="mfa-message" role="status" aria-live="polite"></p>
+        <button class="button button-dark full-width" type="submit">Verificar e ingresar <span aria-hidden="true">→</span></button>
+        <button class="forgot-link" id="back-login" type="button">Volver al acceso</button>
+      </form>
+      <form id="forgot-form" hidden novalidate>
+        <p class="mfa-hint">Si el correo está registrado, recibirás un enlace para restablecer tu contraseña.</p>
+        <label for="reset-email">Correo electrónico</label>
+        <input id="reset-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="nombre@empresa.com">
+        <p class="form-message" id="forgot-message" role="status" aria-live="polite"></p>
+        <button class="button button-dark full-width" type="submit">Enviar enlace <span aria-hidden="true">→</span></button>
+        <button class="forgot-link" id="back-login-forgot" type="button">Volver al acceso</button>
+      </form>
+      <p class="access-foot">¿Aún no tienes una cuenta? <a href="red-socios.html#postulacion">Postúlate a la red</a></p>
+    </section>
+    <p class="security-note"><span aria-hidden="true">◆</span> Acceso protegido · Las sesiones se cierran tras 30 minutos de inactividad</p>
+  </main>
+</body>
+</html>

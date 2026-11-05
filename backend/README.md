@@ -67,6 +67,20 @@ Ejemplo de envío:
 - `services/campanas.js` tiene los porcentajes y fechas escritos en el código. Para cambiarlos desde el panel administrativo, deberían leerse de una tabla de la base de datos.
 - GitHub Pages no ejecuta Node ni PHP: este backend necesita su propio hosting.
 
+## Acceso seguro de socios
+
+La página `acceso.html` usa las rutas de autenticación del backend de Node. El sistema guarda contraseñas con `scrypt` (nunca en texto), bloquea una cuenta 15 minutos después de cinco fallos, usa cookies HTTP-only y renueva la sesión al consultar una ruta protegida. Dirección debe ingresar un código de correo con vencimiento de 10 minutos. Los enlaces de recuperación vencen en 30 minutos y la respuesta no revela si el correo existe.
+
+Antes de habilitarlo en un entorno real:
+
+1. Ejecuta `backend/database/auth.sql` sobre `cotizador_db`.
+2. Configura en `backend/node/.env` `AUTH_APP_URL`, `AUTH_ALLOWED_ORIGINS`, `AUTH_EMAIL_FROM`, `RESEND_API_KEY` y un `AUTH_TOKEN_SECRET` aleatorio. En producción usa HTTPS y `NODE_ENV=production`. En `public/js/auth-config.js`, cambia `TUPLUS_AUTH_API_URL` por la dirección HTTPS del backend.
+3. Crea las cuentas autorizadas desde `backend/node` con `node src/scripts/create-auth-user.js`. El rol `direccion` exige el código adicional; el rol `partner` no tiene alta pública.
+4. Para suspender una cuenta, actualiza su estado a `suspended` en `auth_accounts`. La sesión se rechaza en la siguiente solicitud autenticada.
+5. Protege cada ruta privada de la aplicación con `loadSession` exportado por `src/routes/auth.js`. La web pública de Red de socios no es un portal privado.
+
+Las rutas de acceso son `POST /api/auth/login`, `POST /api/auth/verify-email-code`, `POST /api/auth/forgot-password`, `POST /api/auth/reset-password`, `GET /api/auth/session` y `POST /api/auth/logout`. Configura las URL de destino con `PARTNER_HOME_URL` y `DIRECTION_HOME_URL` si el portal se publica en otro lugar.
+
 ## Usar la versión en PHP (anterior)
 
 1. Crea la base con `database/database.sql`.
