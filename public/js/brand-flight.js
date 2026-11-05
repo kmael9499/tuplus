@@ -26,6 +26,25 @@
   let c=letters.getContext('2d');c.save();c.clip(textArea);c.drawImage(full,0,0);c.restore();
   c=bird.getContext('2d');c.drawImage(full,0,0);c.globalCompositeOperation='destination-out';c.fill(textArea);c.globalCompositeOperation='source-over';
   const warped=layer(),warpContext=warped.getContext('2d');
+  function drawChristmasHat(target, x, y) {
+   if(!document.documentElement.classList.contains('season-christmas'))return;
+   target.save();target.translate(x,y);target.rotate(-.12);
+   target.filter='drop-shadow(0 4px 7px rgba(7,19,29,.32))';
+   let g=target.createLinearGradient(-64,-108,72,12);
+   g.addColorStop(0,'#ff625c');g.addColorStop(.58,'#e3323a');g.addColorStop(1,'#b9142e');
+   target.fillStyle=g;target.beginPath();target.moveTo(-77,3);
+   target.bezierCurveTo(-57,-45,-37,-87,-23,-112);
+   target.bezierCurveTo(15,-77,55,-37,77,-4);
+   target.bezierCurveTo(36,10,-33,11,-77,3);target.closePath();target.fill();
+   g=target.createLinearGradient(0,-4,0,18);g.addColorStop(0,'#fff');g.addColorStop(1,'#dce8ef');
+   target.fillStyle=g;target.beginPath();target.moveTo(-81,-5);
+   target.bezierCurveTo(-35,7,36,7,80,-10);
+   target.bezierCurveTo(91,-7,94,8,82,15);
+   target.bezierCurveTo(34,31,-39,28,-82,12);
+   target.bezierCurveTo(-92,8,-91,-2,-81,-5);target.closePath();target.fill();
+   target.fillStyle='#fff';target.beginPath();target.ellipse(-24,-111,14,14,-.1,0,Math.PI*2);target.fill();
+   target.restore();
+  }
   function drawWings(time, amount, target) {
    // Deform the continuous silhouette around a fixed hinge. No cutout edges.
    warpContext.clearRect(0,0,w,h);
@@ -41,7 +60,8 @@
     warpContext.drawImage(bird,x,0,1,hinge,x,hinge-height,1,height);
    }
    warpContext.restore();
-   (target||ctx).drawImage(warped,0,0);
+   const out=target||ctx;out.drawImage(warped,0,0);
+   drawChristmasHat(out,590,200);
   }
   const scale=1,ox=0,oy=0;
   const ease=t=>1-Math.pow(1-t,3);
@@ -143,7 +163,7 @@
   function flyFull(t){
    const p=(t-FLY_START)/FLY_TIME;
    if(p>=1){
-    ctx.drawImage(bird,0,0);
+     ctx.drawImage(bird,0,0);drawChristmasHat(ctx,590,200);
     const q=(t-FLY_START-FLY_TIME)/FLASH;
     // Al posarse, un brillo recorre el nombre de izquierda a derecha.
     const sq=(q-.12)/.75;
@@ -218,7 +238,7 @@
    const t=(now-started)/1000;ctx.clearRect(0,0,screen.width,screen.height);ctx.save();ctx.translate(ox,oy);ctx.scale(scale,scale);
    if(FULL){const done=flyFull(t);ctx.restore();if(!done)frame=requestAnimationFrame(draw);return}
    const progress=Math.min(1,t/1.05);ctx.globalAlpha=progress;ctx.save();ctx.translate(0,18*(1-ease(progress)));ctx.drawImage(letters,0,0);ctx.restore();ctx.globalAlpha=1;
-   if(t>=3.5){ctx.drawImage(bird,0,0);ctx.restore();return}
+   if(t>=3.5){ctx.drawImage(bird,0,0);drawChristmasHat(ctx,590,200);ctx.restore();return}
    const p=Math.max(0,Math.min(1,(t-.35)/3.15));
    const q=ease(p),dx=-1050*(1-q),dy=-150*Math.sin(p*Math.PI)+160*(1-q),angle=-.15*(1-q);
    ctx.save();ctx.globalAlpha=Math.min(1,p*9);ctx.translate(450+dx,330+dy);ctx.rotate(angle);ctx.translate(-450,-330);

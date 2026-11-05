@@ -1,5 +1,6 @@
 ---
 import SiteFooter from '../components/SiteFooter.astro';
+import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
 ---
 <!doctype html>
 <html lang="es">
@@ -12,7 +13,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260925-2"><link rel="stylesheet" href="css/cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="css/quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="css/brand-flight.css?v=20261004-1"><link rel="stylesheet" href="css/cotizador-extras.css?v=20261009-1"><link rel="stylesheet" href="css/cotizador-diseno.css?v=20261021-2"><link rel="stylesheet" href="css/cotizador-colibri.css?v=20261011-1"><script is:inline defer src="js/brand-flight.js?v=20261016-4"></script><script is:inline src="js/theme.js?v=20261011-2"></script><script is:inline src="js/config.js?v=20261024-1"></script><meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/styles.css?v=20260925-2"><link rel="stylesheet" href="css/cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="css/quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="css/brand-flight.css?v=20261004-1"><link rel="stylesheet" href="css/cotizador-extras.css?v=20261009-1"><link rel="stylesheet" href="css/cotizador-diseno.css?v=20261021-2"><link rel="stylesheet" href="css/cotizador-colibri.css?v=20261011-1"><script is:inline defer src="js/brand-flight.js?v=20261103-xmas-hat-2"></script><script is:inline src="js/theme.js?v=20261011-2"></script><script is:inline src="js/config.js?v=20261024-1"></script><meta name="robots" content="noindex, nofollow">
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-plugin-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   <link rel="icon" href="colibri.png" type="image/png">
@@ -50,7 +51,8 @@ import SiteFooter from '../components/SiteFooter.astro';
 <!-- Campo de cupón del paso 5 -->
 <link rel="stylesheet" href="css/cotizador-cupon.css?v=20261024-1"/>
   <link rel="stylesheet" href="css/cotizador-ray.css?v=20261028-2"/>
-<link rel="stylesheet" href="css/caminos.css?v=1"/></head>
+<link rel="stylesheet" href="css/caminos.css?v=1"/>    <SeasonalAtmosphere />
+</head>
 <body>
   <div class="ambient" aria-hidden="true">
     <div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
@@ -363,3 +365,9 @@ import SiteFooter from '../components/SiteFooter.astro';
 <script is:inline src="js/cotizador-cupon.js?v=20261024-1" defer></script>
 </body>
 </html>
+
+
+
+
+
+
