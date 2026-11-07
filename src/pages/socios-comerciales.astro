@@ -1,4 +1,5 @@
 ---
+import NavigationStyles from "../components/NavigationStyles.astro";
 import SiteFooter from '../components/SiteFooter.astro';
 import ColibriVuelo from '../components/ColibriVuelo.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
@@ -45,8 +46,8 @@ import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
   <link rel="stylesheet" href="css/socios-scenes.css?v=3" />
   <script is:inline defer src="js/faq.js?v=20261011-1"></script>
   <script is:inline defer src="js/partners-motion.js?v=8"></script>
-<link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
-<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+<NavigationStyles />
+<script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
 <body class="partners-page partners-shared-background">
   <ColibriVuelo />
@@ -294,6 +295,6 @@ import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
   <WhatsAppFlotante />
   <SiteFooter />
 
-  <script is:inline defer src="/js/socios-application.js?v=20261107-1"></script>
+  <script is:inline defer src="js/socios-application.js?v=20261107-1"></script>
 </body>
 </html>
