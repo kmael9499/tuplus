@@ -141,10 +141,9 @@
   const submitError = document.querySelector("#pa-submit-error");
   const finishLabel = finish.querySelector("[data-i18n]");
   function submitUrl() {
-    const base = String(window.TUPLUS_CONFIG?.apiUrl || "").trim()
-      .replace(/\/+$/, "")
-      .replace(/\/api$/i, "");
-    return base ? `${base}/api/postulaciones/partners` : "";
+    const base = String(window.TUPLUS_CONFIG?.partnersApiUrl || "").trim()
+      .replace(/\/+$/, "");
+    return base ? `${base}/postulaciones` : "";
   }
   function applicationPayload() {
     const value = (name) => field(name).value.trim();

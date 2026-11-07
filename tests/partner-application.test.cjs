@@ -16,6 +16,7 @@ for(const file of ['theme.js','config.js','i18n-data.js','partner-translations.j
 const localConfigContext=vm.createContext({window:{location:{hostname:'localhost',origin:'http://localhost:4321'}}});
 vm.runInContext(fs.readFileSync('public/js/config.js','utf8'),localConfigContext);
 assert.equal(localConfigContext.window.TUPLUS_CONFIG.apiUrl,'http://localhost:4321','local development must target the same-origin API proxy');
+assert.equal(localConfigContext.window.TUPLUS_CONFIG.partnersApiUrl,'https://tuplus-partners-api-production.up.railway.app/api','Partners must use its own API even during local development');
 document.dispatchEvent(new window.Event('DOMContentLoaded'));
 const click=id=>document.querySelector(id).click();
 const shown=()=>document.querySelector('.pa-panel:not([hidden])').getAttribute('data-panel');
@@ -51,7 +52,7 @@ console.log('OK: '+combinations+' estados: 8 idiomas × 2 temas × 4 etapas, sin
 async function simulateSubmit(){
  field('confirmed').checked=false;formSubmit();await new Promise(resolve=>setTimeout(resolve,0));assert.equal(requests.length,0,'must not send without consent');
  field('confirmed').checked=true;formSubmit();await new Promise(resolve=>setTimeout(resolve,0));
- assert.equal(requests.length,1);assert.equal(requests[0][0],'http://localhost:4321/api/postulaciones/partners');
+ assert.equal(requests.length,1);assert.equal(requests[0][0],'https://tuplus-partners-api-production.up.railway.app/api/postulaciones');
  assert.equal(requests[0][1].method,'POST');assert.equal(requests[0][1].headers['Content-Type'],'application/json');
  const payload=JSON.parse(requests[0][1].body);
  assert.deepEqual(Object.keys(payload),['fullName','email','phone','profile','company','role','website','country','otherCountry','city','region','sector','experience','clients','solutions','level','hours','start','strategy','goal','confirmed']);
