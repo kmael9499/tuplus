@@ -28,10 +28,10 @@
   K('presetLabel', 'Paquetes rápidos', 'Quick packages', '快速套餐', 'Готовые пакеты', 'Pacotes rápidos', 'Forfaits rapides', 'クイックパッケージ', 'Schnellpakete');
   K('pkE', 'Esencial', 'Essential', '基础版', 'Базовый', 'Essencial', 'Essentiel', 'エッセンシャル', 'Essential');
   K('pkED', 'Landing con contacto directo', 'Landing page with direct contact', '带直接联系方式的落地页', 'Лендинг с прямой связью', 'Landing page com contato direto', 'Landing page avec contact direct', '直接連絡できるランディングページ', 'Landingpage mit direktem Kontakt');
-  K('pkP', 'Profesional', 'Professional', '专业版', 'Профессиональный', 'Profissional', 'Professionnel', 'プロフェッショナル', 'Professionell');
-  K('pkPD', 'Sitio de 6 páginas con SEO y analítica', '6-page site with SEO and analytics', '含 SEO 和数据分析的 6 页网站', 'Сайт из 6 страниц с SEO и аналитикой', 'Site de 6 páginas com SEO e análises', 'Site de 6 pages avec SEO et analytique', 'SEO・分析付きの6ページサイト', '6-Seiten-Website mit SEO und Analytics');
+  K('pkP', 'Empresa', 'Business', '企业版', 'Бизнес', 'Empresa', 'Entreprise', 'ビジネス', 'Business');
+  K('pkPD', 'Sitio Empresarial de 8 páginas con blog y SEO', '8-page Business-tier site with blog and SEO', '含博客和 SEO 的 8 页企业级网站', 'Сайт уровня «Бизнес» на 8 страниц с блогом и SEO', 'Site Empresarial de 8 páginas com blog e SEO', 'Site Entreprise de 8 pages avec blog et SEO', 'ブログとSEO付きの8ページ・ビジネス版サイト', 'Business-Website mit 8 Seiten, Blog und SEO');
   K('pkC', 'Completo', 'Complete', '完整版', 'Полный', 'Completo', 'Complet', 'コンプリート', 'Komplett');
-  K('pkCD', 'Tienda con pagos, blog y Cloud', 'Store with payments, blog and Cloud', '含支付、博客和云服务的网店', 'Магазин с оплатой, блогом и Cloud', 'Loja com pagamentos, blog e Cloud', 'Boutique avec paiements, blog et Cloud', '決済・ブログ・クラウド付きのショップ', 'Shop mit Zahlungen, Blog und Cloud');
+  K('pkCD', 'Tienda Corporativa con 100 productos y alojamiento', 'Corporate store with 100 products and hosting', '含 100 件商品和主机的企业级网店', 'Корпоративный магазин на 100 товаров с хостингом', 'Loja Corporativa com 100 produtos e hospedagem', 'Boutique Corporate avec 100 produits et hébergement', '商品100点とホスティング付きのコーポレート版ショップ', 'Corporate-Shop mit 100 Produkten und Hosting');
   K('tagTop', 'Más elegido', 'Most popular', '最受欢迎', 'Самый популярный', 'Mais escolhido', 'Le plus choisi', '一番人気', 'Am beliebtesten');
   K('tagRec', 'Recomendado', 'Recommended', '推荐', 'Рекомендуем', 'Recomendado', 'Recommandé', 'おすすめ', 'Empfohlen');
   K('pkToast', 'Paquete aplicado. Puedes ajustarlo en los siguientes pasos.', 'Package applied. You can adjust it in the next steps.', '已应用套餐，您可以在后续步骤中调整。', 'Пакет применён. Его можно изменить на следующих шагах.', 'Pacote aplicado. Você pode ajustá-lo nas próximas etapas.', 'Forfait appliqué. Vous pouvez l’ajuster aux étapes suivantes.', 'パッケージを適用しました。次のステップで調整できます。', 'Paket übernommen. Sie können es in den nächsten Schritten anpassen.');
@@ -61,6 +61,8 @@
   K('tr2d', 'Te enviamos la propuesta por el mismo chat.', 'We send the proposal in the same chat.', '我们在同一对话中发送方案。', 'Отправим предложение в том же чате.', 'Enviamos a proposta no mesmo chat.', 'Nous envoyons la proposition dans le même chat.', '同じチャットで提案をお送りします。', 'Wir senden das Angebot im selben Chat.');
   K('tr3', 'Precio claro', 'Clear pricing', '价格透明', 'Понятная цена', 'Preço claro', 'Prix clair', '明確な価格', 'Klarer Preis');
   K('tr3d', 'El importe final se confirma contigo.', 'The final amount is confirmed with you.', '最终金额与您确认。', 'Итоговая сумма согласуется с вами.', 'O valor final é confirmado com você.', 'Le montant final est confirmé avec vous.', '最終金額はご相談のうえ確定します。', 'Der Endbetrag wird mit Ihnen abgestimmt.');
+  K('tr4', 'Entrega con dominio', 'Delivered with a domain', '含域名交付', 'Сдаём с доменом', 'Entrega com domínio', 'Livré avec nom de domaine', 'ドメイン付きでお届け', 'Lieferung mit Domain');
+  K('tr4d', 'Tu web sale publicada con su propio dominio.', 'Your site goes live on its own domain.', '您的网站将以专属域名上线。', 'Ваш сайт публикуется на собственном домене.', 'Seu site é publicado com domínio próprio.', 'Votre site est publié sur son propre nom de domaine.', 'サイトは専用ドメインで公開されます。', 'Ihre Website geht mit eigener Domain online.');
   K('mq1', 'SEO técnico', 'Technical SEO', '技术 SEO', 'Технический SEO', 'SEO técnico', 'SEO technique', 'テクニカルSEO', 'Technisches SEO');
   K('mq2', 'Soporte 30 días', '30-day support', '30 天支持', 'Поддержка 30 дней', 'Suporte de 30 dias', 'Support 30 jours', '30日サポート', '30 Tage Support');
 
@@ -264,6 +266,7 @@
     const q = (sel, v) => $(`${sel}="${CSS.escape(String(v))}"]`);
 
     click(q('#projectOptions .choice-card[data-key', c.p));
+    if (c.v) click(q('#tierOptions [data-tier', c.v));
 
     const rg = $('#pagesRange');
     if (rg) {
@@ -291,6 +294,7 @@
     const s = S();
     return {
       p: s.project,
+      v: s.tier,
       g: s.pages,
       f: [...s.features],
       d: s.design,
@@ -303,9 +307,9 @@
   };
 
   const PRESETS = [
-    { n: 'pkE', d: 'pkED', c: { p: 'landing', g: 1, f: ['whatsapp', 'forms'], d: 'clean', s: '30', r: 0, h: 0, c: 0 } },
-    { n: 'pkP', d: 'pkPD', tag: 'tagTop', c: { p: 'website', g: 6, f: ['whatsapp', 'forms', 'seo', 'analytics'], d: 'custom', s: '90', r: 0, h: 0, c: 0 } },
-    { n: 'pkC', d: 'pkCD', c: { p: 'ecommerce', g: 10, f: ['whatsapp', 'forms', 'seo', 'analytics', 'payments', 'blog'], d: 'premium', s: '180', r: 0, h: 1, c: 0 } }
+    { n: 'pkE', d: 'pkED', c: { p: 'landing', v: 'pro', g: 6, f: [], d: 'clean', s: '30', r: 0, h: 0, c: 0 } },
+    { n: 'pkP', d: 'pkPD', tag: 'tagTop', c: { p: 'website', v: 'biz', g: 8, f: ['seo'], d: 'clean', s: 'web', r: 0, h: 1, c: 0 } },
+    { n: 'pkC', d: 'pkCD', c: { p: 'ecommerce', v: 'corp', g: 12, f: ['seo', 'blog'], d: 'custom', s: 'store', r: 0, h: 1, c: 0 } }
   ];
 
   function initPresets() {
@@ -461,7 +465,7 @@
 
     const strip = document.createElement('div');
     strip.className = 'xd-trust';
-    strip.innerHTML = [1, 2, 3].map(n => `<div><b data-xd="tr${n}"></b><small data-xd="tr${n}d"></small></div>`).join('');
+    strip.innerHTML = [1, 2, 3, 4].map(n => `<div><b data-xd="tr${n}"></b><small data-xd="tr${n}d"></small></div>`).join('');
     form.insertAdjacentElement('afterend', strip);
   }
 
