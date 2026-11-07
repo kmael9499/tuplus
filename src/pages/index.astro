@@ -54,6 +54,8 @@ import SiteFooter from '../components/SiteFooter.astro';
 <!-- NUEVO: estilos de los caminos clientes / partners -->
 <link rel="stylesheet" href="css/caminos.css?v=3"/>
 <link rel="stylesheet" href="css/ajuste-menu.css?v=2"/>
+<link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
+<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
 </head>
  <body>
   <svg aria-hidden="true" focusable="false" height="0" style="position:absolute;pointer-events:none" width="0" xmlns="http://www.w3.org/2000/svg">
@@ -102,13 +104,14 @@ import SiteFooter from '../components/SiteFooter.astro';
      <a href="#nosotros">
       Nosotros
      </a>
-     <a class="nav-quote partner-nav-link" href="partner.html">
-      Red de Socios
-      <span aria-hidden="true">↗</span>
-     </a>
+
      <!-- NUEVO: camino partners -->
-     <a class="nav-socios nav-quote" href="socios-comerciales.html"><svg class="nav-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18" r="2.3"/><circle cx="19" cy="18" r="2.3"/><path d="M12 7.3v4.2M12 11.5 6.2 16M12 11.5l5.8 4.5"/></svg>Red de Socios Comerciales <span aria-hidden="true">↗</span></a>
-     <a class="nav-quote" href="https://plantillas-eosin.vercel.app/" target="_blank" rel="noopener noreferrer">Plantillas <span aria-hidden="true">↗</span></a><a class="nav-quote" href="cotizador.html">
+
+     <a href="https://plantillas-eosin.vercel.app/" target="_blank" rel="noopener noreferrer">Plantillas <span aria-hidden="true">↗</span></a><details class="nav-networks"><summary><span translate="no">Redes TUPLUS</span><span class="nav-chevron" aria-hidden="true"></span></summary><div class="nav-networks-menu"><a class="partner-nav-link" href="partner.html">
+      Red de Socios
+
+     </a><a class="nav-socios" href="socios-comerciales.html">Red de Socios Comerciales </a></div></details><a class="nav-access" translate="no" href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
+<a class="nav-quote" href="cotizador.html">
       Cotizar mi web
       <span aria-hidden="true">
        ↗
@@ -251,7 +254,7 @@ import SiteFooter from '../components/SiteFooter.astro';
         </div>
        </div>
       </div>
-      
+
      </div>
     </div>
    </section>

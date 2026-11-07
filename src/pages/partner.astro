@@ -56,7 +56,9 @@ import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
     <script is:inline defer src="js/faq.js?v=20261011-1"></script>
     <script is:inline defer src="js/partners-motion.js?v=8"></script>
 
-  </head>
+  <link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
+<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+</head>
   <body class="partners-page partner-public">
     <ColibriVuelo />
     <svg
@@ -130,11 +132,12 @@ import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
             ><span data-i18n="partner.home">Servicios para clientes</span></a
           >
           <a href="socios-comerciales.html">Red de Socios Comerciales</a>
-          <a class="nav-quote" href="#postulacion"
+          <a href="#postulacion"
             ><span data-i18n="partner.application">Conocer la postulación</span>
             <span aria-hidden="true">↗</span></a
           >
-        </nav>
+        <a translate="no" href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
+</nav>
         <label class="language-picker" translate="no"
           ><span class="sr-only">Idioma del sitio</span
           ><select id="site-language" aria-label="Idioma del sitio">

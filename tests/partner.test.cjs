@@ -9,7 +9,17 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
   const { window } = parseHTML(
     fs.readFileSync(path.join(base, "partner.html"), "utf8"),
   );
-  const { document } = window; Object.defineProperty(document.getElementById("pp-territory-country"),"value",{value:"",writable:true}); Object.defineProperty(document.querySelector('#partner-form [name="country"]'),"value",{value:"",writable:true});
+  const { document } = window;
+  Object.defineProperty(
+    document.getElementById("pp-territory-country"),
+    "value",
+    { value: "", writable: true },
+  );
+  Object.defineProperty(
+    document.querySelector('#partner-form [name="country"]'),
+    "value",
+    { value: "", writable: true },
+  );
   const picker = document.getElementById("site-language"),
     region = document.getElementById("pp-region-filter");
   Object.defineProperty(picker, "value", { value: "es", writable: true });
@@ -30,13 +40,16 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
     Node: window.Node,
     NodeFilter: { SHOW_TEXT: 4 },
     MutationObserver: window.MutationObserver,
-    CustomEvent: window.CustomEvent, Event:window.Event,
+    CustomEvent: window.CustomEvent,
+    Event: window.Event,
     localStorage: {
       getItem: (k) => store.get(k),
       setItem: (k, v) => store.set(k, v),
     },
     matchMedia: () => ({ matches: false, addEventListener() {} }),
-    history: {}, URLSearchParams, location: {href:""},
+    history: {},
+    URLSearchParams,
+    location: { href: "" },
     performance: { getEntriesByType: () => [] },
     addEventListener() {},
     console,
@@ -44,24 +57,36 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
   for (const file of [
     "theme.js",
     "i18n-data.js",
-    "partner-translations.js", "partner-application-translations.js", "partner-territory.js",
+    "partner-translations.js",
+    "partner-application-translations.js",
+    "partner-territory.js",
     "i18n.js",
     "partner-countries.js",
     "partner-public.js",
   ])
     vm.runInContext(fs.readFileSync(path.join(base, "js", file), "utf8"), ctx);
   document.dispatchEvent(new window.Event("DOMContentLoaded"));
-  const territoryForm=document.getElementById('pp-territory-form');
-  territoryForm.querySelectorAll('input').forEach(el=>el.setCustomValidity=()=>{});
-  territoryForm.reportValidity=()=>true;
-  document.getElementById('pp-territory-country').value='PE';
-  document.getElementById('pp-territory-city').value='Lima';
-  document.getElementById('pp-territory-region').value='Lima';
-  territoryForm.dispatchEvent(new window.Event('submit',{cancelable:true}));
-  const applicationField=name=>document.querySelector('#partner-form [name="'+name+'"]');
-  assert.equal(ctx.location.href,'');assert.equal(applicationField('country').value,'PE');assert.equal(applicationField('city').value,'Lima');assert.equal(applicationField('region').value,'Lima');
-  assert.equal(document.querySelector('.pp-final'),null);
-  assert.deepEqual([...document.querySelectorAll('main section[id]')].map(el=>el.id),['que-es','niveles','territorios','requisitos','preguntas']);assert.ok(document.getElementById('postulacion'));
+  const territoryForm = document.getElementById("pp-territory-form");
+  territoryForm
+    .querySelectorAll("input")
+    .forEach((el) => (el.setCustomValidity = () => {}));
+  territoryForm.reportValidity = () => true;
+  document.getElementById("pp-territory-country").value = "PE";
+  document.getElementById("pp-territory-city").value = "Lima";
+  document.getElementById("pp-territory-region").value = "Lima";
+  territoryForm.dispatchEvent(new window.Event("submit", { cancelable: true }));
+  const applicationField = (name) =>
+    document.querySelector('#partner-form [name="' + name + '"]');
+  assert.equal(ctx.location.href, "");
+  assert.equal(applicationField("country").value, "PE");
+  assert.equal(applicationField("city").value, "Lima");
+  assert.equal(applicationField("region").value, "Lima");
+  assert.equal(document.querySelector(".pp-final"), null);
+  assert.deepEqual(
+    [...document.querySelectorAll("main section[id]")].map((el) => el.id),
+    ["que-es", "niveles", "territorios", "requisitos", "preguntas"],
+  );
+  assert.ok(document.getElementById("postulacion"));
   const api = window.TUPLUS_I18N,
     dict = window.TUPLUS_TRANSLATIONS,
     data = window.TUPLUS_PARTNER_COUNTRIES;
@@ -81,7 +106,12 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
     picker.value = locale;
     picker.dispatchEvent(new window.Event("change"));
     await pause();
-    assert.equal(store.get("tuplus-language"), locale); assert.ok(!document.getElementById("pp-selected-level").textContent.includes("estimateText"));
+    assert.equal(store.get("tuplus-language"), locale);
+    assert.ok(
+      !document
+        .getElementById("pp-selected-level")
+        .textContent.includes("estimateText"),
+    );
     checks++;
     for (const node of document.querySelectorAll("[data-i18n-html]")) {
       const key = node.getAttribute("data-i18n-html");
@@ -101,24 +131,56 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
         document.querySelector(".theme-toggle").click();
       assert.equal(document.documentElement.dataset.theme, theme);
       checks++;
-      for (const [country,city,state,enabled] of [['PE','  LÍMA  ','open',true],['ES','Madrid','limited',true],['PT','Lisboa','future',false],['US','Boston','closed',false],['DE','Berlin','unavailable',false],['ES','Madrid','limited',true],['PE','','open',false]]) {
-        const countryInput=document.getElementById('pp-territory-country'), cityInput=document.getElementById('pp-territory-city');
-        countryInput.value=country;countryInput.dispatchEvent(new window.Event('change'));cityInput.value=city;cityInput.dispatchEvent(new window.Event('input'));
-        const availability=territoryForm.querySelector('.territory-availability');
-        assert.equal(availability.dataset.state,state);
-        assert.equal(availability.querySelector('.territory-availability-badge').textContent,dict[locale]['territory.status.'+state]);
-        assert.equal(document.getElementById('pp-map-cta').disabled,!enabled);
-        applicationField('city').value='unchanged';territoryForm.dispatchEvent(new window.Event('submit',{cancelable:true}));
-        assert.equal(applicationField('city').value,enabled?city.trim():'unchanged');
-        checks+=4;
+      for (const [country, city, state, enabled] of [
+        ["PE", "  LÍMA  ", "open", true],
+        ["ES", "Madrid", "limited", true],
+        ["PT", "Lisboa", "future", false],
+        ["US", "Boston", "closed", false],
+        ["DE", "Berlin", "unavailable", false],
+        ["ES", "Madrid", "limited", true],
+        ["PE", "", "open", false],
+      ]) {
+        const countryInput = document.getElementById("pp-territory-country"),
+          cityInput = document.getElementById("pp-territory-city");
+        countryInput.value = country;
+        countryInput.dispatchEvent(new window.Event("change"));
+        cityInput.value = city;
+        cityInput.dispatchEvent(new window.Event("input"));
+        const availability = territoryForm.querySelector(
+          ".territory-availability",
+        );
+        assert.equal(availability.dataset.state, state);
+        assert.equal(
+          availability.querySelector(".territory-availability-badge")
+            .textContent,
+          dict[locale]["territory.status." + state],
+        );
+        assert.equal(document.getElementById("pp-map-cta").disabled, !enabled);
+        applicationField("city").value = "unchanged";
+        territoryForm.dispatchEvent(
+          new window.Event("submit", { cancelable: true }),
+        );
+        assert.equal(
+          applicationField("city").value,
+          enabled ? city.trim() : "unchanged",
+        );
+        checks += 4;
       }
-      for(const id of Object.keys(data)) {
-        const card=document.querySelector('[data-territory="'+id+'"]');card.click();
-        assert.equal(card.getAttribute('aria-pressed'),'true');
-        assert.equal(document.getElementById('pp-territory-country').value,id);
-        assert.equal(globeCalls.country,id);
-        assert.equal(document.getElementById('pp-map-cta').hidden,!['PE','ES'].includes(id));
-        assert.equal(card.querySelector('.territory-card-status').textContent,dict[locale]['territory.status.'+card.dataset.state]);checks+=5;
+      for (const id of Object.keys(data)) {
+        const card = document.querySelector('[data-territory="' + id + '"]');
+        card.click();
+        assert.equal(card.getAttribute("aria-pressed"), "true");
+        assert.equal(document.getElementById("pp-territory-country").value, id);
+        assert.equal(globeCalls.country, id);
+        assert.equal(
+          document.getElementById("pp-map-cta").hidden,
+          !["PE", "ES"].includes(id),
+        );
+        assert.equal(
+          card.querySelector(".territory-card-status").textContent,
+          dict[locale]["territory.status." + card.dataset.state],
+        );
+        checks += 5;
       }
       for (const id of Object.keys(data)) {
         document
