@@ -20,6 +20,15 @@
         ],
         "createdAt": "2026-11-01T15:34:57.991Z",
         "reason": "agent triage: line 26 is the fixed 3px scroll progress bar at the top of the page, not a card border"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/pages/cotizador.astro"
+        ],
+        "createdAt": "2026-11-06T23:42:32.657Z",
+        "reason": "Claude: #cryptoQrImg es un <img hidden> preexistente cuyo src lo asigna cotizador.js solo cuando hay billetera con QR configurada"
       }
     ]
   }

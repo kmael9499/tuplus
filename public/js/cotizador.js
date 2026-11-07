@@ -3,10 +3,16 @@ const WHATSAPP_NUMBER = window.TUPLUS_CONFIG.whatsapp;
 const fx = window.TUPLUS_FX;
 const countries = window.TUPLUS_COUNTRIES;
 const t = value=>window.TUPLUS_I18N?.t(value)||value;
+/* Tarifario TUPLUS por niveles (propuesta del 29/10/2026).
+   Todos los importes están en SOLES y SIN IGV; la pantalla los convierte a la moneda elegida.
+   Los adicionales con rango no se suman al total: se muestran "por confirmar". */
 const state = {
   step: 1,
   project: "landing",
-  pages: 1,
+  tier: "pro",
+  pages: 6,
+  blocks20: 0,
+  blocks50: 0,
   contentPro: false,
   features: new Set(),
   design: "clean",
@@ -20,52 +26,105 @@ const state = {
 };
 let reached = 1; // paso más lejano al que se llegó avanzando en orden
 
+const TIERS = ["pro","biz","corp"];
+const tierNames = {pro:"Profesional", biz:"Empresarial", corp:"Corporativo"};
+// unit: qué mide el deslizador. extraRate: precio por unidad sobre lo incluido.
 const catalog = {
-  landing: {label:"Landing page", base:295, pagesBase:1, pageRate:35, days:5},
-  website: {label:"Sitio corporativo", base:450, pagesBase:5, pageRate:35, days:10},
-  catalog: {label:"Catálogo online", base:600, pagesBase:5, pageRate:40, days:12},
-  ecommerce: {label:"Tienda e-commerce", base:890, pagesBase:8, pageRate:45, days:16},
-  webapp: {label:"Aplicación web / SaaS", base:1500, pagesBase:8, pageRate:55, days:25}
+  landing: {label:"Landing page", delivery:[14,16], unit:"section", extraRate:90, tiers:{
+    pro:{price:1090, included:6, scope:"Una página de campaña, hasta 6 secciones."},
+    biz:{price:1490, included:9, scope:"Hasta 9 secciones y mayor personalización visual."},
+    corp:{price:1990, included:12, scope:"Hasta 12 secciones y diseño visual a medida."}}},
+  website: {label:"Sitio corporativo", delivery:[20,30], unit:"page", extraRate:180, tiers:{
+    pro:{price:1690, included:5, scope:"Hasta 5 páginas de contenido."},
+    biz:{price:2790, included:8, scope:"Hasta 8 páginas, con gestor de contenidos y blog.", includes:["blog"]},
+    corp:{price:3990, included:12, scope:"Hasta 12 páginas, con gestor de contenidos y mayor personalización.", includes:["blog"]}}},
+  catalog: {label:"Catálogo online", delivery:[30,45], unit:"page", extraRate:180, products:true, tiers:{
+    pro:{price:2290, included:5, products:20, scope:"Hasta 5 páginas informativas y carga de 20 productos."},
+    biz:{price:2990, included:8, products:50, scope:"Hasta 8 páginas informativas y carga de 50 productos."},
+    corp:{price:3990, included:12, products:100, scope:"Hasta 12 páginas informativas y carga de 100 productos."}}},
+  // La tienda ya incluye carrito, checkout y una pasarela estándar; el adicional "payments" es la segunda.
+  ecommerce: {label:"Tienda e-commerce", delivery:[30,45], unit:"page", extraRate:180, products:true, tiers:{
+    pro:{price:3490, included:5, products:20, scope:"Hasta 5 páginas informativas y carga de 20 productos."},
+    biz:{price:5490, included:8, products:50, scope:"Hasta 8 páginas informativas y carga de 50 productos."},
+    corp:{price:7490, included:12, products:100, scope:"Hasta 12 páginas informativas y carga de 100 productos."}}},
+  // Las aplicaciones se cotizan a medida: un solo nivel con importe referencial.
+  webapp: {label:"Aplicación web / SaaS", delivery:[15,15], unit:"page", extraRate:180, custom:true, tiers:{
+    pro:{price:5090, included:8, scope:"Cotización personalizada según módulos, usuarios e integraciones."}}}
 };
+const productBlocks = {blocks20:{qty:20, price:280}, blocks50:{qty:50, price:650}};
+// price: importe cerrado. range: [mínimo, máximo|null] por confirmar, no se suma al total.
 const features = {
-  whatsapp:{label:"WhatsApp",price:25}, forms:{label:"Formularios",price:45}, seo:{label:"SEO inicial",price:80},
-  analytics:{label:"Analítica",price:35}, booking:{label:"Reservas",price:110}, multilingual:{label:"Multidioma",price:120},
-  payments:{label:"Pagos online",price:160}, blog:{label:"Blog / CMS",price:75}, maps:{label:"Mapa interactivo",price:30},
-  automation:{label:"Automatización",price:180}, speed:{label:"Performance+",price:95}, security:{label:"Hardening",price:85}
+  forms:{label:"Formulario adicional",price:180}, seo:{label:"SEO de intención",price:650},
+  analytics:{label:"Analítica avanzada",range:[350,600]}, booking:{label:"Reservas",price:450},
+  multilingual:{label:"Multidioma",price:650}, payments:{label:"Pagos online",price:180},
+  blog:{label:"Blog / CMS",price:450}, maps:{label:"Mapa con buscador o rutas",range:[600,null]},
+  automation:{label:"Automatización",price:750}, speed:{label:"Performance+",range:[450,900]},
+  security:{label:"Hardening",range:[600,1200]}, email:{label:"Correo corporativo",price:120},
+  migration:{label:"Migración de web",range:[600,1200]}, geo:{label:"Contenido GEO",price:750}
 };
-const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:180},premium:{label:"Premium motion",price:350}};
-const supports = {"30":{label:"30 días",price:0},"90":{label:"90 días",price:75},"180":{label:"180 días",price:150}};
+const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",range:[1200,2000]}};
+// Soporte mensual: pago recurrente, no entra al total de implementación.
+const supports = {"30":{label:"Garantía 30 días",monthly:0},web:{label:"Soporte web",monthly:150},store:{label:"Soporte tienda",monthly:300},plus:{label:"Soporte ampliado",monthly:550}};
+const CONTENT_PAGE = 150, CONTENT_PACK = 650; // contenido profesional: S/150 por página o S/650 cada 5
+const RUSH_RATE = .20;                         // entrega prioritaria: +20 % del valor de la implementación
+const RUSH_CUT = .75;                          // y el plazo se recorta a ese porcentaje
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const currencyMeta = Object.fromEntries(Object.keys(fx.rates).map(code=>[code,{code}]));
-const money = usd=>fx.format(usd,state.currency);
+const penRate = () => fx.rates.PEN.rate;
+const toUsd = pen => pen / penRate();
+const money = pen => fx.format(toUsd(pen), state.currency);
 const moneyCode = ()=>state.currency;
-const baseUSD = (n) => `$${Math.round(n).toLocaleString("en-US")}`;
+// Importe en la moneda elegida, como número (para PDF y pagos).
+const amountIn = pen => state.currency==="PEN" ? Math.round(pen) : Math.round(toUsd(pen) * fx.rates[state.currency].rate);
 
-function pagesExtraCost(){
-  const p = Math.max(1, Number(state.pages));
-  const cfg = catalog[state.project];
-  return Math.max(0, p - cfg.pagesBase) * cfg.pageRate;
+const project = () => catalog[state.project];
+const tierCfg = () => project().tiers[state.tier] || project().tiers.pro;
+const unitName = n => project().unit==="section" ? t(n===1?"sección":"secciones") : t(n===1?"página":"páginas");
+function includedFeature(k){
+  return (project().includes||[]).includes(k) || (tierCfg().includes||[]).includes(k);
 }
-function subtotal(){
-  let sum = catalog[state.project].base + pagesExtraCost();
-  if(state.contentPro) sum += 120;
-  state.features.forEach(k => sum += features[k].price);
-  sum += designs[state.design].price + supports[state.support].price;
-  if(state.rush) sum += 180;
-  if(state.hosting) sum += 120;
+function featureInfo(k){
+  const f = features[k];
+  if(includedFeature(k)) return {...f, price:0, range:null, included:true};
+  // En tienda, la primera pasarela está incluida; lo que se cobra es una segunda.
+  if(k==="payments") return state.project==="ecommerce"
+    ? {...f, label:"Segunda pasarela de pago", price:450}
+    : {...f, label:"Enlace de pago", price:180};
+  return f;
+}
+function extraUnits(){ return Math.max(0, Math.max(1, Number(state.pages)) - tierCfg().included); }
+function pagesExtraCost(){ return extraUnits() * project().extraRate; }
+function productCount(){
+  if(!project().products) return 0;
+  return tierCfg().products + state.blocks20*productBlocks.blocks20.qty + state.blocks50*productBlocks.blocks50.qty;
+}
+function productsCost(){
+  if(!project().products) return 0;
+  return state.blocks20*productBlocks.blocks20.price + state.blocks50*productBlocks.blocks50.price;
+}
+function contentUnits(){ return project().unit==="section" ? 1 : Math.max(1, Number(state.pages)); }
+function contentPrice(){ const n = contentUnits(); return Math.floor(n/5)*CONTENT_PACK + (n%5)*CONTENT_PAGE; }
+function contentCost(){ return state.contentPro ? contentPrice() : 0; }
+function implementationCost(){
+  let sum = tierCfg().price + pagesExtraCost() + productsCost() + contentCost();
+  state.features.forEach(k => sum += featureInfo(k).price || 0);
+  sum += designs[state.design].price || 0;
   return Math.round(sum);
 }
+function rushCost(){ return state.rush ? Math.round(implementationCost()*RUSH_RATE) : 0; }
+function subtotal(){ return implementationCost() + rushCost(); }
 /* Descuentos: cupón y descuento por fecha NO se suman, se aplica el mayor.
    Las reglas finales las valida el backend; aquí solo se muestra el efecto. */
-function subtotalUsd(){ return subtotal(); }
+function subtotalUsd(){ return Math.round(toUsd(subtotal())*100)/100; }
 const promo = { coupon: null, campaign: null };
 function promoAmount(p, sub){
   if(!p) return 0;
   const v = Number(p.valor);
   if(!(v > 0) || !(sub > 0)) return 0;
-  const raw = p.tipo === 'porcentaje' ? sub * Math.min(v, 100) / 100 : Math.min(v, sub);
+  // Los montos fijos del panel están en USD; se pasan a soles.
+  const raw = p.tipo === 'porcentaje' ? sub * Math.min(v, 100) / 100 : Math.min(v * penRate(), sub);
   return Math.round(raw * 100) / 100;
 }
 function discountInfo(){
@@ -75,28 +134,54 @@ function discountInfo(){
   if(promo.campaign && dCampaign > 0) return { origin: 'campana', label: promo.campaign.nombre, amount: dCampaign };
   return { origin: null, label: '', amount: 0 };
 }
-function grandTotal(){
-  const net = Math.max(0, subtotal() - discountInfo().amount);
-  return state.tax ? Math.round(net * 1.18) : Math.round(net);
+const withTax = n => state.tax ? Math.round(n * 1.18) : Math.round(n);
+function grandTotal(){ return withTax(Math.max(0, subtotal() - discountInfo().amount)); }
+// Adicionales con rango: se listan aparte y no entran al total.
+function pending(){
+  const items = [];
+  state.features.forEach(k => { const f = featureInfo(k); if(f.range) items.push({label:f.label, range:f.range}); });
+  if(designs[state.design].range) items.push({label:`${t("Diseño")} · ${t(designs[state.design].label)}`, range:designs[state.design].range});
+  const min = items.reduce((s,i)=>s+i.range[0],0), max = items.reduce((s,i)=>s+(i.range[1]??i.range[0]),0);
+  return {items, min:withTax(min), max:withTax(max), open:items.some(i=>i.range[1]==null)};
 }
-function range(){
-  const t = grandTotal();
-  return {min: Math.max(0, Math.round(t * .94)), max: Math.round(t * 1.25 + 90)};
+const rangeText = (min,max,open) => open||max===min ? `${t("desde")} ${money(min)}` : `${money(min)} — ${money(max)}`;
+function hostingInfo(){ return state.project==="ecommerce" ? {label:"Alojamiento WooCommerce", yearly:900} : {label:"Alojamiento web", yearly:420}; }
+// Pagos recurrentes: no forman parte del total de implementación.
+function recurring(){
+  const rows = [];
+  const s = supports[state.support];
+  if(s.monthly) rows.push({label:s.label, text:`${money(withTax(s.monthly))} / ${t("mes")}`});
+  if(state.hosting){ const h = hostingInfo(); rows.push({label:h.label, text:`${t("desde")} ${money(withTax(h.yearly))} / ${t("año")}`}); }
+  return rows;
 }
 function deliveryDays(){
-  let days = catalog[state.project].days;
-  if(state.pages > catalog[state.project].pagesBase) days += Math.ceil((state.pages-catalog[state.project].pagesBase)/4);
-  if(state.rush) days = Math.max(3, Math.ceil(days*.75));
-  return `${days}–${days+3} ${t("días hábiles")}`;
+  // Plazo fijo por tipo de proyecto: los extras no lo alargan. Solo la entrega urgente lo acorta.
+  let [min,max] = project().delivery;
+  if(state.rush){ min = Math.max(3, Math.ceil(min*RUSH_CUT)); max = Math.max(min, Math.ceil(max*RUSH_CUT)); }
+  const unit = t("días hábiles");
+  return min===max ? `${min} ${unit}` : `${min}–${max} ${unit}`;
 }
 function setCountry(code){
   if(!countries.has(code))return;
   state.country=code;state.currency=countries.currency(code);state.currencyManual=false;
 }
+function setProject(key){
+  state.project=key;
+  if(!project().tiers[state.tier]) state.tier="pro";
+  state.pages=tierCfg().included;
+}
+function setTier(key){
+  if(!project().tiers[key]) return;
+  // Si el visitante no había pasado de lo incluido, el deslizador acompaña al nuevo nivel.
+  const followed = state.pages <= tierCfg().included;
+  state.tier=key;
+  if(followed) state.pages=tierCfg().included;
+}
+const clampBlocks = n => Math.max(0, Math.min(10, Math.round(Number(n)) || 0));
 function save(){
   try { localStorage.setItem("tuplusQuote", JSON.stringify({
-    project:state.project,pages:state.pages,contentPro:state.contentPro,features:[...state.features],
-    design:state.design,support:state.support,rush:state.rush,hosting:state.hosting,tax:state.tax,currency:state.currency,country:state.country,currencyManual:state.currencyManual,version:2
+    project:state.project,tier:state.tier,pages:state.pages,blocks20:state.blocks20,blocks50:state.blocks50,contentPro:state.contentPro,features:[...state.features],
+    design:state.design,support:state.support,rush:state.rush,hosting:state.hosting,tax:state.tax,currency:state.currency,country:state.country,currencyManual:state.currencyManual,version:3
   })); } catch { /* El cálculo funciona aunque el navegador bloquee el guardado. */ }
 }
 function load(){
@@ -104,18 +189,30 @@ function load(){
     const q = JSON.parse(localStorage.getItem("tuplusQuote") || "null");
     if(!q) return;
     state.project = Object.hasOwn(catalog,q.project) ? q.project : state.project;
+    state.tier = Object.hasOwn(project().tiers,q.tier) ? q.tier : "pro";
     state.pages = Math.max(1,Math.min(20,Math.round(Number(q.pages)) || state.pages));
+    state.blocks20 = clampBlocks(q.blocks20);
+    state.blocks50 = clampBlocks(q.blocks50);
     state.contentPro = !!q.contentPro;
     state.features = new Set(Array.isArray(q.features) ? q.features.filter(k=>Object.hasOwn(features,k)) : []);
     state.design = Object.hasOwn(designs,q.design) ? q.design : state.design;
-    state.support = Object.hasOwn(supports,q.support) ? q.support : state.support;
+    state.support = Object.hasOwn(supports,q.support) ? q.support : "30";
     state.rush = !!q.rush;
     state.hosting = !!q.hosting;
     state.tax = !!q.tax;
     state.country = countries.has(q.country) ? q.country : 'PE';
-    state.currencyManual = q.version===2 && q.currencyManual===true && Object.hasOwn(currencyMeta,q.currency);
+    state.currencyManual = q.version>=2 && q.currencyManual===true && Object.hasOwn(currencyMeta,q.currency);
     state.currency = state.currencyManual ? q.currency : countries.currency(state.country);
   }catch{}
+}
+function priceText(el){
+  const pen = Number(el.dataset.pen), max = el.dataset.penMax ? Number(el.dataset.penMax) : null;
+  if(el.dataset.included==="true") return t("Incluido");
+  let text = max ? `${money(pen)} — ${money(max)}` : money(pen);
+  if(el.dataset.period) return `${text} / ${t(el.dataset.period)}`;
+  if(el.dataset.prefix==="from" || el.closest('.choice-card')) return `${t('desde')} ${text}`;
+  if(el.dataset.prefix==="none") return text;
+  return max ? text : '+'+text;
 }
 function updateCurrencyUI(){
   const code=state.currency, row=fx.rates[code];
@@ -134,27 +231,73 @@ function updateCurrencyUI(){
   $("#currencyRate").textContent=code==='USD'?t('Precios base en USD'):`1 USD = ${new Intl.NumberFormat(document.documentElement.lang,{maximumFractionDigits:4}).format(row.rate)} ${code} · ${row.date}`;
   ["heroCurrencyCode","heroEyebrowCurrency","summaryCurrencyTag","perkCurrency"].forEach(id=>{const el=$("#"+id);if(el)el.textContent=code});
   $("#estimatePill").textContent=`${code} · ${t('estimado')} · ${t(state.tax?'CON IGV':'SIN IGV')}`;
-  $$(".option-price[data-usd]").forEach(el=>{
-    el.setAttribute('translate','no');
-    const prefix=el.closest('.choice-card')?t('desde')+' ':'+';
-    el.textContent=prefix+money(Number(el.dataset.usd));
+}
+function renderTiers(){
+  const box=$("#tierOptions"); if(!box) return;
+  const custom=!!project().custom;
+  $("#tierBlock").hidden=custom; $("#tierCustom").hidden=!custom;
+  if(custom){ box.textContent=""; return; }
+  box.innerHTML=TIERS.map(k=>{
+    const c=project().tiers[k], on=k===state.tier;
+    return `<button class="radio-card tier-card${on?" selected":""}" data-tier="${k}" type="button" role="radio" aria-checked="${on}" tabindex="${on?0:-1}"><span class="radio"></span><div><b>${t(tierNames[k])}</b><small>${t(c.scope)}</small></div><strong><span class="option-price" data-pen="${c.price}" data-prefix="none" translate="no"></span></strong></button>`;
+  }).join("");
+}
+function renderScope(){
+  const c=tierCfg(), p=project(), extra=extraUnits();
+  $("#pagesUnit").textContent=t(p.unit==="section"?"Secciones de la landing":"Páginas principales");
+  $("#pagesRange").setAttribute("aria-label",t(p.unit==="section"?"Número de secciones":"Número de páginas"));
+  const tierLabel=p.custom?t("La base"):t(tierNames[state.tier]);
+  const base=`${tierLabel} ${t("incluye")} ${c.included} ${unitName(c.included)}.`;
+  $("#pagesHint").textContent = extra
+    ? `${base} ${t("Adicionales")}: ${extra} × ${money(p.extraRate)} = +${money(pagesExtraCost())}`
+    : `${base} ${t(p.unit==="section"?"Cada sección adicional":"Cada página adicional")}: ${money(p.extraRate)}.`;
+  const prod=$("#productsBlock"); prod.hidden=!p.products;
+  if(p.products){
+    $("#productsTotal").textContent=productCount();
+    $("#productsHint").textContent=`${c.products} ${t("incluidos en")} ${t(tierNames[state.tier])}${productsCost()?` · +${money(productsCost())}`:""}`;
+    for(const key of Object.keys(productBlocks)){
+      const row=$(`.stepper[data-block="${key}"]`);
+      row.querySelector("output").textContent=state[key];
+      row.querySelector('[data-delta="-1"]').disabled=state[key]===0;
+      row.querySelector('[data-delta="1"]').disabled=state[key]===10;
+    }
+  }
+  $("#contentProPrice").dataset.pen=contentPrice();
+}
+function renderFeatures(){
+  $$(".feature-card").forEach(el=>{
+    const k=el.dataset.feature, f=featureInfo(k), price=el.querySelector(".option-price");
+    el.querySelector("b").textContent=t(f.label);
+    if(price){
+      price.dataset.pen=f.range?f.range[0]:(f.price||0);
+      if(f.range&&f.range[1]) price.dataset.penMax=f.range[1]; else delete price.dataset.penMax;
+      price.dataset.prefix=f.range&&!f.range[1]?"from":"";
+      price.dataset.included=String(!!f.included);
+    }
+    el.classList.toggle("is-included",!!f.included);
+    if(f.included) el.setAttribute("aria-disabled","true"); else el.removeAttribute("aria-disabled");
+    el.classList.toggle("is-pending",!!f.range);
   });
+  const h=hostingInfo(), hp=$("#hostingPrice");
+  $("#hostingLabel").textContent=t(h.label); hp.dataset.pen=h.yearly;
 }
 
 function sync(){
   updateCurrencyUI();
+  renderTiers(); renderScope(); renderFeatures();
+  $$(".option-price[data-pen]").forEach(el=>{el.setAttribute('translate','no');el.textContent=priceText(el);});
   $$("#projectOptions .choice-card").forEach(el => el.classList.toggle("selected", el.dataset.key===state.project));
   $("#pagesRange").value=state.pages; $("#pagesValue").textContent=state.pages;
   $$(".toggle-card").forEach(el => el.classList.toggle("selected", el.dataset.toggle==="contentPro" ? state.contentPro : !state.contentPro));
-  $$(".feature-card").forEach(el => el.classList.toggle("selected", state.features.has(el.dataset.feature)));
+  $$(".feature-card").forEach(el => el.classList.toggle("selected", state.features.has(el.dataset.feature) || el.classList.contains("is-included")));
   $$(".radio-card[data-design]").forEach(el => el.classList.toggle("selected", el.dataset.design===state.design));
   $$(".radio-card[data-support]").forEach(el => el.classList.toggle("selected", el.dataset.support===state.support));
   $("#rushToggle").classList.toggle("active", state.rush); $("#rushToggle").setAttribute("aria-pressed", state.rush);
   $("#hostingToggle").classList.toggle("active", state.hosting); $("#hostingToggle").setAttribute("aria-pressed", state.hosting);
   $("#taxToggle").classList.toggle("active", state.tax); $("#taxToggle").setAttribute("aria-pressed", state.tax);
   $("#taxToggle").querySelector("span").textContent = "";
-  $$(".choice-card,.toggle-card,.feature-card,.radio-card").forEach(el=>el.setAttribute("aria-pressed",String(el.classList.contains("selected"))));
-  $("#sideProjectName").textContent = catalog[state.project].label;
+  $$(".choice-card,.toggle-card,.feature-card,.radio-card:not(.tier-card)").forEach(el=>el.setAttribute("aria-pressed",String(el.classList.contains("selected"))));
+  $("#sideProjectName").textContent = project().custom ? t(project().label) : `${t(project().label)} · ${t(tierNames[state.tier])}`;
   const live=$("#liveTotal"), value=money(grandTotal());
   if(live.textContent!==value){
     live.textContent=value;
@@ -194,26 +337,42 @@ function renderProgress(){
   if(state.step===5) renderSummary();
   $("#liveTotal").textContent = money(grandTotal());
 }
-function renderSummary(){
-  const total=grandTotal(), sub=subtotal(), r=range();
-  $("#totalPrice").textContent=money(total);
-  $("#rangePrice").textContent=`${t("Rango orientativo")}: ${money(r.min)} — ${money(r.max)}`;
-  $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
+function projectLabel(){ return project().custom ? project().label : `${project().label} · ${tierNames[state.tier]}`; }
+function summaryRows(){
+  const p=project(), c=tierCfg(), extra=extraUnits(), inc=t("Incluido");
   const rows=[
-    [catalog[state.project].label, money(catalog[state.project].base)],
-    [`${state.pages} ${t(state.pages===1?"página":"páginas")}`, pagesExtraCost()?money(pagesExtraCost()):"Incluido"],
-    [state.contentPro?"Contenido profesional":"Contenido entregado por el cliente", state.contentPro?money(120):"Sin recargo"],
-    ...[...state.features].map(k=>[features[k].label,money(features[k].price)]),
-    [`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?money(designs[state.design].price):"Incluido"],
-    [`${t("Soporte")} · ${t(supports[state.support].label)}`, supports[state.support].price?money(supports[state.support].price):"Incluido"],
-    ["Entrega prioritaria", state.rush?money(180):"—"],
-    ["Pack Cloud anual", state.hosting?money(120):"—"],
+    [`${t(p.label)}${p.custom?"":" · "+t(tierNames[state.tier])}`, money(c.price)],
+    [`${state.pages} ${unitName(state.pages)}`, extra?`+${money(pagesExtraCost())}`:inc],
   ];
+  if(p.products) rows.push([`${productCount()} ${t("productos")}`, productsCost()?`+${money(productsCost())}`:inc]);
+  rows.push([state.contentPro?"Contenido profesional":"Contenido entregado por el cliente", state.contentPro?money(contentCost()):"Sin recargo"]);
+  state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
+  if(!designs[state.design].range) rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?money(designs[state.design].price):inc]);
+  if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
   rows.push(["Entrega estimada", deliveryDays()]);
   const disc = discountInfo();
   if(disc.amount) rows.push([`Descuento · ${disc.label}`, `−${money(disc.amount)}`]);
-  if(state.tax) rows.push(["IGV 18%", money(Math.round((sub-disc.amount)*.18))]);
-  $("#summaryLines").innerHTML=rows.map(([a,b])=>`<div class="summary-line"><span>${t(a)}</span><strong>${t(b)}</strong></div>`).join("");
+  if(state.tax) rows.push(["IGV 18%", money(Math.round((subtotal()-disc.amount)*.18))]);
+  return rows;
+}
+function renderSummary(){
+  const total=grandTotal(), pend=pending(), rec=recurring();
+  $("#totalPrice").textContent=money(total);
+  $("#rangePrice").textContent=pend.items.length
+    ? `${t("Por confirmar, no incluido")}: ${rangeText(pend.min,pend.max,pend.open)}`
+    : t("Precio según el alcance elegido");
+  $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
+  const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${t(a)}</span><strong>${t(b)}</strong></div>`;
+  let html=summaryRows().map(r=>line(r)).join("");
+  if(pend.items.length){
+    html+=`<div class="summary-sub">${t("Por confirmar tras diagnóstico")}</div>`;
+    html+=pend.items.map(i=>line([i.label, rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)]," is-pending")).join("");
+  }
+  if(rec.length){
+    html+=`<div class="summary-sub">${t("Pagos recurrentes, aparte del total")}</div>`;
+    html+=rec.map(r=>line([r.label,r.text]," is-recurring")).join("");
+  }
+  $("#summaryLines").innerHTML=html;
 }
 function toast(msg){
   const el=$("#toast"); el.textContent=t(msg); el.classList.add("show");
@@ -236,18 +395,23 @@ function validateContact(requireConsent=false){
   return true;
 }
 function quoteText(){
-  const r=range(), selected=[...state.features].map(k=>t(features[k].label)).join(', ')||t('Ninguna adicional');
+  const pend=pending(), rec=recurring();
+  const selected=[...state.features].map(k=>t(featureInfo(k).label)).join(', ')||t('Ninguna adicional');
   const line=(label,value)=>`${t(label)}: ${value}`;
   return [
     'TUPLUS — '+t('COTIZACIÓN WEB'),'',
-    line('Proyecto',t(catalog[state.project].label)),line('Páginas',state.pages),
+    line('Proyecto',t(project().label)),...(project().custom?[]:[line('Nivel',t(tierNames[state.tier]))]),
+    line(project().unit==='section'?'Secciones':'Páginas',`${state.pages} (${tierCfg().included} ${t('incluidas')})`),
+    ...(project().products?[line('Productos',`${productCount()} (${tierCfg().products} ${t('incluidos')})`)]:[]),
     line('Contenido profesional',t(state.contentPro?'Sí':'No')),line('Funciones',selected),
     line('Diseño',t(designs[state.design].label)),line('Soporte',t(supports[state.support].label)),
-    line('Entrega prioritaria',t(state.rush?'Sí':'No')),line('Pack Cloud anual',t(state.hosting?'Sí':'No')),
+    line('Entrega prioritaria',state.rush?`+${money(rushCost())}`:t('No')),
     line('IGV',t(state.tax?'CON IGV':'SIN IGV')),line('Entrega estimada',deliveryDays()),
     ...(discountInfo().amount?[line('Descuento · '+discountInfo().label,'−'+money(discountInfo().amount))]:[]),'',
     line('Cambio de referencia',`1 USD = ${fx.rates[state.currency].rate} ${state.currency} (${fx.rates[state.currency].date})`),
-    line('INVERSIÓN ESTIMADA',money(grandTotal())),line('Rango orientativo',`${money(r.min)} — ${money(r.max)}`),'',
+    line('INVERSIÓN ESTIMADA',money(grandTotal())),
+    ...(pend.items.length?[line('Por confirmar, no incluido',pend.items.map(i=>`${t(i.label)} ${rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)}`).join('; '))]:[]),
+    ...rec.map(r=>line(r.label,r.text)),'',
     line('Tu nombre',$("#nombre").value.trim()),line('Empresa o actividad',$("#empresa").value.trim()),
     line('País',countries.name(state.country)),line('Correo electrónico',$("#email").value.trim()),
     line('Teléfono / WhatsApp',$("#telefono").value.trim()),line('Mensaje',$("#mensajeCliente").value.trim()||'—'),'',
@@ -273,9 +437,11 @@ function sendToBackend(){
   try{
     const payload={
       nombre:$("#nombre").value.trim(), email:$("#email").value.trim(), telefono:$("#telefono").value.trim(),
-      proyecto:catalog[state.project].label,paginas:state.pages,contenido_pro:state.contentPro,moneda:state.currency,total_usd:grandTotal(),total_mostrado:money(grandTotal()),
+      // total y total_usd siguen en USD por compatibilidad con el panel; total_pen es el importe de referencia.
+      proyecto:projectLabel(),nivel:project().custom?'':state.tier,paginas:state.pages,productos:productCount(),contenido_pro:state.contentPro,moneda:state.currency,
+      total_usd:Math.round(toUsd(grandTotal())*100)/100,total_pen:grandTotal(),total_mostrado:money(grandTotal()),
       pais:state.country,consentimiento:$("#consentimiento").checked,cambio:`${fx.rates[state.currency].rate} (${fx.rates[state.currency].date})`,funciones:[...state.features],diseno:designs[state.design].label,soporte:supports[state.support].label,
-      prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:grandTotal(),notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`,
+      prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:Math.round(toUsd(grandTotal())*100)/100,notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`,
       cupon:promo.coupon?promo.coupon.codigo:'',descuento:disc.amount,campana:disc.origin==='campana'?disc.label:''
     };
     // Con apiUrl se usa la API Node; sin ella, el PHP anterior.
@@ -311,10 +477,21 @@ $("#refreshRates").addEventListener('click',async e=>{
 });
 document.addEventListener('tuplus:language-change',()=>{sync();renderProgress()});
 window.addEventListener('beforeprint',renderSummary);
-$$("#projectOptions .choice-card").forEach(el=>el.addEventListener("click",()=>{state.project=el.dataset.key;state.pages=catalog[state.project].pagesBase;save();sync();renderProgress()}));
+$$("#projectOptions .choice-card").forEach(el=>el.addEventListener("click",()=>{setProject(el.dataset.key);save();sync();renderProgress()}));
+$("#tierOptions").addEventListener("click",e=>{const b=e.target.closest("[data-tier]");if(!b)return;setTier(b.dataset.tier);save();sync();$(`#tierOptions [data-tier="${state.tier}"]`)?.focus();});
+$("#tierOptions").addEventListener("keydown",e=>{
+  // Flechas para moverse entre niveles, como un grupo de radios.
+  const i=TIERS.indexOf(state.tier), step={ArrowRight:1,ArrowDown:1,ArrowLeft:-1,ArrowUp:-1}[e.key];
+  if(!step||project().custom)return; e.preventDefault();
+  setTier(TIERS[(i+step+TIERS.length)%TIERS.length]);save();sync();$(`#tierOptions [data-tier="${state.tier}"]`)?.focus();
+});
 $("#pagesRange").addEventListener("input",e=>{state.pages=Number(e.target.value);save();sync();});
+$$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
+  const b=e.target.closest("[data-delta]"); if(!b)return;
+  const key=row.dataset.block; state[key]=clampBlocks(state[key]+Number(b.dataset.delta)); save(); sync();
+}));
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
-$$(".feature-card").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
+$$(".feature-card").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
@@ -349,7 +526,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
       format: "a4"
     });
 
-    const total = Number(typeof grandTotal === "function" ? grandTotal() : (grandTotal || 0));
+    const total = amountIn(grandTotal()); // en la moneda elegida
     const subtotal = (total / 1.18).toFixed(2);
     const igv = (total - subtotal).toFixed(2);
     const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
@@ -483,7 +660,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     format: "a4"
   });
 
-  const total = Number(typeof grandTotal === "function" ? grandTotal() : (grandTotal || 0));
+  const total = amountIn(grandTotal()); // en la moneda elegida
   const subtotal = (total / 1.18).toFixed(2);
   const igv = (total - subtotal).toFixed(2);
   const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
@@ -613,7 +790,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
 const payCfg=(window.TUPLUS_CONFIG&&window.TUPLUS_CONFIG.payments)||{};
 const cryptoWallets=((payCfg.crypto&&payCfg.crypto.wallets)||[]).filter(w=>w&&w.id&&w.label);
 let cryptoSelected=null;
-function payAmountUsd(){return `$${grandTotal().toLocaleString('en-US')} USD`;}
+function payAmountUsd(){return `${Math.round(toUsd(grandTotal())).toLocaleString('en-US')} USD`;}
 function openGateway(){
   if(!validateContact(true))return;
   const url=String(payCfg.gatewayUrl||'').trim();

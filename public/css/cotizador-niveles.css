@@ -1,0 +1,61 @@
+/* Cotizador: niveles de servicio, unidades incluidas, bloques de productos
+   y líneas "por confirmar" / recurrentes del resumen. Hereda las tarjetas existentes. */
+/* El panel del cotizador es azul marino en ambos temas, así que los tonos son siempre para fondo oscuro. */
+.quote-layout{--nv-gold:#e1c38b;--nv-gold-soft:rgba(225,195,139,.1);--nv-ink:#c3d0d8}
+
+/* Nivel */
+.tier-block{margin-top:4px;margin-bottom:22px}
+.tier-grid .tier-card{min-height:118px;display:flex;flex-direction:column;justify-content:space-between;gap:10px}
+.tier-grid .tier-card small{line-height:1.5}
+.tier-grid .tier-card strong{font-size:15px;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.tier-card:focus-visible{outline:2px solid var(--nv-gold);outline-offset:2px}
+.tier-custom{margin:0 0 22px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;color:var(--nv-ink);font-size:12.5px;line-height:1.6;background:var(--nv-gold-soft)}
+
+/* Deslizador: qué incluye el nivel y cuánto cuesta lo adicional */
+.slider-hint{margin:14px 0 0;color:var(--nv-ink);font-size:12px;line-height:1.55;font-variant-numeric:tabular-nums}
+.slider-card .slider-hint{padding-top:12px;border-top:1px solid var(--line)}
+
+/* Productos */
+.product-card{border:1px solid var(--line);border-radius:20px;padding:20px 22px;background:rgba(255,255,255,.017)}
+.product-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.product-head span{display:block;font-size:11px;color:var(--muted)}
+.product-head b{display:block;font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+.product-head small{color:var(--nv-ink);font-size:12px;font-variant-numeric:tabular-nums}
+.product-steppers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.stepper{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 12px 12px 16px;border:1px solid var(--line);border-radius:14px}
+.stepper>div:first-child{min-width:0}
+.stepper b{display:block;font-size:12.5px}
+.stepper small{display:block;margin-top:3px;color:var(--muted);font-size:11px}
+.stepper-ctrl{display:flex;align-items:center;gap:4px;flex:none}
+.stepper-ctrl output{min-width:26px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.stepper-ctrl button{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:transparent;color:inherit;cursor:pointer;touch-action:manipulation;transition:border-color .18s ease-out,background-color .18s ease-out,transform .12s ease-out}
+.stepper-ctrl button:hover:not(:disabled){border-color:var(--nv-gold);background:var(--nv-gold-soft)}
+.stepper-ctrl button:active:not(:disabled){transform:scale(.96)}
+.stepper-ctrl button:focus-visible{outline:2px solid var(--nv-gold);outline-offset:2px}
+.stepper-ctrl button:disabled{opacity:.35;cursor:not-allowed}
+.product-note{margin:14px 0 0;color:var(--muted);font-size:11.5px;line-height:1.55}
+
+/* Funciones incluidas o con rango */
+.feature-card.is-included{cursor:default}
+.feature-card.is-included em{color:var(--nv-gold)}
+.feature-card.is-pending em .option-price{white-space:nowrap}
+
+/* Soporte: cuatro opciones */
+.support-grid.support-four{grid-template-columns:repeat(2,minmax(0,1fr))}
+.included-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* Franja de confianza: cuatro tarjetas (2 × 2 en pantallas medianas, una columna en móvil) */
+.xd-trust{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){.xd-trust{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.xd-trust{grid-template-columns:1fr}}
+
+/* Resumen */
+.summary-sub{margin:16px 0 4px;color:var(--muted);font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.summary-line.is-pending strong,.summary-line.is-recurring strong{color:var(--nv-ink);font-weight:600}
+
+@media (max-width:700px){
+  .tier-grid .tier-card{min-height:0}
+  .product-steppers,.support-grid.support-four{grid-template-columns:1fr}
+  .included-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){.stepper-ctrl button{transition:none}}
