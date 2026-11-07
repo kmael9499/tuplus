@@ -22,7 +22,7 @@
     if (menuButton.getAttribute('aria-expanded') !== 'true') return;
     if (event.key === 'Escape') setMenu(false, true);
     if (event.key === 'Tab') {
-      const focusables = [menuButton, ...nav.querySelectorAll('a')];
+      const focusables = [menuButton, ...Array.from(nav.querySelectorAll('a, summary')).filter(el => el.tagName === 'SUMMARY' || !el.closest('details:not([open])'))];
       const first = focusables[0], last = focusables.at(-1);
       if (event.shiftKey && document.activeElement === first) {event.preventDefault(); last.focus();}
       else if (!event.shiftKey && document.activeElement === last) {event.preventDefault(); first.focus();}
