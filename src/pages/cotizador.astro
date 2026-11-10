@@ -1,6 +1,5 @@
 ---
 import SiteFooter from '../components/SiteFooter.astro';
-import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
 ---
 <!doctype html>
 <html lang="es">
@@ -13,7 +12,7 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260925-2"><link rel="stylesheet" href="css/cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="css/quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="css/brand-flight.css?v=20261004-1"><link rel="stylesheet" href="css/cotizador-extras.css?v=20261009-1"><link rel="stylesheet" href="css/cotizador-diseno.css?v=20261021-2"><link rel="stylesheet" href="css/cotizador-colibri.css?v=20261011-1"><script is:inline defer src="js/brand-flight.js?v=20261103-xmas-hat-2"></script><script is:inline src="js/theme.js?v=20261011-2"></script><script is:inline src="js/config.js?v=20261024-1"></script><meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="css/styles.css?v=20260925-2"><link rel="stylesheet" href="css/cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="css/quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="css/brand-flight.css?v=20261004-1"><link rel="stylesheet" href="css/cotizador-extras.css?v=20261009-1"><link rel="stylesheet" href="css/cotizador-diseno.css?v=20261021-2"><link rel="stylesheet" href="css/cotizador-colibri.css?v=20261011-1"><script is:inline defer src="js/brand-flight.js?v=20261106-1"></script><script is:inline src="js/theme.js?v=20261011-2"></script><script is:inline src="js/config.js?v=20261024-1"></script><meta name="robots" content="noindex, nofollow">
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-plugin-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   <link rel="icon" href="colibri.png" type="image/png">
@@ -49,10 +48,12 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
 <!-- Tablet y celular: debe ir SIEMPRE al final, después de los demás CSS -->
 <link rel="stylesheet" href="css/cotizador-tablet.css?v=20261018-1"/>
 <!-- Campo de cupón del paso 5 -->
-<link rel="stylesheet" href="css/cotizador-cupon.css?v=20261024-1"/>
+<link rel="stylesheet" href="css/cotizador-cupon.css?v=20261110-2"/>
   <link rel="stylesheet" href="css/cotizador-ray.css?v=20261028-2"/>
-<link rel="stylesheet" href="css/caminos.css?v=1"/>    <SeasonalAtmosphere />
-<link rel="stylesheet" href="css/access-link.css"></head>
+<link rel="stylesheet" href="css/cotizador-niveles.css?v=20261106-1"/>
+<link rel="stylesheet" href="css/caminos.css?v=1"/><link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
+<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+</head>
 <body>
   <div class="ambient" aria-hidden="true">
     <div class="orb orb-a"></div><div class="orb orb-b"></div><div class="orb orb-c"></div>
@@ -60,7 +61,8 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
   </div>
 
   <a class="skip-link" href="#cotizador">Saltar al cotizador</a>
-  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none"><defs><filter id="brand-night-filter" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 -3 -3 0 2" result="navyMask"/><feComposite in="navyMask" in2="SourceGraphic" operator="in" result="clippedMask"/><feFlood flood-color="#f1f1f1" result="lightInk"/><feComposite in="lightInk" in2="clippedMask" operator="in" result="lightNavy"/><feComposite in="lightNavy" in2="SourceGraphic" operator="over"/></filter></defs></svg><header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html#inicio" aria-label="TUPLUS, inicio"><span class="brand-art"><img class="brand-light" src="imagenes/marca/logo-claro.png" alt="TuPlus" width="2172" height="724"><img class="brand-dark" src="imagenes/marca/logo-claro.png" alt="TuPlus" width="2172" height="724"></span></a><button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span></button><nav id="main-nav" aria-label="Navegación principal"><a href="index.html#servicios">Soluciones</a><a href="index.html#proyectos">Proyectos</a><a href="index.html#proceso">Proceso</a><a href="index.html#nosotros">Nosotros</a><a class="nav-socios" href="socios-comerciales.html"><svg class="nav-ico" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.3"/><circle cx="5" cy="18" r="2.3"/><circle cx="19" cy="18" r="2.3"/><path d="M12 7.3v4.2M12 11.5 6.2 16M12 11.5l5.8 4.5"/></svg>Red de Socios Comerciales</a><a class="nav-quote" href="https://plantillas-eosin.vercel.app/" target="_blank" rel="noopener noreferrer">Plantillas <span aria-hidden="true">↗</span></a><a class="nav-quote" href="cotizador.html" aria-current="page">Cotizar mi web <span aria-hidden="true">↗</span></a></nav><label class="language-picker" translate="no"><span class="sr-only">Idioma del sitio</span><select id="site-language" aria-label="Idioma del sitio"><option value="es">Español</option><option value="en">English</option><option value="zh">简体中文</option><option value="ru">Русский</option><option value="pt">Português</option><option value="fr">Français</option><option value="ja">日本語</option><option value="de">Deutsch</option></select></label><button class="theme-toggle" type="button" aria-label="Modo oscuro" aria-pressed="false"><span aria-hidden="true">☾</span> Tema</button><a class="login-access" href="acceso.html">Iniciar sesión <span aria-hidden="true">↗</span></a></div></header><button class="menu-overlay" type="button" aria-label="Cerrar menú" hidden></button>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none"><defs><filter id="brand-night-filter" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 -3 -3 0 2" result="navyMask"/><feComposite in="navyMask" in2="SourceGraphic" operator="in" result="clippedMask"/><feFlood flood-color="#f1f1f1" result="lightInk"/><feComposite in="lightInk" in2="clippedMask" operator="in" result="lightNavy"/><feComposite in="lightNavy" in2="SourceGraphic" operator="over"/></filter></defs></svg><header class="site-header"><div class="container nav-wrap"><a class="brand" href="index.html#inicio" aria-label="TUPLUS, inicio"><span class="brand-art"><img class="brand-light" src="imagenes/marca/logo-claro.png" alt="TuPlus" width="2172" height="724"><img class="brand-dark" src="imagenes/marca/logo-claro.png" alt="TuPlus" width="2172" height="724"></span></a><button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span></button><nav id="main-nav" aria-label="Navegación principal"><a href="index.html#servicios">Soluciones</a><a href="index.html#proyectos">Proyectos</a><a href="index.html#proceso">Proceso</a><a href="index.html#nosotros">Nosotros</a><a href="https://plantillas-eosin.vercel.app/" target="_blank" rel="noopener noreferrer">Plantillas <span aria-hidden="true">↗</span></a><details class="nav-networks"><summary><span translate="no">Redes TUPLUS</span><span class="nav-chevron" aria-hidden="true"></span></summary><div class="nav-networks-menu"><a class="nav-socios" href="socios-comerciales.html">Red de Socios Comerciales</a></div></details><a class="nav-access" translate="no" href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
+<a class="nav-quote" href="cotizador.html" aria-current="page">Cotizar mi web <span aria-hidden="true">↗</span></a></nav><label class="language-picker" translate="no"><span class="sr-only">Idioma del sitio</span><select id="site-language" aria-label="Idioma del sitio"><option value="es">Español</option><option value="en">English</option><option value="zh">简体中文</option><option value="ru">Русский</option><option value="pt">Português</option><option value="fr">Français</option><option value="ja">日本語</option><option value="de">Deutsch</option></select></label><button class="theme-toggle" type="button" aria-label="Modo oscuro" aria-pressed="false"><span aria-hidden="true">☾</span> Tema</button></div></header><button class="menu-overlay" type="button" aria-label="Cerrar menú" hidden></button>
 
   <main id="top" class="page-shell">
     <section class="hero">
@@ -124,10 +126,6 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
           <button class="step" data-step="5" type="button"><span>05</span><div><b>Contacto</b><small>Tu propuesta</small></div></button>
         </nav>
 
-        <div class="side-mini">
-          <span class="mini-check">✓</span>
-          <div><b>Precio transparente</b><small>El precio final se confirma contigo</small></div>
-        </div>
       </div></aside>
 
       <div class="main-panel">
@@ -141,14 +139,58 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
           <section class="step-view active" data-view="1">
             <div class="view-heading">
               <div><span class="kicker">01 / FUNDACIÓN</span><h2>¿Qué quieres construir?</h2><p>Elige el formato que más se parece a tu proyecto.</p></div>
-              <span class="estimate-pill" id="estimatePill">USD · estimado</span>
+              <div class="heading-tools">
+                <span class="estimate-pill" id="estimatePill">USD · estimado</span>
+                                <div class="coupon-box" id="couponBox">
+                  <label class="coupon-label" for="couponInput">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg>
+                    ¿Tienes un cupón de descuento?
+                    <span class="coupon-tag">OFERTA</span>
+                  </label>
+                  <div class="coupon-row">
+                    <input id="couponInput" class="coupon-input" type="text" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe tu código" aria-describedby="couponMsg">
+                    <button id="couponBtn" class="coupon-btn" type="button">Aplicar</button>
+                  </div>
+                  <p class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></p>
+                </div>
+              </div>
             </div>
             <div class="option-grid project-grid" id="projectOptions">
-              <button class="choice-card selected" data-key="landing" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div><b>Landing page</b><small>Una página enfocada en conversión</small></div><strong class="option-price" data-usd="295">desde $295</strong></button>
-              <button class="choice-card" data-key="website" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span><div><b>Sitio corporativo</b><small>Web profesional multipágina</small></div><strong class="option-price" data-usd="450">desde $450</strong></button>
-              <button class="choice-card" data-key="catalog" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><div><b>Catálogo online</b><small>Productos, categorías y contacto</small></div><strong class="option-price" data-usd="600">desde $600</strong></button>
-              <button class="choice-card" data-key="ecommerce" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 11h10.6L20 8H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg></span><div><b>Tienda e-commerce</b><small>Carrito, checkout y pagos</small></div><strong class="option-price" data-usd="890">desde $890</strong></button>
-              <button class="choice-card wide" data-key="webapp" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M9 14l-2 2 2 2M15 14l2 2-2 2"/></svg></span><div><b>Aplicación web / SaaS</b><small>Dashboard, usuarios, lógica personalizada, automatización o producto digital</small></div><strong class="option-price" data-usd="1500">desde $1,500</strong></button>
+              <button class="choice-card selected" data-key="landing" type="button">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+                <div class="choice-content"><b>Landing page</b><small>Una página enfocada en conversión</small>
+                  <ul class="choice-features"><li>Diseño personalizado y adaptable</li><li>Secciones de servicios y beneficios</li><li>Botón de WhatsApp y formulario</li><li>SEO básico y enlaces a redes sociales</li></ul>
+                </div>
+                <strong class="option-price" data-pen="1090">desde S/1,090</strong>
+              </button>
+              <button class="choice-card" data-key="website" type="button">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span>
+                <div class="choice-content"><b>Sitio corporativo</b><small>Web profesional multipágina</small>
+                  <ul class="choice-features"><li>Hasta 5 páginas informativas</li><li>Inicio, nosotros, servicios y contacto</li><li>Galería o portafolio de proyectos</li><li>Formulario, mapa y WhatsApp</li><li>Diseño responsive y SEO básico</li></ul>
+                </div>
+                <strong class="option-price" data-pen="1690">desde S/1,690</strong>
+              </button>
+              <button class="choice-card" data-key="catalog" type="button">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span>
+                <div class="choice-content"><b>Catálogo online</b><small>Productos, categorías y contacto</small>
+                  <ul class="choice-features"><li>Listado de productos con fotografías</li><li>Categorías y fichas de producto</li><li>Buscador o filtros de productos</li><li>Consultas y pedidos por WhatsApp</li><li>Panel para actualizar el catálogo</li></ul>
+                </div>
+                <strong class="option-price" data-pen="2290">desde S/2,290</strong>
+              </button>
+              <button class="choice-card" data-key="ecommerce" type="button">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 11h10.6L20 8H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg></span>
+                <div class="choice-content"><b>Tienda e-commerce</b><small>Carrito, checkout y pagos</small>
+                  <ul class="choice-features"><li>Catálogo con precios y variantes</li><li>Carrito y proceso de compra</li><li>Integración de pasarela de pago</li><li>Gestión de pedidos y clientes</li><li>Configuración de envíos y stock</li></ul>
+                </div>
+                <strong class="option-price" data-pen="3490">desde S/3,490</strong>
+              </button>
+              <button class="choice-card wide" data-key="webapp" type="button">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M9 14l-2 2 2 2M15 14l2 2-2 2"/></svg></span>
+                <div class="choice-content"><b>Aplicación web / SaaS</b><small>Plataforma digital con funciones a medida</small>
+                  <ul class="choice-features"><li>Inicio de sesión y roles de usuario</li><li>Panel de control y módulos personalizados</li><li>Base de datos y gestión de información</li><li>Reportes, búsquedas y filtros</li><li>Integraciones y automatizaciones según alcance</li></ul>
+                </div>
+                <strong class="option-price" data-pen="5090">desde S/5,090</strong>
+              </button>
             </div>
             <div class="feature-note">
               <span class="note-icon">✦</span>
@@ -158,26 +200,62 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
 
           <section class="step-view" data-view="2">
             <div class="view-heading">
-              <div><span class="kicker">02 / ALCANCE</span><h2>Define el tamaño.</h2><p>Más páginas = más estructura, contenido y desarrollo.</p></div>
+              <div><span class="kicker">02 / ALCANCE</span><h2>Define el tamaño.</h2><p>Elige el nivel y ajusta lo que necesites por encima de lo incluido.</p></div>
             </div>
+            <div class="section-block tier-block" id="tierBlock">
+              <div class="section-label" id="tierLabel">Nivel de servicio</div>
+              <div class="design-grid tier-grid" id="tierOptions" role="radiogroup" aria-labelledby="tierLabel"></div>
+            </div>
+            <p class="tier-custom" id="tierCustom" hidden>Las aplicaciones web y SaaS se cotizan a medida según módulos, usuarios e integraciones. El importe es referencial.</p>
+
             <div class="slider-card">
-              <div class="slider-top"><div><span>Páginas principales</span><b id="pagesValue">5</b></div><span class="mono">01 — 20</span></div>
-              <input id="pagesRange" aria-label="Número de páginas" type="range" min="1" max="20" value="5">
+              <div class="slider-top"><div><span id="pagesUnit">Páginas principales</span><b id="pagesValue">5</b></div><span class="mono">01 — 20</span></div>
+              <input id="pagesRange" aria-label="Número de páginas" aria-describedby="pagesHint" type="range" min="1" max="20" value="5">
               <div class="range-labels"><span>1</span><span>10</span><span>20</span></div>
+              <p class="slider-hint" id="pagesHint" aria-live="polite"></p>
+            </div>
+
+            <div class="section-block" id="productsBlock" hidden>
+              <div class="section-label">Carga de productos</div>
+              <div class="product-card">
+                <div class="product-head">
+                  <div><span>Productos cargados</span><b id="productsTotal" translate="no">20</b></div>
+                  <small id="productsHint" aria-live="polite"></small>
+                </div>
+                <div class="product-steppers">
+                  <div class="stepper" data-block="blocks20">
+                    <div><b>Bloque de 20 productos</b><small><span class="option-price" data-pen="280" data-prefix="none">S/280</span></small></div>
+                    <div class="stepper-ctrl">
+                      <button type="button" data-delta="-1" aria-label="Quitar un bloque de 20 productos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                      <output aria-live="polite">0</output>
+                      <button type="button" data-delta="1" aria-label="Añadir un bloque de 20 productos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                    </div>
+                  </div>
+                  <div class="stepper" data-block="blocks50">
+                    <div><b>Bloque de 50 productos</b><small><span class="option-price" data-pen="650" data-prefix="none">S/650</span></small></div>
+                    <div class="stepper-ctrl">
+                      <button type="button" data-delta="-1" aria-label="Quitar un bloque de 50 productos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+                      <output aria-live="polite">0</output>
+                      <button type="button" data-delta="1" aria-label="Añadir un bloque de 50 productos"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+                    </div>
+                  </div>
+                </div>
+                <p class="product-note">Fichas simples con datos completos y hasta 3 imágenes. Variantes, importación CSV o más de 100 fichas se cotizan aparte.</p>
+              </div>
             </div>
 
             <div class="section-block">
               <div class="section-label">Contenido</div>
               <div class="option-grid two">
                 <button class="toggle-card selected" data-toggle="contentClient" type="button"><span class="check">✓</span><div><b>Yo entrego el contenido</b><small>Textos, imágenes y estructura base</small></div><strong>Incluido</strong></button>
-                <button class="toggle-card" data-toggle="contentPro" type="button"><span class="check">+</span><div><b>Contenido profesional</b><small>Copy, estructura, edición y criterio visual</small></div><strong><span class="option-price" data-usd="120">+$120</span></strong></button>
+                <button class="toggle-card" data-toggle="contentPro" type="button"><span class="check">+</span><div><b>Contenido profesional</b><small>Hasta 600 palabras por página, con una revisión. Cada 5 páginas se cobran como pack.</small></div><strong><span class="option-price" id="contentProPrice" data-pen="150">+S/150</span></strong></button>
               </div>
             </div>
 
             <div class="section-block">
               <div class="section-label">Incluido en la base</div>
               <div class="included-grid">
-                <span>✓ Responsive</span><span>✓ SSL</span><span>✓ SEO técnico base</span><span>✓ Formulario / contacto</span><span>✓ WhatsApp</span><span>✓ Analytics listo</span>
+                <span>✓ Responsive</span><span>✓ SSL</span><span>✓ SEO técnico base</span><span>✓ Formulario / contacto</span><span>✓ WhatsApp</span><span>✓ Analytics listo</span><span>✓ Mapa de ubicación</span><span>✓ Optimización y seguridad básica</span><span>✓ Garantía de 30 días</span>
               </div>
             </div>
           </section>
@@ -187,20 +265,22 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
               <div><span class="kicker">03 / FUNCIONES</span><h2>Haz que tu web trabaje.</h2><p>Activa solo las integraciones que realmente necesitas.</p></div>
             </div>
             <div class="feature-grid">
-              <button class="feature-card" data-feature="whatsapp" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.7 7.1L4 20l1-4.1A8 8 0 1 1 20 12Z"/></svg></span><b>WhatsApp</b><small>Contacto directo</small><em><span class="option-price" data-usd="25">+$25</span></em></button>
-              <button class="feature-card" data-feature="forms" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><b>Formularios</b><small>Leads + email</small><em><span class="option-price" data-usd="45">+$45</span></em></button>
-              <button class="feature-card" data-feature="seo" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span><b>SEO inicial</b><small>Base técnica + on-page</small><em><span class="option-price" data-usd="80">+$80</span></em></button>
-              <button class="feature-card" data-feature="analytics" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span><b>Analítica</b><small>Eventos + métricas</small><em><span class="option-price" data-usd="35">+$35</span></em></button>
-              <button class="feature-card" data-feature="booking" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><b>Reservas</b><small>Calendario + solicitudes</small><em><span class="option-price" data-usd="110">+$110</span></em></button>
-              <button class="feature-card" data-feature="multilingual" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M8.5 4v2M6 6c.8 3.4 3 5.8 6 7M12 6c-.8 3.4-3 5.8-6 7"/><path d="m13 20 3.5-8 3.5 8M14.3 17h4.4"/></svg></span><b>Multidioma</b><small>Hasta 2 idiomas extra</small><em><span class="option-price" data-usd="120">+$120</span></em></button>
-              <button class="feature-card" data-feature="payments" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg></span><b>Pagos online</b><small>Pasarela de pago</small><em><span class="option-price" data-usd="160">+$160</span></em></button>
-              <button class="feature-card" data-feature="blog" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1Z"/><path d="M14 7l3 3"/></svg></span><b>Blog / CMS</b><small>Publica sin depender de código</small><em><span class="option-price" data-usd="75">+$75</span></em></button>
-              <button class="feature-card" data-feature="maps" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6-5.2 6-10a6 6 0 0 0-12 0c0 4.8 6 10 6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg></span><b>Mapa interactivo</b><small>Ubicación + rutas</small><em><span class="option-price" data-usd="30">+$30</span></em></button>
-              <button class="feature-card" data-feature="automation" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M8.3 6H15a3 3 0 0 1 3 3v6.7M15.7 18H9a3 3 0 0 1-3-3V8.3"/></svg></span><b>Automatización</b><small>Conecta procesos y herramientas</small><em><span class="option-price" data-usd="180">+$180</span></em></button>
-              <button class="feature-card" data-feature="speed" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></span><b>Performance+</b><small>Optimización avanzada</small><em><span class="option-price" data-usd="95">+$95</span></em></button>
-              <button class="feature-card" data-feature="security" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.4 3 7.9 7 9.5 4-1.6 7-5.1 7-9.5V6l-7-3Z"/><path d="m9 12 2.2 2.2L15 10.5"/></svg></span><b>Hardening</b><small>Buenas prácticas de seguridad</small><em><span class="option-price" data-usd="85">+$85</span></em></button>
+              <button class="feature-card" data-feature="forms" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><b>Formulario adicional</b><small>Hasta 6 campos y un destinatario</small><em><span class="option-price" data-pen="180">+S/180</span></em></button>
+              <button class="feature-card" data-feature="seo" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span><b>SEO de intención</b><small>Hasta 5 URLs: consultas, títulos y metas</small><em><span class="option-price" data-pen="650">+S/650</span></em></button>
+              <button class="feature-card" data-feature="analytics" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span><b>Analítica avanzada</b><small>GTM y hasta 8 eventos</small><em><span class="option-price" data-pen="350" data-pen-max="600">S/350 — S/600</span></em></button>
+              <button class="feature-card" data-feature="booking" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><b>Reservas</b><small>Un calendario, un profesional, 3 servicios</small><em><span class="option-price" data-pen="450">+S/450</span></em></button>
+              <button class="feature-card" data-feature="multilingual" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M8.5 4v2M6 6c.8 3.4 3 5.8 6 7M12 6c-.8 3.4-3 5.8-6 7"/><path d="m13 20 3.5-8 3.5 8M14.3 17h4.4"/></svg></span><b>Multidioma</b><small>Un idioma extra, hasta 5 URLs</small><em><span class="option-price" data-pen="650">+S/650</span></em></button>
+              <button class="feature-card" data-feature="payments" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg></span><b>Pagos online</b><small>Cobros con pasarela estándar</small><em><span class="option-price" data-pen="180">+S/180</span></em></button>
+              <button class="feature-card" data-feature="blog" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1Z"/><path d="M14 7l3 3"/></svg></span><b>Blog / CMS</b><small>Artículos, categorías y un autor</small><em><span class="option-price" data-pen="450">+S/450</span></em></button>
+              <button class="feature-card" data-feature="maps" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6-5.2 6-10a6 6 0 0 0-12 0c0 4.8 6 10 6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg></span><b>Mapa con buscador o rutas</b><small>El mapa de ubicación ya está incluido</small><em><span class="option-price" data-pen="600" data-prefix="from">desde S/600</span></em></button>
+              <button class="feature-card" data-feature="automation" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M8.3 6H15a3 3 0 0 1 3 3v6.7M15.7 18H9a3 3 0 0 1-3-3V8.3"/></svg></span><b>Automatización</b><small>Un flujo con hasta 3 acciones</small><em><span class="option-price" data-pen="750">+S/750</span></em></button>
+              <button class="feature-card" data-feature="speed" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></span><b>Performance+</b><small>Hasta 6 horas de mejoras avanzadas</small><em><span class="option-price" data-pen="450" data-pen-max="900">S/450 — S/900</span></em></button>
+              <button class="feature-card" data-feature="security" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.4 3 7.9 7 9.5 4-1.6 7-5.1 7-9.5V6l-7-3Z"/><path d="m9 12 2.2 2.2L15 10.5"/></svg></span><b>Hardening</b><small>Hasta 8 horas de revisión y ajustes</small><em><span class="option-price" data-pen="600" data-pen-max="1200">S/600 — S/1,200</span></em></button>
+              <button class="feature-card" data-feature="email" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></span><b>Correo corporativo</b><small>Hasta 3 cuentas y configuración DNS</small><em><span class="option-price" data-pen="120">+S/120</span></em></button>
+              <button class="feature-card" data-feature="migration" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span><b>Migración de web</b><small>Hasta 10 URLs con redirecciones</small><em><span class="option-price" data-pen="600" data-pen-max="1200">S/600 — S/1,200</span></em></button>
+              <button class="feature-card" data-feature="geo" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 10v4M10 12h4"/></svg></span><b>Contenido GEO</b><small>Tu marca clara para buscadores con IA</small><em><span class="option-price" data-pen="750">+S/750</span></em></button>
             </div>
-            <div class="hint">Puedes cambiar estas opciones en cualquier momento.</div>
+            <div class="hint">Los importes con rango se confirman tras un diagnóstico y no se suman al total.</div>
           </section>
 
           <section class="step-view" data-view="4">
@@ -212,23 +292,25 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
               <div class="section-label">Dirección visual</div>
               <div class="design-grid">
                 <button class="radio-card selected" data-design="clean" type="button"><span class="radio"></span><div><b>Clean / inteligente</b><small>Precisión, aire y jerarquía visual</small></div><strong>Incluido</strong></button>
-                <button class="radio-card" data-design="custom" type="button"><span class="radio"></span><div><b>Custom UI</b><small>Diseño visual a medida para tu marca</small></div><strong><span class="option-price" data-usd="180">+$180</span></strong></button>
-                <button class="radio-card" data-design="premium" type="button"><span class="radio"></span><div><b>Premium motion</b><small>Dirección art + 3D + microanimaciones</small></div><strong><span class="option-price" data-usd="350">+$350</span></strong></button>
+                <button class="radio-card" data-design="custom" type="button"><span class="radio"></span><div><b>Custom UI</b><small>Hasta 5 plantillas visuales y 2 rondas de cambios</small></div><strong><span class="option-price" data-pen="850">+S/850</span></strong></button>
+                <button class="radio-card" data-design="premium" type="button"><span class="radio"></span><div><b>Premium motion</b><small>Hasta 3 interacciones, con versión sin movimiento</small></div><strong><span class="option-price" data-pen="1200" data-pen-max="2000">S/1,200 — S/2,000</span></strong></button>
               </div>
             </div>
 
             <div class="section-block">
               <div class="section-label">Soporte post-lanzamiento</div>
-              <div class="support-grid">
-                <button class="radio-card selected" data-support="30" type="button"><span class="radio"></span><div><b>30 días</b><small>Correcciones y acompañamiento</small></div><strong>Incluido</strong></button>
-                <button class="radio-card" data-support="90" type="button"><span class="radio"></span><div><b>90 días</b><small>Soporte extendido</small></div><strong><span class="option-price" data-usd="75">+$75</span></strong></button>
-                <button class="radio-card" data-support="180" type="button"><span class="radio"></span><div><b>180 días</b><small>Seguimiento prolongado</small></div><strong><span class="option-price" data-usd="150">+$150</span></strong></button>
+              <div class="support-grid support-four">
+                <button class="radio-card selected" data-support="30" type="button"><span class="radio"></span><div><b>Garantía 30 días</b><small>Corrección de defectos del alcance aprobado</small></div><strong>Incluido</strong></button>
+                <button class="radio-card" data-support="web" type="button"><span class="radio"></span><div><b>Soporte web</b><small>1 hora al mes, actualizaciones y backups</small></div><strong><span class="option-price" data-pen="150" data-period="mes">S/150 / mes</span></strong></button>
+                <button class="radio-card" data-support="store" type="button"><span class="radio"></span><div><b>Soporte tienda</b><small>2 horas al mes, respuesta en 4 h si la tienda cae</small></div><strong><span class="option-price" data-pen="300" data-period="mes">S/300 / mes</span></strong></button>
+                <button class="radio-card" data-support="plus" type="button"><span class="radio"></span><div><b>Soporte ampliado</b><small>4 horas al mes, no acumulables</small></div><strong><span class="option-price" data-pen="550" data-period="mes">S/550 / mes</span></strong></button>
               </div>
+              <p class="slider-hint">El soporte es mensual y no se suma al total de implementación. Atención de lunes a viernes, 9:00–18:00, hora de Perú.</p>
             </div>
 
             <div class="section-block addons-row">
-              <button class="toggle-line" id="rushToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Entrega prioritaria</b><small>Reduce el plazo estimado cuando el alcance lo permite</small></div><strong><span class="option-price" data-usd="180">+$180</span></strong></button>
-              <button class="toggle-line" id="hostingToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Pack Cloud anual</b><small>Hosting + dominio + SSL + backups</small></div><strong><span class="option-price" data-usd="120">+$120</span></strong></button>
+              <button class="toggle-line" id="rushToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Entrega prioritaria</b><small>¿La necesitas antes de los plazos indicados? Se acorta la entrega con un incremento del 20 % sobre el valor del proyecto</small></div><strong>+20 %</strong></button>
+              <button class="toggle-line" id="hostingToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b id="hostingLabel">Alojamiento web</b><small>Pago anual, aparte del total. Dominio al costo del registrador</small></div><strong><span class="option-price" id="hostingPrice" data-pen="420" data-period="año">S/420 / año</span></strong></button>
             </div>
 
             <div class="tax-card">
@@ -250,17 +332,7 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
                   <span class="currency-tag" id="summaryCurrencyTag" translate="no">PEN</span>
                 </div>
                 <div class="summary-lines" id="summaryLines"></div>
-                <div class="coupon-box" id="couponBox">
-                  <label class="coupon-label" for="couponInput">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg>
-                    ¿Tienes un cupón de descuento?
-                  </label>
-                  <div class="coupon-row">
-                    <input id="couponInput" class="coupon-input" type="text" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe tu código" aria-describedby="couponMsg">
-                    <button id="couponBtn" class="coupon-btn" type="button">Aplicar</button>
-                  </div>
-                  <p class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></p>
-                </div>
+
                 <div class="summary-note">Estimación orientativa. La moneda cambia la visualización; el importe final, impuestos y alcance se confirman en la propuesta.</div>
                 <div class="pay-box" id="payBox">
                   <span class="kicker">PAGAR AHORA</span>
@@ -301,7 +373,7 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
         </form>
       </div>
     </section>
-  
+
     <section class="xd-faq xd2-faq" aria-label="Preguntas frecuentes">
       <div class="xd2-intro">
         <span class="xd-k" data-xd="faqK">Preguntas frecuentes</span>
@@ -358,16 +430,10 @@ import SeasonalAtmosphere from '../components/SeasonalAtmosphere.astro';
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <SiteFooter top="#top" />
 
-  <noscript><p class="no-js">Activa JavaScript para calcular tu proyecto o <a href="index.html#contacto">contacta con TUPLUS</a>.</p></noscript><script is:inline src="js/i18n-data.js?v=20261031-footer-2"></script><script is:inline src="js/quote-translations.js?v=20260925-2"></script><script is:inline src="js/i18n.js?v=20261013-1"></script><script is:inline src="js/currencies.js?v=20260925-2"></script><script is:inline src="js/countries.js?v=20260925-2"></script><script is:inline src="js/encabezado.js?v=20261016-1"></script><script is:inline src="js/cotizador.js?v=20261024-1"></script>
-<script is:inline src="js/neon-trail.js?v=20261012-1" defer></script><script is:inline src="js/cotizador-extras.js?v=20261021-1" defer></script><script is:inline src="js/cotizador-colibri.js?v=20261011-1" defer></script><script is:inline src="js/faq.js?v=20261011-1" defer></script>
+  <noscript><p class="no-js">Activa JavaScript para calcular tu proyecto o <a href="index.html#contacto">contacta con TUPLUS</a>.</p></noscript><script is:inline src="js/i18n-data.js?v=20261031-footer-2"></script><script is:inline src="js/quote-translations.js?v=20260925-2"></script><script is:inline src="js/quote-tiers-translations.js?v=20261106-1"></script><script is:inline src="js/i18n.js?v=20261013-1"></script><script is:inline src="js/currencies.js?v=20260925-2"></script><script is:inline src="js/countries.js?v=20260925-2"></script><script is:inline src="js/encabezado.js?v=20261016-1"></script><script is:inline src="js/cotizador.js?v=20261106-1"></script>
+<script is:inline src="js/neon-trail.js?v=20261012-1" defer></script><script is:inline src="js/cotizador-extras.js?v=20261110-1" defer></script><script is:inline src="js/cotizador-colibri.js?v=20261110-1" defer></script><script is:inline src="js/faq.js?v=20261011-1" defer></script>
 <script is:inline src="js/lang-flags.js?v=20261015-1" defer></script>
 <script is:inline src="js/cotizador-vuelo.js?v=20261016-1" defer></script>
 <script is:inline src="js/cotizador-cupon.js?v=20261024-1" defer></script>
 </body>
 </html>
-
-
-
-
-
-
