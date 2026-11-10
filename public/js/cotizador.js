@@ -418,8 +418,8 @@ function quoteText(){
     t('La cifra es orientativa y se confirma al validar el alcance final.')
   ].join('\n');
 }
-function whatsappUrl(){
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText())}`;
+function whatsappUrl(extra=''){
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText()+(extra?'\n\n'+extra:''))}`;
 }
 function downloadTxt(){
   if(!validateContact()) return;
@@ -793,9 +793,10 @@ let cryptoSelected=null;
 function payAmountUsd(){return `${Math.round(toUsd(grandTotal())).toLocaleString('en-US')} USD`;}
 function openGateway(){
   if(!validateContact(true))return;
-  const url=String(payCfg.gatewayUrl||'').trim();
-  if(!/^https:\/\//i.test(url)){toast("La pasarela aún no está disponible. Escríbenos por WhatsApp y te enviamos el enlace de pago.");return;}
-  sendToBackend(); window.open(url,"_blank","noopener,noreferrer"); toast("Abriendo la pasarela de pago.");
+  const url=whatsappUrl('Quisiera confirmar mi propuesta y recibir un enlace de pago de Culqi.');
+  window.open(url,"_blank","noopener,noreferrer");
+  sendToBackend();
+  toast("Abriendo WhatsApp para solicitar tu enlace de pago.");
 }
 function renderCryptoWallet(){
   const w=cryptoWallets.find(x=>x.id===cryptoSelected)||cryptoWallets[0];

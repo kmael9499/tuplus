@@ -4,6 +4,10 @@ Sitio de TUPLUS hecho con **Astro** (salida estática) y publicado en **GitHub P
 
 ## Comandos
 
+### Cobros con Culqi
+
+El cotizador permite solicitar por WhatsApp un enlace de Culqi junto con el resumen de la cotización. El importe mostrado es orientativo: confirma primero el alcance y el monto con el cliente. Luego, en CulqiPanel, entra en «Mis links de cobro», crea un enlace con el importe y los medios de pago acordados y compártelo en la conversación. Comprueba el estado del pago en CulqiPanel antes de darlo por recibido. La web no genera enlaces ni confirma pagos automáticamente; este flujo no requiere llaves API en el sitio. Consulta la [guía de CulqiLink](https://docs.culqi.com/es/documentacion/pagos-links/generar-un-link-de-pago/).
+
 ```bash
 npm install       # instalar dependencias
 npm run dev       # servidor local con recarga (http://localhost:4321)

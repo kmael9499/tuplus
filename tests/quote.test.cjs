@@ -83,6 +83,8 @@ run('load()');eq(run('state.pages'),20);eq(run('state.currency'),'PEN');eq(run('
 for(const [id,value]of Object.entries({nombre:'Prueba',empresa:'Negocio',pais:'PE',email:'prueba@example.com',telefono:'+51 900000000',mensajeCliente:'Texto con & y ñ'}))document.querySelector('#'+id).value=value;
 run('state.currency="EUR"');const quote=run('quoteText()');assert.ok(quote.includes('EUR')&&quote.includes('Perú')&&quote.includes('IGV'));checks++;
 eq(new URL(run('whatsappUrl()')).searchParams.get('text'),quote);
+const paymentMessage=new URL(run(`whatsappUrl('Quisiera confirmar mi propuesta y recibir un enlace de pago de Culqi.')`)).searchParams.get('text');
+assert.ok(paymentMessage.startsWith(quote));assert.match(paymentMessage,/enlace de pago de Culqi/);checks++;
 for(const locale of ['en','pt','fr','de','ru','zh','ja']){
  run(`window.TUPLUS_I18N.t=x=>window.TUPLUS_TRANSLATIONS['${locale}'][x]||x;`);
  run('renderSummary()');assert.ok(!elements.get('#summaryPriceLabel').textContent.includes('INVERSIÓN ESTIMADA'));checks++;

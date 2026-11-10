@@ -35,7 +35,7 @@ button,a,input,textarea{-webkit-tap-highlight-color:transparent}button:focus-vis
 /* Pagos: pasarela y crypto */
 .pay-box{margin-top:16px;padding:16px;border:1px solid #c7a66b55;border-radius:14px;background:#e1c38b0a}
 .pay-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
-.pay-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 12px;border-radius:10px;border:1px solid #e1c38b;font:700 13px inherit;font-family:inherit;cursor:pointer;transition:transform .15s,background .2s}
+.pay-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 12px;border-radius:10px;border:1px solid #e1c38b;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer;transition:transform .15s,background .2s}
 .pay-btn:active{transform:scale(.98)}
 .pay-gateway{background:#e1c38b;color:#102c3d}.pay-gateway:hover{background:#eed2a0}
 .pay-crypto{background:transparent;color:#f0d8aa}.pay-crypto:hover{background:#e1c38b1a}
