@@ -6,7 +6,9 @@ Sitio de TUPLUS hecho con **Astro** (salida estática) y publicado en **GitHub P
 
 ### Cobros con Culqi
 
-El cotizador permite solicitar por WhatsApp un enlace de Culqi junto con el resumen de la cotización. El importe mostrado es orientativo: confirma primero el alcance y el monto con el cliente. Luego, en CulqiPanel, entra en «Mis links de cobro», crea un enlace con el importe y los medios de pago acordados y compártelo en la conversación. Comprueba el estado del pago en CulqiPanel antes de darlo por recibido. La web no genera enlaces ni confirma pagos automáticamente; este flujo no requiere llaves API en el sitio. Consulta la [guía de CulqiLink](https://docs.culqi.com/es/documentacion/pagos-links/generar-un-link-de-pago/).
+El bot?n de Culqi est? preparado para abrir Checkout Custom como ventana emergente y cobrar el total del cotizador en soles (PEN), pero permanece desactivado: a?n faltan la cuenta y el servidor de pagos. La integraci?n preparada admite tarjetas; otros medios requieren ?rdenes y confirmaci?n por webhooks. Consulta la [documentaci?n de Culqi Checkout](https://docs.culqi.com/es/documentacion/checkout/checkout-custom).
+
+Para activarlo hace falta desarrollar y desplegar un servidor HTTPS de pagos. Debe recalcular la cotizaci?n y validar promociones en el servidor, persistir una sesi?n de importe inmutable, procesar el token con la llave privada de Culqi, impedir cargos duplicados y confirmar el resultado. El navegador nunca debe recibir la llave privada. El servidor debe implementar `POST /payment-sessions` (recibe `quote` y `customer`, devuelve `id`, `currency: "PEN"` y `amount` en c?ntimos) y `POST /payment-sessions/{id}/charge` (recibe `token`, devuelve `status: "paid"` solo tras confirmar el cargo). No se incluye ese servidor en este proyecto. Probar primero el flujo completo con credenciales de prueba y resolver los estados inciertos antes de pasar a producci?n. Despu?s configurar `payments.culqi` en `public/js/config.js` con la URL del servidor y la llave p?blica y activar `enabled`.
 
 ```bash
 npm install       # instalar dependencias
@@ -80,3 +82,9 @@ Todo está en `backend/` y se explica en `backend/README.md`. Resumen:
 ## Pendientes conocidos
 
 - `public/js/i18n.js` busca imágenes traducidas en `imagenes/idiomas/<idioma>/`, pero esa carpeta no existe. En los idiomas distintos al español, cada imagen pide primero el archivo traducido (404) y luego vuelve a la versión en español, así que sus textos siguen en español (ver `docs/IMAGENES-IDIOMAS.md`).
+
+## Registros de diagnóstico
+
+El sitio escribe en la consola del navegador eventos de carga, errores generales, solicitudes y pasos del pago Culqi. Abre las herramientas de desarrollador (F12) y busca `[TUPLUS]`. Estos eventos no se envían a un servidor ni se conservan al cerrar la consola.
+
+El backend Node registra en su salida estándar la solicitud y respuesta: URL y parámetros, IP, cabeceras, cuerpo JSON, estado, duración y errores. La salida puede contener datos personales, credenciales y tokens; consulta la terminal o los registros del hosting y restringe el acceso. Los cuerpos se registran cuando Express puede analizarlos como JSON. La API externa del panel ERP y la versión PHP no están instrumentadas por estos cambios.

@@ -791,12 +791,57 @@ const payCfg=(window.TUPLUS_CONFIG&&window.TUPLUS_CONFIG.payments)||{};
 const cryptoWallets=((payCfg.crypto&&payCfg.crypto.wallets)||[]).filter(w=>w&&w.id&&w.label);
 let cryptoSelected=null;
 function payAmountUsd(){return `${Math.round(toUsd(grandTotal())).toLocaleString('en-US')} USD`;}
-function openGateway(){
+async function openGateway(){
+  const logPayment = event => window.TUPLUS_LOG?.(`culqi_${event}`);
+  logPayment('requested');
+  const cfg=payCfg.culqi;
+  if(!cfg || !cfg.enabled || !cfg.publicKey || !cfg.apiUrl){
+    logPayment("unavailable");
+    toast("El pago con Culqi a?n no est? disponible."); return;
+  }
   if(!validateContact(true))return;
-  const url=whatsappUrl('Quisiera confirmar mi propuesta y recibir un enlace de pago de Culqi.');
-  window.open(url,"_blank","noopener,noreferrer");
-  sendToBackend();
-  toast("Abriendo WhatsApp para solicitar tu enlace de pago.");
+  if(state.currency!=="PEN"){
+    toast("Selecciona soles (PEN) para pagar con Culqi."); return;
+  }
+  // El servidor debe recalcular el importe y conservar la sesi?n de pago.
+  const button=$("#gatewayBtn"); button.disabled=true;
+  try{
+    const response=await fetch(`${cfg.apiUrl.replace(/\/$/,"")}/payment-sessions`,{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({quote:{...state,features:[...state.features],coupon:promo.coupon?.codigo||null},
+        customer:{name:$("#nombre").value.trim(),email:$("#email").value.trim(),phone:$("#telefono").value.trim()}})
+    });
+    if(!response.ok)throw new Error("session");
+    const session=await response.json();
+    if(!session.id || session.currency!=="PEN" || session.amount!==grandTotal()*100)throw new Error("amount");
+    if(!window.CulqiCheckout){
+      await new Promise((resolve,reject)=>{
+        const script=document.createElement("script"); script.src="https://js.culqi.com/checkout-js";
+        script.onload=resolve; script.onerror=reject; document.head.appendChild(script);
+      });
+    }
+    const checkout=new window.CulqiCheckout(cfg.publicKey,{
+      settings:{title:"TUPLUS",currency:session.currency,amount:session.amount},
+      client:{email:$("#email").value.trim()},
+      options:{lang:"auto",modal:true,paymentMethods:{tarjeta:true,yape:false,billetera:false,bancaMovil:false,agente:false,cuotealo:false}}
+    });
+    logPayment("checkout_opened");
+    checkout.culqi=async()=>{
+      if(!checkout.token){logPayment("token_failed");toast("No se pudo completar el pago. Int?ntalo de nuevo.");return;}
+      checkout.close();
+      try{
+        const result=await fetch(`${cfg.apiUrl.replace(/\/$/,"")}/payment-sessions/${encodeURIComponent(session.id)}/charge`,{
+          method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:checkout.token.id})
+        });
+        const data=await result.json();
+        if(!result.ok || data.status!=="paid")throw new Error("charge");
+        logPayment("payment_confirmed");
+        toast("Pago confirmado.");
+      }catch{logPayment("payment_unconfirmed");toast("No se pudo confirmar el pago. Consulta su estado antes de volver a intentar.");}
+    };
+    checkout.open();
+  }catch{logPayment("checkout_failed");toast("No se pudo iniciar el pago o el importe cambi?. Revisa tu cotizaci?n e int?ntalo de nuevo.");}
+  finally{button.disabled=false;}
 }
 function renderCryptoWallet(){
   const w=cryptoWallets.find(x=>x.id===cryptoSelected)||cryptoWallets[0];

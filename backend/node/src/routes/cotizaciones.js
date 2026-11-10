@@ -4,8 +4,6 @@ const pool = require('../config/db');
 const router = express.Router();
 
 router.post('/api/cotizaciones', async (req, res) => {
-  console.log('RUTA POST /api/cotizaciones RECIBIDA');
-
   try {
     const {
       nombre,
@@ -101,7 +99,7 @@ router.post('/api/cotizaciones', async (req, res) => {
       id: resultado.insertId
     });
   } catch (error) {
-    console.error('Error al guardar la cotización:', error.message);
+    console.error(JSON.stringify({ time: new Date().toISOString(), event: 'quote_save_failed', id: res.getHeader('X-Request-Id'), message: error.message, stack: error.stack }));
 
     res.status(500).json({
       estado: 'error',

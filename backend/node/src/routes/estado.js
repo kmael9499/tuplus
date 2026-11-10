@@ -26,7 +26,7 @@ router.get('/api/prueba-db', async (req, res) => {
       resultado: filas[0].conexion
     });
   } catch (error) {
-    console.error('Error de conexión MySQL:', error.message);
+    console.error(JSON.stringify({ time: new Date().toISOString(), event: 'database_check_failed', id: res.getHeader('X-Request-Id'), message: error.message, stack: error.stack }));
 
     res.status(500).json({
       estado: 'error',
