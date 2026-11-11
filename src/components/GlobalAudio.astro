@@ -1,0 +1,33 @@
+<audio id="tuplus-global-audio" src="/audio/tuplus-fondo.mp3" loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
+<script is:inline>
+  (() => {
+    const audio = document.getElementById("tuplus-global-audio");
+    if (!audio || audio.dataset.initialized === "true") return;
+    audio.dataset.initialized = "true";
+    audio.volume = 0.18;
+    const storageKey = "tuplus-global-audio-time";
+    const savePosition = () => {
+      try { if (Number.isFinite(audio.currentTime)) sessionStorage.setItem(storageKey, String(audio.currentTime)); } catch (_) {}
+    };
+    const startPlayback = () => audio.play().then(() => {
+      window.removeEventListener("pointerdown", startPlayback);
+      window.removeEventListener("keydown", startPlayback);
+      window.removeEventListener("touchstart", startPlayback);
+    }).catch(() => {});
+    try {
+      const savedTime = Number(sessionStorage.getItem(storageKey));
+      if (Number.isFinite(savedTime) && savedTime > 0) {
+        audio.addEventListener("loadedmetadata", () => {
+          if (Number.isFinite(audio.duration) && audio.duration > 0) audio.currentTime = savedTime % audio.duration;
+          startPlayback();
+        }, { once: true });
+      }
+    } catch (_) {}
+    window.addEventListener("pagehide", savePosition);
+    window.addEventListener("beforeunload", savePosition);
+    window.addEventListener("pointerdown", startPlayback);
+    window.addEventListener("keydown", startPlayback);
+    window.addEventListener("touchstart", startPlayback);
+    startPlayback();
+  })();
+</script>

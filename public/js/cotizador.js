@@ -55,12 +55,30 @@ const productBlocks = {blocks20:{qty:20, price:280}, blocks50:{qty:50, price:650
 // price: importe cerrado. range: [mínimo, máximo|null] por confirmar, no se suma al total.
 const features = {
   forms:{label:"Formulario adicional",price:180}, seo:{label:"SEO de intención",price:650},
-  analytics:{label:"Analítica avanzada",range:[350,600]}, booking:{label:"Reservas",price:450},
+  analytics:{label:"Analítica avanzada",range:[450,600]}, booking:{label:"Reservas",range:[450,650]},
   multilingual:{label:"Multidioma",price:650}, payments:{label:"Pagos online",price:180},
-  blog:{label:"Blog / CMS",price:450}, maps:{label:"Mapa con buscador o rutas",range:[600,null]},
+  blog:{label:"Blog / CMS",range:[450,650]}, whatsapp:{label:"WhatsApp",price:0,included:true}, maps:{label:"Mapa con buscador o rutas",range:[600,null]},
   automation:{label:"Automatización",price:750}, speed:{label:"Performance+",range:[450,900]},
-  security:{label:"Hardening",range:[600,1200]}, email:{label:"Correo corporativo",price:120},
-  migration:{label:"Migración de web",range:[600,1200]}, geo:{label:"Contenido GEO",price:750}
+  security:{label:"Hardening",range:[600,1200]}, email:{label:"Correo corporativo",range:[120,180]},
+  migration:{label:"Migración de web",range:[600,1200]}, geo:{label:"Visibilidad en buscadores con IA (GEO)",price:750}
+};
+
+const featureDescriptions = {
+  whatsapp:"Añade un acceso directo para que las personas puedan escribirte por WhatsApp desde tu página. Facilita las consultas, cotizaciones y coordinación con tus clientes sin que tengan que buscar tu número.",
+  forms:"Permite crear formularios para recibir consultas, solicitudes de cotización, datos de contacto o pedidos. La información se organiza mediante campos personalizados y puede enviarse al correo que indiques para que puedas responder a tus potenciales clientes.",
+  seo:"Optimiza la estructura y el contenido de tu sitio para que Google pueda entender mejor tus páginas. Se trabajan elementos como títulos, descripciones y palabras clave relacionadas con tus servicios, ayudando a que tu negocio tenga más oportunidades de aparecer en búsquedas relevantes.",
+  analytics:"Integra herramientas de medición para conocer cuántas personas visitan tu web, desde dónde llegan y qué páginas consultan. También permite revisar interacciones importantes para identificar qué contenido funciona mejor y tomar decisiones basadas en datos.",
+  booking:"Incorpora un sistema para que tus clientes puedan consultar horarios disponibles y solicitar o reservar citas directamente desde tu página. Es útil para negocios que trabajan con atención por turnos, como consultorios, salones, servicios técnicos o asesorías.",
+  multilingual:"Adapta el contenido de tu sitio para que pueda mostrarse en dos o más idiomas mediante un selector de idioma. Así, visitantes de distintos países pueden comprender mejor tus productos y servicios; la traducción y cantidad de idiomas se definen según el alcance del proyecto.",
+  payments:"Agrega una opción para que tus clientes puedan realizar pagos o continuar el proceso de compra por internet. La integración se realiza mediante una pasarela o proveedor externo compatible; sus comisiones, requisitos y posibles cargos se pagan directamente al proveedor.",
+  blog:"Añade una sección de artículos o noticias que podrás actualizar desde un administrador de contenido, sin tener que modificar el código de la página. Puedes publicar novedades, consejos, casos de trabajo y contenido útil para mantener tu web activa y compartir información con tus clientes.",
+  maps:"Integra un mapa para mostrar la ubicación de tu negocio, sucursales o puntos de atención. Según lo contratado, también puede incluir buscador de lugares o indicaciones de rutas para que los visitantes encuentren con mayor facilidad cómo llegar.",
+  automation:"Conecta procesos de tu web con herramientas externas para reducir tareas manuales, como enviar avisos, registrar solicitudes o distribuir información. Las automatizaciones específicas se definen según tu flujo de trabajo y pueden requerir servicios externos con costos propios.",
+  speed:"Mejora el rendimiento de tu sitio para que sus páginas y recursos carguen de manera más eficiente. Se revisan aspectos como imágenes, archivos y recursos que afectan la velocidad, con el objetivo de ofrecer una navegación más fluida, especialmente desde celulares y conexiones lentas.",
+  security:"Refuerza la seguridad de tu página mediante ajustes de configuración y buenas prácticas para reducir riesgos comunes. Puede incluir protección de accesos, revisión de permisos, configuración segura y medidas preventivas; no sustituye el monitoreo continuo ni garantiza que un sitio sea imposible de vulnerar.",
+  email:"Configura cuentas de correo con el nombre de tu propio dominio, por ejemplo ventas@tuempresa.com, para dar una imagen más profesional al comunicarte con tus clientes. La cantidad de buzones, capacidad y renovación dependen del proveedor de correo contratado.",
+  migration:"Traslada una página web existente a un nuevo entorno, procurando conservar su contenido, estructura y enlaces importantes. Antes del traslado se revisan los elementos del sitio para definir qué se puede migrar y evitar, en lo posible, interrupciones o pérdida de información.",
+  geo:"Prepara y estructura el contenido de tu negocio para que los motores de búsqueda y asistentes de inteligencia artificial puedan comprender mejor qué ofreces. Se trabaja la claridad de la información, preguntas frecuentes, datos del negocio y contenido útil para aumentar las posibilidades de que tu marca sea considerada en respuestas generadas por IA; no garantiza menciones ni recomendaciones."
 };
 const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",range:[1200,2000]}};
 // Soporte mensual: pago recurrente, no entra al total de implementación.
@@ -87,6 +105,7 @@ function includedFeature(k){
 }
 function featureInfo(k){
   const f = features[k];
+  if(k==="whatsapp") return {...f, price:0, range:null, included:true};
   if(includedFeature(k)) return {...f, price:0, range:null, included:true};
   // En tienda, la primera pasarela está incluida; lo que se cobra es una segunda.
   if(k==="payments") return state.project==="ecommerce"
@@ -249,8 +268,8 @@ function renderScope(){
   const tierLabel=p.custom?t("La base"):t(tierNames[state.tier]);
   const base=`${tierLabel} ${t("incluye")} ${c.included} ${unitName(c.included)}.`;
   $("#pagesHint").textContent = extra
-    ? `${base} ${t("Adicionales")}: ${extra} × ${money(p.extraRate)} = +${money(pagesExtraCost())}`
-    : `${base} ${t(p.unit==="section"?"Cada sección adicional":"Cada página adicional")}: ${money(p.extraRate)}.`;
+    ? `${base} ${extra} ${t(p.unit==="section"?"secciones adicionales":"páginas adicionales")} × ${money(p.extraRate)} = +${money(pagesExtraCost())}.`
+    : `${base} ${t(p.unit==="section"?"Cada sección adicional cuesta":"Cada página adicional cuesta")} ${money(p.extraRate)}.`;
   const prod=$("#productsBlock"); prod.hidden=!p.products;
   if(p.products){
     $("#productsTotal").textContent=productCount();
@@ -268,6 +287,8 @@ function renderFeatures(){
   $$(".feature-card").forEach(el=>{
     const k=el.dataset.feature, f=featureInfo(k), price=el.querySelector(".option-price");
     el.querySelector("b").textContent=t(f.label);
+    const description=el.querySelector("small");
+    if(description) description.textContent=t(featureDescriptions[k] || "Agrega esta función para ampliar las posibilidades de tu sitio web.");
     if(price){
       price.dataset.pen=f.range?f.range[0]:(f.price||0);
       if(f.range&&f.range[1]) price.dataset.penMax=f.range[1]; else delete price.dataset.penMax;
