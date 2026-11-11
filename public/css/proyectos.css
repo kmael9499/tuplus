@@ -385,3 +385,10 @@ html[data-theme="dark"] .tp-skel{filter:brightness(.92)}
 
 .tp-film .tpl-design.tpl-zenplus{height:100%;padding:0;background:#0d1320}
 .tp-film .tpl-zenplus img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+
+/* Capturas de pantalla: todas las tarjetas tienen el mismo tamaño y forma (440 x 232). Se anclan arriba a la izquierda,
+   así nunca se pierde el menú superior ni el lateral; el recorte, si lo hay, es mínimo y queda abajo o a la derecha. */
+.tp-film .tp-plane:has(.tpl-zenplus){display:flex;align-items:center}
+.tp-film .tp-card:has(.tpl-zenplus){height:232px}
+.tp-film .tpl-design.tpl-zenplus{height:100%}
+.tp-film .tpl-zenplus img{height:100%;object-fit:cover;object-position:top left}
