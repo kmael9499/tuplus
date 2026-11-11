@@ -3,13 +3,38 @@
    Para desactivarlo, quita su enlace en cotizador.astro. */
 
 .coupon-box{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
   margin:16px 0 4px;
   padding:16px;
-  border:1px solid #c7a66b55;
+  border:1px solid #c7a66b88;
   border-radius:14px;
-  background:linear-gradient(135deg,#e1c38b0f,#e1c38b03);
-  transition:border-color .25s,box-shadow .25s;
+  background:linear-gradient(135deg,#e1c38b18,#e1c38b05 58%,#e1c38b12);
+  box-shadow:0 0 0 1px #e1c38b12,0 8px 24px #0002;
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+  animation:coupon-glow 3.8s ease-in-out infinite;
 }
+/* Destello dorado que recorre el cupón para hacerlo visible sin distraer. */
+.coupon-box::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-35% -70%;
+  pointer-events:none;
+  background:linear-gradient(105deg,transparent 43%,#f7dfad08 48%,#f7dfad38 50%,#f7dfad08 52%,transparent 57%);
+  transform:translateX(-42%);
+  animation:coupon-shine 5.5s ease-in-out infinite;
+}
+@keyframes coupon-shine{
+  0%,18%{transform:translateX(-42%)}
+  78%,100%{transform:translateX(42%)}
+}
+@keyframes coupon-glow{
+  0%,100%{border-color:#c7a66b70;box-shadow:0 0 0 1px #e1c38b10,0 8px 24px #0002}
+  50%{border-color:#e1c38bcc;box-shadow:0 0 0 1px #e1c38b30,0 0 22px #e1c38b20,0 8px 24px #0002}
+}
+.coupon-box:hover{transform:translateY(-2px);border-color:#e1c38b;box-shadow:0 0 0 3px #e1c38b18,0 12px 28px #0003}
 .coupon-box:focus-within{border-color:#e1c38b99;box-shadow:0 0 0 3px #e1c38b12}
 
 .coupon-label{
@@ -103,3 +128,34 @@
   background:#e1c38b1a;color:#e4cfaa;
   font-size:13px;font-weight:600;line-height:1.4;
 }
+
+
+/* Cupón en la esquina superior derecha del primer paso */
+.step-view[data-view="1"] .view-heading{align-items:flex-start;gap:22px}
+.step-view[data-view="1"] .heading-tools{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex:0 0 285px;max-width:38%}
+.step-view[data-view="1"] .heading-tools .estimate-pill{margin:0}
+.step-view[data-view="1"] .coupon-box{width:100%;margin:0;padding:12px;border-radius:13px}
+.step-view[data-view="1"] .coupon-label{font-size:11px;margin-bottom:8px}
+.step-view[data-view="1"] .coupon-row{gap:6px}
+.step-view[data-view="1"] .coupon-input{min-height:40px;padding:8px 10px;font-size:11px;letter-spacing:.08em}
+.step-view[data-view="1"] .coupon-input::placeholder{font-size:11px}
+.step-view[data-view="1"] .coupon-btn{min-height:40px;padding:0 12px;font-size:11px}
+.step-view[data-view="1"] .coupon-msg{font-size:10px}
+@media(max-width:820px){
+  .step-view[data-view="1"] .heading-tools{flex-basis:250px;max-width:44%}
+}
+@media(max-width:620px){
+  .step-view[data-view="1"] .view-heading{display:flex;flex-direction:column;gap:14px}
+  .step-view[data-view="1"] .heading-tools{width:100%;max-width:none;flex:1;align-items:stretch}
+  .step-view[data-view="1"] .heading-tools .estimate-pill{align-self:flex-start}
+  .step-view[data-view="1"] .coupon-box{max-width:none}
+  .step-view[data-view="1"] .coupon-row{flex-direction:row}
+  .step-view[data-view="1"] .coupon-input{font-size:16px}
+  .step-view[data-view="1"] .coupon-btn{width:auto}
+}
+
+/* Etiqueta destacada del cupón */
+.step-view[data-view="1"] .coupon-label{flex-wrap:wrap}
+.coupon-tag{display:inline-flex;align-items:center;margin-left:auto;padding:3px 7px;border:1px solid #e1c38b75;border-radius:999px;background:#e1c38b1c;color:#f0d8aa;font:700 8px "DM Mono",monospace;letter-spacing:.12em;white-space:nowrap;animation:coupon-tag-pulse 2.8s ease-in-out infinite}
+@keyframes coupon-tag-pulse{0%,100%{box-shadow:0 0 0 0 #e1c38b00}50%{box-shadow:0 0 0 4px #e1c38b16}}
+@media(prefers-reduced-motion:reduce){.coupon-box,.coupon-box::before,.coupon-tag{animation:none!important;transition:none!important}}
