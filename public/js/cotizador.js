@@ -64,21 +64,21 @@ const features = {
 };
 
 const featureDescriptions = {
-  whatsapp:"Enlace directo para que tus clientes te contacten por WhatsApp.",
-  forms:"Recibe consultas y solicitudes mediante un formulario enviado a tu correo.",
-  seo:"Mejora títulos y contenido para aparecer en búsquedas relevantes de Google.",
-  analytics:"Mide visitas y acciones clave para entender el rendimiento de tu web.",
-  booking:"Permite consultar horarios y solicitar citas desde tu página.",
-  multilingual:"Muestra tu web en varios idiomas para atender a más clientes.",
-  payments:"Acepta pagos online con una pasarela compatible; sus costos van aparte.",
-  blog:"Publica y actualiza artículos o noticias desde un panel sencillo.",
-  maps:"Ubica tu negocio e incluye búsqueda de lugares o indicaciones de rutas.",
-  automation:"Automatiza tareas y conecta tu web con otras herramientas.",
-  speed:"Optimiza recursos para mejorar la velocidad de carga.",
-  security:"Refuerza accesos y configuraciones con medidas preventivas.",
-  email:"Usa correos profesionales con el dominio de tu negocio.",
-  migration:"Traslada tu web procurando conservar contenido y enlaces.",
-  geo:"Ayuda a buscadores y asistentes de IA a entender lo que ofrece tu negocio. No garantiza aparecer."
+  whatsapp:"Añade un acceso directo para que las personas puedan escribirte por WhatsApp desde tu página. Facilita las consultas, cotizaciones y coordinación con tus clientes sin que tengan que buscar tu número.",
+  forms:"Permite crear formularios para recibir consultas, solicitudes de cotización, datos de contacto o pedidos. La información se organiza mediante campos personalizados y puede enviarse al correo que indiques para que puedas responder a tus potenciales clientes.",
+  seo:"Optimiza la estructura y el contenido de tu sitio para que Google pueda entender mejor tus páginas. Se trabajan elementos como títulos, descripciones y palabras clave relacionadas con tus servicios, ayudando a que tu negocio tenga más oportunidades de aparecer en búsquedas relevantes.",
+  analytics:"Integra herramientas de medición para conocer cuántas personas visitan tu web, desde dónde llegan y qué páginas consultan. También permite revisar interacciones importantes para identificar qué contenido funciona mejor y tomar decisiones basadas en datos.",
+  booking:"Incorpora un sistema para que tus clientes puedan consultar horarios disponibles y solicitar o reservar citas directamente desde tu página. Es útil para negocios que trabajan con atención por turnos, como consultorios, salones, servicios técnicos o asesorías.",
+  multilingual:"Adapta el contenido de tu sitio para que pueda mostrarse en dos o más idiomas mediante un selector de idioma. Así, visitantes de distintos países pueden comprender mejor tus productos y servicios; la traducción y cantidad de idiomas se definen según el alcance del proyecto.",
+  payments:"Agrega una opción para que tus clientes puedan realizar pagos o continuar el proceso de compra por internet. La integración se realiza mediante una pasarela o proveedor externo compatible; sus comisiones, requisitos y posibles cargos se pagan directamente al proveedor.",
+  blog:"Añade una sección de artículos o noticias que podrás actualizar desde un administrador de contenido, sin tener que modificar el código de la página. Puedes publicar novedades, consejos, casos de trabajo y contenido útil para mantener tu web activa y compartir información con tus clientes.",
+  maps:"Integra un mapa para mostrar la ubicación de tu negocio, sucursales o puntos de atención. Según lo contratado, también puede incluir buscador de lugares o indicaciones de rutas para que los visitantes encuentren con mayor facilidad cómo llegar.",
+  automation:"Conecta procesos de tu web con herramientas externas para reducir tareas manuales, como enviar avisos, registrar solicitudes o distribuir información. Las automatizaciones específicas se definen según tu flujo de trabajo y pueden requerir servicios externos con costos propios.",
+  speed:"Mejora el rendimiento de tu sitio para que sus páginas y recursos carguen de manera más eficiente. Se revisan aspectos como imágenes, archivos y recursos que afectan la velocidad, con el objetivo de ofrecer una navegación más fluida, especialmente desde celulares y conexiones lentas.",
+  security:"Refuerza la seguridad de tu página mediante ajustes de configuración y buenas prácticas para reducir riesgos comunes. Puede incluir protección de accesos, revisión de permisos, configuración segura y medidas preventivas; no sustituye el monitoreo continuo ni garantiza que un sitio sea imposible de vulnerar.",
+  email:"Configura cuentas de correo con el nombre de tu propio dominio, por ejemplo ventas@tuempresa.com, para dar una imagen más profesional al comunicarte con tus clientes. La cantidad de buzones, capacidad y renovación dependen del proveedor de correo contratado.",
+  migration:"Traslada una página web existente a un nuevo entorno, procurando conservar su contenido, estructura y enlaces importantes. Antes del traslado se revisan los elementos del sitio para definir qué se puede migrar y evitar, en lo posible, interrupciones o pérdida de información.",
+  geo:"Prepara y estructura el contenido de tu negocio para que los motores de búsqueda y asistentes de inteligencia artificial puedan comprender mejor qué ofreces. Se trabaja la claridad de la información, preguntas frecuentes, datos del negocio y contenido útil para aumentar las posibilidades de que tu marca sea considerada en respuestas generadas por IA; no garantiza menciones ni recomendaciones."
 };
 const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",range:[1200,2000]}};
 // Soporte mensual: pago recurrente, no entra al total de implementación.
