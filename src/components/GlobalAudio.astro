@@ -1,10 +1,10 @@
-<audio id="tuplus-global-audio" src="/audio/tuplus-fondo.mp3" loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
+<audio id="tuplus-global-audio" src={`${import.meta.env.BASE_URL}audio/tuplus-fondo.mp3`} loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
 <script is:inline>
   (() => {
     const audio = document.getElementById("tuplus-global-audio");
     if (!audio || audio.dataset.initialized === "true") return;
     audio.dataset.initialized = "true";
-    audio.volume = 0.18;
+    audio.volume = 1;
     const storageKey = "tuplus-global-audio-time";
     const savePosition = () => {
       try { if (Number.isFinite(audio.currentTime)) sessionStorage.setItem(storageKey, String(audio.currentTime)); } catch (_) {}
