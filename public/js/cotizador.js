@@ -55,12 +55,30 @@ const productBlocks = {blocks20:{qty:20, price:280}, blocks50:{qty:50, price:650
 // price: importe cerrado. range: [mínimo, máximo|null] por confirmar, no se suma al total.
 const features = {
   forms:{label:"Formulario adicional",price:180}, seo:{label:"SEO de intención",price:650},
-  analytics:{label:"Analítica avanzada",range:[350,600]}, booking:{label:"Reservas",price:450},
+  analytics:{label:"Analítica avanzada",range:[450,600]}, booking:{label:"Reservas",range:[450,650]},
   multilingual:{label:"Multidioma",price:650}, payments:{label:"Pagos online",price:180},
-  blog:{label:"Blog / CMS",price:450}, maps:{label:"Mapa con buscador o rutas",range:[600,null]},
+  blog:{label:"Blog / CMS",range:[450,650]}, whatsapp:{label:"WhatsApp",price:0,included:true}, maps:{label:"Mapa con buscador o rutas",range:[600,null]},
   automation:{label:"Automatización",price:750}, speed:{label:"Performance+",range:[450,900]},
-  security:{label:"Hardening",range:[600,1200]}, email:{label:"Correo corporativo",price:120},
-  migration:{label:"Migración de web",range:[600,1200]}, geo:{label:"Contenido GEO",price:750}
+  security:{label:"Hardening",range:[600,1200]}, email:{label:"Correo corporativo",range:[120,180]},
+  migration:{label:"Migración de web",range:[600,1200]}, geo:{label:"Visibilidad en buscadores con IA (GEO)",price:750}
+};
+
+const featureDescriptions = {
+  whatsapp:"Enlace directo para que tus clientes te contacten por WhatsApp.",
+  forms:"Recibe consultas y solicitudes mediante un formulario enviado a tu correo.",
+  seo:"Mejora títulos y contenido para aparecer en búsquedas relevantes de Google.",
+  analytics:"Mide visitas y acciones clave para entender el rendimiento de tu web.",
+  booking:"Permite consultar horarios y solicitar citas desde tu página.",
+  multilingual:"Muestra tu web en varios idiomas para atender a más clientes.",
+  payments:"Acepta pagos online con una pasarela compatible; sus costos van aparte.",
+  blog:"Publica y actualiza artículos o noticias desde un panel sencillo.",
+  maps:"Ubica tu negocio e incluye búsqueda de lugares o indicaciones de rutas.",
+  automation:"Automatiza tareas y conecta tu web con otras herramientas.",
+  speed:"Optimiza recursos para mejorar la velocidad de carga.",
+  security:"Refuerza accesos y configuraciones con medidas preventivas.",
+  email:"Usa correos profesionales con el dominio de tu negocio.",
+  migration:"Traslada tu web procurando conservar contenido y enlaces.",
+  geo:"Ayuda a buscadores y asistentes de IA a entender lo que ofrece tu negocio. No garantiza aparecer."
 };
 const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",range:[1200,2000]}};
 // Soporte mensual: pago recurrente, no entra al total de implementación.
@@ -87,6 +105,7 @@ function includedFeature(k){
 }
 function featureInfo(k){
   const f = features[k];
+  if(k==="whatsapp") return {...f, price:0, range:null, included:true};
   if(includedFeature(k)) return {...f, price:0, range:null, included:true};
   // En tienda, la primera pasarela está incluida; lo que se cobra es una segunda.
   if(k==="payments") return state.project==="ecommerce"
@@ -249,8 +268,8 @@ function renderScope(){
   const tierLabel=p.custom?t("La base"):t(tierNames[state.tier]);
   const base=`${tierLabel} ${t("incluye")} ${c.included} ${unitName(c.included)}.`;
   $("#pagesHint").textContent = extra
-    ? `${base} ${t("Adicionales")}: ${extra} × ${money(p.extraRate)} = +${money(pagesExtraCost())}`
-    : `${base} ${t(p.unit==="section"?"Cada sección adicional":"Cada página adicional")}: ${money(p.extraRate)}.`;
+    ? `${base} ${extra} ${t(p.unit==="section"?"secciones adicionales":"páginas adicionales")} × ${money(p.extraRate)} = +${money(pagesExtraCost())}.`
+    : `${base} ${t(p.unit==="section"?"Cada sección adicional cuesta":"Cada página adicional cuesta")} ${money(p.extraRate)}.`;
   const prod=$("#productsBlock"); prod.hidden=!p.products;
   if(p.products){
     $("#productsTotal").textContent=productCount();
@@ -268,6 +287,8 @@ function renderFeatures(){
   $$(".feature-card").forEach(el=>{
     const k=el.dataset.feature, f=featureInfo(k), price=el.querySelector(".option-price");
     el.querySelector("b").textContent=t(f.label);
+    const description=el.querySelector("small");
+    if(description) description.textContent=t(featureDescriptions[k] || "Agrega esta función para ampliar las posibilidades de tu sitio web.");
     if(price){
       price.dataset.pen=f.range?f.range[0]:(f.price||0);
       if(f.range&&f.range[1]) price.dataset.penMax=f.range[1]; else delete price.dataset.penMax;
