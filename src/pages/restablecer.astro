@@ -1,3 +1,6 @@
+---
+import GlobalAudio from '../components/GlobalAudio.astro';
+---
 <!doctype html>
 <html lang="es">
 <head>
@@ -12,5 +15,8 @@
   <main id="contenido" class="access-main" tabindex="-1"><section class="access-card" aria-labelledby="reset-title"><span class="access-mark" aria-hidden="true">✳</span><p class="eyebrow">SEGURIDAD DE TU CUENTA</p><h1 id="reset-title">Crea una contraseña nueva.</h1><p class="access-intro">Usa al menos 12 caracteres. El enlace de recuperación vence a los 30 minutos.</p>
     <form id="reset-form" novalidate><label for="new-password">Nueva contraseña</label><input id="new-password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required placeholder="Mínimo 12 caracteres"><label for="confirm-password">Confirma tu contraseña</label><input id="confirm-password" name="confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required placeholder="Escríbela nuevamente"><p class="form-message" id="reset-message" role="status" aria-live="polite"></p><button class="button button-dark full-width" type="submit">Guardar contraseña <span aria-hidden="true">→</span></button></form>
   </section></main>
+  <GlobalAudio />
 </body>
 </html>
+
+
