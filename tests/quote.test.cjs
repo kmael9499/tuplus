@@ -64,7 +64,7 @@ for(const [key,text] of [['landing','14–16 días hábiles'],['website','20–3
  eq(run('deliveryDays()'),text);
 }
 // Soporte mensual y alojamiento anual van aparte del total.
-reset();run(`setProject('ecommerce');state.support='store';state.hosting=true`);eq(run('grandTotal()'),3490);eq(run('recurring().length'),2);
+reset();run(`setProject('ecommerce');state.support='store';state.hosting=true`);eq(run('grandTotal()'),3790);eq(run('recurring().length'),2);
 run(`Object.assign(state,{design:'custom',tax:true});state.features=new Set(['booking'])`);
 eq(run('subtotal()'),3490+850+450);eq(run('grandTotal()'),Math.round((3490+850+450)*1.18));
 run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('IGV 18%'));checks++;

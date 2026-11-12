@@ -134,7 +134,7 @@ function implementationCost(){
 }
 function rushAmount(){ return Math.round(implementationCost()*RUSH_RATE); }
 function rushCost(){ return state.rush ? rushAmount() : 0; }
-function subtotal(){ return implementationCost() + rushCost(); }
+function subtotal(){ return implementationCost() + rushCost() + (supports[state.support]?.monthly || 0); }
 /* Descuentos: cupón y descuento por fecha NO se suman, se aplica el mayor.
    Las reglas finales las valida el backend; aquí solo se muestra el efecto. */
 function subtotalUsd(){ return Math.round(toUsd(subtotal())*100)/100; }
@@ -165,7 +165,7 @@ function pending(){
 }
 const rangeText = (min,max,open) => open||max===min ? `${t("desde")} ${money(min)}` : `${money(min)} — ${money(max)}`;
 function hostingInfo(){ return state.project==="ecommerce" ? {label:"Hosting tienda + dominio básico (configuración)", yearly:900} : {label:"Hosting básico + dominio básico (configuración)", yearly:420}; }
-// Pagos recurrentes: no forman parte del total de implementación.
+// El primer mes de soporte se suma al estimado; el hosting anual se lista aparte.
 function recurring(){
   const rows = [];
   const s = supports[state.support];
@@ -518,7 +518,13 @@ $("#refreshRates").addEventListener('click',async e=>{
 });
 document.addEventListener('tuplus:language-change',()=>{sync();renderProgress()});
 window.addEventListener('beforeprint',renderSummary);
-$$("#projectOptions .choice-card").forEach(el=>el.addEventListener("click",()=>{setProject(el.dataset.key);save();sync();renderProgress()}));
+$$("#projectOptions .choice-card").forEach(el=>el.addEventListener("click",()=>{
+  const features=el.querySelector(".choice-features");
+  const expanded=el.getAttribute("aria-expanded")==="true";
+  el.setAttribute("aria-expanded",String(!expanded));
+  features.hidden=expanded;
+  setProject(el.dataset.key);save();sync();renderProgress();
+}));
 $("#tierOptions").addEventListener("click",e=>{const b=e.target.closest("[data-tier]");if(!b)return;setTier(b.dataset.tier);save();sync();$(`#tierOptions [data-tier="${state.tier}"]`)?.focus();});
 $("#tierOptions").addEventListener("keydown",e=>{
   // Flechas para moverse entre niveles, como un grupo de radios.
@@ -533,6 +539,11 @@ $$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
 }));
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
 $$(".feature-select").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
+const featureDetails=$$(".feature-grid .feature-details");
+featureDetails.forEach(detail=>detail.addEventListener("toggle",()=>{
+  if(!detail.open)return;
+  featureDetails.forEach(other=>{if(other!==detail&&other.open)other.open=false;});
+}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
