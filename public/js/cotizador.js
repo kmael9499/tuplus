@@ -55,7 +55,7 @@ const productBlocks = {blocks20:{qty:20, price:280}, blocks50:{qty:50, price:650
 // price: importe cerrado. range: [mínimo, máximo|null] por confirmar, no se suma al total.
 const features = {
   forms:{label:"Formulario adicional",price:180}, seo:{label:"SEO de intención",price:650},
-  analytics:{label:"Analítica avanzada",range:[450,600]}, booking:{label:"Reservas",range:[450,650]},
+  booking:{label:"Reservas",price:450},
   multilingual:{label:"Multidioma",price:650}, payments:{label:"Pagos online",price:180},
   blog:{label:"Blog / CMS",range:[450,650]}, whatsapp:{label:"WhatsApp",price:0,included:true}, maps:{label:"Mapa con buscador o rutas",range:[600,null]},
   automation:{label:"Automatización",price:750}, speed:{label:"Performance+",range:[450,900]},
@@ -80,9 +80,9 @@ const featureDescriptions = {
   migration:"Traslada una página web existente a un nuevo entorno, procurando conservar su contenido, estructura y enlaces importantes. Antes del traslado se revisan los elementos del sitio para definir qué se puede migrar y evitar, en lo posible, interrupciones o pérdida de información.",
   geo:"Prepara y estructura el contenido de tu negocio para que los motores de búsqueda y asistentes de inteligencia artificial puedan comprender mejor qué ofreces. Se trabaja la claridad de la información, preguntas frecuentes, datos del negocio y contenido útil para aumentar las posibilidades de que tu marca sea considerada en respuestas generadas por IA; no garantiza menciones ni recomendaciones."
 };
-const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",range:[1200,2000]}};
+const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",price:1200,range:[1200,2000]}};
 // Soporte mensual: pago recurrente, no entra al total de implementación.
-const supports = {"30":{label:"Garantía 30 días",monthly:0},web:{label:"Soporte web",monthly:150},store:{label:"Soporte tienda",monthly:300},plus:{label:"Soporte ampliado",monthly:550}};
+const supports = {"30":{label:"Sin soporte mensual adicional",monthly:0},web:{label:"Soporte web",monthly:150},store:{label:"Soporte tienda",monthly:300},plus:{label:"Soporte ampliado",monthly:550}};
 const CONTENT_PAGE = 150, CONTENT_PACK = 650; // contenido profesional: S/150 por página o S/650 cada 5
 const RUSH_RATE = .20;                         // entrega prioritaria: +20 % del valor de la implementación
 const RUSH_CUT = .75;                          // y el plazo se recorta a ese porcentaje
@@ -132,7 +132,8 @@ function implementationCost(){
   sum += designs[state.design].price || 0;
   return Math.round(sum);
 }
-function rushCost(){ return state.rush ? Math.round(implementationCost()*RUSH_RATE) : 0; }
+function rushAmount(){ return Math.round(implementationCost()*RUSH_RATE); }
+function rushCost(){ return state.rush ? rushAmount() : 0; }
 function subtotal(){ return implementationCost() + rushCost(); }
 /* Descuentos: cupón y descuento por fecha NO se suman, se aplica el mayor.
    Las reglas finales las valida el backend; aquí solo se muestra el efecto. */
@@ -159,12 +160,11 @@ function grandTotal(){ return withTax(Math.max(0, subtotal() - discountInfo().am
 function pending(){
   const items = [];
   state.features.forEach(k => { const f = featureInfo(k); if(f.range) items.push({label:f.label, range:f.range}); });
-  if(designs[state.design].range) items.push({label:`${t("Diseño")} · ${t(designs[state.design].label)}`, range:designs[state.design].range});
   const min = items.reduce((s,i)=>s+i.range[0],0), max = items.reduce((s,i)=>s+(i.range[1]??i.range[0]),0);
   return {items, min:withTax(min), max:withTax(max), open:items.some(i=>i.range[1]==null)};
 }
 const rangeText = (min,max,open) => open||max===min ? `${t("desde")} ${money(min)}` : `${money(min)} — ${money(max)}`;
-function hostingInfo(){ return state.project==="ecommerce" ? {label:"Alojamiento WooCommerce", yearly:900} : {label:"Alojamiento web", yearly:420}; }
+function hostingInfo(){ return state.project==="ecommerce" ? {label:"Hosting tienda + dominio básico (configuración)", yearly:900} : {label:"Hosting básico + dominio básico (configuración)", yearly:420}; }
 // Pagos recurrentes: no forman parte del total de implementación.
 function recurring(){
   const rows = [];
@@ -296,7 +296,8 @@ function renderFeatures(){
       price.dataset.included=String(!!f.included);
     }
     el.classList.toggle("is-included",!!f.included);
-    if(f.included) el.setAttribute("aria-disabled","true"); else el.removeAttribute("aria-disabled");
+    const select=el.querySelector(".feature-select");
+    if(select){ if(f.included){select.setAttribute("aria-disabled","true");select.disabled=true;} else {select.removeAttribute("aria-disabled");select.disabled=false;} }
     el.classList.toggle("is-pending",!!f.range);
   });
   const h=hostingInfo(), hp=$("#hostingPrice");
@@ -310,14 +311,26 @@ function sync(){
   $$("#projectOptions .choice-card").forEach(el => el.classList.toggle("selected", el.dataset.key===state.project));
   $("#pagesRange").value=state.pages; $("#pagesValue").textContent=state.pages;
   $$(".toggle-card").forEach(el => el.classList.toggle("selected", el.dataset.toggle==="contentPro" ? state.contentPro : !state.contentPro));
-  $$(".feature-card").forEach(el => el.classList.toggle("selected", state.features.has(el.dataset.feature) || el.classList.contains("is-included")));
+  $$(".feature-card").forEach(el => {
+    const selected=state.features.has(el.dataset.feature) || el.classList.contains("is-included");
+    el.classList.toggle("selected",selected);
+    el.querySelector(".feature-select")?.setAttribute("aria-pressed",String(selected));
+  });
   $$(".radio-card[data-design]").forEach(el => el.classList.toggle("selected", el.dataset.design===state.design));
   $$(".radio-card[data-support]").forEach(el => el.classList.toggle("selected", el.dataset.support===state.support));
   $("#rushToggle").classList.toggle("active", state.rush); $("#rushToggle").setAttribute("aria-pressed", state.rush);
+  // Mostrar el importe exacto del recargo, incluso antes de activar la entrega prioritaria.
+  const rushPrice = $("#rushToggle").querySelector("strong");
+  const rushDescription = $("#rushToggle").querySelector("small");
+  const rushValue = money(rushAmount());
+  if (rushPrice) rushPrice.textContent = `+${rushValue} · 20%`;
+  if (rushDescription) rushDescription.textContent = state.rush
+    ? `Entrega acelerada activada. Se añadieron ${rushValue} (20 % del valor de implementación).`
+    : `¿La necesitas antes de los plazos indicados? Al activarla se añadirán ${rushValue} (20 % del valor de implementación).`;
   $("#hostingToggle").classList.toggle("active", state.hosting); $("#hostingToggle").setAttribute("aria-pressed", state.hosting);
   $("#taxToggle").classList.toggle("active", state.tax); $("#taxToggle").setAttribute("aria-pressed", state.tax);
   $("#taxToggle").querySelector("span").textContent = "";
-  $$(".choice-card,.toggle-card,.feature-card,.radio-card:not(.tier-card)").forEach(el=>el.setAttribute("aria-pressed",String(el.classList.contains("selected"))));
+  $$(".choice-card,.toggle-card,.radio-card:not(.tier-card)").forEach(el=>el.setAttribute("aria-pressed",String(el.classList.contains("selected"))));
   $("#sideProjectName").textContent = project().custom ? t(project().label) : `${t(project().label)} · ${t(tierNames[state.tier])}`;
   const live=$("#liveTotal"), value=money(grandTotal());
   if(live.textContent!==value){
@@ -367,8 +380,10 @@ function summaryRows(){
   ];
   if(p.products) rows.push([`${productCount()} ${t("productos")}`, productsCost()?`+${money(productsCost())}`:inc]);
   rows.push([state.contentPro?"Contenido profesional":"Contenido entregado por el cliente", state.contentPro?money(contentCost()):"Sin recargo"]);
+  rows.push(["Garantía de 30 días", "Incluida · corrección de defectos del alcance aprobado"]);
+  rows.push(["Plan de soporte", t(supports[state.support].label)]);
   state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
-  if(!designs[state.design].range) rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?money(designs[state.design].price):inc]);
+  rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?`${money(designs[state.design].price)}${state.design === "premium" ? ` (${t("desde")})` : ""}`:inc]);
   if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
   rows.push(["Entrega estimada", deliveryDays()]);
   const disc = discountInfo();
@@ -385,6 +400,9 @@ function renderSummary(){
   $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
   const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${t(a)}</span><strong>${t(b)}</strong></div>`;
   let html=summaryRows().map(r=>line(r)).join("");
+  if(state.design === "premium"){
+    html+=`<div class="summary-sub">${t("Premium Motion: el estimado incluye S/1,200. El precio final puede llegar a S/2,000 según las interacciones y el alcance aprobado.")}</div>`;
+  }
   if(pend.items.length){
     html+=`<div class="summary-sub">${t("Por confirmar tras diagnóstico")}</div>`;
     html+=pend.items.map(i=>line([i.label, rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)]," is-pending")).join("");
@@ -425,8 +443,10 @@ function quoteText(){
     line(project().unit==='section'?'Secciones':'Páginas',`${state.pages} (${tierCfg().included} ${t('incluidas')})`),
     ...(project().products?[line('Productos',`${productCount()} (${tierCfg().products} ${t('incluidos')})`)]:[]),
     line('Contenido profesional',t(state.contentPro?'Sí':'No')),line('Funciones',selected),
-    line('Diseño',t(designs[state.design].label)),line('Soporte',t(supports[state.support].label)),
+    line('Diseño',state.design === "premium" ? `${t(designs[state.design].label)} — ${money(1200)} incluidos; hasta ${money(2000)} según alcance` : t(designs[state.design].label)),line('Soporte',t(supports[state.support].label)),
     line('Entrega prioritaria',state.rush?`+${money(rushCost())}`:t('No')),
+    line('Garantía', '30 días incluida · defectos del alcance aprobado'),
+    line('Hosting y dominio básico', state.hosting ? 'Seleccionado; registro del dominio al costo del proveedor' : 'No seleccionado'),
     line('IGV',t(state.tax?'CON IGV':'SIN IGV')),line('Entrega estimada',deliveryDays()),
     ...(discountInfo().amount?[line('Descuento · '+discountInfo().label,'−'+money(discountInfo().amount))]:[]),'',
     line('Cambio de referencia',`1 USD = ${fx.rates[state.currency].rate} ${state.currency} (${fx.rates[state.currency].date})`),
@@ -512,7 +532,7 @@ $$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
   const key=row.dataset.block; state[key]=clampBlocks(state[key]+Number(b.dataset.delta)); save(); sync();
 }));
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
-$$(".feature-card").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
+$$(".feature-select").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
