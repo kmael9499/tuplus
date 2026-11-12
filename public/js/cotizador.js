@@ -518,9 +518,18 @@ $("#refreshRates").addEventListener('click',async e=>{
 });
 document.addEventListener('tuplus:language-change',()=>{sync();renderProgress()});
 window.addEventListener('beforeprint',renderSummary);
-$$("#projectOptions .choice-card").forEach(el=>el.addEventListener("click",()=>{
+const projectCards=$$("#projectOptions .choice-card");
+projectCards.forEach(el=>el.addEventListener("click",()=>{
   const features=el.querySelector(".choice-features");
   const expanded=el.getAttribute("aria-expanded")==="true";
+  if(!expanded){
+    projectCards.forEach(other=>{
+      if(other===el)return;
+      other.setAttribute("aria-expanded","false");
+      const otherFeatures=other.querySelector(".choice-features");
+      if(otherFeatures)otherFeatures.hidden=true;
+    });
+  }
   el.setAttribute("aria-expanded",String(!expanded));
   features.hidden=expanded;
   setProject(el.dataset.key);save();sync();renderProgress();
