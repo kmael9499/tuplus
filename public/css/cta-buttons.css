@@ -68,7 +68,9 @@
   font-size: 15px;
   font-weight: 800;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 9px 22px rgba(97,66,11,.3), 0 0 0 5px rgba(211,166,63,.18);
-  animation: quote-button-pulse 4s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+  animation: quote-button-pulse 3.6s cubic-bezier(.22,.7,.25,1) infinite;
 }
 
 .ux-actions > .quote-highlight::after {
@@ -80,7 +82,7 @@
   border-radius: inherit;
   opacity: 0;
   pointer-events: none;
-  animation: quote-button-halo 4s ease-out infinite;
+  animation: quote-button-halo 3.6s ease-out infinite;
 }
 
 .ux-actions > .quote-highlight > span {
@@ -98,7 +100,7 @@
 
 .ux-actions > .quote-highlight:hover > span {
   background: #0f2635;
-  transform: translate(2px,-2px);
+  transform: translate(2px,-2px) scale(1.08);
 }
 
 html[data-theme="dark"] .ux-actions > .quote-highlight {
@@ -119,13 +121,13 @@ html[data-theme="dark"] .ux-actions > .quote-highlight:hover {
 }
 
 @keyframes quote-button-pulse {
-  0%, 72%, 100% { scale: 1; }
-  80% { scale: 1.045; }
-  88% { scale: 1; }
+  0%, 64%, 100% { transform: scale(1); }
+  74% { transform: scale(1.085); }
+  84% { transform: scale(1); }
 }
 
 @keyframes quote-button-halo {
-  0%, 72%, 100% { opacity: 0; transform: scale(.96); }
-  80% { opacity: .9; }
-  100% { opacity: 0; transform: scale(1.06); }
+  0%, 64%, 100% { opacity: 0; transform: scale(.94); }
+  74% { opacity: .95; transform: scale(1.035); }
+  100% { opacity: 0; transform: scale(1.13); }
 }

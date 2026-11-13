@@ -1,5 +1,6 @@
 ---
 import SiteFooter from '../components/SiteFooter.astro';
+import GlobalAudio from '../components/GlobalAudio.astro';
 ---
 <!doctype html>
 <html lang="es">
@@ -49,10 +50,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 <!-- Tablet y celular: debe ir SIEMPRE al final, después de los demás CSS -->
 <link rel="stylesheet" href="css/cotizador-tablet.css?v=20261018-1"/>
 <!-- Campo de cupón del paso 5 -->
-<link rel="stylesheet" href="css/cotizador-cupon.css?v=20261024-1"/>
+<link rel="stylesheet" href="css/cotizador-cupon.css?v=20261110-2"/>
   <link rel="stylesheet" href="css/cotizador-ray.css?v=20261028-2"/>
 <link rel="stylesheet" href="css/cotizador-niveles.css?v=20261106-1"/>
 <link rel="stylesheet" href="css/caminos.css?v=1"/><link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
+<!-- Escalado fluido para monitores grandes; cargar después de todos los estilos del cotizador. -->
+<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261112-2"/>
 <script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
 </head>
 <body>
@@ -101,7 +104,7 @@ import SiteFooter from '../components/SiteFooter.astro';
       </div>
     </section>
 
-    <div class="xd-marquee" aria-hidden="true"><div class="xd-track"><div class="xd-grp"><span>Responsive</span><span>SSL</span><span data-xd="mq1">SEO técnico</span><span>Analytics</span><span>WhatsApp</span><span data-xd="mq2">Soporte 30 días</span><span data-xd="tr3">Precio claro</span></div><div class="xd-grp"><span>Responsive</span><span>SSL</span><span data-xd="mq1">SEO técnico</span><span>Analytics</span><span>WhatsApp</span><span data-xd="mq2">Soporte 30 días</span><span data-xd="tr3">Precio claro</span></div></div></div>
+    <div class="xd-marquee" aria-hidden="true"><div class="xd-track"><div class="xd-grp"><span>Responsive</span><span>SSL</span><span data-xd="mq1">SEO técnico</span><span>WhatsApp</span><span data-xd="mq2">Soporte 30 días</span><span data-xd="tr3">Precio claro</span></div><div class="xd-grp"><span>Responsive</span><span>SSL</span><span data-xd="mq1">SEO técnico</span><span>WhatsApp</span><span data-xd="mq2">Soporte 30 días</span><span data-xd="tr3">Precio claro</span></div></div></div>
 
     <section class="xd-how xd3-how" aria-label="Cómo funciona">
       <span class="xd-k" data-xd="howK">Cómo funciona</span>
@@ -127,10 +130,6 @@ import SiteFooter from '../components/SiteFooter.astro';
           <button class="step" data-step="5" type="button"><span>05</span><div><b>Contacto</b><small>Tu propuesta</small></div></button>
         </nav>
 
-        <div class="side-mini">
-          <span class="mini-check">✓</span>
-          <div><b>Precio transparente</b><small>El precio final se confirma contigo</small></div>
-        </div>
       </div></aside>
 
       <div class="main-panel">
@@ -144,14 +143,66 @@ import SiteFooter from '../components/SiteFooter.astro';
           <section class="step-view active" data-view="1">
             <div class="view-heading">
               <div><span class="kicker">01 / FUNDACIÓN</span><h2>¿Qué quieres construir?</h2><p>Elige el formato que más se parece a tu proyecto.</p></div>
-              <span class="estimate-pill" id="estimatePill">USD · estimado</span>
+              <div class="heading-tools">
+                <span class="estimate-pill" id="estimatePill">USD · estimado</span>
+                                <div class="coupon-box" id="couponBox">
+                  <label class="coupon-label" for="couponInput">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg>
+                    ¿Tienes un cupón de descuento?
+                    <span class="coupon-tag">OFERTA</span>
+                  </label>
+                  <div class="coupon-row">
+                    <input id="couponInput" class="coupon-input" type="text" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe tu código" aria-describedby="couponMsg">
+                    <button id="couponBtn" class="coupon-btn" type="button">Aplicar</button>
+                  </div>
+                  <p class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></p>
+                </div>
+              </div>
             </div>
             <div class="option-grid project-grid" id="projectOptions">
+<<<<<<< HEAD
               <button class="choice-card selected" data-key="landing" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div><b>Landing page</b><small>Una página enfocada en conversión</small></div><strong class="option-price" data-pen="1090">desde S/1,090</strong></button>
               <button class="choice-card" data-key="website" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span><div><b>Sitio corporativo</b><small>Web profesional multipágina</small></div><strong class="option-price" data-pen="1690">desde S/1,690</strong></button>
               <button class="choice-card" data-key="catalog" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><div><b>Catálogo online</b><small>Productos, categorías y contacto</small></div><strong class="option-price" data-pen="2290">desde S/2,290</strong></button>
               <button class="choice-card" data-key="ecommerce" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 11h10.6L20 8H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg></span><div><b>Tienda e-commerce</b><small>Carrito, checkout y pagos</small></div><strong class="option-price" data-pen="3490">desde S/3,490</strong></button>
-              <button class="choice-card wide" data-key="webapp" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M9 14l-2 2 2 2M15 14l2 2-2 2"/></svg></span><div><b>Aplicación web / SaaS</b><small>Dashboard, usuarios, lógica personalizada, automatización o producto digital</small></div><strong class="option-price" data-pen="5090">desde S/5,090</strong></button>
+              <button class="choice-card wide" data-key="webapp" type="button"><span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M9 14l-2 2 2 2M15 14l2 2-2 2"/></svg></span><div><b>Aplicación web / SaaS</b><small>Dashboard, usuarios, lógica personalizada, automatización o producto digital</small></div><strong class="pedir-cotizacion" role="link" tabindex="0" data-wa-msg="Hola TUPLUS, quiero cotizar una Aplicación web / SaaS">Pedir cotización</strong></button>
+=======
+              <button class="choice-card selected" data-key="landing" type="button" aria-expanded="false" aria-controls="features-landing">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+                <div class="choice-content"><div class="choice-title"><b>Landing page</b><span class="choice-disclosure" aria-hidden="true">›</span></div><small>Una página enfocada en conversión</small>
+                  <ul class="choice-features" id="features-landing" hidden><li>Diseño personalizado y adaptable</li><li>Secciones de servicios y beneficios</li><li>Botón de WhatsApp y formulario</li><li>SEO básico y enlaces a redes sociales</li></ul>
+                </div>
+                <strong class="option-price" data-pen="1090">desde S/1,090</strong>
+              </button>
+              <button class="choice-card" data-key="website" type="button" aria-expanded="false" aria-controls="features-website">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span>
+                <div class="choice-content"><div class="choice-title"><b>Sitio corporativo</b><span class="choice-disclosure" aria-hidden="true">›</span></div><small>Web profesional multipágina</small>
+                  <ul class="choice-features" id="features-website" hidden><li>Hasta 5 páginas informativas</li><li>Inicio, nosotros, servicios y contacto</li><li>Galería o portafolio de proyectos</li><li>Formulario, mapa y WhatsApp</li><li>Diseño responsive y SEO básico</li></ul>
+                </div>
+                <strong class="option-price" data-pen="1690">desde S/1,690</strong>
+              </button>
+              <button class="choice-card" data-key="catalog" type="button" aria-expanded="false" aria-controls="features-catalog">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span>
+                <div class="choice-content"><div class="choice-title"><b>Catálogo online</b><span class="choice-disclosure" aria-hidden="true">›</span></div><small>Productos, categorías y contacto</small>
+                  <ul class="choice-features" id="features-catalog" hidden><li>Listado de productos con fotografías</li><li>Categorías y fichas de producto</li><li>Buscador o filtros de productos</li><li>Consultas y pedidos por WhatsApp</li><li>Panel para actualizar el catálogo</li></ul>
+                </div>
+                <strong class="option-price" data-pen="2290">desde S/2,290</strong>
+              </button>
+              <button class="choice-card" data-key="ecommerce" type="button" aria-expanded="false" aria-controls="features-ecommerce">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.2 11h10.6L20 8H6.2"/><circle cx="9" cy="19" r="1.3"/><circle cx="17" cy="19" r="1.3"/></svg></span>
+                <div class="choice-content"><div class="choice-title"><b>Tienda e-commerce</b><span class="choice-disclosure" aria-hidden="true">›</span></div><small>Carrito, checkout y pagos</small>
+                  <ul class="choice-features" id="features-ecommerce" hidden><li>Catálogo con precios y variantes</li><li>Carrito y proceso de compra</li><li>Integración de pasarela de pago</li><li>Gestión de pedidos y clientes</li><li>Configuración de envíos y stock</li></ul>
+                </div>
+                <strong class="option-price" data-pen="3490">desde S/3,490</strong>
+              </button>
+              <button class="choice-card wide" data-key="webapp" type="button" aria-expanded="false" aria-controls="features-webapp">
+                <span class="choice-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M9 14l-2 2 2 2M15 14l2 2-2 2"/></svg></span>
+                <div class="choice-content"><div class="choice-title"><b>Aplicación web / SaaS</b><span class="choice-disclosure" aria-hidden="true">›</span></div><small>Plataforma digital con funciones a medida</small>
+                  <ul class="choice-features" id="features-webapp" hidden><li>Inicio de sesión y roles de usuario</li><li>Panel de control y módulos personalizados</li><li>Base de datos y gestión de información</li><li>Reportes, búsquedas y filtros</li><li>Integraciones y automatizaciones según alcance</li></ul>
+                </div>
+                <strong class="option-price" data-pen="5090">desde S/5,090</strong>
+              </button>
+>>>>>>> Dennys/Prueba
             </div>
             <div class="feature-note">
               <span class="note-icon">✦</span>
@@ -216,7 +267,7 @@ import SiteFooter from '../components/SiteFooter.astro';
             <div class="section-block">
               <div class="section-label">Incluido en la base</div>
               <div class="included-grid">
-                <span>✓ Responsive</span><span>✓ SSL</span><span>✓ SEO técnico base</span><span>✓ Formulario / contacto</span><span>✓ WhatsApp</span><span>✓ Analytics listo</span><span>✓ Mapa de ubicación</span><span>✓ Optimización y seguridad básica</span><span>✓ Garantía de 30 días</span>
+                <span>✓ Responsive</span><span>✓ SSL</span><span>✓ SEO técnico base</span><span>✓ Formulario / contacto</span><span>✓ WhatsApp</span><span>✓ Mapa de ubicación</span><span>✓ Optimización y seguridad básica</span><span>✓ Garantía de 30 días</span><span>✓ Configuración de hosting y dominio básico</span>
               </div>
             </div>
           </section>
@@ -226,22 +277,60 @@ import SiteFooter from '../components/SiteFooter.astro';
               <div><span class="kicker">03 / FUNCIONES</span><h2>Haz que tu web trabaje.</h2><p>Activa solo las integraciones que realmente necesitas.</p></div>
             </div>
             <div class="feature-grid">
-              <button class="feature-card" data-feature="forms" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><b>Formulario adicional</b><small>Hasta 6 campos y un destinatario</small><em><span class="option-price" data-pen="180">+S/180</span></em></button>
-              <button class="feature-card" data-feature="seo" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span><b>SEO de intención</b><small>Hasta 5 URLs: consultas, títulos y metas</small><em><span class="option-price" data-pen="650">+S/650</span></em></button>
-              <button class="feature-card" data-feature="analytics" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg></span><b>Analítica avanzada</b><small>GTM y hasta 8 eventos</small><em><span class="option-price" data-pen="350" data-pen-max="600">S/350 — S/600</span></em></button>
-              <button class="feature-card" data-feature="booking" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><b>Reservas</b><small>Un calendario, un profesional, 3 servicios</small><em><span class="option-price" data-pen="450">+S/450</span></em></button>
-              <button class="feature-card" data-feature="multilingual" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M8.5 4v2M6 6c.8 3.4 3 5.8 6 7M12 6c-.8 3.4-3 5.8-6 7"/><path d="m13 20 3.5-8 3.5 8M14.3 17h4.4"/></svg></span><b>Multidioma</b><small>Un idioma extra, hasta 5 URLs</small><em><span class="option-price" data-pen="650">+S/650</span></em></button>
-              <button class="feature-card" data-feature="payments" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg></span><b>Pagos online</b><small>Cobros con pasarela estándar</small><em><span class="option-price" data-pen="180">+S/180</span></em></button>
-              <button class="feature-card" data-feature="blog" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1Z"/><path d="M14 7l3 3"/></svg></span><b>Blog / CMS</b><small>Artículos, categorías y un autor</small><em><span class="option-price" data-pen="450">+S/450</span></em></button>
-              <button class="feature-card" data-feature="maps" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6-5.2 6-10a6 6 0 0 0-12 0c0 4.8 6 10 6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg></span><b>Mapa con buscador o rutas</b><small>El mapa de ubicación ya está incluido</small><em><span class="option-price" data-pen="600" data-prefix="from">desde S/600</span></em></button>
-              <button class="feature-card" data-feature="automation" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M8.3 6H15a3 3 0 0 1 3 3v6.7M15.7 18H9a3 3 0 0 1-3-3V8.3"/></svg></span><b>Automatización</b><small>Un flujo con hasta 3 acciones</small><em><span class="option-price" data-pen="750">+S/750</span></em></button>
-              <button class="feature-card" data-feature="speed" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></span><b>Performance+</b><small>Hasta 6 horas de mejoras avanzadas</small><em><span class="option-price" data-pen="450" data-pen-max="900">S/450 — S/900</span></em></button>
-              <button class="feature-card" data-feature="security" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.4 3 7.9 7 9.5 4-1.6 7-5.1 7-9.5V6l-7-3Z"/><path d="m9 12 2.2 2.2L15 10.5"/></svg></span><b>Hardening</b><small>Hasta 8 horas de revisión y ajustes</small><em><span class="option-price" data-pen="600" data-pen-max="1200">S/600 — S/1,200</span></em></button>
-              <button class="feature-card" data-feature="email" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></span><b>Correo corporativo</b><small>Hasta 3 cuentas y configuración DNS</small><em><span class="option-price" data-pen="120">+S/120</span></em></button>
-              <button class="feature-card" data-feature="migration" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span><b>Migración de web</b><small>Hasta 10 URLs con redirecciones</small><em><span class="option-price" data-pen="600" data-pen-max="1200">S/600 — S/1,200</span></em></button>
-              <button class="feature-card" data-feature="geo" type="button"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 10v4M10 12h4"/></svg></span><b>Contenido GEO</b><small>Tu marca clara para buscadores con IA</small><em><span class="option-price" data-pen="750">+S/750</span></em></button>
+              <article class="feature-card" data-feature="forms">
+  <button class="feature-select" type="button" data-feature="forms" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><b>Formulario adicional</b><small>Hasta 6 campos y un destinatario</small><em><span class="option-price" data-pen="180">+S/180</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Amplía el formulario para recopilar datos específicos del cliente. Incluye hasta 6 campos personalizados y el envío de respuestas a un destinatario.</p></details>
+</article>
+              <article class="feature-card" data-feature="seo">
+  <button class="feature-select" type="button" data-feature="seo" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span><b>SEO de intención</b><small>Hasta 5 URLs: consultas, títulos y metas</small><em><span class="option-price" data-pen="650">+S/650</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Optimizamos hasta 5 páginas para búsquedas con intención: revisión de consultas, títulos, metadescripciones y estructura básica de contenido.</p></details>
+</article>
+              <article class="feature-card" data-feature="booking">
+  <button class="feature-select" type="button" data-feature="booking" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span><b>Reservas</b><small>Un calendario, un profesional, 3 servicios</small><em><span class="option-price" data-pen="450">+S/450</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Permite que tus clientes soliciten citas desde la web. Incluye un calendario, un profesional y la configuración de hasta 3 servicios.</p></details>
+</article>
+              <article class="feature-card" data-feature="multilingual">
+  <button class="feature-select" type="button" data-feature="multilingual" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h9M8.5 4v2M6 6c.8 3.4 3 5.8 6 7M12 6c-.8 3.4-3 5.8-6 7"/><path d="m13 20 3.5-8 3.5 8M14.3 17h4.4"/></svg></span><b>Multidioma</b><small>Un idioma extra, hasta 5 URLs</small><em><span class="option-price" data-pen="650">+S/650</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Añade un idioma adicional en hasta 5 URLs, con selector de idioma y adaptación de los textos proporcionados.</p></details>
+</article>
+              <article class="feature-card" data-feature="payments">
+  <button class="feature-select" type="button" data-feature="payments" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg></span><b>Pagos online</b><small>Cobros con pasarela estándar</small><em><span class="option-price" data-pen="180">+S/180</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Conecta una pasarela de pago estándar para que tus clientes puedan realizar cobros en línea. Las comisiones del proveedor se contratan por separado.</p></details>
+</article>
+              <article class="feature-card" data-feature="blog">
+  <button class="feature-select" type="button" data-feature="blog" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1Z"/><path d="M14 7l3 3"/></svg></span><b>Blog / CMS</b><small>Artículos, categorías y un autor</small><em><span class="option-price" data-pen="450">+S/450</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Incorpora una sección administrable de noticias o artículos, con categorías y un usuario autor para publicar contenido.</p></details>
+</article>
+              <article class="feature-card" data-feature="maps">
+  <button class="feature-select" type="button" data-feature="maps" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6-5.2 6-10a6 6 0 0 0-12 0c0 4.8 6 10 6 10Z"/><circle cx="12" cy="11" r="2.2"/></svg></span><b>Mapa con buscador o rutas</b><small>El mapa de ubicación ya está incluido</small><em><span class="option-price" data-pen="600" data-prefix="from">desde S/600</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Integra un mapa interactivo con buscador de ubicaciones o rutas. El mapa de ubicación simple ya forma parte de la base.</p></details>
+</article>
+              <article class="feature-card" data-feature="automation">
+  <button class="feature-select" type="button" data-feature="automation" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M8.3 6H15a3 3 0 0 1 3 3v6.7M15.7 18H9a3 3 0 0 1-3-3V8.3"/></svg></span><b>Automatización</b><small>Un flujo con hasta 3 acciones</small><em><span class="option-price" data-pen="750">+S/750</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Conecta un flujo automatizado de hasta 3 acciones, por ejemplo registrar una consulta, enviar una notificación y crear una tarea.</p></details>
+</article>
+              <article class="feature-card" data-feature="speed">
+  <button class="feature-select" type="button" data-feature="speed" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 13h6l-1 8 8-10h-6l1-8Z"/></svg></span><b>Performance+</b><small>Hasta 6 horas de mejoras avanzadas</small><em><span class="option-price" data-pen="450" data-pen-max="900">S/450 — S/900</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Realizamos una sesión de optimización de rendimiento de hasta 6 horas. El importe final depende del diagnóstico y las mejoras necesarias.</p></details>
+</article>
+              <article class="feature-card" data-feature="security">
+  <button class="feature-select" type="button" data-feature="security" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.4 3 7.9 7 9.5 4-1.6 7-5.1 7-9.5V6l-7-3Z"/><path d="m9 12 2.2 2.2L15 10.5"/></svg></span><b>Hardening</b><small>Hasta 8 horas de revisión y ajustes</small><em><span class="option-price" data-pen="600" data-pen-max="1200">S/600 — S/1,200</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Revisamos configuraciones y puntos de exposición, y aplicamos ajustes de seguridad durante un máximo de 8 horas. El alcance se valida previamente.</p></details>
+</article>
+              <article class="feature-card" data-feature="email">
+  <button class="feature-select" type="button" data-feature="email" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></span><b>Correo corporativo</b><small>Hasta 3 cuentas y configuración DNS</small><em><span class="option-price" data-pen="120">+S/120</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Configuramos hasta 3 cuentas de correo corporativo y los registros DNS necesarios. La disponibilidad y el costo del proveedor de correo se confirman aparte.</p></details>
+</article>
+              <article class="feature-card" data-feature="migration">
+  <button class="feature-selecgit add src/pages/cotizador.astrot" type="button" data-feature="migration" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span><b>Migración de web</b><small>Hasta 10 URLs con redirecciones</small><em><span class="option-price" data-pen="600" data-pen-max="1200">S/600 — S/1,200</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Trasladamos hasta 10 URLs y configuramos redirecciones para conservar el acceso a las páginas anteriores. La complejidad puede modificar el precio final.</p></details>
+</article>
+              <article class="feature-card" data-feature="geo">
+  <button class="feature-select" type="button" data-feature="geo" aria-pressed="false"><span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/><path d="M12 10v4M10 12h4"/></svg></span><b>Contenido GEO</b><small>Tu marca clara para buscadores con IA</small><em><span class="option-price" data-pen="750">+S/750</span></em></button>
+  <details class="feature-details"><summary>Ver detalles</summary><p>Preparamos contenido y estructura para que la información de tu marca sea más clara y fácil de interpretar por buscadores y asistentes con IA.</p></details>
+</article>
             </div>
-            <div class="hint">Los importes con rango se confirman tras un diagnóstico y no se suman al total.</div>
+            <div class="hint"></div>
           </section>
 
           <section class="step-view" data-view="4">
@@ -271,7 +360,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 
             <div class="section-block addons-row">
               <button class="toggle-line" id="rushToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Entrega prioritaria</b><small>¿La necesitas antes de los plazos indicados? Se acorta la entrega con un incremento del 20 % sobre el valor del proyecto</small></div><strong>+20 %</strong></button>
-              <button class="toggle-line" id="hostingToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b id="hostingLabel">Alojamiento web</b><small>Pago anual, aparte del total. Dominio al costo del registrador</small></div><strong><span class="option-price" id="hostingPrice" data-pen="420" data-period="año">S/420 / año</span></strong></button>
+              <button class="toggle-line" id="hostingToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b id="hostingLabel">Hosting básico + dominio básico</b><small>Alojamiento anual y configuración del dominio. El registro del dominio se paga al costo del proveedor.</small></div><strong><span class="option-price" id="hostingPrice" data-pen="420" data-period="año">S/420 / año</span></strong></button>
             </div>
 
             <div class="tax-card">
@@ -293,17 +382,7 @@ import SiteFooter from '../components/SiteFooter.astro';
                   <span class="currency-tag" id="summaryCurrencyTag" translate="no">PEN</span>
                 </div>
                 <div class="summary-lines" id="summaryLines"></div>
-                <div class="coupon-box" id="couponBox">
-                  <label class="coupon-label" for="couponInput">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 11v2M13 17v2"/></svg>
-                    ¿Tienes un cupón de descuento?
-                  </label>
-                  <div class="coupon-row">
-                    <input id="couponInput" class="coupon-input" type="text" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Escribe tu código" aria-describedby="couponMsg">
-                    <button id="couponBtn" class="coupon-btn" type="button">Aplicar</button>
-                  </div>
-                  <p class="coupon-msg" id="couponMsg" role="status" aria-live="polite"></p>
-                </div>
+
                 <div class="summary-note">Estimación orientativa. La moneda cambia la visualización; el importe final, impuestos y alcance se confirman en la propuesta.</div>
                 <div class="pay-box" id="payBox">
                   <span class="kicker">OPCIONES DE PAGO</span>
@@ -406,5 +485,180 @@ import SiteFooter from '../components/SiteFooter.astro';
 <script is:inline src="js/lang-flags.js?v=20261015-1" defer></script>
 <script is:inline src="js/cotizador-vuelo.js?v=20261016-1" defer></script>
 <script is:inline src="js/cotizador-cupon.js?v=20261024-1" defer></script>
+  <GlobalAudio />
 </body>
+<style is:inline>
+  /* ===== Tarjeta SaaS ===== */
+  .choice-card[data-key="webapp"]{
+    position:relative !important;
+    min-height:0 !important; height:auto !important;
+    align-items:center !important; align-content:center !important;
+    padding-block:22px !important;
+    overflow:visible;
+    box-shadow:inset 0 0 70px rgba(232,201,138,.07), 0 0 0 1px rgba(232,201,138,.12);
+  }
+  .choice-card[data-key="webapp"]::after{
+    content:""; position:absolute; right:0; top:0; bottom:0; width:42%;
+    background:radial-gradient(ellipse at 80% 50%, rgba(232,201,138,.16), transparent 70%);
+    pointer-events:none; border-radius:inherit;
+  }
+
+  /* ===== Botón ===== */
+  .choice-card .pedir-cotizacion{
+    position:relative; z-index:2; overflow:hidden;
+    display:inline-flex; align-items:center; align-self:center !important; gap:10px;
+    padding:9px 10px 9px 20px; border-radius:999px;
+    border:1px solid rgba(255,226,150,.65);
+    background:linear-gradient(135deg,#f3d98f 0%,#d9ae55 55%,#c4943a 100%);
+    color:#1b1405 !important; -webkit-text-fill-color:#1b1405;
+    font-family:'Manrope',system-ui,sans-serif !important;
+    font-size:13.5px; font-weight:800; letter-spacing:.03em;
+    text-decoration:none; text-shadow:none; white-space:nowrap; cursor:pointer;
+    box-shadow:0 4px 18px rgba(217,174,85,.28), inset 0 1px 0 rgba(255,255,255,.45);
+    transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  }
+  .choice-card .pedir-cotizacion::after{
+    content:"→"; display:inline-grid; place-items:center;
+    width:26px; height:26px; border-radius:50%;
+    background:#1b1405; color:#f3d98f; -webkit-text-fill-color:#f3d98f;
+    font-size:14px; line-height:1; transition:transform .25s ease;
+  }
+  .choice-card .pedir-cotizacion::before{
+    content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+    transform:skewX(-20deg); transition:left .6s ease;
+  }
+  .choice-card .pedir-cotizacion:hover,
+  .choice-card .pedir-cotizacion:focus-visible{
+    transform:translateY(-1px); filter:brightness(1.06);
+    box-shadow:0 8px 26px rgba(217,174,85,.45), inset 0 1px 0 rgba(255,255,255,.5);
+    outline:none;
+  }
+  .choice-card .pedir-cotizacion:hover::before,
+  .choice-card .pedir-cotizacion:focus-visible::before{ left:120% }
+  .choice-card .pedir-cotizacion:hover::after{ transform:translateX(3px) }
+  .choice-card .pedir-cotizacion:active{ transform:translateY(0) scale(.98) }
+
+  /* ===== Colibrí ===== */
+  .pc-bird{
+    position:absolute; z-index:3; pointer-events:none;
+    top:50%; right:230px; width:58px; height:58px;
+    margin-top:-29px;
+    opacity:0; transform:translateX(-140px) scale(.7) rotate(-8deg);
+    transition:opacity .35s ease, transform .6s cubic-bezier(.2,.9,.3,1.2);
+    filter:saturate(1.5) brightness(1.2) drop-shadow(0 0 6px #ffc83d) drop-shadow(0 0 18px rgba(255,190,50,.55));
+  }
+  .pc-bird img{ width:100%; height:100%; object-fit:contain; display:block }
+  .choice-card.pc-on .pc-bird{
+    opacity:1; transform:translateX(0) scale(1) rotate(0);
+    animation:pc-flotar 1.6s ease-in-out .6s infinite;
+  }
+  .choice-card.pc-on .pc-bird img{ animation:pc-aleteo .22s ease-in-out infinite alternate }
+  @keyframes pc-flotar{
+    0%,100%{ translate:0 0 } 50%{ translate:0 -8px }
+  }
+  @keyframes pc-aleteo{
+    from{ transform:scaleY(1) rotate(-2deg) } to{ transform:scaleY(.9) rotate(2deg) }
+  }
+
+  @media (max-width:640px){
+    .choice-card .pedir-cotizacion{ padding:7px 8px 7px 14px; font-size:12.5px; gap:8px }
+    .choice-card .pedir-cotizacion::after{ width:22px; height:22px; font-size:12px }
+    .pc-bird{ width:40px; height:40px; margin-top:-20px; top:14px; right:70px }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .choice-card .pedir-cotizacion,
+    .choice-card .pedir-cotizacion::before,
+    .choice-card .pedir-cotizacion::after,
+    .pc-bird{ transition:opacity .2s }
+    .choice-card.pc-on .pc-bird,
+    .choice-card.pc-on .pc-bird img{ animation:none }
+  }
+    .pc-bird{ pointer-events:auto; cursor:pointer }
+  .pc-polen{
+    position:absolute; z-index:4; pointer-events:none;
+    width:7px; height:7px; border-radius:50%;
+    background:radial-gradient(circle,#fff6c9 0%,#ffc83d 60%,transparent 100%);
+    box-shadow:0 0 8px rgba(255,200,61,.9);
+  }
+</style>
+<script is:inline>
+(function(){
+  var el=document.querySelector('.pedir-cotizacion'); if(!el) return;
+  var card=el.closest('.choice-card');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function abrirWA(){
+    var wa=document.getElementById('floatingWhatsapp')||document.querySelector('a[href*="wa.me"],a[href*="whatsapp.com"]');
+    var base=wa ? wa.href.split('?')[0] : '';
+    if(!/wa\.me|whatsapp/.test(base)) return;
+    window.open(base+'?text='+encodeURIComponent(el.dataset.waMsg),'_blank','noopener');
+  }
+
+  function polen(){
+    if(!card||reduce||!card.animate) return;
+    var c=card.getBoundingClientRect(), b=el.getBoundingClientRect();
+    var x=b.left+b.width/2-c.left, y=b.top+b.height/2-c.top;
+    for(var i=0;i<14;i++){
+      var p=document.createElement('span'); p.className='pc-polen';
+      p.style.left=x+'px'; p.style.top=y+'px';
+      card.appendChild(p);
+      var ang=Math.random()*Math.PI*2, d=40+Math.random()*60;
+      var a=p.animate([
+        {transform:'translate(-50%,-50%) scale(1)',opacity:1},
+        {transform:'translate(calc(-50% + '+Math.cos(ang)*d+'px),calc(-50% + '+(Math.sin(ang)*d-10)+'px)) scale(.2)',opacity:0}
+      ],{duration:650+Math.random()*350,easing:'cubic-bezier(.2,.8,.3,1)'});
+      a.onfinish=(function(n){return function(){n.remove();};})(p);
+    }
+  }
+
+  if(card){
+    var bird=document.createElement('span');
+    bird.className='pc-bird'; bird.setAttribute('aria-hidden','true');
+    var ref=document.querySelector('img[src$="colibri.png"]');
+    var src=ref ? ref.getAttribute('src') : 'colibri.png';
+    bird.innerHTML='<img src="'+src+'" alt="" width="58" height="58">';
+    card.appendChild(bird);
+
+    var t, busy=false;
+    function on(){ clearTimeout(t); card.classList.add('pc-on'); }
+    function off(d){ clearTimeout(t); t=setTimeout(function(){ if(!busy) card.classList.remove('pc-on'); }, d); }
+    function delay(e){ return e&&e.pointerType==='touch' ? 1400 : 350; }
+
+    [el,bird].forEach(function(n){
+      n.addEventListener('pointerenter',on);
+      n.addEventListener('pointerleave',function(e){ off(delay(e)); });
+    });
+    el.addEventListener('pointerdown',on);
+    el.addEventListener('focus',on);
+    el.addEventListener('blur',function(){ off(0); });
+
+    /* Tocar el colibrí: picada hacia el botón, polen y WhatsApp */
+    bird.addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation();
+      if(busy) return; busy=true;
+      if(reduce||!bird.animate){ abrirWA(); busy=false; return; }
+      var br=bird.getBoundingClientRect(), er=el.getBoundingClientRect();
+      var dx=(er.left+er.width/2)-(br.left+br.width/2);
+      var dy=(er.top+er.height/2)-(br.top+br.height/2);
+      var a=bird.animate([
+        {transform:'translateX(0) scale(1) rotate(0)',opacity:1},
+        {transform:'translate('+(dx*.55)+'px,'+(dy*.55-24)+'px) scale(1.25) rotate(10deg)',opacity:1,offset:.5},
+        {transform:'translate('+dx+'px,'+dy+'px) scale(.25) rotate(14deg)',opacity:0}
+      ],{duration:650,easing:'ease-in',fill:'forwards'});
+      a.onfinish=function(){
+        polen(); abrirWA();
+        card.classList.remove('pc-on'); a.cancel(); busy=false;
+      };
+    });
+  }
+
+  /* Tocar el botón: polen y WhatsApp directo */
+  function click(e){ e.preventDefault(); e.stopPropagation(); polen(); abrirWA(); }
+  el.addEventListener('click',click);
+  el.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' ') click(e); });
+})();
+</script>
 </html>
+
+

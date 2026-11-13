@@ -1,0 +1,176 @@
+/* Escalado fluido para monitores grandes y pantallas de alta resolución.
+   Mantiene el ancho de lectura y evita que la tipografía quede diminuta al crecer el viewport. */
+:root {
+  --quote-fluid-body: clamp(15px, .32vw + 12px, 18px);
+  --quote-fluid-small: clamp(12px, .18vw + 10px, 14px);
+  --quote-fluid-title: clamp(27px, 1.15vw + 17px, 42px);
+  --quote-fluid-heading: clamp(20px, .62vw + 15px, 27px);
+}
+
+html { font-size: 100%; }
+body { font-size: var(--quote-fluid-body); }
+
+@media (min-width: 1440px) {
+  .hero { gap: clamp(44px, 5vw, 100px); }
+  .hero-copy h1 { font-size: clamp(48px, 3.5vw, 76px); line-height: 1.04; }
+  .hero-copy > p { font-size: clamp(16px, .45vw + 11px, 20px); line-height: 1.7; }
+  .view-heading h2 { font-size: var(--quote-fluid-title); line-height: 1.15; }
+  .view-heading p, .hero-meta, .section-label { font-size: clamp(14px, .28vw + 11px, 17px); }
+  .choice-card b, .tier-card b, .feature-card b, .radio-card b,
+  .toggle-line b, .toggle-card b { font-size: clamp(15px, .25vw + 12px, 18px); }
+  .choice-card small, .tier-card small, .feature-card small,
+  .radio-card small, .toggle-line small, .toggle-card small,
+  .slider-hint, .product-note { font-size: var(--quote-fluid-small); line-height: 1.55; }
+  .included-grid { gap: clamp(12px, 1vw, 20px); }
+  .included-grid span { font-size: clamp(13px, .22vw + 10px, 16px); }
+  .summary-line { font-size: clamp(14px, .24vw + 11px, 17px); }
+}
+
+@media (min-width: 1920px) {
+  .hero-copy h1 { font-size: clamp(68px, 3.7vw, 84px); }
+  .hero-copy > p { font-size: 20px; }
+  .choice-card, .tier-card, .feature-card, .radio-card, .toggle-card, .toggle-line { padding: clamp(18px, 1vw, 26px); }
+}
+
+/* No permitir que textos largos o grids desborden en ventanas intermedias. */
+.choice-card small, .tier-card small, .feature-card small, .radio-card small,
+.toggle-card small, .toggle-line small { overflow-wrap: anywhere; }
+
+@media (max-width: 700px) {
+  body { font-size: 15px; }
+}
+
+
+/* Funciones: tarjeta seleccionable + descripción desplegable */
+.feature-grid { align-items: start; }
+.feature-grid > .feature-card {
+  display:flex; flex-direction:column; min-height:0;
+  align-items:stretch;
+  padding:0; border:1px solid rgba(255,255,255,.14); border-radius:20px;
+  background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
+  overflow:hidden; transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.feature-grid > .feature-card:hover { border-color:rgba(225,195,139,.58); }
+.feature-grid > .feature-card.selected {
+  border-color:#dfbf80; background:linear-gradient(120deg,rgba(225,195,139,.12),rgba(225,195,139,.035));
+  box-shadow:inset 0 0 0 1px rgba(225,195,139,.12);
+}
+.feature-select {
+  display:grid; flex:1; width:100%; box-sizing:border-box; grid-template-columns:30px minmax(0,1fr); align-content:start; align-items:start; justify-items:start; gap:7px 10px; padding:20px; border:0; border-radius:0;
+  color:inherit; text-align:left; background:transparent; font:inherit; cursor:pointer;
+  touch-action:manipulation;
+}
+.feature-select:focus-visible,.feature-details summary:focus-visible { outline:2px solid #e1c38b; outline-offset:-3px; }
+.feature-select > span { display:grid; grid-column:1; grid-row:1 / span 2; justify-self:start; place-items:center; height:30px; border:1px solid rgba(225,195,139,.25); border-radius:9px; color:#e1c38b; }
+.feature-select > b { grid-column:2; justify-self:start; text-align:left; font-size:clamp(14px,.3vw + 12px,17px); line-height:1.35; }
+.feature-select > small { display:none; }
+.feature-select > em { grid-column:2; justify-self:start; width:100%; padding-top:3px; text-align:left; font-style:normal; color:#cfb581; font-size:12px; font-weight:600; }
+.feature-details {
+  border-top:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg,rgba(255,255,255,.025),transparent 90%);
+  transition:background .24s ease;
+}
+.feature-details summary {
+  display:flex; align-items:center; justify-content:flex-start; gap:9px; min-height:44px;
+  padding:7px 12px; color:#e1c38b; cursor:pointer; list-style:none;
+  font-size:12px; font-weight:650; transition:color .22s ease,background .22s ease;
+}
+.feature-details summary::-webkit-details-marker { display:none; }
+.feature-details summary::before {
+  content:''; flex:none; width:6px; height:6px; border-radius:50%;
+  background:#e1c38b; box-shadow:0 0 10px rgba(225,195,139,.42);
+}
+.feature-details summary::after {
+  content:'⌄'; display:grid; place-items:center; flex:none; width:27px; height:27px;
+  margin-left:auto; border:1px solid rgba(225,195,139,.28); border-radius:50%;
+  background:rgba(225,195,139,.06); color:#f0cf91; font:500 17px/1 'DM Mono',monospace;
+  transform:rotate(0); transition:transform .3s cubic-bezier(.2,.75,.25,1),background .22s ease,border-color .22s ease;
+}
+.feature-details[open] { background:linear-gradient(180deg,rgba(225,195,139,.075),rgba(255,255,255,.012)); }
+.feature-details[open] summary { color:#f4dba9; }
+.feature-details[open] summary::after { transform:rotate(180deg); background:rgba(225,195,139,.15); border-color:rgba(225,195,139,.55); }
+.feature-details p {
+  position:relative; margin:0 12px 12px; padding:12px 14px 13px 15px;
+  border:1px solid rgba(225,195,139,.18); border-left:2px solid rgba(225,195,139,.72);
+  border-radius:0 12px 12px 12px;
+  background:linear-gradient(135deg,rgba(7,24,34,.58),rgba(255,255,255,.035));
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
+  color:#d1dbe0; font-size:12px; line-height:1.7;
+}
+.feature-details p::before {
+  content:'Incluye'; display:block; margin:0 0 5px;
+  color:#e1c38b; font-size:9px; font-weight:750; letter-spacing:.1em; text-transform:uppercase;
+}
+.feature-details[open] p { animation:feature-detail-reveal .34s cubic-bezier(.2,.75,.25,1) both; }
+@keyframes feature-detail-reveal {
+  from { opacity:0; transform:translateY(-7px) scale(.985); clip-path:inset(0 0 35% 0 round 12px); }
+  to { opacity:1; transform:translateY(0) scale(1); clip-path:inset(0 0 0 0 round 12px); }
+}
+@media (min-width:1440px) {
+  .feature-select { padding:clamp(20px,1.2vw,28px); gap:8px 12px; }
+  .feature-select > b { font-size:clamp(16px,.28vw + 13px,19px); }
+  .feature-select > small,.feature-details p { font-size:clamp(13px,.2vw + 10px,15px); }
+  .feature-details summary { font-size:13px; }
+}
+@media (max-width:700px) {
+  .feature-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .feature-select { padding:15px 13px; gap:7px 8px; }
+  .feature-select > b { font-size:13px; }
+  .feature-select > small { font-size:11px; }
+  .feature-select > em { font-size:11px; }
+  .feature-details summary { min-height:42px; font-size:11px; }
+  .feature-details p { font-size:11px; line-height:1.65; }
+}
+@media (max-width:420px) {
+  .feature-grid { grid-template-columns:1fr; }
+  .feature-select { padding:16px; }
+  .feature-select > b { font-size:14px; }
+  .feature-select > small,.feature-details p { font-size:12px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .feature-grid > .feature-card,.feature-details,.feature-details summary,.feature-details summary::after { transition:none; }
+  .feature-details[open] p { animation:none; }
+}
+
+/* Mantiene la flecha de cada tipo en la parte inferior de su tarjeta. */
+.choice-card { position: relative; }
+.choice-card .choice-disclosure {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  z-index: 1;
+}
+.choice-card.wide .choice-disclosure {
+  right: auto;
+  left: 18px;
+}
+
+/* Opciones más compactas y alineadas en el primer paso. */
+.project-grid { align-items: start; }
+.project-grid .choice-card { min-height: 170px; align-self: start; }
+.project-grid .choice-card.wide { grid-column:1 / -1; width:calc(50% - 5px); min-height:170px; grid-template-columns:36px minmax(0,1fr); justify-self:center; }
+.project-grid .choice-card.wide .option-price {
+  grid-column: 2;
+  justify-self: start;
+  align-self: end;
+}
+.project-grid .choice-card.wide .choice-disclosure {
+  right: 18px;
+  left: auto;
+}
+@media (max-width: 700px) {
+  .project-grid .choice-card,
+  .project-grid .choice-card.wide { min-height: 148px; }
+}
+@media (max-width: 420px) {
+  .project-grid .choice-card,
+  .project-grid .choice-card.wide { min-height: 140px; }
+}
+
+@media (max-width: 700px) {
+  .project-grid .choice-card.wide {
+    grid-column: auto;
+    width: 100%;
+    justify-self: stretch;
+  }
+}

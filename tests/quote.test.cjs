@@ -39,15 +39,17 @@ reset();run(`setProject('website');setTier('biz');state.features=new Set(['blog'
 run(`setTier('pro')`);eq(run('grandTotal()'),1690+450+650);
 reset();run(`setProject('ecommerce');state.features=new Set(['payments'])`);eq(run('grandTotal()'),3490+450);
 run(`setProject('landing');state.features=new Set(['payments','email'])`);eq(run('grandTotal()'),1090+180+120);
-// Los rangos no se suman: se listan "por confirmar".
-reset();run(`setProject('website');state.features=new Set(['analytics','security','maps']);state.design='premium'`);
-eq(run('grandTotal()'),1690);eq(run('pending().min'),350+600+600+1200);eq(run('pending().max'),600+1200+600+2000);eq(run('pending().open'),true);
-run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('Por confirmar tras diagnóstico'));checks++;
+// Los adicionales con rango siguen por confirmar, pero Premium Motion suma su mínimo al estimado.
+reset();run(`setProject('website');state.features=new Set(['security','maps']);state.design='premium'`);
+eq(run('grandTotal()'),1690+1200);eq(run('pending().min'),600+600);eq(run('pending().max'),1200+600);eq(run('pending().open'),true);
+run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('Por confirmar tras diagnóstico'));assert.ok(elements.get('#summaryLines').innerHTML.includes('S/1,200'));assert.ok(elements.get('#summaryLines').innerHTML.includes('puede llegar a S/2,000'));checks++;
 // Contenido profesional: S/150 por página, pack de 5 a S/650.
 reset();run(`setProject('website');state.contentPro=true`);eq(run('grandTotal()'),1690+650);run('state.pages=7');eq(run('grandTotal()'),1690+360+650+300);
 run(`setProject('landing');state.contentPro=true`);eq(run('grandTotal()'),1090+150);
 // Entrega prioritaria: +20 % del valor real de la implementación, sin mínimo.
-reset();run(`setProject('website');state.rush=true`);eq(run('grandTotal()'),1690+Math.round(1690*.20));
+reset();run(`setProject('website');state.design='premium'`);eq(run('implementationCost()'),1690+1200);eq(run('grandTotal()'),2890);eq(run('pending().min'),0);
+reset();run(`setProject('website');state.rush=false`);eq(run('rushAmount()'),338);eq(run('rushCost()'),0);
+run('state.rush=true');eq(run('rushCost()'),338);eq(run('grandTotal()'),1690+338);
 run(`setProject('landing')`);eq(run('grandTotal()'),1090+Math.round(1090*.20));
 reset();run(`setProject('ecommerce');state.blocks20=1;state.features=new Set(['seo']);state.rush=true`);eq(run('rushCost()'),Math.round((3490+280+650)*.20));
 // Plazos de referencia por tipo de proyecto (días hábiles) y con entrega urgente.
@@ -58,11 +60,11 @@ for(const [key,text,rush] of [['landing','14–16 días hábiles','11–12 días
 }
 // El plazo es fijo: páginas, productos, funciones, diseño y contenido extra no lo alargan.
 for(const [key,text] of [['landing','14–16 días hábiles'],['website','20–30 días hábiles'],['catalog','30–45 días hábiles'],['ecommerce','30–45 días hábiles'],['webapp','15 días hábiles']]){
- reset();run(`setProject('${key}');state.pages=18;state.blocks20=3;state.blocks50=2;state.contentPro=true;state.design='premium';state.features=new Set(['seo','forms','analytics','booking','multilingual','blog','automation','geo'])`);
+ reset();run(`setProject('${key}');state.pages=18;state.blocks20=3;state.blocks50=2;state.contentPro=true;state.design='premium';state.features=new Set(['seo','forms','booking','multilingual','blog','automation','geo'])`);
  eq(run('deliveryDays()'),text);
 }
 // Soporte mensual y alojamiento anual van aparte del total.
-reset();run(`setProject('ecommerce');state.support='store';state.hosting=true`);eq(run('grandTotal()'),3490);eq(run('recurring().length'),2);
+reset();run(`setProject('ecommerce');state.support='store';state.hosting=true`);eq(run('grandTotal()'),3790);eq(run('recurring().length'),2);
 run(`Object.assign(state,{design:'custom',tax:true});state.features=new Set(['booking'])`);
 eq(run('subtotal()'),3490+850+450);eq(run('grandTotal()'),Math.round((3490+850+450)*1.18));
 run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('IGV 18%'));checks++;

@@ -58,3 +58,54 @@ button,a,input,textarea{-webkit-tap-highlight-color:transparent}button:focus-vis
 .crypto-qr{display:grid;place-items:center;width:200px;height:200px;margin:0 auto 14px;background:#fff;border:2px dashed #c7a66b;border-radius:14px;overflow:hidden;color:#5b6b75;font-size:12px}
 .crypto-qr img{width:100%;height:100%;object-fit:contain;display:block}
 .crypto-qr [hidden]{display:none}
+
+/* Tarjetas de funciones: icono y nombre en línea; precio y beneficio debajo */
+.quote-layout .feature-card{
+  display:grid;
+  grid-template-columns:30px minmax(0,1fr);
+  grid-template-rows:auto auto auto;
+  align-items:center;
+  column-gap:10px;
+  row-gap:7px;
+  min-height:148px;
+  padding:15px;
+  text-align:left;
+}
+.quote-layout .feature-card>span{
+  grid-column:1;
+  grid-row:1;
+  width:28px;
+  height:28px;
+  margin:0;
+}
+.quote-layout .feature-card>b{
+  grid-column:2;
+  grid-row:1;
+  align-self:center;
+  min-width:0;
+  padding-right:0;
+  font-size:13px;
+  line-height:1.35;
+}
+.quote-layout .feature-card>em{
+  position:static;
+  grid-column:2;
+  grid-row:2;
+  justify-self:start;
+  font-size:10px;
+  line-height:1.3;
+  margin:0;
+}
+.quote-layout .feature-card>small{
+  grid-column:1 / -1;
+  grid-row:3;
+  margin-top:1px;
+  font-size:11px;
+  line-height:1.5;
+  color:#bacbd6;
+}
+@media(max-width:620px){
+  .quote-layout .feature-card{min-height:138px;padding:13px}
+  .quote-layout .feature-card>b{font-size:12px}
+  .quote-layout .feature-card>small{font-size:10px}
+}
