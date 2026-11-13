@@ -379,3 +379,62 @@ body { font-size: var(--quote-fluid-body); }
   [data-view="2"] .tier-grid .tier-card { grid-template-columns: 18px minmax(0,1fr) auto; }
   [data-view="2"] .included-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
+
+/* ===== Todos los pasos: titulares y espaciado más livianos ===== */
+.quote-layout .view-heading h2 { font-size: clamp(26px, 1.6vw + 14px, 38px); line-height: 1.12; }
+.quote-layout .view-heading p { font-size: 14px; margin-top: 6px; }
+.quote-layout .view-heading { margin-bottom: 16px; }
+
+/* ===== Paso 3 (Funciones): tarjetas bajas, "Ver detalles" en la fila del precio ===== */
+.feature-grid { gap: 10px; align-items: start; }
+.feature-grid > .feature-card { border-radius: 16px; }
+.feature-select { padding: 14px 16px 40px; gap: 4px 10px; }
+.feature-select > b { font-size: 14.5px; }
+.feature-select > em { padding-top: 0; }
+.feature-details { border-top: 0; background: none; position: static; }
+.feature-details summary {
+  position: absolute; right: 10px; bottom: 9px; z-index: 2; min-height: 0; padding: 4px 6px 4px 10px; gap: 6px;
+  border: 1px solid rgba(225,195,139,.28); border-radius: 99px; background: rgba(225,195,139,.07);
+  font-size: 11.5px; font-weight: 600;
+}
+.feature-details summary::before { display: none; }
+.feature-details summary::after { width: 20px; height: 20px; font-size: 14px; margin-left: 2px; border: 0; background: rgba(225,195,139,.12); }
+.feature-details[open] { background: none; }
+.feature-grid > .feature-card .xt-badge { top: -9px; right: 14px; }
+@media (max-width: 700px) {
+  .feature-select { padding: 12px 12px 40px; }
+  .feature-details summary { right: 8px; bottom: 8px; font-size: 11px; }
+}
+
+/* ===== Paso 4 (Diseño y soporte): mismas tarjetas que los niveles ===== */
+[data-view="4"] .section-block { margin-top: 14px; }
+[data-view="4"] .radio-card {
+  display: grid !important; grid-template-columns: 18px minmax(0,1fr) auto; align-items: start;
+  column-gap: 10px; min-height: 0; padding: 12px 14px;
+}
+[data-view="4"] .radio-card .radio { position: static; margin-top: 3px; width: 16px; height: 16px; }
+[data-view="4"] .radio-card > div { grid-column: 2; min-width: 0; }
+[data-view="4"] .radio-card > div small { margin-top: 3px; font-size: 11.5px; line-height: 1.45; }
+[data-view="4"] .radio-card > strong { position: static; grid-column: 3; grid-row: 1; margin: 0; font-size: 12.5px; color: #f4dba9; white-space: nowrap; }
+[data-view="4"] .toggle-line { min-height: 0; padding: 12px 14px; border-radius: 14px; }
+[data-view="4"] .toggle-line small { line-height: 1.45; }
+
+/* ===== Paso 5 (Contacto): formulario en dos columnas ===== */
+[data-view="5"] .contact-card {
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 12px; padding: 18px; align-content: start;
+}
+[data-view="5"] .contact-card > .contact-head,
+[data-view="5"] .contact-card > label:has(#telefono),
+[data-view="5"] .contact-card > label:has(#mensajeCliente),
+[data-view="5"] .contact-card > label.consent,
+[data-view="5"] .contact-card > :not(label):not(.contact-head) { grid-column: 1 / -1; }
+[data-view="5"] .contact-card label { margin: 0; font-size: 12.5px; }
+[data-view="5"] .contact-card input:not([type="checkbox"]),
+[data-view="5"] .contact-card select { min-height: 40px; padding: 8px 12px; font-size: 13.5px; margin-top: 5px; }
+[data-view="5"] .contact-card textarea { min-height: 64px; margin-top: 5px; font-size: 13.5px; }
+[data-view="5"] .summary-card { padding: 18px; }
+[data-view="5"] .summary-line, [data-view="5"] .summary-lines > * { padding-top: 8px; padding-bottom: 8px; }
+@media (max-width: 700px) { [data-view="5"] .contact-card { grid-template-columns: 1fr; } }
+/* Dirección visual: el precio va bajo la descripción para que el texto respire */
+[data-view="4"] .design-grid .radio-card > strong { grid-column: 2; grid-row: 2; margin-top: 8px; }
+[data-view="4"] .design-grid { align-items: stretch; }
