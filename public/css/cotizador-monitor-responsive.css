@@ -807,3 +807,13 @@ body { font-size: var(--quote-fluid-body); }
 [data-view="5"] .summary-line strong { font-size: 12.5px; }
 [data-view="5"] .pay-box small { font-size: 12px !important; line-height: 1.5; color: #9fb2bb; }
 [data-view="5"] .pay-box .kicker { font-size: 10px; }
+
+/* Cupón del final (paso 5): dentro del resumen, apilado y compacto */
+[data-view="5"] .coupon-box {
+  display: grid; grid-template-columns: 1fr; gap: 8px; margin: 12px 0 0; padding: 12px 14px; border-radius: 14px;
+}
+[data-view="5"] .coupon-label { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 13px; flex-wrap: wrap; }
+[data-view="5"] .coupon-input, [data-view="5"] .coupon-btn { min-height: 38px; font-size: 13px; }
+[data-view="5"] .coupon-btn { padding: 7px 16px; }
+[data-view="5"] .coupon-msg { margin: 0; font-size: 12px; }
+@media print { [data-view="5"] .coupon-box { display: none !important; } }
