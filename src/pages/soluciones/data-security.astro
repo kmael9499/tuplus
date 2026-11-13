@@ -1,4 +1,5 @@
 ---
+import NavigationStyles from "../../components/NavigationStyles.astro";
 import SiteFooter from '../../components/SiteFooter.astro';
 import GlobalAudio from '../../components/GlobalAudio.astro';
 ---
@@ -6,7 +7,7 @@ import GlobalAudio from '../../components/GlobalAudio.astro';
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Datos y seguridad | TUPLUS</title><meta name="description" content="Datos, analítica, protección y continuidad para acompañar tus procesos digitales.">
-<meta name="theme-color" content="#122c3d"><meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#122c3d"><meta name="robots" content="index, follow">
 <meta property="og:title" content="Datos y seguridad | TUPLUS"><meta property="og:description" content="Datos, analítica, protección y continuidad para acompañar tus procesos digitales."><meta property="og:type" content="website"><meta property="og:locale" content="es_LA">
 <link rel="icon" href="../imagenes/marca/simbolo-oscuro.png"><link rel="stylesheet" href="../css/style.css?v=20261011-4">
 <script is:inline src="../js/config.js?v=20260925-2" defer></script><script is:inline src="../js/quote-core.js?v=20260925-2" defer></script><script is:inline src="../js/script.js?v=20261002-1" defer></script>
@@ -18,8 +19,8 @@ import GlobalAudio from '../../components/GlobalAudio.astro';
 <link rel="stylesheet" href="../css/soluciones/solucion-v2.css?v=20261016-6"/>
 <link rel="stylesheet" href="../css/soluciones/solucion-pasos.css?v=20261016-4"/>
 <link rel="stylesheet" href="../css/soluciones/solucion-extra.css?v=20261016-3"/>
-<link rel="stylesheet" href="../css/caminos.css?v=1"/><link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
-<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+<link rel="stylesheet" href="../css/caminos.css?v=1"/><NavigationStyles />
+<script is:inline defer src="../js/navigation.js?v=20261107-3"></script>
 </head><body><svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none"><defs><filter id="brand-night-filter" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%"><feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 -3 -3 0 2" result="navyMask"/><feComposite in="navyMask" in2="SourceGraphic" operator="in" result="clippedMask"/><feFlood flood-color="#f1f1f1" result="lightInk"/><feComposite in="lightInk" in2="clippedMask" operator="in" result="lightNavy"/><feComposite in="lightNavy" in2="SourceGraphic" operator="over"/></filter></defs></svg>
 <a class="skip" href="#contenido">Saltar al contenido</a><header class="site-header"><div class="container nav-wrap">
 <a class="brand" href="../index.html#inicio" aria-label="TUPLUS, inicio"><span class="brand-art"><img class="brand-light" src="../imagenes/marca/logo-claro.png" alt="TuPlus" width="2172" height="724"><img class="brand-dark" src="../imagenes/marca/logo-claro.png" alt="TuPlus" width="2172" height="724"></span></a>
@@ -39,7 +40,7 @@ import GlobalAudio from '../../components/GlobalAudio.astro';
    <div class="sl-actions"><a class="button button-dark" href="../index.html?interes=data-security#contacto">Conversemos sobre datos y seguridad ↗</a><a class="btn-contratar" href="../cotizador.html">Contratar <span aria-hidden="true">→</span></a><a class="sl-ghost" href="#sl-signature">Ver cómo funciona <span aria-hidden="true">↓</span></a></div>
   </div>
   <figure class="sl-visual" data-tilt data-reveal>
-   <div class="sl-visual-frame"><img src="../imagenes/data-security.webp" alt="Ejemplo ilustrativo de un panel de análisis con protección y copias de seguridad" width="1200" height="800" fetchpriority="high"></div>
+   <div class="sl-visual-frame"><img src="../imagenes/data-security.webp" alt="Ejemplo ilustrativo de un panel de análisis con protección y copias de seguridad" width="1200" height="948" fetchpriority="high"></div>
    <div class="sl-float sl-float-a"><span class="sl-float-icon" aria-hidden="true">⛨</span><div><strong>Copia de seguridad completada</strong><small>Hoy · automática</small></div></div>
    <div class="sl-float sl-float-b"><span class="sl-float-icon" aria-hidden="true">✓</span><div><strong>Accesos verificados</strong><small>Solo quien debe</small></div></div>
    <figcaption><span>REFERENCIA VISUAL · DATOS Y SEGURIDAD</span>Ejemplo ilustrativo para ayudarte a imaginar tu solución.</figcaption>
