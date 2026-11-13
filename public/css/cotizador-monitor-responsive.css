@@ -569,3 +569,19 @@ body { font-size: var(--quote-fluid-body); }
 @media (max-width: 700px) {
   .project-grid .choice-card > .option-price { font-size: 13px; }
 }
+
+/* ===== Precios (corrección): solo el número, mono dorado, sin caja — igual en todos los pasos ===== */
+.project-grid .choice-card > .option-price,
+.project-grid .choice-card.selected > .option-price,
+[data-view="2"] .tier-card > strong,
+[data-view="2"] .tier-card.selected > strong,
+[data-view="2"] .toggle-card > strong,
+[data-view="4"] .radio-card > strong,
+[data-view="4"] .radio-card.selected > strong,
+[data-view="4"] .toggle-line > strong,
+.feature-select > em .option-price,
+[data-view="2"] .stepper small .option-price {
+  padding: 0; border: 0; border-radius: 0; background: none;
+  color: #f4dba9; font-family: "DM Mono", monospace; font-size: 14px; font-weight: 600; letter-spacing: .01em;
+}
+.feature-select > em { color: #f4dba9; }
