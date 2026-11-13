@@ -549,10 +549,21 @@ $$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
 $$(".feature-select").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
 const featureDetails=$$(".feature-grid .feature-details");
+// El panel "Qué incluye" ocupa todo el ancho de su grupo, debajo de la tarjeta, para no salirse de la pantalla.
+function placeFeatureMore(detail){
+  const more=detail.querySelector(".feature-more"),card=detail.closest(".feature-card"),group=detail.closest(".feature-group");
+  if(!more||!card||!group)return;
+  if(getComputedStyle(more).position!=="absolute"){more.style.left=more.style.right=more.style.width="";return;}
+  const c=card.getBoundingClientRect(),g=group.getBoundingClientRect();
+  more.style.left=(g.left-c.left-1)+"px";more.style.right="auto";more.style.width=(g.width+2)+"px";
+}
 featureDetails.forEach(detail=>detail.addEventListener("toggle",()=>{
   if(!detail.open)return;
   featureDetails.forEach(other=>{if(other!==detail&&other.open)other.open=false;});
+  placeFeatureMore(detail);
+  requestAnimationFrame(()=>{placeFeatureMore(detail);setTimeout(()=>{if(detail.open)placeFeatureMore(detail);},480);});
 }));
+window.addEventListener("resize",()=>featureDetails.forEach(d=>{if(d.open)placeFeatureMore(d);}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
