@@ -1,4 +1,11 @@
-<audio id="tuplus-global-audio" src={`${import.meta.env.BASE_URL}audio/tuplus-fondo.mp3`} loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
+---
+// Ruta relativa a la página (igual que el resto del sitio) para funcionar en /tuplus/ y en subcarpetas.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const rel = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) : Astro.url.pathname;
+const depth = Math.max(0, rel.split('/').filter(Boolean).length - 1);
+const audioSrc = '../'.repeat(depth) + 'audio/tuplus-fondo.mp3';
+---
+<audio id="tuplus-global-audio" src={audioSrc} loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
 <script is:inline>
   (() => {
     const audio = document.getElementById("tuplus-global-audio");
