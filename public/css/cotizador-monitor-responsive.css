@@ -438,3 +438,41 @@ body { font-size: var(--quote-fluid-body); }
 /* Dirección visual: el precio va bajo la descripción para que el texto respire */
 [data-view="4"] .design-grid .radio-card > strong { grid-column: 2; grid-row: 2; margin-top: 8px; }
 [data-view="4"] .design-grid { align-items: stretch; }
+
+/* ===== Alcance: composición en bloques ordenados =====
+   Nivel (ancho completo) → Tamaño | Productos → Contenido | Incluido en la base */
+@media (min-width: 901px) {
+  .step-view.active[data-view="2"] {
+    display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 16px; align-content: start;
+  }
+  [data-view="2"] > .view-heading,
+  [data-view="2"] > .tier-block,
+  [data-view="2"] > .tier-custom { grid-column: 1 / -1; }
+  [data-view="2"] > .view-heading { margin-bottom: 0; }
+  [data-view="2"] > .tier-block, [data-view="2"] > .section-block { margin-top: 0; margin-bottom: 0; }
+  [data-view="2"] > .tier-custom[hidden] { display: none; }
+
+  /* Tamaño junto a Productos (si no hay productos, el deslizador ocupa todo el ancho) */
+  [data-view="2"] > .slider-card { grid-column: 1 / -1; align-self: stretch; }
+  [data-view="2"]:has(#productsBlock:not([hidden])) > .slider-card { grid-column: 1; }
+  [data-view="2"] > #productsBlock:not([hidden]) { grid-column: 2; display: flex; }
+  [data-view="2"] > #productsBlock > .section-label { display: none; }
+  [data-view="2"] > #productsBlock > .product-card { flex: 1; display: flex; flex-direction: column; }
+  [data-view="2"] .product-steppers { grid-template-columns: 1fr; margin-top: 10px; }
+  [data-view="2"] .product-note { margin-top: auto; padding-top: 10px; }
+
+  /* Contenido | Incluido en la base */
+  [data-view="2"] > .section-block:nth-of-type(n) { min-width: 0; }
+  [data-view="2"] .option-grid.two { grid-template-columns: 1fr; gap: 8px; }
+  [data-view="2"] .included-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+/* Etiquetas de sección con una línea guía para separar bloques */
+[data-view="2"] .section-label, [data-view="2"] .tier-block .section-label {
+  display: flex; align-items: center; gap: 10px; color: #e1c38b;
+}
+[data-view="2"] #productsBlock > .section-label { display: none; }
+[data-view="2"] .section-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(225,195,139,.3), transparent); }
+@media (min-width: 901px) {
+  [data-view="2"] > .slider-card { display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  [data-view="2"] .included-grid span:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
