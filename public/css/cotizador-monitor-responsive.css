@@ -210,3 +210,52 @@ body { font-size: var(--quote-fluid-body); }
   }
   .project-grid .choice-card.selected > .option-price { background:#e1c38b; border-color:#e1c38b; color:#112e40; }
 }
+
+/* ===== Paso 1 compacto: tarjetas bajas, flecha junto al título, "Más elegido" sobre el borde ===== */
+.project-grid { gap: 10px; align-items: start; }
+.project-grid .choice-card,
+.project-grid .choice-card.wide {
+  min-height: 0; padding: 14px 16px; gap: 6px 12px; overflow: visible;
+}
+.project-grid .choice-card .choice-icon { width: 34px; height: 34px; border-radius: 10px; }
+.project-grid .choice-card .choice-title { gap: 8px; }
+.project-grid .choice-card .choice-disclosure {
+  position: static; width: 22px; height: 22px; font-size: 18px; border-radius: 7px; opacity: .85;
+}
+.project-grid .choice-card .choice-content small { display: block; margin-top: 3px; line-height: 1.45; }
+.project-grid .choice-card .choice-features { margin: 10px 0 2px; padding-left: 18px; font-size: 12.5px; line-height: 1.6; color: #c3d0d8; }
+.project-grid .choice-card .xt-badge { top: -9px; right: 14px; }
+
+@media (min-width: 701px) {
+  .project-grid .choice-card > .option-price { top: 14px; right: 14px; font-size: 14px; padding: 6px 11px; }
+  .project-grid .choice-card .choice-content { padding-right: 140px; }
+  .project-grid .choice-card.wide {
+    width: 100%; grid-column: 1 / -1; justify-self: stretch;
+    grid-template-columns: 34px minmax(0,1fr) auto; align-items: center;
+  }
+  .project-grid .choice-card.wide .choice-content { padding-right: 0; }
+  .project-grid .choice-card.wide .pedir-cotizacion { grid-column: 3; grid-row: 1; align-self: center; }
+}
+
+/* Paquetes rápidos y nota final menos pesados */
+.xt-presets, .quick-packs { gap: 8px; }
+.feature-note { padding: 10px 14px; margin-top: 12px; }
+.feature-note .note-icon { width: 30px; height: 30px; }
+
+/* Encabezado y chips del paso 1 más livianos */
+.quote-layout .xt-chips { gap: 6px; margin-top: 12px; }
+.quote-layout .xt-chip { font-size: 12px; padding: 5px 11px; }
+.quote-layout .view-heading { gap: 16px; margin-bottom: 14px; }
+.quote-layout .coupon-box { padding: 11px 13px; gap: 8px; }
+.quote-layout .coupon-label { font-size: 13px; gap: 8px; }
+.quote-layout .coupon-input { min-height: 38px; padding: 7px 12px; font-size: 13px; }
+.quote-layout .coupon-btn { min-height: 38px; padding: 7px 16px; font-size: 13px; }
+.quote-layout .coupon-msg { margin: 4px 0 0; font-size: 12px; }
+.quote-layout .xt-presets { margin-top: 16px; }
+
+.quote-layout .xt-chips .xt-chip { font-size: 12px !important; padding: 5px 11px !important; }
+@media (min-width: 701px) {
+  .project-grid .choice-card:not(.wide) .choice-content { padding-right: 0; }
+  .project-grid .choice-card:not(.wide) .choice-content > .choice-title,
+  .project-grid .choice-card:not(.wide) .choice-content > small { padding-right: 140px; }
+}
