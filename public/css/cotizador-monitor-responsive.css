@@ -259,3 +259,73 @@ body { font-size: var(--quote-fluid-body); }
   .project-grid .choice-card:not(.wide) .choice-content > .choice-title,
   .project-grid .choice-card:not(.wide) .choice-content > small { padding-right: 140px; }
 }
+
+/* ===== Cabecera del paso 1: título a la izquierda, cupón en una franja propia ===== */
+[data-view="1"] .view-heading {
+  display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: start; gap: 6px 16px; margin-bottom: 16px;
+}
+[data-view="1"] .view-heading > div:first-child { grid-column: 1; grid-row: 1; }
+[data-view="1"] .view-heading > .heading-tools { display: contents !important; }
+[data-view="1"] .estimate-pill { grid-column: 2; grid-row: 1; justify-self: end; align-self: start; }
+[data-view="1"] .coupon-box {
+  grid-column: 1 / -1; grid-row: 2; margin-top: 8px;
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(260px,380px); align-items: center; gap: 4px 18px;
+  padding: 10px 14px; border-radius: 14px; max-width: none; width: 100%;
+}
+[data-view="1"] .coupon-label { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 13.5px; white-space: nowrap; }
+[data-view="1"] .coupon-tag { margin-left: 2px; position: static; }
+[data-view="1"] .coupon-row { margin: 0; }
+[data-view="1"] .coupon-msg { grid-column: 1 / -1; }
+@media (max-width: 700px) {
+  [data-view="1"] .coupon-box { grid-template-columns: 1fr; }
+  [data-view="1"] .coupon-label { white-space: normal; }
+}
+
+/* ===== Detalle de cada tipo: píldoras en una fila y tarjetas vecinas al mismo alto ===== */
+.project-grid { align-items: stretch; }
+.project-grid .choice-card { align-self: stretch; }
+.project-grid .choice-card .choice-features {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none;
+}
+.project-grid .choice-card .choice-features[hidden] { display: none; }
+.project-grid .choice-card .choice-features li {
+  padding: 4px 10px; border: 1px solid rgba(225,195,139,.28); border-radius: 99px;
+  background: rgba(225,195,139,.08); color: #dfe8ec; font-size: 12px; line-height: 1.35;
+}
+.project-grid .choice-card .choice-features li::before { content: none; }
+
+/* ===== Zona inferior: paquetes, nota, navegación y garantías más ligeras ===== */
+.quote-layout .xt-presets-grid { gap: 8px; margin-top: 8px; }
+.quote-layout .xt-preset { padding: 10px 13px; border-radius: 12px; }
+.quote-layout .xt-preset b { font-size: 13.5px; }
+.quote-layout .xt-preset small { margin-top: 2px; font-size: 11.5px; }
+.quote-layout .feature-note { display: flex; align-items: center; gap: 12px; padding: 9px 14px; margin-top: 10px; border-radius: 12px; }
+.quote-layout .feature-note > div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.quote-layout .feature-note p { margin: 0; }
+.quote-layout .nav-row { margin-top: 16px; padding-top: 16px; }
+.quote-layout .xd-trust {
+  grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0; margin-top: 16px;
+  border: 1px solid rgba(225,195,139,.18); border-radius: 14px; background: rgba(255,255,255,.025); overflow: hidden;
+}
+.quote-layout .xd-trust > div { padding: 12px 16px; border: 0; border-left: 1px solid rgba(225,195,139,.14); border-radius: 0; background: none; }
+.quote-layout .xd-trust > div:first-child { border-left: 0; }
+@media (max-width: 900px) {
+  .quote-layout .xd-trust { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .quote-layout .xd-trust > div:nth-child(3) { border-left: 0; }
+  .quote-layout .xd-trust > div:nth-child(n+3) { border-top: 1px solid rgba(225,195,139,.14); }
+}
+@media (max-width: 520px) {
+  .quote-layout .xd-trust { grid-template-columns: 1fr; }
+  .quote-layout .xd-trust > div { border-left: 0; }
+  .quote-layout .xd-trust > div:nth-child(n+2) { border-top: 1px solid rgba(225,195,139,.14); }
+}
+
+/* Detalle desplegado en 2 columnas para que la tarjeta crezca poco */
+.project-grid .choice-card .choice-features:not([hidden]) {
+  display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 6px;
+}
+.project-grid .choice-card .choice-features li {
+  border-radius: 10px; font-size: 11.5px; padding: 5px 9px; display: flex; align-items: center;
+}
+.project-grid .choice-card .choice-features li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (max-width: 420px) { .project-grid .choice-card .choice-features:not([hidden]) { grid-template-columns: 1fr; } }
