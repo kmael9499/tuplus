@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --force",
     "build": "astro build",
     "preview": "astro preview",
     "test": "astro build && node tests/site.test.cjs && node tests/quote.test.cjs && node tests/i18n.test.cjs && node tests/partner.test.cjs && node tests/partner-footer.test.cjs && node tests/partner-application.test.cjs && node tests/socios.test.cjs && node tests/socios-application.test.cjs && node tests/navigation.test.cjs"
