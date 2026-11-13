@@ -187,3 +187,26 @@ body { font-size: var(--quote-fluid-body); }
     justify-self: stretch;
   }
 }
+
+/* Precio del tipo de proyecto: arriba a la derecha, junto a la descripción, bien visible. */
+@media (min-width: 701px) {
+  .project-grid .choice-card > .option-price {
+    position: absolute; top: 40px; right: 16px; z-index: 1;
+    margin: 0; padding: 7px 12px; border-radius: 10px;
+    border: 1px solid rgba(225,195,139,.4); background: rgba(225,195,139,.12);
+    color: #f4dba9; font-size: 15px; font-weight: 700; letter-spacing: .01em; line-height: 1.2;
+  }
+  .project-grid .choice-card.selected > .option-price {
+    background: #e1c38b; border-color: #e1c38b; color: #112e40;
+  }
+  .project-grid .choice-card .choice-content { padding-right: 150px; }
+  .project-grid .choice-card.wide .choice-content { padding-right: 0; }
+}
+@media (max-width: 700px) {
+  .project-grid .choice-card > .option-price {
+    justify-self: start; padding: 6px 10px; border-radius: 9px;
+    border: 1px solid rgba(225,195,139,.4); background: rgba(225,195,139,.12);
+    color: #f4dba9; font-size: 14px; font-weight: 700;
+  }
+  .project-grid .choice-card.selected > .option-price { background:#e1c38b; border-color:#e1c38b; color:#112e40; }
+}
