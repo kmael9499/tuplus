@@ -515,3 +515,24 @@ body { font-size: var(--quote-fluid-body); }
 /* Productos: cabecera y filas más limpias */
 [data-view="2"] .stepper { background: rgba(255,255,255,.03); border-color: transparent; }
 [data-view="2"] .product-head small { padding: 4px 10px; border-radius: 99px; background: rgba(225,195,139,.1); color: #f0d8aa; }
+
+/* ===== Alcance, tercera pasada: los cuatro paneles comparten la misma estructura =====
+   etiqueta en mayúsculas arriba → valor grande → control → nota al pie */
+[data-view="2"] .slider-card,
+[data-view="2"] .product-card { padding: 16px 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.012)); }
+[data-view="2"] .slider-top > div,
+[data-view="2"] .product-head > div { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+[data-view="2"] .slider-top > div > span,
+[data-view="2"] .product-head > div > span {
+  color: #e1c38b; font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+}
+[data-view="2"] .slider-top, [data-view="2"] .product-head { align-items: flex-start; }
+[data-view="2"] .slider-top b, [data-view="2"] .product-head b { font-size: 36px; line-height: 1.05; }
+[data-view="2"] .slider-top > .mono { padding: 3px 9px; border-radius: 99px; background: rgba(255,255,255,.05); font-size: 11px; }
+@media (min-width: 901px) {
+  [data-view="2"] > .slider-card { justify-content: flex-start; gap: 6px; }
+  [data-view="2"] > .slider-card input { margin-top: 10px; }
+  [data-view="2"] > .slider-card .slider-hint { margin-top: auto; }
+  [data-view="2"] .product-steppers { margin-top: 12px; }
+}
