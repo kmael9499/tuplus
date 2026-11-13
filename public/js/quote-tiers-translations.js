@@ -92,7 +92,11 @@ const rows=[
 ['Por confirmar, no incluido','To be confirmed, not included','A confirmar, não incluído','À confirmer, non inclus','Noch zu bestätigen, nicht enthalten','Уточняется, не включено','待确认，不计入','要確認・合計外'],
 ['Precio según el alcance elegido','Price based on the scope you chose','Preço conforme o escopo escolhido','Prix selon le périmètre choisi','Preis nach gewähltem Umfang','Цена по выбранному объёму','价格依据所选范围','選んだ範囲に基づく価格'],
 ['Por confirmar tras diagnóstico','To be confirmed after assessment','A confirmar após diagnóstico','À confirmer après diagnostic','Nach Analyse zu bestätigen','Уточняется после диагностики','诊断后确认','診断後に確定'],
-['Pagos recurrentes, aparte del total','Recurring payments, separate from the total','Pagamentos recorrentes, à parte do total','Paiements récurrents, hors total','Wiederkehrende Zahlungen, getrennt von der Summe','Регулярные платежи, отдельно от итога','定期费用，不计入总额','定期支払い（合計とは別）']
+['Pagos recurrentes, aparte del total','Recurring payments, separate from the total','Pagamentos recorrentes, à parte do total','Paiements récurrents, hors total','Wiederkehrende Zahlungen, getrennt von der Summe','Регулярные платежи, отдельно от итога','定期费用，不计入总额','定期支払い（合計とは別）'],
+['Captar clientes','Win customers','Captar clientes','Attirer des clients','Kunden gewinnen','Привлечение клиентов','获取客户','集客'],
+['Visibilidad y contenido','Visibility and content','Visibilidade e conteúdo','Visibilité et contenu','Sichtbarkeit und Inhalte','Видимость и контент','可见度与内容','露出とコンテンツ'],
+['Presencia y comunicación','Presence and communication','Presença e comunicação','Présence et communication','Präsenz und Kommunikation','Присутствие и коммуникация','形象与沟通','存在感とコミュニケーション'],
+['Operación y respaldo técnico','Operations and technical backup','Operação e suporte técnico','Exploitation et appui technique','Betrieb und technische Absicherung','Операции и техническая поддержка','运营与技术保障','運用と技術サポート']
 ];
 const T=window.TUPLUS_TRANSLATIONS=window.TUPLUS_TRANSLATIONS||{};
 for(const [es,...values] of rows) L.forEach((locale,i)=>{(T[locale]=T[locale]||{})[es]=values[i];});
