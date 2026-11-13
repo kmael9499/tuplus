@@ -329,3 +329,53 @@ body { font-size: var(--quote-fluid-body); }
 }
 .project-grid .choice-card .choice-features li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 @media (max-width: 420px) { .project-grid .choice-card .choice-features:not([hidden]) { grid-template-columns: 1fr; } }
+
+/* ===== Paso 2 (Alcance) compacto y ordenado ===== */
+[data-view="2"] .section-block { margin-top: 16px; }
+[data-view="2"] .section-label { margin-bottom: 8px; }
+[data-view="2"] .tier-block { margin-top: 4px; margin-bottom: 12px; }
+
+/* Niveles: radio | título + alcance | precio, sin que el radio pise el texto */
+[data-view="2"] .tier-grid { gap: 10px; }
+[data-view="2"] .tier-grid .tier-card {
+  display: grid !important; grid-template-columns: 18px minmax(0,1fr) auto; align-items: start;
+  column-gap: 10px; row-gap: 0; min-height: 0; padding: 12px 14px; justify-content: stretch;
+}
+[data-view="2"] .tier-card .radio { position: static; margin-top: 3px; width: 16px; height: 16px; }
+[data-view="2"] .tier-card > div { grid-column: 2; min-width: 0; }
+[data-view="2"] .tier-card > div b { font-size: 14px; }
+[data-view="2"] .tier-card > div small { margin-top: 3px; font-size: 11.5px; line-height: 1.45; }
+[data-view="2"] .tier-card > strong { position: static; grid-column: 3; grid-row: 1; margin: 0; font-size: 13px; color: #f4dba9; }
+
+/* Deslizador */
+[data-view="2"] .slider-card { padding: 14px 18px 12px; border-radius: 16px; }
+[data-view="2"] .slider-top { align-items: center; }
+[data-view="2"] .slider-top > div { display: flex; align-items: baseline; gap: 12px; }
+[data-view="2"] .slider-top b { font-size: 28px; line-height: 1; }
+[data-view="2"] .slider-card .slider-hint { margin: 8px 0 0; padding-top: 8px; font-size: 12px; }
+[data-view="2"] .range-labels { margin-top: 4px; }
+
+/* Carga de productos */
+[data-view="2"] .product-card { padding: 14px 16px; border-radius: 16px; }
+[data-view="2"] .product-head { align-items: center; }
+[data-view="2"] .product-head > div { display: flex; align-items: baseline; gap: 12px; }
+[data-view="2"] .product-head b { font-size: 26px; }
+[data-view="2"] .product-steppers { margin-top: 10px; gap: 8px; }
+[data-view="2"] .stepper { padding: 8px 8px 8px 14px; border-radius: 12px; }
+[data-view="2"] .stepper-ctrl button { width: 38px; height: 38px; border-radius: 10px; }
+[data-view="2"] .product-note { margin: 10px 0 0; }
+
+/* Contenido */
+[data-view="2"] .toggle-card { min-height: 0; padding: 12px 14px 12px 46px; border-radius: 14px; }
+[data-view="2"] .toggle-card .check { left: 14px; top: 13px; }
+
+/* Incluido en la base: chips ligeros */
+[data-view="2"] .included-grid { gap: 6px; }
+[data-view="2"] .included-grid span {
+  padding: 7px 11px; border-radius: 10px; font-size: 12px; color: #c3d0d8;
+  background: rgba(225,195,139,.05); border-color: rgba(225,195,139,.16);
+}
+@media (max-width: 700px) {
+  [data-view="2"] .tier-grid .tier-card { grid-template-columns: 18px minmax(0,1fr) auto; }
+  [data-view="2"] .included-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
