@@ -536,3 +536,12 @@ body { font-size: var(--quote-fluid-body); }
   [data-view="2"] > .slider-card .slider-hint { margin-top: auto; }
   [data-view="2"] .product-steppers { margin-top: 12px; }
 }
+
+/* Deslizador: contenido agrupado y centrado, sin hueco entre el control y la nota */
+@media (min-width: 901px) {
+  [data-view="2"] > .slider-card { justify-content: center; gap: 4px; }
+  [data-view="2"] > .slider-card .slider-top { margin-bottom: 4px; }
+  [data-view="2"] > .slider-card input { margin-top: 14px; }
+  [data-view="2"] > .slider-card .range-labels { margin-top: 6px; }
+  [data-view="2"] > .slider-card .slider-hint { margin-top: 16px; }
+}
