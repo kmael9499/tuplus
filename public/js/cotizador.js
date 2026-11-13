@@ -493,6 +493,7 @@ function sendToBackend(){
       .then(async response=>{
         const result=await response.json();
         if(!response.ok||(result.status!=="success"&&result.estado!=="correcto")) throw new Error("save");
+        window.TUPLUS_LOG?.('cotizacion_guardada', { proyecto: payload.proyecto, moneda: payload.moneda, total_pen: payload.total_pen });
         return true;
       })
       .catch(()=>{ toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."); return false; })

@@ -18,6 +18,15 @@ npm run preview   # sirve dist/ para revisarlo
 npm test          # compila y ejecuta los tests de tests/
 ```
 
+### Ver los logs en la terminal
+
+Ejecuta `npm run dev` desde la raíz y abre `http://localhost:4321` en el navegador.
+Al guardar una cotización correctamente, aparece en esa terminal un evento
+`[TUPLUS]` con IP de la conexión local, navegador, proyecto, moneda e importe.
+Abrir páginas no genera eventos. La IP local no identifica la IP pública del cliente.
+Para detener el servidor, presiona `Ctrl+C`. Esta salida funciona en desarrollo
+local; no envía datos de formularios ni registra los logs del ERP en Render.
+
 Al hacer push a `main`, el sitio se publica solo (`.github/workflows/deploy.yml`).
 
 ### API durante el desarrollo
