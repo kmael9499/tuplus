@@ -92,7 +92,19 @@ const rows=[
 ['Por confirmar, no incluido','To be confirmed, not included','A confirmar, não incluído','À confirmer, non inclus','Noch zu bestätigen, nicht enthalten','Уточняется, не включено','待确认，不计入','要確認・合計外'],
 ['Precio según el alcance elegido','Price based on the scope you chose','Preço conforme o escopo escolhido','Prix selon le périmètre choisi','Preis nach gewähltem Umfang','Цена по выбранному объёму','价格依据所选范围','選んだ範囲に基づく価格'],
 ['Por confirmar tras diagnóstico','To be confirmed after assessment','A confirmar após diagnóstico','À confirmer après diagnostic','Nach Analyse zu bestätigen','Уточняется после диагностики','诊断后确认','診断後に確定'],
-['Pagos recurrentes, aparte del total','Recurring payments, separate from the total','Pagamentos recorrentes, à parte do total','Paiements récurrents, hors total','Wiederkehrende Zahlungen, getrennt von der Summe','Регулярные платежи, отдельно от итога','定期费用，不计入总额','定期支払い（合計とは別）']
+['Pagos recurrentes, aparte del total','Recurring payments, separate from the total','Pagamentos recorrentes, à parte do total','Paiements récurrents, hors total','Wiederkehrende Zahlungen, getrennt von der Summe','Регулярные платежи, отдельно от итога','定期费用，不计入总额','定期支払い（合計とは別）'],
+['Captar clientes','Win customers','Captar clientes','Attirer des clients','Kunden gewinnen','Привлечение клиентов','获取客户','集客'],
+['Visibilidad y contenido','Visibility and content','Visibilidade e conteúdo','Visibilité et contenu','Sichtbarkeit und Inhalte','Видимость и контент','可见度与内容','露出とコンテンツ'],
+['Qué incluye','What’s included','O que inclui','Ce qui est inclus','Was enthalten ist','Что входит','包含内容','含まれるもの'],
+['Añadir a mi cotización','Add to my quote','Adicionar à minha cotação','Ajouter à mon devis','Zu meinem Angebot hinzufügen','Добавить в мою смету','添加到我的报价','見積もりに追加'],
+['Quitar de mi cotización','Remove from my quote','Remover da minha cotação','Retirer de mon devis','Aus meinem Angebot entfernen','Убрать из сметы','从我的报价中移除','見積もりから削除'],
+['Incluido en tu nivel','Included in your tier','Incluído no seu nível','Inclus dans votre niveau','In Ihrer Stufe enthalten','Входит в ваш уровень','已包含在您的级别中','ご利用レベルに含まれます'],
+['Tu selección','Your selection','Sua seleção','Votre sélection','Ihre Auswahl','Ваш выбор','您的选择','選択中'],
+['Aún no has elegido funciones. Pasa el mouse por una para ver su detalle.','You haven’t picked any features yet. Hover over one to see its details.','Você ainda não escolheu funções. Passe o mouse sobre uma para ver os detalhes.','Vous n’avez pas encore choisi de fonctions. Survolez-en une pour voir le détail.','Sie haben noch keine Funktionen gewählt. Fahren Sie über eine, um Details zu sehen.','Вы пока ничего не выбрали. Наведите курсор на функцию, чтобы увидеть детали.','您还没有选择功能。将鼠标悬停在某项上即可查看详情。','まだ機能を選んでいません。カーソルを合わせると詳細が表示されます。'],
+['Extras','Extras','Extras','Options','Extras','Дополнительно','附加项','オプション'],
+['Completa tus datos antes de pagar. Confirmaremos tu pago por WhatsApp.','Fill in your details before paying. We will confirm your payment on WhatsApp.','Preencha seus dados antes de pagar. Confirmaremos seu pagamento pelo WhatsApp.','Renseignez vos coordonnées avant de payer. Nous confirmerons votre paiement sur WhatsApp.','Füllen Sie Ihre Daten aus, bevor Sie zahlen. Wir bestätigen Ihre Zahlung per WhatsApp.','Заполните данные перед оплатой. Мы подтвердим оплату в WhatsApp.','付款前请先填写您的信息。我们将通过 WhatsApp 确认您的付款。','お支払い前に情報をご入力ください。お支払いはWhatsAppで確認します。'],
+['Presencia y comunicación','Presence and communication','Presença e comunicação','Présence et communication','Präsenz und Kommunikation','Присутствие и коммуникация','形象与沟通','存在感とコミュニケーション'],
+['Operación y respaldo técnico','Operations and technical backup','Operação e suporte técnico','Exploitation et appui technique','Betrieb und technische Absicherung','Операции и техническая поддержка','运营与技术保障','運用と技術サポート']
 ];
 const T=window.TUPLUS_TRANSLATIONS=window.TUPLUS_TRANSLATIONS||{};
 for(const [es,...values] of rows) L.forEach((locale,i)=>{(T[locale]=T[locale]||{})[es]=values[i];});

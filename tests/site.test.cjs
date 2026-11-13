@@ -51,6 +51,10 @@ assert.equal(menu.focused, true);
 assert.equal(new URL(whatsapp.href).pathname, '/51916828870');
 assert.match(new URL(whatsapp.href).searchParams.get('text'), /TUPLUS/);
 
+// GitHub Pages sirve el sitio en /tuplus/: una ruta que empiece por / se rompe allí.
+for (const file of ['index.html', 'partner.html', 'socios-comerciales.html', 'cotizador.html', 'privacidad.html', '404.html', 'soluciones/web.html']) {
+  assert.doesNotMatch(fs.readFileSync(path.join(base, file), 'utf8'), /(?:href|src)="\/(?!\/)/, file + ' usa una ruta absoluta');
+}
 const pages = ['index.html', 'privacidad.html', '404.html', ...fs.readdirSync(path.join(base, 'soluciones')).filter(file => file.endsWith('.html')).map(file => 'soluciones/' + file)];
 for (const file of pages) {
   const html = fs.readFileSync(path.join(base, file), 'utf8');

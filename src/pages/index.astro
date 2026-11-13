@@ -1,4 +1,5 @@
 ---
+import NavigationStyles from "../components/NavigationStyles.astro";
 import SiteFooter from '../components/SiteFooter.astro';
 import GlobalAudio from '../components/GlobalAudio.astro';
 ---
@@ -12,7 +13,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
   </title>
   <meta content="Diseño web, tiendas virtuales, automatización, sistemas digitales y datos para Latinoamérica. Explora nuestras soluciones y estima tu proyecto web." name="description"/>
   <meta content="#122c3d" name="theme-color"/>
-  <meta content="noindex, nofollow" name="robots"/>
+  <meta content="index, follow" name="robots"/>
   <meta content="TUPLUS | Tu siguiente paso digital" property="og:title"/>
   <meta content="Diseño web, tiendas virtuales, automatización, sistemas digitales y datos para Latinoamérica. Explora nuestras soluciones y estima tu proyecto web." property="og:description"/>
   <meta content="website" property="og:type"/>
@@ -55,8 +56,8 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <!-- NUEVO: estilos de los caminos clientes / partners -->
 <link rel="stylesheet" href="css/caminos.css?v=3"/>
 <link rel="stylesheet" href="css/ajuste-menu.css?v=2"/>
-<link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
-<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+<NavigationStyles />
+<script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
  <body>
   <svg aria-hidden="true" focusable="false" height="0" style="position:absolute;pointer-events:none" width="0" xmlns="http://www.w3.org/2000/svg">
@@ -329,7 +330,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        <span class="sv-progress" aria-hidden="true"><i></i></span>
       </article>
       <article class="sv-panel" style="--i:4" aria-labelledby="sv-title-4">
-       <figure class="sv-media"><img alt="" data-i18n-image="imagenes/data-security.webp" decoding="async" height="800" loading="lazy" src="imagenes/data-security.webp" width="1200"/></figure>
+       <figure class="sv-media"><img alt="" data-i18n-image="imagenes/data-security.webp" decoding="async" height="948" loading="lazy" src="imagenes/data-security.webp" width="1200"/></figure>
        <button class="sv-tab" type="button" aria-controls="sv-body-4" aria-expanded="false"><span class="icon-box"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"> <path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6zM8 12l3 3 5-6"> </path> </svg></span><span class="sv-num">05</span><span class="sv-tab-title">Datos y seguridad</span></button>
        <div class="sv-body" id="sv-body-4">
         <p class="sv-kicker">05 / 05</p>
@@ -354,7 +355,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
      </div>
      <div class="tp-stage">
       <div class="tp-concept" data-index="0">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/zenplus.png" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/zenplus.png" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-0">
         <p class="tp-info-count"><b>01</b><i></i>05</p>
         <p class="tp-eyebrow">DISEÑO WEB</p>
@@ -364,7 +365,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="1">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/tienda.jpg" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/tienda.jpg" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-1">
         <p class="tp-info-count"><b>02</b><i></i>05</p>
         <p class="tp-eyebrow">TIENDAS VIRTUALES</p>
@@ -374,7 +375,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="2">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/campa%C3%B1a.png" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/campa%C3%B1a.png" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-2">
         <p class="tp-info-count"><b>03</b><i></i>05</p>
         <p class="tp-eyebrow">DISEÑO WEB</p>
@@ -384,7 +385,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="3">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/crm.png" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/crm.png" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-3">
         <p class="tp-info-count"><b>04</b><i></i>05</p>
         <p class="tp-eyebrow">SISTEMAS A MEDIDA</p>
@@ -394,7 +395,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="4">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/catalogo.jpg" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/catalogo.jpg" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-4">
         <p class="tp-info-count"><b>05</b><i></i>05</p>
         <p class="tp-eyebrow">TIENDAS VIRTUALES</p>

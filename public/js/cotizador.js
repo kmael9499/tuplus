@@ -134,7 +134,7 @@ function implementationCost(){
 }
 function rushAmount(){ return Math.round(implementationCost()*RUSH_RATE); }
 function rushCost(){ return state.rush ? rushAmount() : 0; }
-function subtotal(){ return implementationCost() + rushCost(); }
+function subtotal(){ return implementationCost() + rushCost() + (supports[state.support]?.monthly || 0); }
 /* Descuentos: cupón y descuento por fecha NO se suman, se aplica el mayor.
    Las reglas finales las valida el backend; aquí solo se muestra el efecto. */
 function subtotalUsd(){ return Math.round(toUsd(subtotal())*100)/100; }
@@ -165,7 +165,7 @@ function pending(){
 }
 const rangeText = (min,max,open) => open||max===min ? `${t("desde")} ${money(min)}` : `${money(min)} — ${money(max)}`;
 function hostingInfo(){ return state.project==="ecommerce" ? {label:"Hosting tienda + dominio básico (configuración)", yearly:900} : {label:"Hosting básico + dominio básico (configuración)", yearly:420}; }
-// Pagos recurrentes: no forman parte del total de implementación.
+// El primer mes de soporte se suma al estimado; el hosting anual se lista aparte.
 function recurring(){
   const rows = [];
   const s = supports[state.support];
@@ -316,6 +316,7 @@ function sync(){
     el.classList.toggle("selected",selected);
     el.querySelector(".feature-select")?.setAttribute("aria-pressed",String(selected));
   });
+  renderFeaturePane();
   $$(".radio-card[data-design]").forEach(el => el.classList.toggle("selected", el.dataset.design===state.design));
   $$(".radio-card[data-support]").forEach(el => el.classList.toggle("selected", el.dataset.support===state.support));
   $("#rushToggle").classList.toggle("active", state.rush); $("#rushToggle").setAttribute("aria-pressed", state.rush);
@@ -518,7 +519,22 @@ $("#refreshRates").addEventListener('click',async e=>{
 });
 document.addEventListener('tuplus:language-change',()=>{sync();renderProgress()});
 window.addEventListener('beforeprint',renderSummary);
-$$("#projectOptions .choice-card").forEach(el=>el.addEventListener("click",()=>{setProject(el.dataset.key);save();sync();renderProgress()}));
+const projectCards=$$("#projectOptions .choice-card");
+projectCards.forEach(el=>el.addEventListener("click",()=>{
+  const features=el.querySelector(".choice-features");
+  const expanded=el.getAttribute("aria-expanded")==="true";
+  if(!expanded){
+    projectCards.forEach(other=>{
+      if(other===el)return;
+      other.setAttribute("aria-expanded","false");
+      const otherFeatures=other.querySelector(".choice-features");
+      if(otherFeatures)otherFeatures.hidden=true;
+    });
+  }
+  el.setAttribute("aria-expanded",String(!expanded));
+  features.hidden=expanded;
+  setProject(el.dataset.key);save();sync();renderProgress();
+}));
 $("#tierOptions").addEventListener("click",e=>{const b=e.target.closest("[data-tier]");if(!b)return;setTier(b.dataset.tier);save();sync();$(`#tierOptions [data-tier="${state.tier}"]`)?.focus();});
 $("#tierOptions").addEventListener("keydown",e=>{
   // Flechas para moverse entre niveles, como un grupo de radios.
@@ -533,6 +549,69 @@ $$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
 }));
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
 $$(".feature-select").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
+// ===== Panel de detalle de Funciones (escritorio): se actualiza al pasar el mouse, enfocar o hacer clic =====
+var paneKey;
+const paneMQ=window.matchMedia?window.matchMedia("(min-width: 901px)"):{matches:false};
+function renderFeaturePane(key){
+  const pane=document.getElementById("featurePane"); if(!pane)return;
+  if(key) paneKey=key;
+  const cards=$$(".feature-card"); if(!cards.length)return;
+  let card=cards.find(c=>c.dataset.feature===paneKey);
+  if(!card){card=cards.find(c=>c.querySelector(".xt-badge"))||cards[0];paneKey=card.dataset.feature;}
+  const sel=card.querySelector(".feature-select"), more=card.querySelector(".feature-more");
+  const included=card.classList.contains("is-included"), on=card.classList.contains("selected");
+  const title=sel.querySelector("b")?.textContent||"", sub=sel.querySelector("small")?.textContent||"";
+  const priceEl=sel.querySelector(".option-price"), price=priceEl?priceEl.textContent:"";
+  const icon=sel.querySelector(":scope > span")?.innerHTML||"";
+  const rec=card.querySelector(".xt-badge")?.textContent||"";
+  const label=more?.querySelector(".feature-more-label")?.textContent||t("Qué incluye");
+  const items=more?.querySelector("ul")?.innerHTML||"", note=more?.querySelector(".feature-note-line")?.textContent||"";
+  const btnText=included?t("Incluido en tu nivel"):(on?t("Quitar de mi cotización"):t("Añadir a mi cotización"));
+  pane.classList.toggle("is-on",on);
+  pane.innerHTML=`<div class="fp-head"><span class="fp-icon" aria-hidden="true">${icon}</span><div class="fp-title"><h3>${title}</h3></div></div>${sub?`<p class="fp-desc">${sub}</p>`:""}
+    <div class="fp-price-row"><span class="fp-price" translate="no">${price}</span>${rec?`<span class="fp-tag">${rec}</span>`:""}</div>
+    <div class="fp-label">${label}</div><ul class="fp-list">${items}</ul>${note?`<p class="fp-note">${note}</p>`:""}
+    <button type="button" class="fp-btn${on&&!included?" is-remove":""}" ${included?"disabled":""}>${btnText}</button>`;
+  pane.querySelector(".fp-btn")?.addEventListener("click",()=>{sel.click();});
+  $$(".feature-card").forEach(c=>c.classList.toggle("is-previewed",c===card));
+  renderFeaturePicked();
+}
+// Resumen "Tu selección": funciones elegidas con su precio y un botón para quitarlas.
+function renderFeaturePicked(){
+  const box=document.getElementById("featurePicked"); if(!box)return;
+  const picked=$$(".feature-card.selected").filter(c=>!c.classList.contains("is-included"));
+  const rows=picked.map(c=>{
+    const name=c.querySelector(".feature-select b")?.textContent||"", price=c.querySelector(".feature-select .option-price")?.textContent||"";
+    return `<li data-feature="${c.dataset.feature}"><span class="fk-name">${name}</span><span class="fk-price" translate="no">${price}</span><button type="button" class="fk-x" aria-label="${t("Quitar de mi cotización")}: ${name}">×</button></li>`;
+  }).join("");
+  box.innerHTML=`<div class="fk-head"><span>${t("Tu selección")}</span><b>${picked.length}</b></div>`+
+    (rows?`<ul class="fk-list">${rows}</ul>`:`<p class="fk-empty">${t("Aún no has elegido funciones. Pasa el mouse por una para ver su detalle.")}</p>`);
+  box.querySelectorAll(".fk-x").forEach(btn=>btn.addEventListener("click",()=>{
+    document.querySelector(`.feature-select[data-feature="${btn.closest("li").dataset.feature}"]`)?.click();
+  }));
+}
+$$(".feature-card").forEach(card=>{
+  const show=()=>{if(paneMQ.matches)renderFeaturePane(card.dataset.feature);};
+  card.addEventListener("mouseenter",show);
+  card.addEventListener("focusin",show);
+  card.querySelector(".feature-select")?.addEventListener("click",()=>{if(paneMQ.matches)setTimeout(()=>renderFeaturePane(card.dataset.feature),0);});
+});
+const featureDetails=$$(".feature-grid .feature-details");
+// El panel "Qué incluye" ocupa todo el ancho de su grupo, debajo de la tarjeta, para no salirse de la pantalla.
+function placeFeatureMore(detail){
+  const more=detail.querySelector(".feature-more"),card=detail.closest(".feature-card"),group=detail.closest(".feature-group");
+  if(!more||!card||!group)return;
+  if(getComputedStyle(more).position!=="absolute"){more.style.left=more.style.right=more.style.width="";return;}
+  const c=card.getBoundingClientRect(),g=group.getBoundingClientRect();
+  more.style.left=(g.left-c.left-1)+"px";more.style.right="auto";more.style.width=(g.width+2)+"px";
+}
+featureDetails.forEach(detail=>detail.addEventListener("toggle",()=>{
+  if(!detail.open)return;
+  featureDetails.forEach(other=>{if(other!==detail&&other.open)other.open=false;});
+  placeFeatureMore(detail);
+  requestAnimationFrame(()=>{placeFeatureMore(detail);setTimeout(()=>{if(detail.open)placeFeatureMore(detail);},480);});
+}));
+window.addEventListener("resize",()=>featureDetails.forEach(d=>{if(d.open)placeFeatureMore(d);}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
