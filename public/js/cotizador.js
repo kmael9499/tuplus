@@ -574,6 +574,21 @@ function renderFeaturePane(key){
     <button type="button" class="fp-btn${on&&!included?" is-remove":""}" ${included?"disabled":""}>${btnText}</button>`;
   pane.querySelector(".fp-btn")?.addEventListener("click",()=>{sel.click();});
   $$(".feature-card").forEach(c=>c.classList.toggle("is-previewed",c===card));
+  renderFeaturePicked();
+}
+// Resumen "Tu selección": funciones elegidas con su precio y un botón para quitarlas.
+function renderFeaturePicked(){
+  const box=document.getElementById("featurePicked"); if(!box)return;
+  const picked=$$(".feature-card.selected").filter(c=>!c.classList.contains("is-included"));
+  const rows=picked.map(c=>{
+    const name=c.querySelector(".feature-select b")?.textContent||"", price=c.querySelector(".feature-select .option-price")?.textContent||"";
+    return `<li data-feature="${c.dataset.feature}"><span class="fk-name">${name}</span><span class="fk-price" translate="no">${price}</span><button type="button" class="fk-x" aria-label="${t("Quitar de mi cotización")}: ${name}">×</button></li>`;
+  }).join("");
+  box.innerHTML=`<div class="fk-head"><span>${t("Tu selección")}</span><b>${picked.length}</b></div>`+
+    (rows?`<ul class="fk-list">${rows}</ul>`:`<p class="fk-empty">${t("Aún no has elegido funciones. Pasa el mouse por una para ver su detalle.")}</p>`);
+  box.querySelectorAll(".fk-x").forEach(btn=>btn.addEventListener("click",()=>{
+    document.querySelector(`.feature-select[data-feature="${btn.closest("li").dataset.feature}"]`)?.click();
+  }));
 }
 $$(".feature-card").forEach(card=>{
   const show=()=>{if(paneMQ.matches)renderFeaturePane(card.dataset.feature);};

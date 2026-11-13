@@ -99,6 +99,8 @@ const rows=[
 ['Añadir a mi cotización','Add to my quote','Adicionar à minha cotação','Ajouter à mon devis','Zu meinem Angebot hinzufügen','Добавить в мою смету','添加到我的报价','見積もりに追加'],
 ['Quitar de mi cotización','Remove from my quote','Remover da minha cotação','Retirer de mon devis','Aus meinem Angebot entfernen','Убрать из сметы','从我的报价中移除','見積もりから削除'],
 ['Incluido en tu nivel','Included in your tier','Incluído no seu nível','Inclus dans votre niveau','In Ihrer Stufe enthalten','Входит в ваш уровень','已包含在您的级别中','ご利用レベルに含まれます'],
+['Tu selección','Your selection','Sua seleção','Votre sélection','Ihre Auswahl','Ваш выбор','您的选择','選択中'],
+['Aún no has elegido funciones. Pasa el mouse por una para ver su detalle.','You haven’t picked any features yet. Hover over one to see its details.','Você ainda não escolheu funções. Passe o mouse sobre uma para ver os detalhes.','Vous n’avez pas encore choisi de fonctions. Survolez-en une pour voir le détail.','Sie haben noch keine Funktionen gewählt. Fahren Sie über eine, um Details zu sehen.','Вы пока ничего не выбрали. Наведите курсор на функцию, чтобы увидеть детали.','您还没有选择功能。将鼠标悬停在某项上即可查看详情。','まだ機能を選んでいません。カーソルを合わせると詳細が表示されます。'],
 ['Presencia y comunicación','Presence and communication','Presença e comunicação','Présence et communication','Präsenz und Kommunikation','Присутствие и коммуникация','形象与沟通','存在感とコミュニケーション'],
 ['Operación y respaldo técnico','Operations and technical backup','Operação e suporte técnico','Exploitation et appui technique','Betrieb und technische Absicherung','Операции и техническая поддержка','运营与技术保障','運用と技術サポート']
 ];
