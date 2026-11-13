@@ -545,3 +545,27 @@ body { font-size: var(--quote-fluid-body); }
   [data-view="2"] > .slider-card .range-labels { margin-top: 6px; }
   [data-view="2"] > .slider-card .slider-hint { margin-top: 16px; }
 }
+
+/* ===== Precios: un solo estilo en todo el cotizador (caja oscura, número dorado en mono) ===== */
+.project-grid .choice-card > .option-price,
+.project-grid .choice-card.selected > .option-price,
+[data-view="2"] .tier-card > strong,
+[data-view="2"] .toggle-card > strong,
+[data-view="4"] .radio-card > strong,
+[data-view="4"] .toggle-line > strong,
+.feature-select > em .option-price,
+[data-view="2"] .stepper small .option-price {
+  display: inline-block; width: auto; max-width: max-content;
+  padding: 5px 11px; border: 1px solid rgba(225,195,139,.28); border-radius: 8px;
+  background: rgba(6,22,32,.62); color: #ecd4a4;
+  font-family: "DM Mono", monospace; font-size: 13.5px; font-weight: 600; line-height: 1.25; letter-spacing: .01em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.project-grid .choice-card.selected > .option-price,
+[data-view="2"] .tier-card.selected > strong,
+[data-view="4"] .radio-card.selected > strong { border-color: rgba(225,195,139,.6); }
+.feature-select > em { font-size: 13.5px; }
+[data-view="2"] .toggle-card > strong { align-self: start; }
+@media (max-width: 700px) {
+  .project-grid .choice-card > .option-price { font-size: 13px; }
+}
