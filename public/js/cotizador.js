@@ -316,6 +316,7 @@ function sync(){
     el.classList.toggle("selected",selected);
     el.querySelector(".feature-select")?.setAttribute("aria-pressed",String(selected));
   });
+  renderFeaturePane();
   $$(".radio-card[data-design]").forEach(el => el.classList.toggle("selected", el.dataset.design===state.design));
   $$(".radio-card[data-support]").forEach(el => el.classList.toggle("selected", el.dataset.support===state.support));
   $("#rushToggle").classList.toggle("active", state.rush); $("#rushToggle").setAttribute("aria-pressed", state.rush);
@@ -548,6 +549,38 @@ $$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
 }));
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
 $$(".feature-select").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
+// ===== Panel de detalle de Funciones (escritorio): se actualiza al pasar el mouse, enfocar o hacer clic =====
+var paneKey;
+const paneMQ=window.matchMedia?window.matchMedia("(min-width: 901px)"):{matches:false};
+function renderFeaturePane(key){
+  const pane=document.getElementById("featurePane"); if(!pane)return;
+  if(key) paneKey=key;
+  const cards=$$(".feature-card"); if(!cards.length)return;
+  let card=cards.find(c=>c.dataset.feature===paneKey);
+  if(!card){card=cards.find(c=>c.querySelector(".xt-badge"))||cards[0];paneKey=card.dataset.feature;}
+  const sel=card.querySelector(".feature-select"), more=card.querySelector(".feature-more");
+  const included=card.classList.contains("is-included"), on=card.classList.contains("selected");
+  const title=sel.querySelector("b")?.textContent||"", sub=sel.querySelector("small")?.textContent||"";
+  const priceEl=sel.querySelector(".option-price"), price=priceEl?priceEl.textContent:"";
+  const icon=sel.querySelector(":scope > span")?.innerHTML||"";
+  const rec=card.querySelector(".xt-badge")?.textContent||"";
+  const label=more?.querySelector(".feature-more-label")?.textContent||t("Qué incluye");
+  const items=more?.querySelector("ul")?.innerHTML||"", note=more?.querySelector(".feature-note-line")?.textContent||"";
+  const btnText=included?t("Incluido en tu nivel"):(on?t("Quitar de mi cotización"):t("Añadir a mi cotización"));
+  pane.classList.toggle("is-on",on);
+  pane.innerHTML=`<div class="fp-head"><span class="fp-icon" aria-hidden="true">${icon}</span><div class="fp-title"><h3>${title}</h3></div></div>${sub?`<p class="fp-desc">${sub}</p>`:""}
+    <div class="fp-price-row"><span class="fp-price" translate="no">${price}</span>${rec?`<span class="fp-tag">${rec}</span>`:""}</div>
+    <div class="fp-label">${label}</div><ul class="fp-list">${items}</ul>${note?`<p class="fp-note">${note}</p>`:""}
+    <button type="button" class="fp-btn${on&&!included?" is-remove":""}" ${included?"disabled":""}>${btnText}</button>`;
+  pane.querySelector(".fp-btn")?.addEventListener("click",()=>{sel.click();});
+  $$(".feature-card").forEach(c=>c.classList.toggle("is-previewed",c===card));
+}
+$$(".feature-card").forEach(card=>{
+  const show=()=>{if(paneMQ.matches)renderFeaturePane(card.dataset.feature);};
+  card.addEventListener("mouseenter",show);
+  card.addEventListener("focusin",show);
+  card.querySelector(".feature-select")?.addEventListener("click",()=>{if(paneMQ.matches)setTimeout(()=>renderFeaturePane(card.dataset.feature),0);});
+});
 const featureDetails=$$(".feature-grid .feature-details");
 // El panel "Qué incluye" ocupa todo el ancho de su grupo, debajo de la tarjeta, para no salirse de la pantalla.
 function placeFeatureMore(detail){

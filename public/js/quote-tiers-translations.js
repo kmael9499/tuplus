@@ -95,6 +95,10 @@ const rows=[
 ['Pagos recurrentes, aparte del total','Recurring payments, separate from the total','Pagamentos recorrentes, à parte do total','Paiements récurrents, hors total','Wiederkehrende Zahlungen, getrennt von der Summe','Регулярные платежи, отдельно от итога','定期费用，不计入总额','定期支払い（合計とは別）'],
 ['Captar clientes','Win customers','Captar clientes','Attirer des clients','Kunden gewinnen','Привлечение клиентов','获取客户','集客'],
 ['Visibilidad y contenido','Visibility and content','Visibilidade e conteúdo','Visibilité et contenu','Sichtbarkeit und Inhalte','Видимость и контент','可见度与内容','露出とコンテンツ'],
+['Qué incluye','What’s included','O que inclui','Ce qui est inclus','Was enthalten ist','Что входит','包含内容','含まれるもの'],
+['Añadir a mi cotización','Add to my quote','Adicionar à minha cotação','Ajouter à mon devis','Zu meinem Angebot hinzufügen','Добавить в мою смету','添加到我的报价','見積もりに追加'],
+['Quitar de mi cotización','Remove from my quote','Remover da minha cotação','Retirer de mon devis','Aus meinem Angebot entfernen','Убрать из сметы','从我的报价中移除','見積もりから削除'],
+['Incluido en tu nivel','Included in your tier','Incluído no seu nível','Inclus dans votre niveau','In Ihrer Stufe enthalten','Входит в ваш уровень','已包含在您的级别中','ご利用レベルに含まれます'],
 ['Presencia y comunicación','Presence and communication','Presença e comunicação','Présence et communication','Präsenz und Kommunikation','Присутствие и коммуникация','形象与沟通','存在感とコミュニケーション'],
 ['Operación y respaldo técnico','Operations and technical backup','Operação e suporte técnico','Exploitation et appui technique','Betrieb und technische Absicherung','Операции и техническая поддержка','运营与技术保障','運用と技術サポート']
 ];
