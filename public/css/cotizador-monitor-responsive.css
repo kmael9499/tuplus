@@ -762,3 +762,48 @@ body { font-size: var(--quote-fluid-body); }
   }
   [data-view="4"] > .section-block:has(.support-grid) > .section-label { margin-bottom: 12px; }
 }
+
+/* ===== Contacto (paso 5): resumen a la izquierda; datos y pago a la derecha, más ligero ===== */
+[data-view="5"] .view-heading { align-items: flex-start; }
+[data-view="5"] .secure-pill { white-space: nowrap; font-size: 10px; padding: 6px 12px; }
+[data-view="5"] .contact-col { display: grid; gap: 12px; align-content: start; min-width: 0; }
+[data-view="5"] .summary-grid { gap: 14px; align-items: start; grid-template-columns: repeat(2, minmax(0,1fr)); }
+@media (max-width: 900px) { [data-view="5"] .summary-grid { grid-template-columns: 1fr; } }
+
+/* Resumen */
+[data-view="5"] .summary-card { padding: 18px 20px; position: static; }
+[data-view="5"] .summary-hero { align-items: flex-start; padding-bottom: 12px; }
+[data-view="5"] .big-price { font-size: clamp(32px, 2.4vw + 14px, 44px); line-height: 1.05; text-shadow: none; }
+[data-view="5"] .summary-range { display: block; margin-top: 6px; font-size: 11.5px; }
+[data-view="5"] .summary-lines { padding: 4px 0 0; }
+[data-view="5"] .summary-line { padding: 8px 0; font-size: 13px; align-items: baseline; }
+[data-view="5"] .summary-line strong { font-size: 13px; font-weight: 600; }
+[data-view="5"] .summary-line > span { color: #b8c9d4; }
+[data-view="5"] .summary-sub { margin: 14px 0 2px; }
+[data-view="5"] .summary-note { margin-top: 12px; padding: 9px 12px; border-radius: 10px; font-size: 11.5px; line-height: 1.5; }
+
+/* Pago: franja compacta bajo el formulario */
+[data-view="5"] .pay-box { margin: 0; padding: 14px 16px; border-radius: 16px; display: grid; gap: 10px; }
+[data-view="5"] .pay-box .kicker { margin: 0; }
+[data-view="5"] .pay-actions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+[data-view="5"] .pay-btn { min-height: 42px; font-size: 13px; }
+[data-view="5"] .pay-box small { margin: 0; }
+
+/* Datos: acciones ordenadas */
+[data-view="5"] .contact-actions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 4px; }
+[data-view="5"] .contact-actions .whatsapp-btn { grid-column: 1 / -1; }
+[data-view="5"] .contact-actions .subtle-btn { min-height: 42px; justify-content: center; }
+
+/* Garantías finales en una sola línea discreta */
+[data-view="5"] .final-perks { justify-content: center; gap: 6px 18px; margin-top: 16px; }
+[data-view="5"] .final-perks span { border: 0; padding: 0; color: #9fb2bb; font-size: 11px; }
+
+[data-view="5"] .secure-pill { white-space: normal; max-width: 200px; text-align: center; line-height: 1.35; }
+[data-view="5"] .contact-card > label,
+[data-view="5"] .contact-card > label.consent { font-size: 12.5px !important; font-weight: 600; color: #cfdbe2; }
+[data-view="5"] .contact-card > label.consent { font-weight: 400; line-height: 1.5; }
+[data-view="5"] .contact-card > label .optional { font-size: 10.5px; opacity: .7; margin-left: 6px; }
+[data-view="5"] .summary-line { padding: 6px 0; font-size: 12.5px; }
+[data-view="5"] .summary-line strong { font-size: 12.5px; }
+[data-view="5"] .pay-box small { font-size: 12px !important; line-height: 1.5; color: #9fb2bb; }
+[data-view="5"] .pay-box .kicker { font-size: 10px; }

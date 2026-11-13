@@ -55,7 +55,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <link rel="stylesheet" href="css/cotizador-niveles.css?v=20261106-1"/>
 <link rel="stylesheet" href="css/caminos.css?v=1"/><NavigationStyles />
 <!-- Escalado fluido para monitores grandes; cargar después de todos los estilos del cotizador. -->
-<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261113-32"/>
+<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261113-35"/>
 <script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
 <body>
@@ -385,18 +385,9 @@ import GlobalAudio from '../components/GlobalAudio.astro';
                 <div class="summary-lines" id="summaryLines"></div>
 
                 <div class="summary-note">Estimación orientativa. La moneda cambia la visualización; el importe final, impuestos y alcance se confirman en la propuesta.</div>
-                <div class="pay-box" id="payBox">
-                  <span class="kicker">PAGAR AHORA</span>
-                  <div class="pay-actions">
-                    <button id="gatewayBtn" class="pay-btn pay-gateway" type="button"><span aria-hidden="true">▭</span><span>Pagar con pasarela</span></button>
-                    <button id="cryptoBtn" class="pay-btn pay-crypto" type="button"><span aria-hidden="true">₿</span><span>Pagar con crypto</span></button>
-                  </div>
-                  <small>Completa tus datos a la derecha antes de pagar. Confirmaremos tu pago por WhatsApp.</small>
-                </div>
-
               </div>
 
-              <div class="contact-card">
+              <div class="contact-col"><div class="contact-card">
                 <div class="contact-head"><span class="kicker">TU INFORMACIÓN</span><span class="contact-badge">WhatsApp directo</span></div>
                 <label>Tu nombre<input id="nombre" maxlength="100" type="text" autocomplete="name" placeholder="Ej. Juan Pérez" required></label>
                 <label>Empresa o actividad<input id="empresa" type="text" autocomplete="organization" maxlength="100" placeholder="Tu negocio o emprendimiento" required></label><label>País<select id="pais" translate="no" required></select></label><label>Correo electrónico<input id="email" maxlength="160" type="email" autocomplete="email" placeholder="cliente@correo.com" required></label>
@@ -406,6 +397,14 @@ import GlobalAudio from '../components/GlobalAudio.astro';
                   <button id="whatsappBtn" class="whatsapp-btn" type="button"><span class="wa-icon">◔</span><span>Revisar cotización en WhatsApp</span><span>↗</span></button>
                   <button id="downloadBtn" class="subtle-btn" type="button"><span>↓</span> Descargar resumen</button>
                   <button id="printBtn" class="subtle-btn" type="button"><span>▧</span> Boleta/Factura </button>
+                </div>
+              </div>                <div class="pay-box" id="payBox">
+                  <span class="kicker">PAGAR AHORA</span>
+                  <div class="pay-actions">
+                    <button id="gatewayBtn" class="pay-btn pay-gateway" type="button"><span aria-hidden="true">▭</span><span>Pagar con pasarela</span></button>
+                    <button id="cryptoBtn" class="pay-btn pay-crypto" type="button"><span aria-hidden="true">₿</span><span>Pagar con crypto</span></button>
+                  </div>
+                  <small>Completa tus datos antes de pagar. Confirmaremos tu pago por WhatsApp.</small>
                 </div>
               </div>
             </div>
