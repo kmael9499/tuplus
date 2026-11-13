@@ -55,7 +55,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <link rel="stylesheet" href="css/cotizador-niveles.css?v=20261106-1"/>
 <link rel="stylesheet" href="css/caminos.css?v=1"/><NavigationStyles />
 <!-- Escalado fluido para monitores grandes; cargar después de todos los estilos del cotizador. -->
-<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261113-30"/>
+<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261113-32"/>
 <script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
 <body>
@@ -359,6 +359,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
             </div>
 
             <div class="section-block addons-row">
+              <div class="section-label">Extras</div>
               <button class="toggle-line" id="rushToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b>Entrega prioritaria</b><small>¿La necesitas antes de los plazos indicados? Se acorta la entrega con un incremento del 20 % sobre el valor del proyecto</small></div><strong>+20 %</strong></button>
               <button class="toggle-line" id="hostingToggle" type="button" aria-pressed="false"><span class="toggle-dot"></span><div><b id="hostingLabel">Hosting básico + dominio básico</b><small>Alojamiento anual y configuración del dominio. El registro del dominio se paga al costo del proveedor.</small></div><strong><span class="option-price" id="hostingPrice" data-pen="420" data-period="año">S/420 / año</span></strong></button>
             </div>

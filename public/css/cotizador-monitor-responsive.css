@@ -726,3 +726,39 @@ body { font-size: var(--quote-fluid-body); }
   .fk-x:hover { border-color: #e1c38b; color: #f4dba9; }
   .fk-empty { margin: 0; color: #9fb2bb; font-size: 12.5px; line-height: 1.5; }
 }
+
+/* ===== Diseño y soporte (paso 4): bloques ordenados y precios en la misma posición ===== */
+[data-view="4"] .addons-row { display: grid; grid-template-columns: 1fr; gap: 8px; }
+[data-view="4"] .addons-row > .section-label { margin: 0 0 4px; }
+[data-view="4"] .support-grid.support-four { grid-template-columns: 1fr; gap: 8px; }
+[data-view="4"] .support-grid .radio-card > strong,
+[data-view="4"] .addons-row .toggle-line > strong { align-self: center; }
+[data-view="4"] .support-grid .radio-card > strong { grid-row: 1; }
+[data-view="4"] .slider-hint { margin: 12px 0 0; padding: 9px 12px; border-radius: 10px; background: rgba(225,195,139,.08); color: #dbe5ea; font-size: 12px; line-height: 1.5; }
+
+/* Dirección visual: precio siempre al pie de la tarjeta, alineado entre las tres */
+[data-view="4"] .design-grid { gap: 10px; }
+[data-view="4"] .design-grid .radio-card { align-content: start; }
+[data-view="4"] .design-grid .radio-card > strong { align-self: end; margin-top: 10px; }
+
+/* Extras: filas con interruptor + precio a la derecha */
+[data-view="4"] .toggle-line { display: grid; grid-template-columns: 22px minmax(0,1fr) auto; align-items: start; gap: 0 12px; }
+[data-view="4"] .toggle-line > strong { align-self: start; margin: 0; }
+[data-view="4"] .tax-card { padding: 12px 16px; border-radius: 14px; }
+
+@media (min-width: 901px) {
+  .step-view.active[data-view="4"] { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 16px; align-content: start; }
+  [data-view="4"] > .view-heading { grid-column: 1 / -1; margin-bottom: 0; }
+  [data-view="4"] > .section-block, [data-view="4"] > .tax-card { margin-top: 0; margin-bottom: 0; min-width: 0; }
+  [data-view="4"] > .section-block:has(.design-grid) { grid-column: 1 / -1; }
+  [data-view="4"] > .section-block:has(.support-grid) { grid-column: 1; grid-row: 3 / span 2; }
+  [data-view="4"] > .addons-row { grid-column: 2; grid-row: 3; }
+  [data-view="4"] > .tax-card { grid-column: 2; grid-row: 4; align-self: start; }
+  /* Paneles */
+  [data-view="4"] > .section-block:has(.support-grid),
+  [data-view="4"] > .addons-row {
+    padding: 14px 16px 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 16px;
+    background: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.012));
+  }
+  [data-view="4"] > .section-block:has(.support-grid) > .section-label { margin-bottom: 12px; }
+}
