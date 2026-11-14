@@ -1,0 +1,421 @@
+- generic [active] [ref=f7e1]:
+  - link "Saltar al cotizador" [ref=f7e2] [cursor=pointer]:
+    - /url: "#cotizador"
+  - banner [ref=f7e3]:
+    - generic [ref=f7e4]:
+      - link "TUPLUS, inicio" [ref=f7e5] [cursor=pointer]:
+        - /url: index.html#inicio
+        - img "TuPlus" [ref=f7e7]
+      - navigation "Navegación principal" [ref=f7e8]:
+        - link "Soluciones" [ref=f7e9] [cursor=pointer]:
+          - /url: index.html#servicios
+        - link "Proyectos" [ref=f7e10] [cursor=pointer]:
+          - /url: index.html#proyectos
+        - link "Proceso" [ref=f7e11] [cursor=pointer]:
+          - /url: index.html#proceso
+        - link "Nosotros" [ref=f7e12] [cursor=pointer]:
+          - /url: index.html#nosotros
+        - link "Plantillas" [ref=f7e13] [cursor=pointer]:
+          - /url: https://plantillas-eosin.vercel.app/
+          - text: Plantillas
+          - generic [aria-hidden] [ref=f7e14]: ↗
+        - group [ref=f7e15]:
+          - generic "Redes TUPLUS" [ref=f7e16] [cursor=pointer]
+        - link "Acceso Partners" [ref=f7e19] [cursor=pointer]:
+          - /url: https://tuplus-partners-portal.vercel.app/acceso
+        - link "Cotizar mi web" [ref=f7e20] [cursor=pointer]:
+          - /url: cotizador.html
+          - text: Cotizar mi web
+          - generic [aria-hidden] [ref=f7e21]: ↗
+      - generic [ref=f7e22]:
+        - generic [ref=f7e23]: Idioma del sitio
+        - combobox [aria-hidden]
+        - button "Idioma del sitio" [ref=f7e24] [cursor=pointer]:
+          - generic [ref=f7e28]: Español
+      - button "Modo claro" [pressed] [ref=f7e30] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f7e31]: ☀
+        - text: Tema
+  - main [ref=f7e32]:
+    - generic [ref=f7e33]:
+      - generic [ref=f7e34]:
+        - generic [ref=f7e35]:
+          - text: COTIZADOR DIGITAL
+          - generic [ref=f7e37]: EUR
+        - heading [level=1] [ref=f7e38]:
+          - text: Diseña la web.
+          - emphasis [ref=f7e39]: Visualiza la inversión.
+        - paragraph [ref=f7e40]: Configura alcance, funciones y acabado visual. El precio se actualiza al instante y puedes enviar tu resumen directo a WhatsApp.
+        - link "Empezar mi cotización" [ref=f7e41] [cursor=pointer]:
+          - /url: "#cotizador"
+          - text: Empezar mi cotización
+          - generic [aria-hidden] [ref=f7e42]: ↓
+        - list [ref=f7e43]:
+          - listitem [ref=f7e44]: ✓ Sin compromiso
+          - listitem [ref=f7e45]: ✓ Respuesta por WhatsApp
+          - listitem [ref=f7e46]: ✓ Precio claro
+        - generic [ref=f7e47]:
+          - generic [ref=f7e48]:
+            - strong [ref=f7e49]: "05"
+            - generic [ref=f7e50]: pasos
+          - generic [ref=f7e51]:
+            - strong [ref=f7e52]: EUR
+            - generic [ref=f7e53]: moneda
+          - generic [ref=f7e54]:
+            - strong [ref=f7e55]: A tu medida
+            - generic [ref=f7e56]: alcance
+      - generic [ref=f7e57]:
+        - generic "Colibrí de TUPLUS":
+          - generic:
+            - img "Colibrí de Tuplus"
+        - generic "País y moneda" [ref=f7e59]:
+          - generic [ref=f7e60]:
+            - generic [ref=f7e61]: País de tu proyecto
+            - combobox "País de tu proyecto" [ref=f7e62] [cursor=pointer]:
+              - option "Alemania"
+              - option "Argentina"
+              - option "Bolivia"
+              - option "Brasil"
+              - option "Canadá"
+              - option "Chile"
+              - option "China"
+              - option "Colombia"
+              - option "Costa Rica"
+              - option "Ecuador"
+              - option "El Salvador"
+              - option "España" [selected]
+              - option "Estados Unidos"
+              - option "Francia"
+              - option "Guatemala"
+              - option "Honduras"
+              - option "Japón"
+              - option "México"
+              - option "Otro país"
+              - option "Panamá"
+              - option "Paraguay"
+              - option "Perú"
+              - option "Portugal"
+              - option "Reino Unido"
+              - option "República Dominicana"
+              - option "Rusia"
+              - option "Uruguay"
+          - generic [ref=f7e63]:
+            - generic [ref=f7e64]: Moneda de tu proyecto
+            - combobox "Moneda de tu proyecto" [ref=f7e65] [cursor=pointer]:
+              - option "USD · dólar estadounidense"
+              - option "PEN · sol peruano"
+              - option "EUR · euro" [selected]
+              - option "BRL · real brasileño"
+              - option "MXN · peso mexicano"
+              - option "COP · peso colombiano"
+              - option "CLP · peso chileno"
+              - option "ARS · peso argentino"
+              - option "UYU · peso uruguayo"
+              - option "BOB · boliviano"
+              - option "PYG · guaraní paraguayo"
+              - option "CRC · colón costarricense"
+              - option "GTQ · quetzal guatemalteco"
+              - option "DOP · peso dominicano"
+              - option "HNL · lempira hondureño"
+              - option "CNY · yuan renminbi"
+              - option "JPY · yen japonés"
+              - option "RUB · rublo ruso"
+              - option "GBP · libra esterlina"
+              - option "CAD · dólar canadiense"
+          - paragraph [ref=f7e66]: La moneda se ajusta al país que elijas.
+          - generic [ref=f7e67]:
+            - button "PEN" [ref=f7e68] [cursor=pointer]
+            - button "USD" [ref=f7e69] [cursor=pointer]
+            - button "EUR" [ref=f7e70] [cursor=pointer]
+            - button "MXN" [ref=f7e71] [cursor=pointer]
+            - button "COP" [ref=f7e72] [cursor=pointer]
+            - button "CLP" [ref=f7e73] [cursor=pointer]
+            - button "ARS" [ref=f7e74] [cursor=pointer]
+            - button "BRL" [ref=f7e75] [cursor=pointer]
+          - generic [ref=f7e76]:
+            - generic [ref=f7e77]: euro
+            - generic [ref=f7e78]: 1 USD = 0,877 EUR · 2026-09-24
+          - generic [ref=f7e79]: 100 USD ≈ 26 EUR
+          - generic [ref=f7e80]:
+            - 'link "Fuente: Frankfurter" [ref=f7e81] [cursor=pointer]':
+              - /url: https://frankfurter.dev/
+            - button "Actualizar cambio ↻" [ref=f7e82] [cursor=pointer]
+        - generic [ref=f7e83]:
+          - generic [ref=f7e84]: TUPLUS / WEB
+          - generic [ref=f7e85]: TU SIGUIENTE PASO
+    - generic [ref=f7e87]:
+      - generic [ref=f7e88]:
+        - generic [ref=f7e89]: Adaptable ✦
+        - generic [ref=f7e90]: SSL ✦
+        - generic [ref=f7e91]: SEO técnico ✦
+        - generic [ref=f7e92]: WhatsApp ✦
+        - generic [ref=f7e93]: Soporte 30 días ✦
+        - generic [ref=f7e94]: Precio claro ✦
+      - generic [ref=f7e95]:
+        - generic [ref=f7e96]: Adaptable ✦
+        - generic [ref=f7e97]: SSL ✦
+        - generic [ref=f7e98]: SEO técnico ✦
+        - generic [ref=f7e99]: WhatsApp ✦
+        - generic [ref=f7e100]: Soporte 30 días ✦
+        - generic [ref=f7e101]: Precio claro ✦
+    - region "Cómo funciona" [ref=f7e102]:
+      - heading "Tu cotización en tres pasos." [level=2] [ref=f7e104]
+      - list [ref=f7e105]:
+        - listitem [ref=f7e106]:
+          - generic [ref=f7e123]: "01"
+          - generic [ref=f7e124]: Configura tu proyecto
+          - paragraph [ref=f7e125]: Elige el tipo de web, las páginas, las funciones y el acabado visual.
+        - listitem [ref=f7e126]:
+          - generic [aria-hidden] [ref=f7e127]:
+            - generic [ref=f7e128]: $
+            - generic [ref=f7e138]:
+              - generic [ref=f7e139]: $
+              - generic [ref=f7e140]: S/
+              - generic [ref=f7e141]: €
+          - generic [ref=f7e142]: "02"
+          - generic [ref=f7e143]: Mira el precio al instante
+          - paragraph [ref=f7e144]: El total se actualiza contigo, en tu moneda y con o sin IGV.
+        - listitem [ref=f7e145]:
+          - generic [aria-hidden] [ref=f7e146]:
+            - emphasis [ref=f7e154]: ✓✓
+            - generic [ref=f7e155]: ➤
+          - generic [ref=f7e156]: "03"
+          - generic [ref=f7e157]: Recibe tu propuesta
+          - paragraph [ref=f7e158]: Envía el resumen por WhatsApp y confirmamos contigo el alcance y el importe final.
+    - region "Cotizador TUPLUS" [ref=f7e159]:
+      - complementary [ref=f7e160]:
+        - generic [ref=f7e161]:
+          - generic [ref=f7e162]:
+            - generic [ref=f7e163]: TU PROYECTO
+            - strong [ref=f7e164]: Aplicación web / SaaS · Profesional
+            - generic:
+              - generic: Estimado
+              - generic: 1704 EUR
+              - emphasis: SIN IGV
+          - navigation "Progreso" [ref=f7e165]:
+            - button "01 Tipo Qué vas a construir" [ref=f7e166] [cursor=pointer]:
+              - generic [ref=f7e167]: "01"
+              - generic [ref=f7e168]:
+                - generic [ref=f7e169]: Tipo
+                - generic [ref=f7e170]: Qué vas a construir
+            - button "02 Alcance Páginas y contenido" [ref=f7e171] [cursor=pointer]:
+              - generic [ref=f7e172]: "02"
+              - generic [ref=f7e173]:
+                - generic [ref=f7e174]: Alcance
+                - generic [ref=f7e175]: Páginas y contenido
+            - button "03 Funciones Qué hará tu web" [ref=f7e176] [cursor=pointer]:
+              - generic [ref=f7e177]: "03"
+              - generic [ref=f7e178]:
+                - generic [ref=f7e179]: Funciones
+                - generic [ref=f7e180]: Qué hará tu web
+            - button "04 Diseño Diseño y soporte" [ref=f7e181] [cursor=pointer]:
+              - generic [ref=f7e182]: "04"
+              - generic [ref=f7e183]:
+                - generic [ref=f7e184]: Diseño
+                - generic [ref=f7e185]: Diseño y soporte
+            - button "05 Contacto Tu propuesta" [ref=f7e186] [cursor=pointer]:
+              - generic [ref=f7e187]: "05"
+              - generic [ref=f7e188]:
+                - generic [ref=f7e189]: Contacto
+                - generic [ref=f7e190]: Tu propuesta
+      - generic [ref=f7e191]:
+        - generic [ref=f7e192]:
+          - generic [ref=f7e193]: Paso 1 de 5
+          - progressbar "Progreso de la cotización" [ref=f7e194]
+          - generic [ref=f7e196]: 20%
+        - generic [ref=f7e197]:
+          - generic [ref=f7e198]: Aplicación web / SaaS
+          - generic [ref=f7e199]: 8 páginas
+          - generic [ref=f7e200]: 4 funciones
+          - generic [ref=f7e201]: Clean / inteligente
+          - generic [ref=f7e202]: ⏱ 15 días hábiles
+          - button "SIN IGV" [ref=f7e203] [cursor=pointer]
+          - button "Copiar enlace" [ref=f7e204] [cursor=pointer]
+        - generic [ref=f7e205]:
+          - generic [ref=f7e206]:
+            - generic [ref=f7e207]:
+              - generic [ref=f7e208]:
+                - text: 01 / FUNDACIÓN
+                - heading "¿Qué quieres construir?" [level=2] [ref=f7e209]
+                - paragraph [ref=f7e210]: Elige el formato que más se parece a tu proyecto.
+              - generic [ref=f7e211]:
+                - generic [ref=f7e212]: EUR · estimado · SIN IGV
+                - generic [ref=f7e213]:
+                  - generic [ref=f7e214]:
+                    - text: ¿Tienes un cupón de descuento?
+                    - generic [ref=f7e217]: OFERTA
+                  - generic [ref=f7e218]:
+                    - textbox "¿Tienes un cupón de descuento? OFERTA" [ref=f7e219]:
+                      - /placeholder: Escribe tu código
+                    - button "Aplicar" [ref=f7e220] [cursor=pointer]
+                  - status [ref=f7e221]
+            - generic [ref=f7e222]:
+              - button "Landing page Una página enfocada en conversión desde 282 EUR" [ref=f7e223] [cursor=pointer]:
+                - generic [ref=f7e227]:
+                  - generic [ref=f7e228]:
+                    - generic [ref=f7e229]: Landing page
+                    - generic [aria-hidden] [ref=f7e230]: ›
+                  - generic [ref=f7e231]: Una página enfocada en conversión
+                - strong [ref=f7e232]: desde 282 EUR
+              - button "Sitio corporativo Web profesional multipágina desde 437 EUR Más elegido" [ref=f7e233] [cursor=pointer]:
+                - generic [ref=f7e238]:
+                  - generic [ref=f7e239]:
+                    - generic [ref=f7e240]: Sitio corporativo
+                    - generic [aria-hidden] [ref=f7e241]: ›
+                  - generic [ref=f7e242]: Web profesional multipágina
+                - strong [ref=f7e243]: desde 437 EUR
+                - generic: Más elegido
+              - button "Catálogo online Productos, categorías y contacto desde 592 EUR" [ref=f7e244] [cursor=pointer]:
+                - generic [ref=f7e251]:
+                  - generic [ref=f7e252]:
+                    - generic [ref=f7e253]: Catálogo online
+                    - generic [aria-hidden] [ref=f7e254]: ›
+                  - generic [ref=f7e255]: Productos, categorías y contacto
+                - strong [ref=f7e256]: desde 592 EUR
+              - button "Tienda e-commerce Carrito, checkout y pagos desde 902 EUR" [ref=f7e257] [cursor=pointer]:
+                - generic [ref=f7e263]:
+                  - generic [ref=f7e264]:
+                    - generic [ref=f7e265]: Tienda e-commerce
+                    - generic [aria-hidden] [ref=f7e266]: ›
+                  - generic [ref=f7e267]: Carrito, checkout y pagos
+                - strong [ref=f7e268]: desde 902 EUR
+              - button "Aplicación web / SaaS Plataforma digital con funciones a medida desde 1316 EUR" [pressed] [ref=f7e269] [cursor=pointer]:
+                - generic [ref=f7e274]:
+                  - generic [ref=f7e275]:
+                    - generic [ref=f7e276]: Aplicación web / SaaS
+                    - generic [aria-hidden] [ref=f7e277]: ›
+                  - generic [ref=f7e278]: Plataforma digital con funciones a medida
+                - strong [ref=f7e279]: desde 1316 EUR
+            - generic [ref=f7e280]:
+              - generic [ref=f7e281]: Paquetes rápidos
+              - generic [ref=f7e282]:
+                - button "Esencial Landing con contacto directo" [ref=f7e283] [cursor=pointer]:
+                  - generic [ref=f7e284]: Esencial
+                  - generic [ref=f7e285]: Landing con contacto directo
+                - button "Empresa Sitio Empresarial de 8 páginas con blog y SEO Más elegido" [ref=f7e286] [cursor=pointer]:
+                  - generic [ref=f7e287]: Empresa
+                  - generic [ref=f7e288]: Sitio Empresarial de 8 páginas con blog y SEO
+                  - generic: Más elegido
+                - button "Completo Tienda Corporativa con 100 productos y alojamiento" [ref=f7e289] [cursor=pointer]:
+                  - generic [ref=f7e290]: Completo
+                  - generic [ref=f7e291]: Tienda Corporativa con 100 productos y alojamiento
+            - generic [ref=f7e292]:
+              - generic [ref=f7e293]: ✦
+              - generic [ref=f7e294]:
+                - generic [ref=f7e295]: Idea en mente pero sin nombre técnico
+                - paragraph [ref=f7e296]: No importa. Elige la opción más cercana y luego lo aterrizamos.
+          - text: ✓ ✓ ✓ ⌄ ⌄ ⌄ ★ ⌄ ✓ ⌄ ✓ ⌄ ⌄ ⌄ ⌄ ✓ ⌄ ✓ ⌄ ⌄ ⌄
+          - generic [ref=f7e297]:
+            - button "← Atrás" [disabled] [ref=f7e298]
+            - generic [ref=f7e299]:
+              - generic [ref=f7e300]: ESTIMADO
+              - generic "Estimado 1704 EUR" [ref=f7e301]: 1704 EUR
+            - button "Continuar →" [ref=f7e302] [cursor=pointer]:
+              - generic [ref=f7e303]: Continuar
+              - generic [ref=f7e304]: →
+        - generic [ref=f7e305]:
+          - generic [ref=f7e306]:
+            - generic [ref=f7e307]: ✓Sin compromiso
+            - generic [ref=f7e308]: Tu cotización no te obliga a nada.
+          - generic [ref=f7e309]:
+            - generic [ref=f7e310]: ✓Respuesta por WhatsApp
+            - generic [ref=f7e311]: Te enviamos la propuesta por el mismo chat.
+          - generic [ref=f7e312]:
+            - generic [ref=f7e313]: ✓Precio claro
+            - generic [ref=f7e314]: El importe final se confirma contigo.
+          - generic [ref=f7e315]:
+            - generic [ref=f7e316]: ✓Entrega con dominio
+            - generic [ref=f7e317]: Tu web sale publicada con su propio dominio.
+    - region "Preguntas frecuentes" [ref=f7e318]:
+      - generic [ref=f7e319]:
+        - generic [ref=f7e320]: Preguntas frecuentes
+        - heading "Antes de cotizar." [level=2] [ref=f7e321]
+        - generic [ref=f7e325]: "?"
+      - generic [ref=f7e326]:
+        - generic [ref=f7e329]: TUPLUS
+        - generic [ref=f7e335]:
+          - group [ref=f7e336]:
+            - generic "¿El precio que veo es el final? +" [ref=f7e337] [cursor=pointer]
+            - paragraph [ref=f7e338]: Es una estimación orientativa. El importe final, los impuestos y el alcance se confirman contigo en la propuesta.
+          - group [ref=f7e339]:
+            - generic "¿Qué incluye el soporte? +" [ref=f7e340] [cursor=pointer]
+          - group [ref=f7e341]:
+            - generic "¿Cuánto demora mi proyecto? +" [ref=f7e342] [cursor=pointer]
+          - group [ref=f7e343]:
+            - generic "¿En qué moneda puedo cotizar? +" [ref=f7e344] [cursor=pointer]
+          - group [ref=f7e345]:
+            - generic "¿Cómo pago? +" [ref=f7e346] [cursor=pointer]
+    - region "Empezar" [ref=f7e347]:
+      - generic [ref=f7e348]:
+        - generic [ref=f7e349]:
+          - heading "¿Listo para tener tu web?" [level=2] [ref=f7e350]
+          - paragraph [ref=f7e351]: Configura tu proyecto en un par de minutos y recibe una estimación clara.
+          - link "Empezar mi cotización" [ref=f7e352] [cursor=pointer]:
+            - /url: "#cotizador"
+        - generic [ref=f7e354]:
+          - emphasis [ref=f7e369]
+          - emphasis [ref=f7e373]
+          - emphasis [ref=f7e377]
+  - link "Abrir WhatsApp de TUPLUS" [ref=f7e381] [cursor=pointer]:
+    - /url: https://wa.me/51916828870?text=Hola%20TUPLUS%2C%20quiero%20informaci%C3%B3n%20sobre%20una%20cotizaci%C3%B3n%20web.
+  - status
+  - contentinfo [ref=f7e386]:
+    - generic [ref=f7e387]:
+      - generic [ref=f7e388]:
+        - generic [ref=f7e389]:
+          - link "TUPLUS, inicio" [ref=f7e390] [cursor=pointer]:
+            - /url: index.html#inicio
+            - img "TUPLUS" [ref=f7e391]
+          - paragraph [ref=f7e392]: Ideas que avanzan.Tecnología que conecta.
+          - generic [ref=f7e393]: Desde Latinoamérica, para tu negocio.
+        - generic [ref=f7e394]:
+          - heading "Explora" [level=2] [ref=f7e395]
+          - link "Conceptos de proyectos" [ref=f7e396] [cursor=pointer]:
+            - /url: index.html#proyectos
+          - link "Cómo trabajamos" [ref=f7e397] [cursor=pointer]:
+            - /url: index.html#proceso
+          - link "Cotizador web" [ref=f7e398] [cursor=pointer]:
+            - /url: cotizador.html
+          - link "Red de Socios Comerciales" [ref=f7e399] [cursor=pointer]:
+            - /url: socios-comerciales.html
+          - link "Contacto" [ref=f7e400] [cursor=pointer]:
+            - /url: index.html#contacto
+        - generic [ref=f7e401]:
+          - heading "Soluciones" [level=2] [ref=f7e402]
+          - link "Diseño web" [ref=f7e403] [cursor=pointer]:
+            - /url: soluciones/web.html
+          - link "Tiendas virtuales" [ref=f7e404] [cursor=pointer]:
+            - /url: soluciones/commerce.html
+          - link "Automatización" [ref=f7e405] [cursor=pointer]:
+            - /url: soluciones/automation.html
+          - link "Sistemas a medida" [ref=f7e406] [cursor=pointer]:
+            - /url: soluciones/systems.html
+          - link "Datos y seguridad" [ref=f7e407] [cursor=pointer]:
+            - /url: soluciones/data-security.html
+        - generic [ref=f7e408]:
+          - heading "Red Partner" [level=2] [ref=f7e409]
+          - link "Conocer la red" [ref=f7e410] [cursor=pointer]:
+            - /url: partner.html
+          - link "Territorios" [ref=f7e411] [cursor=pointer]:
+            - /url: partner.html#territorios
+          - link "Niveles de colaboración" [ref=f7e412] [cursor=pointer]:
+            - /url: partner.html#niveles
+          - link "Postularme" [ref=f7e413] [cursor=pointer]:
+            - /url: partner.html#postulacion
+        - generic [ref=f7e414]:
+          - heading "Conversemos" [level=2] [ref=f7e415]
+          - link "WhatsApp ↗" [ref=f7e416] [cursor=pointer]:
+            - /url: https://wa.me/51916828870
+          - link "Privacidad y uso del sitio" [ref=f7e417] [cursor=pointer]:
+            - /url: privacidad.html
+          - generic [ref=f7e418]: Versión para revisión
+      - generic [ref=f7e419]:
+        - generic [ref=f7e420]: © 2026 TUPLUS · 7CANALES MARKETING DIGITAL S.R.L.
+        - link "Volver arriba ↑" [ref=f7e421] [cursor=pointer]:
+          - /url: "#top"
+  - tooltip
+  - button "Subir"
+  - generic [ref=f7e424]:
+    - button "Menu" [ref=f7e425]
+    - button "Inspect" [ref=f7e431]
+    - button "Audit" [ref=f7e435]
+    - button "Settings" [ref=f7e440]

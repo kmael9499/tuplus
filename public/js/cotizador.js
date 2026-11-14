@@ -47,9 +47,11 @@ const catalog = {
     pro:{price:3490, included:5, products:20, scope:"Hasta 5 páginas informativas y carga de 20 productos."},
     biz:{price:5490, included:8, products:50, scope:"Hasta 8 páginas informativas y carga de 50 productos."},
     corp:{price:7490, included:12, products:100, scope:"Hasta 12 páginas informativas y carga de 100 productos."}}},
-  // Las aplicaciones se cotizan a medida: un solo nivel con importe referencial.
-  webapp: {label:"Aplicación web / SaaS", delivery:[15,15], unit:"page", extraRate:180, custom:true, tiers:{
-    pro:{price:5090, included:8, scope:"Cotización personalizada según módulos, usuarios e integraciones."}}}
+  // Las aplicaciones se cotizan a medida: los niveles son importes referenciales.
+  webapp: {label:"Aplicación web / SaaS", delivery:[15,15], unit:"page", extraRate:180, tiers:{
+    pro:{price:5090, included:8, scope:"Hasta 8 pantallas y 2 módulos esenciales."},
+    biz:{price:7490, included:12, scope:"Hasta 12 pantallas, roles de usuario e integraciones."},
+    corp:{price:10990, included:16, scope:"Hasta 16 pantallas, módulos avanzados y automatizaciones."}}}
 };
 const productBlocks = {blocks20:{qty:20, price:280}, blocks50:{qty:50, price:650}};
 // price: importe cerrado. range: [mínimo, máximo|null] por confirmar, no se suma al total.
@@ -253,9 +255,7 @@ function updateCurrencyUI(){
 }
 function renderTiers(){
   const box=$("#tierOptions"); if(!box) return;
-  const custom=!!project().custom;
-  $("#tierBlock").hidden=custom; $("#tierCustom").hidden=!custom;
-  if(custom){ box.textContent=""; return; }
+  $("#tierBlock").hidden=false;
   box.innerHTML=TIERS.map(k=>{
     const c=project().tiers[k], on=k===state.tier;
     return `<button class="radio-card tier-card${on?" selected":""}" data-tier="${k}" type="button" role="radio" aria-checked="${on}" tabindex="${on?0:-1}"><span class="radio"></span><div><b>${t(tierNames[k])}</b><small>${t(c.scope)}</small></div><strong><span class="option-price" data-pen="${c.price}" data-prefix="none" translate="no"></span></strong></button>`;
@@ -282,6 +282,18 @@ function renderScope(){
     }
   }
   $("#contentProPrice").dataset.pen=contentPrice();
+  // Panel junto al deslizador cuando no hay carga de productos
+  const side=$("#tierCustom"); side.hidden=!!p.products;
+  if(!p.products){
+    const app=state.project==="webapp";
+    $("#customLabel").textContent=t(app?"Alcance a medida":"Tu nivel");
+    $("#customValue").textContent=app?t("Referencial"):t(tierNames[state.tier]);
+    const items=app
+      ? ["Módulos y pantallas según tu proceso","Usuarios, roles y permisos","Integraciones y automatizaciones"].map(x=>t(x))
+      : [t(c.scope), `${t("Entrega estimada")}: ${deliveryDays()}`, `${t(p.unit==="section"?"Cada sección adicional cuesta":"Cada página adicional cuesta")} ${money(p.extraRate)}`];
+    $("#customList").innerHTML=items.map(x=>`<li>${x}</li>`).join("");
+    $("#customNote").textContent=t(app?"El importe final se confirma al revisar el alcance contigo.":"Cambia de nivel arriba para ampliar lo incluido.");
+  }
 }
 function renderFeatures(){
   $$(".feature-card").forEach(el=>{
