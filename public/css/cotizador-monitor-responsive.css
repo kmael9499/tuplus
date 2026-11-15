@@ -234,7 +234,6 @@ body { font-size: var(--quote-fluid-body); }
     grid-template-columns: 34px minmax(0,1fr) auto; align-items: center;
   }
   .project-grid .choice-card.wide .choice-content { padding-right: 0; }
-  .project-grid .choice-card.wide .pedir-cotizacion { grid-column: 3; grid-row: 1; align-self: center; }
 }
 
 /* Paquetes rápidos y nota final menos pesados */
@@ -446,15 +445,16 @@ body { font-size: var(--quote-fluid-body); }
     display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 16px; align-content: start;
   }
   [data-view="2"] > .view-heading,
-  [data-view="2"] > .tier-block,
-  [data-view="2"] > .tier-custom { grid-column: 1 / -1; }
+  [data-view="2"] > .tier-block { grid-column: 1 / -1; }
   [data-view="2"] > .view-heading { margin-bottom: 0; }
   [data-view="2"] > .tier-block, [data-view="2"] > .section-block { margin-top: 0; margin-bottom: 0; }
   [data-view="2"] > .tier-custom[hidden] { display: none; }
 
   /* Tamaño junto a Productos (si no hay productos, el deslizador ocupa todo el ancho) */
   [data-view="2"] > .slider-card { grid-column: 1 / -1; align-self: stretch; }
-  [data-view="2"]:has(#productsBlock:not([hidden])) > .slider-card { grid-column: 1; }
+  [data-view="2"]:has(#productsBlock:not([hidden])) > .slider-card,
+  [data-view="2"]:has(#tierCustom:not([hidden])) > .slider-card { grid-column: 1; }
+  [data-view="2"] > #tierCustom:not([hidden]) { grid-column: 2; display: flex; flex-direction: column; }
   [data-view="2"] > #productsBlock:not([hidden]) { grid-column: 2; display: flex; }
   [data-view="2"] > #productsBlock > .section-label { display: none; }
   [data-view="2"] > #productsBlock > .product-card { flex: 1; display: flex; flex-direction: column; }
@@ -817,3 +817,14 @@ body { font-size: var(--quote-fluid-body); }
 [data-view="5"] .coupon-btn { padding: 7px 16px; }
 [data-view="5"] .coupon-msg { margin: 0; font-size: 12px; }
 @media print { [data-view="5"] .coupon-box { display: none !important; } }
+
+/* Alcance a medida (aplicaciones): panel a la derecha del deslizador, mismo estilo que Productos */
+[data-view="2"] .custom-card { margin: 0; padding: 16px 18px; border-radius: 16px; border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(160deg, rgba(255,255,255,.04), rgba(255,255,255,.012)); font-size: 13px; }
+[data-view="2"] .custom-head { display: flex; flex-direction: column; gap: 2px; }
+[data-view="2"] .custom-head span { color: #e1c38b; font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+[data-view="2"] .custom-head b { font-size: 28px; line-height: 1.1; color: #f4dba9; letter-spacing: -.02em; }
+[data-view="2"] .custom-card ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 2px; }
+[data-view="2"] .custom-card li { padding: 7px 2px; border-bottom: 1px solid rgba(255,255,255,.07); color: #dbe5ea; font-size: 12.5px; }
+[data-view="2"] .custom-card li::before { content: "✓ "; }
+[data-view="2"] .custom-card p { margin: auto 0 0; padding: 9px 12px; border-radius: 10px; background: rgba(225,195,139,.08); color: #dbe5ea; font-size: 12px; }
