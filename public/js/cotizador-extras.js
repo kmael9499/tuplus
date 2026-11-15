@@ -1079,7 +1079,6 @@
           `<span class="xt-chip">${s.pages} ${x(s.pages === 1 ? "pg1" : "pgN")}</span>` +
           `<span class="xt-chip">${n} ${x(n === 1 ? "fn1" : "fnN")}</span>` +
           `<span class="xt-chip">${tt(designs[s.design].label)}</span>` +
-          `<span class="xt-chip">&#9201; ${deliveryDays()}</span>` +
           '<span class="xt-grow"></span>' +
           `<button class="xt-chip" type="button" data-xt="igv" aria-pressed="${!!s.tax}">${tt(s.tax ? "CON IGV" : "SIN IGV")}</button>` +
           `<button class="xt-chip" type="button" data-xt="copy">${x("copyLink")}</button>`;

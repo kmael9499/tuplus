@@ -351,6 +351,7 @@ function sync(){
     if(live.animate&&!matchMedia('(prefers-reduced-motion:reduce)').matches){live.getAnimations().forEach(a=>a.cancel());live.animate([{opacity:.4,transform:'translateY(5px)'},{opacity:1,transform:'none'}],{duration:260,easing:'ease-out'});}
   }
   $("#liveTotal").setAttribute("aria-label", `${t("Estimado")} ${money(grandTotal())}`);
+  if(state.step===5) renderSummary();
 }
 function contactComplete(){
   const v=id=>($("#"+id)?.value||"").trim();
@@ -398,7 +399,6 @@ function summaryRows(){
   state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
   rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?`${money(designs[state.design].price)}${state.design === "premium" ? ` (${t("desde")})` : ""}`:inc]);
   if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
-  rows.push(["Entrega estimada", deliveryDays()]);
   const disc = discountInfo();
   if(disc.amount) rows.push([`Descuento · ${disc.label}`, `−${money(disc.amount)}`]);
   if(state.tax) rows.push(["IGV 18%", money(Math.round((subtotal()-disc.amount)*.18))]);
@@ -407,6 +407,7 @@ function summaryRows(){
 function renderSummary(){
   const total=grandTotal(), pend=pending(), rec=recurring();
   $("#totalPrice").textContent=money(total);
+  $("#summaryDelivery").textContent=deliveryDays();
   $("#rangePrice").textContent=pend.items.length
     ? `${t("Por confirmar, no incluido")}: ${rangeText(pend.min,pend.max,pend.open)}`
     : t("Precio según el alcance elegido");
@@ -659,7 +660,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     });
 
     const total = amountIn(grandTotal()); // en la moneda elegida
-    const subtotal = (total / 1.18).toFixed(2);
+    const subtotal = (state.tax ? total / 1.18 : total).toFixed(2);
     const igv = (total - subtotal).toFixed(2);
     const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
     const servicio = (typeof catalog !== "undefined" && typeof state !== "undefined" && catalog?.[state?.project]?.label) || "Servicio Web Especializado";
@@ -697,7 +698,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     const filas = [
       { c1: servicio, c2: "Desarrollo & Despliegue", c3: `${moneda} ${subtotal}`, isTotal: false },
       { c1: "Subtotal (Base Imponible)", c2: "—", c3: `${moneda} ${subtotal}`, isTotal: false },
-      { c1: "IGV (18%)", c2: "—", c3: `${moneda} ${igv}`, isTotal: false },
+      ...(state.tax ? [{ c1: "IGV (18%)", c2: "—", c3: `${moneda} ${igv}`, isTotal: false }] : []),
       { c1: "TOTAL ESTIMADO", c2: "—", c3: `${moneda} ${total.toFixed(2)}`, isTotal: true }
     ];
 
@@ -721,13 +722,18 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     });
 
     
-    const yBar = y + 14;
-    doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(15, 23, 42);
-    doc.text("Distribución de Inversión (Neto vs IGV):", 14, yBar);
-    doc.setFillColor(37, 99, 235);
-    doc.rect(14, yBar + 4, 155, 6, "F");
-    doc.setFillColor(203, 213, 225);
-    doc.rect(169, yBar + 4, 27, 6, "F");
+    if (!state.tax) {
+      doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(15, 23, 42);
+      doc.text("Precio no incluye IGV", 14, y + 6);
+    } else {
+      const yBar = y + 14;
+      doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(15, 23, 42);
+      doc.text("Distribución de Inversión (Neto vs IGV):", 14, yBar);
+      doc.setFillColor(37, 99, 235);
+      doc.rect(14, yBar + 4, 155, 6, "F");
+      doc.setFillColor(203, 213, 225);
+      doc.rect(169, yBar + 4, 27, 6, "F");
+    }
 
     
     doc.addPage();
@@ -793,7 +799,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   });
 
   const total = amountIn(grandTotal()); // en la moneda elegida
-  const subtotal = (total / 1.18).toFixed(2);
+  const subtotal = (state.tax ? total / 1.18 : total).toFixed(2);
   const igv = (total - subtotal).toFixed(2);
   const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
   const numDoc = "F001-" + Math.floor(100000 + Math.random() * 900000);
@@ -886,12 +892,14 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   doc.text(`${moneda} ${subtotal}`, 192, yTable + 6.5, { align: "right" });
 
   
-  yTable += 10;
-  doc.setFillColor(255, 255, 255);
-  doc.rect(14, yTable, 182, 10, "F");
-  doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9.5);
-  doc.text("IGV (18%)", 18, yTable + 6.5);
-  doc.text(`${moneda} ${igv}`, 192, yTable + 6.5, { align: "right" });
+  if (state.tax) {
+    yTable += 10;
+    doc.setFillColor(255, 255, 255);
+    doc.rect(14, yTable, 182, 10, "F");
+    doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9.5);
+    doc.text("IGV (18%)", 18, yTable + 6.5);
+    doc.text(`${moneda} ${igv}`, 192, yTable + 6.5, { align: "right" });
+  }
 
   
   yTable += 10;
@@ -901,8 +909,13 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   doc.text("TOTAL A PAGAR", 18, yTable + 6.5);
   doc.text(`${moneda} ${total.toFixed(2)}`, 192, yTable + 6.5, { align: "right" });
 
+  if (!state.tax) {
+    doc.setTextColor(15, 23, 42).setFont("helvetica", "normal").setFontSize(9);
+    doc.text("Precio no incluye IGV", 14, yTable + 16);
+  }
+
   
-  const terminosY = yTable + 18;
+  const terminosY = yTable + (state.tax ? 18 : 22);
 
   doc.setFillColor(248, 250, 252);
   doc.roundedRect(14, terminosY, 182, 22, 2, 2, "F");
