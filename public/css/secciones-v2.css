@@ -351,3 +351,7 @@ html[data-theme="dark"] body .ct2 .contact-form-card :is(input:not([type="checkb
 /* Casilla de autorización centrada respecto a todo el texto */
 :root body .ct2 .contact-form-card label.consent{display:flex;align-items:center;gap:12px;margin:6px 0 22px;font-size:14px;line-height:1.7;color:var(--v2-muted)}
 :root body .ct2 .contact-form-card label.consent input[type="checkbox"]{flex:0 0 20px;width:20px;height:20px;min-height:20px;min-width:20px;margin:0;align-self:center;cursor:pointer}
+
+/* Separadores entre las secciones principales. */
+:root body .about-section.ab2, :root body .faq-section.fq2{border-top:3px solid var(--gold)}
+
