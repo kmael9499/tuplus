@@ -144,7 +144,36 @@
     const form = document.getElementById(id);
     if (!form) return;
     const contact = form.elements.contact;
-    contact.addEventListener('input', () => contact.setCustomValidity(''));
+    const t = text => window.TUPLUS_I18N?.t(text) || text;
+    const country = form.elements.country;
+    const localizeCountries = () => {
+      if (id !== 'contact-form') return;
+      const locale = window.TUPLUS_I18N?.locale || 'es';
+      const names = new Intl.DisplayNames([locale], {type: 'region'});
+      const selected = country.value;
+      const options = [...country.options].filter(option => option.value);
+      options.forEach(option => { option.textContent = names.of(option.value); });
+      options.sort((a, b) => a.textContent.localeCompare(b.textContent, locale)).forEach(option => country.append(option));
+      country.value = selected;
+    };
+    const validateFields = () => {
+      const checks = [
+        ['contact', quote.validContact, 'Escribe un correo válido o un teléfono de 7 a 15 dígitos con código de país.'],
+        ['name', quote.validName, 'Escribe un nombre de 2 a 80 caracteres, sin números ni símbolos especiales.'],
+        ['company', quote.validCompany, 'Escribe una empresa o actividad de 2 a 100 caracteres, con letras y puntuación habitual.'],
+        ['message', value => (!value.trim() && id !== 'contact-form') || quote.validMessage(value), 'Describe tu proyecto en 20 a 1000 caracteres.']
+      ];
+      checks.forEach(([name, valid, message]) => {
+        const field = form.elements[name];
+        if (field) field.setCustomValidity(valid(field.value) ? '' : t(message));
+      });
+      if (id === 'contact-form') country.setCustomValidity([...country.options].some(option => option.value && option.value === country.value) ? '' : t('Selecciona tu país'));
+    };
+    localizeCountries();
+    validateFields();
+    form.addEventListener('input', validateFields);
+    form.addEventListener('change', validateFields);
+    document.addEventListener('tuplus:language-change', () => { localizeCountries(); validateFields(); });
     form.addEventListener('input', () => {
       form.querySelector('.form-error').hidden = true;
       const result = form.querySelector('.form-result');
@@ -152,20 +181,21 @@
     });
     form.addEventListener('submit', event => {
       event.preventDefault();
+      validateFields();
       const error = form.querySelector('.form-error');
       const values = Object.fromEntries(new FormData(form).entries());
       for (const [key, value] of Object.entries(values)) if (typeof value === 'string') values[key] = value.trim();
       const requiredNames = id === 'contact-form' ? ['name', 'company', 'contact', 'country', 'message'] : ['name', 'company', 'contact', 'country'];
       const missing = requiredNames.find(key => !values[key]);
       if (missing) {
-        error.textContent = 'Completa los campos con información válida; los espacios en blanco no son suficientes.';
+        error.textContent = t('Completa los campos con información válida; los espacios en blanco no son suficientes.');
         error.hidden = false; form.elements[missing].focus(); return;
       }
       if (!quote.validContact(values.contact)) {
-        contact.setCustomValidity('Escribe un correo válido o un teléfono de 7 a 15 dígitos con código de país.');
         contact.reportValidity(); return;
       }
       if (!form.reportValidity()) return;
+      if (id === 'contact-form') values.country = country.selectedOptions[0].textContent;
       const source = id === 'quote-form' ? 'Web TUPLUS / Cotizador' : 'Web TUPLUS / Contacto';
       const extras = [values.budget && values.budget !== 'Por definir' ? `Inversión aproximada: ${values.budget}` : '', values.urgency && values.urgency !== 'Solo estoy explorando' ? `Plazo: ${values.urgency}` : ''].filter(Boolean);
       const message = [`Hola, soy ${values.name}.`, `Empresa o actividad: ${values.company}`, `Contacto: ${values.contact}`, `País: ${values.country}`, `Preferencia de contacto: ${values.preference}`, '', id === 'quote-form' ? estimateText() : `Solución de interés: ${values.service}`, ...extras, values.message ? `\nMi proyecto: ${values.message}` : '', `\nOrigen: ${source}`, 'Consentimiento: autorizo el uso de estos datos para atender esta consulta.'].filter(Boolean).join('\n');
