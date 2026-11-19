@@ -22,7 +22,24 @@
     reverse.get(value).add(source);
   }
   let currentLocale = 'es';
-  const translate = source => dictionaries[currentLocale]?.[normalize(source)] ?? dictionaries.es?.[normalize(source)] ?? source;
+  const formats = [
+    [/^desde (.+)$/i, 'desde {amount}', ['amount']],
+    [/^(.+) \/ mes$/, '{amount} / mes', ['amount']],
+    [/^(.+) \/ año$/, '{amount} / año', ['amount']],
+    [/^Paso (\d+) de (\d+)$/, 'Paso {step} de {total}', ['step', 'total']],
+    [/^([A-Z]{3}) · estimado$/i, '{currency} · estimado', ['currency']]
+  ];
+  function translate(source) {
+    const key = normalize(source);
+    const direct = dictionaries[currentLocale]?.[key] ?? dictionaries.es?.[key];
+    if (direct !== undefined) return direct;
+    for (const [pattern, template, names] of formats) {
+      const match = key.match(pattern);
+      const localized = dictionaries[currentLocale]?.[template];
+      if (match && localized) return names.reduce((text, name, index) => text.replaceAll(`{${name}}`, match[index + 1]), localized);
+    }
+    return source;
+  }
   function canonical(value, previous) {
     const text = normalize(value);
     // Punctuation is not a translation key: reverse lookup may match code fragments.

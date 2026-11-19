@@ -158,7 +158,7 @@
     };
     const validateFields = () => {
       const checks = [
-        ['contact', quote.validContact, 'Escribe un correo válido o un teléfono de 7 a 15 dígitos con código de país.'],
+        ['contact', quote.validContact, 'Escribe un correo válido o un teléfono internacional con + y entre 7 y 15 dígitos.'],
         ['name', quote.validName, 'Escribe un nombre de 2 a 80 caracteres, sin números ni símbolos especiales.'],
         ['company', quote.validCompany, 'Escribe una empresa o actividad de 2 a 100 caracteres, con letras y puntuación habitual.'],
         ['message', value => (!value.trim() && id !== 'contact-form') || quote.validMessage(value), 'Describe tu proyecto en 20 a 1000 caracteres.']

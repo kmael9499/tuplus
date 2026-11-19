@@ -69,3 +69,4 @@ assert.match(quotePage, /cotizador\.js\?v=/);
 assert.doesNotMatch(quotePage, /src="(?:\.\/)?js\/script\.js/);
 console.log('OK: inicio sin campos del cotizador, menú móvil, Escape, WhatsApp y scripts de las 9 páginas.');
 require('./contact.test.cjs');
+require('./contact-validation.test.cjs');

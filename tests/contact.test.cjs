@@ -21,12 +21,12 @@ form.reportValidity = () => Object.values(fields).every(field => !field.validati
 document.querySelectorAll('main>section[id]').forEach(section => {section.getBoundingClientRect = () => ({top: 1000});});
 form.querySelector('.form-result').scrollIntoView = () => {};
 const context = vm.createContext({
-  window, document, Intl, URLSearchParams, location: {pathname: '/index.html', search: ''},
+  window, document, Intl, URL, URLSearchParams, location: {pathname: '/index.html', search: ''},
   CustomEvent: window.CustomEvent, matchMedia: () => ({matches: false, addEventListener() {}}),
   addEventListener() {}, requestAnimationFrame() {},
   FormData: class {entries() {return Object.entries(fields).map(([name, field]) => [name, field.value]);}}
 });
-for (const file of ['config', 'quote-core', 'i18n-data', 'contact-translations', 'script']) {
+for (const file of ['config', 'quote-core', 'i18n-data', 'contact-translations', 'site-translations', 'script']) {
   vm.runInContext(fs.readFileSync(path.join(base, 'js', file + '.js'), 'utf8'), context);
 }
 const api = window.TuplusQuote;
@@ -68,5 +68,14 @@ for (const locale of ['en', 'zh', 'ru', 'pt', 'fr', 'ja', 'de']) {
   assert.equal(fields.country.value, 'PE');
   assert.equal(fields.country.selectedOptions[0].textContent, new Intl.DisplayNames([locale], {type: 'region'}).of('PE'));
   assert.notEqual(fields.message.validationMessage, 'Describe tu proyecto en 20 a 1000 caracteres.');
+  for (const [name, invalid] of [['name', 'Ana123'], ['company', '<Empresa>'], ['contact', 'a..b@example.com'], ['country', 'INVALID'], ['message', '#']]) {
+    const original = fields[name].value;
+    fields[name].value = invalid;
+    submit();
+    assert.ok(fields[name].validationMessage, `${locale}: ${name}`);
+    assert.equal(result.hidden, true);
+    assert.equal(result.querySelector('a').hasAttribute('href'), false);
+    fields[name].value = original;
+  }
 }
 console.log('OK: contacto — validación, países, consentimiento, WhatsApp y avisos en 7 idiomas.');

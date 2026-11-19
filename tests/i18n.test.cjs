@@ -10,7 +10,7 @@ async function test(file){
  if(picker)Object.defineProperty(picker,'value',{value:'es',writable:true});
  const store=new Map();
  const context=vm.createContext({window,document,scrollY:0,Node:window.Node,NodeFilter:{SHOW_TEXT:4},MutationObserver:window.MutationObserver,CustomEvent:window.CustomEvent,localStorage:{getItem:k=>store.get(k),setItem:(k,v)=>store.set(k,v)},matchMedia:()=>({matches:true,addEventListener(){}}),requestAnimationFrame:()=>0,cancelAnimationFrame(){},setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},console});
- for(const script of ['js/i18n-data.js','js/quote-translations.js',...(file==='index.html'?['js/contact-translations.js','js/proyectos.js','js/redesign.js']:[]),'js/i18n.js'])vm.runInContext(fs.readFileSync(path.join(base,script),'utf8'),context,{filename:script});
+ for(const script of ['js/i18n-data.js','js/site-translations.js','js/quote-translations.js',...(file==='index.html'?['js/contact-translations.js','js/proyectos.js','js/redesign.js']:[]),'js/i18n.js'])vm.runInContext(fs.readFileSync(path.join(base,script),'utf8'),context,{filename:script});
  const api=window.TUPLUS_I18N;
  for(const locale of ['ja','zh','en','ru','pt','fr','de','zh','ja','es','ja','zh','es']){
   api.setLocale(locale);await pause();
