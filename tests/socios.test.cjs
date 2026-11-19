@@ -5,6 +5,7 @@ const context = vm.createContext({ window: {} });
 context.window.window = context.window;
 vm.runInContext('var window = this.window;' + fs.readFileSync('public/js/i18n-data.js', 'utf8'), context);
 vm.runInContext(fs.readFileSync('public/js/socios-translations.js', 'utf8'), context);
+vm.runInContext(fs.readFileSync('public/js/site-translations.js', 'utf8'), context);
 const dictionaries = context.window.TUPLUS_TRANSLATIONS;
 const locales = ['en', 'zh', 'ru', 'pt', 'fr', 'ja', 'de'];
 const normalize = (text) => text.trim().replace(/\s+/g, ' ');
