@@ -36,7 +36,8 @@
     atmosphere.setAttribute('aria-hidden', 'true');
 
     if (season === 'christmas') {
-      for (let index = 0; index < 28; index += 1) {
+      // Mantiene el ambiente navideño con menos elementos animados en pantalla.
+      for (let index = 0; index < 9; index += 1) {
         const flake = document.createElement('i');
         flake.className = 'seasonal-snowflake';
         flake.style.setProperty('--snow-left', (Math.random() * 100).toFixed(2) + 'vw');

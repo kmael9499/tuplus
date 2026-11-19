@@ -149,7 +149,8 @@
       yaw: -40 * DEG,
       tilt: 15 * DEG,
       target: null,
-      paused: motion.matches,
+      // El globo queda quieto al entrar; cada persona decide si quiere rotarlo.
+      paused: true,
       hold: 0,
       drag: null,
     };
@@ -414,14 +415,13 @@
     }
   });
   motion.addEventListener("change", (event) => {
-    states.forEach((s) => {
-      s.paused = event.matches;
-      s.dirty = true;
-      translate(
-        s.root.querySelector("[data-globe-toggle] [data-i18n]"),
-        s.paused ? "partner.play" : "partner.pause",
-      );
-    });
+    // Activar "reducir movimiento" siempre detiene el globo. Desactivarlo no
+    // inicia una animación que la persona no pidió.
+    if (event.matches) states.forEach((s) => { s.paused = true; s.dirty = true; });
+    states.forEach((s) => translate(
+      s.root.querySelector("[data-globe-toggle] [data-i18n]"),
+      s.paused ? "partner.play" : "partner.pause",
+    ));
     schedule();
   });
   window.TUPLUS_GLOBE = {

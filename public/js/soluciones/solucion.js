@@ -38,7 +38,10 @@
   }
 
   // Aparición al bajar.
-  page.querySelectorAll('[data-reveal]').forEach(element => io(element, visible => { if (visible) element.classList.add('is-in'); }, {threshold: .15}));
+  page.querySelectorAll('[data-reveal]').forEach(element => io(element, visible => {
+    element.classList.toggle('is-visible', visible);
+    if (visible) element.classList.add('is-in');
+  }, {threshold: .15}));
   page.querySelectorAll('[data-steps]').forEach(element => io(element, visible => { if (visible) element.classList.add('is-in'); }, {threshold: .4}));
   page.querySelectorAll('[data-count]').forEach(element => {
     let done = false;
