@@ -116,3 +116,6 @@ button,a,input,textarea{-webkit-tap-highlight-color:transparent}button:focus-vis
 .summary-delivery span{font:10px "DM Mono",monospace;letter-spacing:.1em}
 .summary-delivery strong{font-size:clamp(20px,2vw,28px);line-height:1.2}
 .summary-delivery small{color:#cbd6dd;font-size:12px;line-height:1.4}
+
+.contact-card .consent-note{margin:2px 0 0;font-size:11.5px;line-height:1.55;color:#a5b9c6}
+@media print{.consent-note{display:none!important}}

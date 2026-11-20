@@ -4,6 +4,7 @@ const pool = require('../config/db');
 
 const router = express.Router();
 const SESSION_MS = 30 * 60 * 1000;
+const RESET_COOLDOWN_MIN = 5; // minutos mínimos entre dos correos de recuperación para la misma cuenta
 const HASH_COST = 32768;
 const COOKIE = 'tuplus_session';
 const PENDING_COOKIE = 'tuplus_mfa';
@@ -148,7 +149,15 @@ router.post('/api/auth/forgot-password', async (req, res) => {
   if (!validEmail(email)) return res.json({ message: generic });
   try {
     const [rows] = await pool.execute("SELECT id, email FROM auth_accounts WHERE email = ? AND status = 'active' LIMIT 1", [email]);
+    // Límite por cuenta: si ya se pidió un enlace hace menos de 5 minutos, no se envía otro correo ni se anula el anterior.
+    // La respuesta es la misma de siempre, así nadie puede saber si el correo existe ni spamear a una persona ajena.
+    let enfriamiento = false;
     if (rows[0]) {
+      const [recientes] = await pool.execute(`SELECT id FROM auth_password_resets
+        WHERE account_id = ? AND used_at IS NULL AND created_at > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL ${RESET_COOLDOWN_MIN} MINUTE) LIMIT 1`, [rows[0].id]);
+      enfriamiento = recientes.length > 0;
+    }
+    if (rows[0] && !enfriamiento) {
       const token = randomToken();
       await pool.execute('DELETE FROM auth_password_resets WHERE account_id = ?', [rows[0].id]);
       await pool.execute(`INSERT INTO auth_password_resets (account_id, token_hash, expires_at)

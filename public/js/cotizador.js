@@ -91,6 +91,8 @@ const RUSH_CUT = .75;                          // y el plazo se recorta a ese po
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
+// Escapa texto antes de ponerlo dentro de un innerHTML (los datos de la API o del usuario nunca deben interpretarse como HTML).
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const currencyMeta = Object.fromEntries(Object.keys(fx.rates).map(code=>[code,{code}]));
 const penRate = () => fx.rates.PEN.rate;
 const toUsd = pen => pen / penRate();
@@ -291,7 +293,7 @@ function renderScope(){
     const items=app
       ? ["Módulos y pantallas según tu proceso","Usuarios, roles y permisos","Integraciones y automatizaciones"].map(x=>t(x))
       : [t(c.scope), `${t("Entrega estimada")}: ${deliveryDays()}`, `${t(p.unit==="section"?"Cada sección adicional cuesta":"Cada página adicional cuesta")} ${money(p.extraRate)}`];
-    $("#customList").innerHTML=items.map(x=>`<li>${x}</li>`).join("");
+    $("#customList").innerHTML=items.map(x=>`<li>${esc(x)}</li>`).join("");
     $("#customNote").textContent=t(app?"El importe final se confirma al revisar el alcance contigo.":"Cambia de nivel arriba para ampliar lo incluido.");
   }
 }
@@ -412,7 +414,7 @@ function renderSummary(){
     ? `${t("Por confirmar, no incluido")}: ${rangeText(pend.min,pend.max,pend.open)}`
     : t("Precio según el alcance elegido");
   $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
-  const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${t(a)}</span><strong>${t(b)}</strong></div>`;
+  const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${esc(t(a))}</span><strong>${esc(t(b))}</strong></div>`;
   let html=summaryRows().map(r=>line(r)).join("");
   if(state.design === "premium"){
     html+=`<div class="summary-sub">${t("Premium Motion: el estimado incluye S/1,200. El precio final puede llegar a S/2,000 según las interacciones y el alcance aprobado.")}</div>`;
@@ -441,13 +443,16 @@ function go(n){
 function validateContact(requireConsent=false){
   for(const id of ["nombre","empresa","pais","email","telefono"]){if(!$("#"+id).value.trim()){toast("Completa tus datos de contacto, empresa y país.");$("#"+id).focus();return false;}}
   if(requireConsent && !$("#consentimiento").checked){toast("Autoriza el uso de tus datos antes de abrir WhatsApp.");$("#consentimiento").focus();return false;}
-  const name=$("#nombre").value.trim(), email=$("#email").value.trim(), phone=$("#telefono").value.trim();
-  if(!name || !email || !phone){ toast("Completa nombre, correo y WhatsApp para continuar."); return false; }
-  if(!/^\S+@\S+\.\S+$/.test(email)){ toast("Revisa el correo electrónico."); return false; }
+  const name=$("#nombre").value.trim(), company=$("#empresa").value.trim(), email=$("#email").value.trim(), phone=$("#telefono").value.trim();
+  // Mismas reglas que el formulario de contacto de la portada (quote-core.js) y que el servidor.
+  const Q=window.TuplusQuote;
+  if(Q&&!Q.validName(name)){toast("Escribe tu nombre con letras, de 2 a 80 caracteres, sin números ni símbolos.");$("#nombre").focus();return false;}
+  if(Q&&!Q.validCompany(company)){toast("Escribe tu empresa o actividad de 2 a 100 caracteres, con letras y puntuación habitual.");$("#empresa").focus();return false;}
+  if(Q?!Q.validEmail(email):!/^\S+@\S+\.\S+$/.test(email)){toast("Revisa el correo electrónico (por ejemplo nombre@empresa.com).");$("#email").focus();return false;}
   if(!/^\+?[\d\s().-]{7,30}$/.test(phone)||phone.replace(/\D/g,'').length<7||phone.replace(/\D/g,'').length>15){toast("Revisa el teléfono e incluye el código de país.");$("#telefono").focus();return false;}
   return true;
 }
-function quoteText(){
+function quoteText(forWhatsapp=false){
   const pend=pending(), rec=recurring();
   const selected=[...state.features].map(k=>t(featureInfo(k).label)).join(', ')||t('Ninguna adicional');
   const line=(label,value)=>`${t(label)}: ${value}`;
@@ -468,13 +473,14 @@ function quoteText(){
     ...(pend.items.length?[line('Por confirmar, no incluido',pend.items.map(i=>`${t(i.label)} ${rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)}`).join('; '))]:[]),
     ...rec.map(r=>line(r.label,r.text)),'',
     line('Tu nombre',$("#nombre").value.trim()),line('Empresa o actividad',$("#empresa").value.trim()),
-    line('País',countries.name(state.country)),line('Correo electrónico',$("#email").value.trim()),
-    line('Teléfono / WhatsApp',$("#telefono").value.trim()),line('Mensaje',$("#mensajeCliente").value.trim()||'—'),'',
+    line('País',countries.name(state.country)),
+    ...(forWhatsapp?[]:[line('Correo electrónico',$("#email").value.trim()),line('Teléfono / WhatsApp',$("#telefono").value.trim())]),
+    line('Mensaje',(forWhatsapp?$("#mensajeCliente").value.trim().slice(0,300):$("#mensajeCliente").value.trim())||'—'),'',
     t('La cifra es orientativa y se confirma al validar el alcance final.')
   ].join('\n');
 }
 function whatsappUrl(){
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText())}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText(true))}`;
 }
 function downloadTxt(){
   if(!validateContact()) return;
@@ -497,6 +503,8 @@ function sendToBackend(){
       total_usd:Math.round(toUsd(grandTotal())*100)/100,total_pen:grandTotal(),total_mostrado:money(grandTotal()),
       pais:state.country,consentimiento:$("#consentimiento").checked,cambio:`${fx.rates[state.currency].rate} (${fx.rates[state.currency].date})`,funciones:[...state.features],diseno:designs[state.design].label,soporte:supports[state.support].label,
       prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:Math.round(toUsd(grandTotal())*100)/100,notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`,
+      // Claves para que el servidor recalcule el precio con su propio tarifario (no confía en los totales).
+      proyecto_clave:state.project,diseno_clave:state.design,soporte_clave:state.support,blocks20:state.blocks20,blocks50:state.blocks50,
       cupon:promo.coupon?promo.coupon.codigo:'',descuento:disc.amount,campana:disc.origin==='campana'?disc.label:''
     };
     // Con apiUrl se usa la API Node; sin ella, el PHP anterior.
@@ -505,11 +513,12 @@ function sendToBackend(){
     const timer = setTimeout(()=>ctrl.abort(), 12000); // si el servidor no responde en 12 s, se considera fallo
     return fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:ctrl.signal})
       .then(async response=>{
+        if(response.status===429) throw new Error("limit"); // límite de cotizaciones por hora
         const result=await response.json();
         if(!response.ok||(result.status!=="success"&&result.estado!=="correcto")) throw new Error("save");
         return true;
       })
-      .catch(()=>{ toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."); return false; })
+      .catch(e=>{ toast(e&&e.message==="limit" ? "Alcanzaste el límite de cotizaciones por hora. Tu resumen sigue disponible por WhatsApp o descarga; inténtalo de nuevo más tarde." : "No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."); return false; })
       .finally(()=>clearTimeout(timer));
   }catch{ return Promise.resolve(false); }
 }
@@ -573,12 +582,12 @@ function renderFeaturePane(key){
   if(!card){card=cards.find(c=>c.querySelector(".xt-badge"))||cards[0];paneKey=card.dataset.feature;}
   const sel=card.querySelector(".feature-select"), more=card.querySelector(".feature-more");
   const included=card.classList.contains("is-included"), on=card.classList.contains("selected");
-  const title=sel.querySelector("b")?.textContent||"", sub=sel.querySelector("small")?.textContent||"";
-  const priceEl=sel.querySelector(".option-price"), price=priceEl?priceEl.textContent:"";
+  const title=esc(sel.querySelector("b")?.textContent||""), sub=esc(sel.querySelector("small")?.textContent||"");
+  const priceEl=sel.querySelector(".option-price"), price=esc(priceEl?priceEl.textContent:"");
   const icon=sel.querySelector(":scope > span")?.innerHTML||"";
-  const rec=card.querySelector(".xt-badge")?.textContent||"";
-  const label=more?.querySelector(".feature-more-label")?.textContent||t("Qué incluye");
-  const items=more?.querySelector("ul")?.innerHTML||"", note=more?.querySelector(".feature-note-line")?.textContent||"";
+  const rec=esc(card.querySelector(".xt-badge")?.textContent||"");
+  const label=esc(more?.querySelector(".feature-more-label")?.textContent||t("Qué incluye"));
+  const items=more?.querySelector("ul")?.innerHTML||"", note=esc(more?.querySelector(".feature-note-line")?.textContent||"");
   const btnText=included?t("Incluido en tu nivel"):(on?t("Quitar de mi cotización"):t("Añadir a mi cotización"));
   pane.classList.toggle("is-on",on);
   pane.innerHTML=`<div class="fp-head"><span class="fp-icon" aria-hidden="true">${icon}</span><div class="fp-title"><h3>${title}</h3></div></div>${sub?`<p class="fp-desc">${sub}</p>`:""}
@@ -594,8 +603,8 @@ function renderFeaturePicked(){
   const box=document.getElementById("featurePicked"); if(!box)return;
   const picked=$$(".feature-card.selected").filter(c=>!c.classList.contains("is-included"));
   const rows=picked.map(c=>{
-    const name=c.querySelector(".feature-select b")?.textContent||"", price=c.querySelector(".feature-select .option-price")?.textContent||"";
-    return `<li data-feature="${c.dataset.feature}"><span class="fk-name">${name}</span><span class="fk-price" translate="no">${price}</span><button type="button" class="fk-x" aria-label="${t("Quitar de mi cotización")}: ${name}">×</button></li>`;
+    const name=esc(c.querySelector(".feature-select b")?.textContent||""), price=esc(c.querySelector(".feature-select .option-price")?.textContent||"");
+    return `<li data-feature="${esc(c.dataset.feature)}"><span class="fk-name">${name}</span><span class="fk-price" translate="no">${price}</span><button type="button" class="fk-x" aria-label="${t("Quitar de mi cotización")}: ${name}">×</button></li>`;
   }).join("");
   box.innerHTML=`<div class="fk-head"><span>${t("Tu selección")}</span><b>${picked.length}</b></div>`+
     (rows?`<ul class="fk-list">${rows}</ul>`:`<p class="fk-empty">${t("Aún no has elegido funciones. Pasa el mouse por una para ver su detalle.")}</p>`);

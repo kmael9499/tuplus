@@ -828,3 +828,15 @@ body { font-size: var(--quote-fluid-body); }
 [data-view="2"] .custom-card li { padding: 7px 2px; border-bottom: 1px solid rgba(255,255,255,.07); color: #dbe5ea; font-size: 12.5px; }
 [data-view="2"] .custom-card li::before { content: "✓ "; }
 [data-view="2"] .custom-card p { margin: auto 0 0; padding: 9px 12px; border-radius: 10px; background: rgba(225,195,139,.08); color: #dbe5ea; font-size: 12px; }
+
+/* iPhone/Safari: el formulario de país y moneda vive dentro del escenario 3D del hero. En un contexto
+   preserve-3d el z-index se ignora y las capas del pájaro y los anillos (que giran en 3D) pueden pasar por
+   delante de la mitad del formulario. Se aplana ese escenario (el efecto 3D sigue dentro de .scene) y el
+   formulario forma su propio plano por encima. */
+.hero-stage:has(> .currency-control) { transform-style: flat !important; }
+.hero-stage > .currency-control { isolation: isolate; transform: translateZ(0); }
+
+/* Listas desplegables (país, moneda…): en tema oscuro el texto de las opciones es casi blanco y la lista nativa
+   del navegador es blanca, así que no se leían (contraste 1.1:1). Se fija fondo y texto propios con buen contraste. */
+:where(html[data-theme="dark"]) select option { background-color: #102634; color: #e7edf1; }
+:where(html[data-theme="dark"]) select option:disabled { color: #9fb2bf; }

@@ -11,7 +11,7 @@ const audioSrc = '../'.repeat(depth) + 'audio/tuplus-fondo.mp3';
     const audio = document.getElementById("tuplus-global-audio");
     if (!audio || audio.dataset.initialized === "true") return;
     audio.dataset.initialized = "true";
-    audio.volume = 1;
+    audio.volume = 0.2; // música de fondo suave (antes estaba al máximo); sube o baja este valor entre 0 y 1
     const storageKey = "tuplus-global-audio-time";
     const savePosition = () => {
       try { if (Number.isFinite(audio.currentTime)) sessionStorage.setItem(storageKey, String(audio.currentTime)); } catch (_) {}
