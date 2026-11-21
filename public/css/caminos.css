@@ -1,0 +1,94 @@
+/* TUPLUS — estilos de los caminos de clientes y socios. */
+
+/* Protección general: ninguna página se desborda de lado con ningún zoom. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+/* Camino partners: conserva el estilo que hereda de .nav-quote. */
+.site-header .nav-socios {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+}
+
+.site-header .nav-socios .nav-ico {
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+/* Red de socios permanece en una sola línea. */
+.site-header .partner-nav-link {
+  white-space: nowrap;
+}
+
+/* Menú compacto para TODOS los tamaños de escritorio (cualquier zoom). */
+@media (min-width: 851px) {
+  .site-header .container { width: min(1500px, 100% - 48px) !important; }
+  .site-header .nav-wrap { gap: 10px !important; }
+  .site-header .brand .brand-art { width: 116px !important; }
+  .site-header #main-nav { gap: 12px !important; flex-wrap: nowrap !important; }
+  .site-header #main-nav > a { font-size: 11px !important; white-space: nowrap !important; }
+  .site-header #main-nav .nav-quote { padding: 10px 11px !important; gap: 8px !important; }
+  .site-header .language-picker select { min-width: 82px !important; max-width: 86px !important; font-size: 10px !important; }
+  .site-header .theme-toggle { font-size: 0 !important; padding: 8px !important; }
+  .site-header .theme-toggle span { font-size: 20px !important; }
+}
+
+/* Camino clientes: botón Contratar. */
+.btn-contratar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 10px;
+  background: #122c3d;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-contratar:hover {
+  filter: brightness(1.15);
+}
+
+.sv-contratar {
+  margin-top: 1.5rem;
+}
+
+/* Tarjetas de la página de socios comerciales. */
+.sc-section {
+  padding: 2rem 0 4rem;
+}
+
+.sc-cards {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.sc-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  background: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.sc-card h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.sc-card p {
+  margin: 0;
+  opacity: 0.8;
+}

@@ -24,8 +24,8 @@
   const GLOW1 = 'saturate(1.9) brightness(1.5) drop-shadow(0 0 14px #ffe08a) drop-shadow(0 0 40px rgba(255,200,70,.95))';
 
   /* La etiqueta "ESTIMADO" sale de la escena y pasa a la esquina del escenario */
-  const badge = $('.xd-pricebadge', scene) || $('.xd-pricebadge', stage);
-  if (badge && badge.parentNode !== stage) stage.appendChild(badge);
+  /* El estimado vive en la parte superior del panel lateral, debajo del nombre del proyecto. */
+  const badge = $('.xd-pricebadge', document.querySelector('.side-brand')) || $('.xd-pricebadge', scene) || $('.xd-pricebadge', stage);
 
   /* ---------- Estado ---------- */
   const pos = { x: 0, y: 0, r: 0 };           // desplazamiento del colibrí (px locales de la escena)

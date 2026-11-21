@@ -1,0 +1,364 @@
+/* Vistas compartidas del globo. El relieve y la luz se calculan sobre una esfera. */
+.partner-public .pp-world-hero {
+  min-width: 0;
+  position: relative;
+  margin-inline: -12px;
+}
+.partner-public .pp-world-hero > .pp-eyebrow {
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.23em;
+}
+.partner-public .pp-globe {
+  position: relative;
+  min-width: 0;
+}
+.partner-public .pp-globe-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  isolation: isolate;
+  touch-action: pan-y;
+  cursor: grab;
+  border-radius: 50%;
+  outline-offset: -8px;
+}
+.partner-public .pp-globe-stage:active {
+  cursor: grabbing;
+}
+.partner-public .pp-globe-stage:before {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #38576722, transparent 70%);
+  box-shadow: 0 22px 50px #122c3d20;
+  z-index: -1;
+}
+.partner-public .pp-globe-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+.partner-public .pp-globe-static {
+  position: absolute;
+  inset: 7.5%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 25%, #42677955, transparent 45%),
+    linear-gradient(120deg, #1a3c4d, #071724);
+  box-shadow:
+    inset -25px -10px 45px #0009,
+    inset 5px 5px 18px #92b0bd44;
+}
+.partner-public .pp-globe[data-ready="true"] .pp-globe-static {
+  display: none;
+}
+.partner-public .pp-globe-static:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: url("../imagenes/partner/earth-mask.svg") 32% center/200% 100%;
+  mix-blend-mode: screen;
+  opacity: 0.27;
+}
+.partner-public .pp-globe-markers {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.partner-public .pp-globe-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  padding: 5px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 2px 3px #0009);
+}
+.partner-public .pp-globe-pin:before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid #e5c27c;
+  border-radius: 50%;
+  opacity: 0.65;
+  animation: pp-bird-pulse 3.6s ease-out infinite;
+  pointer-events: none;
+}
+.partner-public .pp-globe-pin img {
+  display: block;
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+  animation: pp-bird-beat 3.6s ease-in-out infinite;
+}
+.partner-public .pp-globe-pin[aria-pressed="true"] {
+  background: #102532a6;
+  box-shadow: 0 0 0 1px #f0d49c80;
+}
+.partner-public .pp-globe-pin[hidden] {
+  display: none !important;
+}
+.partner-public .pp-globe-pin:focus-visible {
+  outline: 2px solid #ffe6af;
+  outline-offset: 3px;
+}
+.partner-public .pp-globe-leaders {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  stroke: #eed39b;
+  stroke-width: 1;
+}
+.partner-public .pp-globe-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  min-height: 36px;
+  flex-wrap: wrap;
+  margin-top: -5px;
+  position: relative;
+  z-index: 5;
+}
+.partner-public .pp-globe-controls button {
+  min-height: 36px;
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid var(--pp-line);
+  border-radius: 30px;
+  color: var(--pp-muted);
+  font:
+    600 0.68rem/1.4 "Segoe UI",
+    sans-serif;
+  cursor: pointer;
+}
+.partner-public .pp-globe-controls button:hover {
+  color: var(--pp-ink);
+  border-color: var(--pp-gold);
+}
+.partner-public .pp-globe-help {
+  font-size: 0.68rem !important;
+  line-height: 1.6 !important;
+  color: var(--pp-muted);
+  text-align: center;
+  max-width: 360px;
+  margin: 12px auto 0;
+  padding: 0 12px;
+}
+.partner-public .pp-globe-fallback {
+  font-size: 0.75rem !important;
+  color: var(--pp-muted);
+  text-align: center;
+  padding: 12px;
+}
+.partner-public .pp-globe-country-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 20px auto 0;
+  max-width: 440px;
+}
+.partner-public .pp-globe-country-list button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font:
+    600 0.68rem/1.4 "Segoe UI",
+    sans-serif;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--pp-line);
+  border-radius: 30px;
+  color: var(--pp-muted);
+  background: var(--pp-surface);
+  cursor: pointer;
+}
+.partner-public .pp-country-code {
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.partner-public .pp-globe-country-list button[aria-pressed="true"],
+.partner-public .pp-country-list button[aria-pressed="true"] {
+  border-color: var(--pp-gold);
+  color: var(--pp-ink);
+  background: color-mix(in srgb, var(--pp-accent) 12%, var(--pp-surface));
+}
+.partner-public .pp-world-explorer {
+  grid-template-columns: 1.25fr 1fr;
+}
+.partner-public .pp-world-map {
+  padding: 24px 18px;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--pp-accent) 8%, var(--pp-map)),
+    var(--pp-map)
+  );
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.partner-public .pp-world-map .pp-map-credit {
+  margin-top: 18px;
+}
+.partner-public .pp-country-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+.partner-public .pp-country-list button {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  text-align: left;
+  padding: 11px;
+  border-radius: 7px;
+  border: 1px solid var(--pp-line);
+  background: transparent;
+  color: var(--pp-muted);
+  min-height: 44px;
+  font:
+    600 0.78rem/1.4 "Segoe UI",
+    sans-serif;
+  cursor: pointer;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.partner-public .pp-country-info .pp-eyebrow {
+  display: block;
+  margin-bottom: 12px;
+}
+.partner-public .pp-country-info h3 {
+  font-size: clamp(1.6rem, 3vw, 2.7rem);
+  margin-bottom: 16px;
+  overflow-wrap: anywhere;
+}
+.partner-public .pp-country-info p {
+  font-size: 0.88rem;
+  margin: 20px 0 24px;
+}
+.partner-public .pp-country-info .pp-status {
+  color: var(--pp-gold);
+  background: color-mix(in srgb, var(--pp-accent) 8%, var(--pp-surface));
+  border-color: var(--pp-line);
+}
+.partner-public .pp-globe[data-visible="false"] .pp-globe-pin:before,
+.partner-public .pp-globe[data-visible="false"] .pp-globe-pin img {
+  animation-play-state: paused;
+}
+@keyframes pp-bird-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.65;
+  }
+  70%,
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+@keyframes pp-bird-beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  12% {
+    transform: scale(1.15);
+  }
+  23% {
+    transform: scale(1);
+  }
+  34% {
+    transform: scale(1.08);
+  }
+  48% {
+    transform: scale(1);
+  }
+}
+@media (max-width: 760px) {
+  .partner-public .pp-world-hero {
+    width: min(520px, 100%);
+    margin: auto;
+  }
+  .partner-public .pp-world-explorer {
+    grid-template-columns: 1fr;
+  }
+  .partner-public .pp-world-map {
+    padding: 20px 12px;
+  }
+  .partner-public .pp-world-map .pp-globe {
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+  }
+  .partner-public .pp-country-info h3 {
+    font-size: 2rem;
+  }
+}
+@media (max-width: 420px) {
+  .partner-public .pp-globe-pin {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
+  .partner-public .pp-globe-pin img {
+    width: 24px;
+    height: 24px;
+  }
+  .partner-public .pp-globe-country-list {
+    gap: 6px;
+  }
+  .partner-public .pp-globe-country-list button {
+    font-size: 0.64rem;
+    padding: 6px 8px;
+  }
+  .partner-public .pp-country-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .partner-public .pp-globe-pin:before,
+  .partner-public .pp-globe-pin img {
+    animation: none !important;
+  }
+  .partner-public .pp-globe-pin:before {
+    opacity: 0.35;
+  }
+}
+.partner-public .pp-globe-pin {
+  background: #102532b8;
+  box-shadow: 0 0 0 1px #d3b16b55;
+}
+.partner-public .pp-globe-pin[aria-pressed="true"] {
+  background: #102532e6;
+  box-shadow: 0 0 0 1px #f0d49ccc;
+}
+/* Mantener el borde atmosférico circular incluso ante un compositor antiguo. */
+.partner-public .pp-globe-canvas {
+  clip-path: circle(49% at 50% 50%);
+  background: transparent;
+}
+html[data-theme="dark"] .partner-public .pp-globe-stage:before {
+  box-shadow: 0 24px 55px #0005;
+}

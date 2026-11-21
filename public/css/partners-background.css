@@ -1,0 +1,72 @@
+/* Both partner forms share the home background and the selected site theme. */
+html body.partners-shared-background {
+  --partners-panel: rgba(255, 255, 255, .86);
+}
+html[data-theme="dark"] body.partners-shared-background {
+  --partners-panel: rgba(10, 26, 38, .72);
+  --sc-paper: #0c202d;
+  --sc-white: #182934;
+  --sc-text: #e1e8ed;
+  --sc-muted: #acbdc9;
+  --sc-border: #334652;
+}
+html body.partners-page.partners-shared-background main,
+html body.partners-page.partners-shared-background main > section,
+html[data-theme="dark"] body.partners-page.partners-shared-background main > section {
+  background: transparent;
+}
+/* Keep the shared blue/gold glow instead of stacking the old hero backgrounds. */
+.partners-shared-background .sc-hero-mesh,
+.partners-shared-background .sc-hero-ambient {
+  display: none;
+}
+html body.partners-page.partners-shared-background .sc-hero-next::before {
+  background: none;
+}
+html body.partners-shared-background #partner-form,
+html body.partners-shared-background .sc-form {
+  background: var(--partners-panel);
+}
+html[data-theme="dark"] .partners-shared-background :is(.sc-solution-card, .sc-steps-3d li, .sc-apply-promise) {
+  background: var(--partners-panel);
+  border-color: var(--line);
+}
+html[data-theme="dark"] .partners-shared-background :is(.sc-solution-card, .sc-steps-3d, .sc-apply-promise, .sc-form) :is(h2, h3, b, label) {
+  color: var(--ink);
+}
+html[data-theme="dark"] .partners-shared-background :is(.sc-solution-card, .sc-steps-3d, .sc-apply-promise, .sc-form) :is(p, small),
+html[data-theme="dark"] .partners-shared-background .sc-form-required {
+  color: var(--muted);
+}
+html[data-theme="dark"] .partners-shared-background .sc-form :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="dark"] .partners-shared-background .sc-form .sc-check {
+  color: var(--muted) !important;
+}
+html[data-theme="dark"] .partners-shared-background .sc-form :is(.sc-form-step, .sc-required-star, .sc-check a) {
+  color: var(--gold-ink);
+}
+/* The hero used to stay dark in both themes; its copy now follows the theme. */
+html body.partners-shared-background .sc-hero-copy-next h1,
+html body.partners-shared-background .sc-button-quiet,
+html body.partners-shared-background .sc-hero-proof b {
+  color: var(--ink);
+}
+html body.partners-shared-background .sc-hero-lead,
+html body.partners-shared-background .sc-hero-proof small {
+  color: var(--muted);
+}
+html body.partners-shared-background .sc-hero-proof { border-color: var(--line); }
+html[data-theme="light"] body.partners-shared-background .sc-hero-copy-next h1 em {
+  color: var(--gold-ink);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+html[data-theme="light"] body.partners-shared-background .sc-kicker,
+html[data-theme="light"] body.partners-shared-background .sc-proof-index,
+html[data-theme="light"] body.partners-shared-background .sc-button-quiet span {
+  color: var(--gold-ink);
+}

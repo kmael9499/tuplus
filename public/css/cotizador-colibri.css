@@ -38,3 +38,12 @@ body.xc-wa-compact .floating-whatsapp span:not(.wa-symbol),body.xc-wa-compact .f
   .xc-pollen{display:none}
 }
 @media print{.xc-pollen{display:none!important}}
+
+
+/* ===== Estimado en la parte superior del panel lateral ===== */
+.xd-side .side-brand{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.xd-side .side-brand>.xd-pricebadge{position:static;inset:auto;display:inline-flex;flex-direction:column;gap:3px;width:max-content;max-width:100%;margin:0 0 2px;padding:9px 13px;border-radius:12px;animation:none;box-shadow:0 8px 20px rgba(0,0,0,.18);pointer-events:none}
+.xd-side .side-brand>.xd-pricebadge b{font-size:17px}
+.xd-side .side-brand>.xd-pricebadge small{font-size:8px}
+.xd-side .side-brand>.xd-pricebadge em{font-size:8px}
+.xd-side .side-mini{display:none!important}

@@ -14,6 +14,19 @@ npm test          # compila y ejecuta los tests de tests/
 
 Al hacer push a `main`, el sitio se publica solo (`.github/workflows/deploy.yml`).
 
+### API durante el desarrollo
+
+`npm run dev` y `npm run preview` redirigen `/api` al ERP publicado en
+`https://tuplusadminpanel.onrender.com`. Los formularios enviados desde la web
+local también llegan a ese ERP.
+
+Para trabajar con un ERP local, copia `.env.example` como `.env` en la raíz,
+define `TUPLUS_API_PROXY_TARGET=http://127.0.0.1:8080` e inicia el proyecto ERP
+en ese puerto. Reinicia Astro después de cambiar la variable. El backend
+antiguo de `backend/node` no incluye las rutas de descuentos, cupones ni
+postulaciones del ERP. Un error `ECONNREFUSED` indica que no hay un servicio
+aceptando la conexión en el destino configurado.
+
 ## Estructura
 
 ```

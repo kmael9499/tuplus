@@ -1,0 +1,193 @@
+/* TUPLUS — colibrí volador (reemplaza al anterior de socios-pulido.css). */
+
+/* Apaga el colibrí viejo para que no haya dos. */
+body.partners-page::before,
+body.partners-page::after {
+  display: none !important;
+}
+
+/* Capa 1: recorrido de lado a lado, ida y vuelta, cada ~20 segundos. */
+/* Si vuela de espaldas, cambia --f de 1 a -1. */
+.colibri-vuelo {
+  --f: 1;
+  --cw: clamp(90px, 11vw, 160px);
+  position: fixed;
+  top: 42vh;
+  left: 0;
+  z-index: 30;
+  width: var(--cw);
+  height: var(--cw);
+  pointer-events: none;
+  opacity: 0;
+  animation: colibri-ruta 20s linear 1s infinite;
+}
+
+@keyframes colibri-ruta {
+  0%      { opacity: 0; transform: translate3d(-20vw, 22vh, 0) scaleX(var(--f)); }
+  3%      { opacity: 1; }
+  37%     { opacity: 1; }
+  40%     { opacity: 0; transform: translate3d(112vw, -14vh, 0) scaleX(var(--f)); }
+  40.01%  { opacity: 0; transform: translate3d(112vw, 22vh, 0) scaleX(calc(var(--f) * -1)); }
+  50%     { opacity: 0; transform: translate3d(112vw, 22vh, 0) scaleX(calc(var(--f) * -1)); }
+  53%     { opacity: 1; }
+  87%     { opacity: 1; }
+  90%     { opacity: 0; transform: translate3d(-20vw, -14vh, 0) scaleX(calc(var(--f) * -1)); }
+  90.01%  { opacity: 0; transform: translate3d(-20vw, 22vh, 0) scaleX(var(--f)); }
+  100%    { opacity: 0; transform: translate3d(-20vw, 22vh, 0) scaleX(var(--f)); }
+}
+
+/* Capa 2: ondas suaves, sube y baja como un colibrí de verdad. */
+.colibri-ola {
+  width: 100%;
+  height: 100%;
+  animation: colibri-ola 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes colibri-ola {
+  from { transform: translateY(-9vh); }
+  to   { transform: translateY(9vh); }
+}
+
+/* Capa 3: el cuerpo, con aleteo y cabeceo. */
+.colibri-cuerpo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url("../colibri.png") center / contain no-repeat;
+  filter: drop-shadow(0 0 10px rgba(240, 217, 156, .55)) drop-shadow(0 10px 14px rgba(0, 0, 0, .2));
+  transform-origin: 50% 60%;
+  animation:
+    colibri-aleteo .13s ease-in-out infinite alternate,
+    colibri-cabeceo 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes colibri-aleteo {
+  from { transform: scale(1, 1); }
+  to   { transform: scale(.92, 1.08) translateY(-3%); }
+}
+
+@keyframes colibri-cabeceo {
+  from { rotate: -5deg; }
+  to   { rotate: 5deg; }
+}
+
+/* Alas: dos sombras borrosas que se agitan a los lados. */
+.colibri-cuerpo::before,
+.colibri-cuerpo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../colibri.png") center / contain no-repeat;
+  opacity: .3;
+  filter: blur(1.5px);
+  transform-origin: 55% 45%;
+  pointer-events: none;
+}
+
+.colibri-cuerpo::before { animation: colibri-ala-a .12s ease-in-out infinite alternate; }
+.colibri-cuerpo::after  { animation: colibri-ala-b .12s ease-in-out infinite alternate; }
+
+@keyframes colibri-ala-a {
+  from { transform: rotate(-14deg) scale(1.02); }
+  to   { transform: rotate(5deg) scale(.97); }
+}
+
+@keyframes colibri-ala-b {
+  from { transform: rotate(12deg) scale(.97); }
+  to   { transform: rotate(-6deg) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .colibri-vuelo { display: none; }
+}
+/* TUPLUS — colibrí dibujado con alas que aletean de verdad. */
+
+/* Apaga el colibrí viejo (del archivo anterior). */
+body.partners-page::before,
+body.partners-page::after {
+  display: none !important;
+}
+
+/* Capa 1: recorrido de lado a lado, ida y vuelta, cada ~20 segundos. */
+/* Si vuela de espaldas, cambia --f de 1 a -1. */
+.colibri-vuelo {
+  --f: 1;
+  --cw: clamp(100px, 12vw, 170px);
+  position: fixed;
+  top: 42vh;
+  left: 0;
+  z-index: 30;
+  width: var(--cw);
+  height: var(--cw);
+  pointer-events: none;
+  opacity: 0;
+  animation: colibri-ruta 20s linear 1s infinite;
+}
+
+@keyframes colibri-ruta {
+  0%      { opacity: 0; transform: translate3d(-20vw, 22vh, 0) scaleX(var(--f)); }
+  3%      { opacity: 1; }
+  37%     { opacity: 1; }
+  40%     { opacity: 0; transform: translate3d(112vw, -14vh, 0) scaleX(var(--f)); }
+  40.01%  { opacity: 0; transform: translate3d(112vw, 22vh, 0) scaleX(calc(var(--f) * -1)); }
+  50%     { opacity: 0; transform: translate3d(112vw, 22vh, 0) scaleX(calc(var(--f) * -1)); }
+  53%     { opacity: 1; }
+  87%     { opacity: 1; }
+  90%     { opacity: 0; transform: translate3d(-20vw, -14vh, 0) scaleX(calc(var(--f) * -1)); }
+  90.01%  { opacity: 0; transform: translate3d(-20vw, 22vh, 0) scaleX(var(--f)); }
+  100%    { opacity: 0; transform: translate3d(-20vw, 22vh, 0) scaleX(var(--f)); }
+}
+
+/* Capa 2: ondas suaves, sube y baja como un colibrí de verdad. */
+.colibri-ola {
+  width: 100%;
+  height: 100%;
+  animation: colibri-ola 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes colibri-ola {
+  from { transform: translateY(-9vh); }
+  to   { transform: translateY(9vh); }
+}
+
+/* Capa 3: el dibujo del colibrí. */
+.colibri-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 8px rgba(240, 217, 156, .6)) drop-shadow(0 10px 12px rgba(0, 0, 0, .2));
+  animation: colibri-cabeceo 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes colibri-cabeceo {
+  from { rotate: -4deg; }
+  to   { rotate: 4deg; }
+}
+
+/* Alas: giran sobre el hombro, una en contra de la otra. */
+.cb-ala {
+  transform-origin: 100px 64px;
+}
+
+.cb-ala-fondo {
+  animation: cb-aleteo-a .1s ease-in-out infinite alternate;
+}
+
+.cb-ala-frente {
+  animation: cb-aleteo-b .1s ease-in-out infinite alternate;
+}
+
+@keyframes cb-aleteo-a {
+  from { transform: rotate(-38deg); }
+  to   { transform: rotate(52deg); }
+}
+
+@keyframes cb-aleteo-b {
+  from { transform: rotate(48deg); }
+  to   { transform: rotate(-30deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .colibri-vuelo { display: none; }
+}
