@@ -47,9 +47,11 @@ const catalog = {
     pro:{price:3490, included:5, products:20, scope:"Hasta 5 páginas informativas y carga de 20 productos."},
     biz:{price:5490, included:8, products:50, scope:"Hasta 8 páginas informativas y carga de 50 productos."},
     corp:{price:7490, included:12, products:100, scope:"Hasta 12 páginas informativas y carga de 100 productos."}}},
-  // Las aplicaciones se cotizan a medida: un solo nivel con importe referencial.
-  webapp: {label:"Aplicación web / SaaS", delivery:[15,15], unit:"page", extraRate:180, custom:true, tiers:{
-    pro:{price:5090, included:8, scope:"Cotización personalizada según módulos, usuarios e integraciones."}}}
+  // Las aplicaciones se cotizan a medida: los niveles son importes referenciales.
+  webapp: {label:"Aplicación web / SaaS", delivery:[15,15], unit:"page", extraRate:180, tiers:{
+    pro:{price:5090, included:8, scope:"Hasta 8 pantallas y 2 módulos esenciales."},
+    biz:{price:7490, included:12, scope:"Hasta 12 pantallas, roles de usuario e integraciones."},
+    corp:{price:10990, included:16, scope:"Hasta 16 pantallas, módulos avanzados y automatizaciones."}}}
 };
 const productBlocks = {blocks20:{qty:20, price:280}, blocks50:{qty:50, price:650}};
 // price: importe cerrado. range: [mínimo, máximo|null] por confirmar, no se suma al total.
@@ -89,6 +91,8 @@ const RUSH_CUT = .75;                          // y el plazo se recorta a ese po
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
+// Escapa texto antes de ponerlo dentro de un innerHTML (los datos de la API o del usuario nunca deben interpretarse como HTML).
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const currencyMeta = Object.fromEntries(Object.keys(fx.rates).map(code=>[code,{code}]));
 const penRate = () => fx.rates.PEN.rate;
 const toUsd = pen => pen / penRate();
@@ -253,9 +257,7 @@ function updateCurrencyUI(){
 }
 function renderTiers(){
   const box=$("#tierOptions"); if(!box) return;
-  const custom=!!project().custom;
-  $("#tierBlock").hidden=custom; $("#tierCustom").hidden=!custom;
-  if(custom){ box.textContent=""; return; }
+  $("#tierBlock").hidden=false;
   box.innerHTML=TIERS.map(k=>{
     const c=project().tiers[k], on=k===state.tier;
     return `<button class="radio-card tier-card${on?" selected":""}" data-tier="${k}" type="button" role="radio" aria-checked="${on}" tabindex="${on?0:-1}"><span class="radio"></span><div><b>${t(tierNames[k])}</b><small>${t(c.scope)}</small></div><strong><span class="option-price" data-pen="${c.price}" data-prefix="none" translate="no"></span></strong></button>`;
@@ -282,6 +284,18 @@ function renderScope(){
     }
   }
   $("#contentProPrice").dataset.pen=contentPrice();
+  // Panel junto al deslizador cuando no hay carga de productos
+  const side=$("#tierCustom"); side.hidden=!!p.products;
+  if(!p.products){
+    const app=state.project==="webapp";
+    $("#customLabel").textContent=t(app?"Alcance a medida":"Tu nivel");
+    $("#customValue").textContent=app?t("Referencial"):t(tierNames[state.tier]);
+    const items=app
+      ? ["Módulos y pantallas según tu proceso","Usuarios, roles y permisos","Integraciones y automatizaciones"].map(x=>t(x))
+      : [t(c.scope), `${t("Entrega estimada")}: ${deliveryDays()}`, `${t(p.unit==="section"?"Cada sección adicional cuesta":"Cada página adicional cuesta")} ${money(p.extraRate)}`];
+    $("#customList").innerHTML=items.map(x=>`<li>${esc(x)}</li>`).join("");
+    $("#customNote").textContent=t(app?"El importe final se confirma al revisar el alcance contigo.":"Cambia de nivel arriba para ampliar lo incluido.");
+  }
 }
 function renderFeatures(){
   $$(".feature-card").forEach(el=>{
@@ -316,6 +330,7 @@ function sync(){
     el.classList.toggle("selected",selected);
     el.querySelector(".feature-select")?.setAttribute("aria-pressed",String(selected));
   });
+  renderFeaturePane();
   $$(".radio-card[data-design]").forEach(el => el.classList.toggle("selected", el.dataset.design===state.design));
   $$(".radio-card[data-support]").forEach(el => el.classList.toggle("selected", el.dataset.support===state.support));
   $("#rushToggle").classList.toggle("active", state.rush); $("#rushToggle").setAttribute("aria-pressed", state.rush);
@@ -338,6 +353,7 @@ function sync(){
     if(live.animate&&!matchMedia('(prefers-reduced-motion:reduce)').matches){live.getAnimations().forEach(a=>a.cancel());live.animate([{opacity:.4,transform:'translateY(5px)'},{opacity:1,transform:'none'}],{duration:260,easing:'ease-out'});}
   }
   $("#liveTotal").setAttribute("aria-label", `${t("Estimado")} ${money(grandTotal())}`);
+  if(state.step===5) renderSummary();
 }
 function contactComplete(){
   const v=id=>($("#"+id)?.value||"").trim();
@@ -385,7 +401,6 @@ function summaryRows(){
   state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
   rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?`${money(designs[state.design].price)}${state.design === "premium" ? ` (${t("desde")})` : ""}`:inc]);
   if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
-  rows.push(["Entrega estimada", deliveryDays()]);
   const disc = discountInfo();
   if(disc.amount) rows.push([`Descuento · ${disc.label}`, `−${money(disc.amount)}`]);
   if(state.tax) rows.push(["IGV 18%", money(Math.round((subtotal()-disc.amount)*.18))]);
@@ -394,11 +409,12 @@ function summaryRows(){
 function renderSummary(){
   const total=grandTotal(), pend=pending(), rec=recurring();
   $("#totalPrice").textContent=money(total);
+  $("#summaryDelivery").textContent=deliveryDays();
   $("#rangePrice").textContent=pend.items.length
     ? `${t("Por confirmar, no incluido")}: ${rangeText(pend.min,pend.max,pend.open)}`
     : t("Precio según el alcance elegido");
   $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
-  const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${t(a)}</span><strong>${t(b)}</strong></div>`;
+  const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${esc(t(a))}</span><strong>${esc(t(b))}</strong></div>`;
   let html=summaryRows().map(r=>line(r)).join("");
   if(state.design === "premium"){
     html+=`<div class="summary-sub">${t("Premium Motion: el estimado incluye S/1,200. El precio final puede llegar a S/2,000 según las interacciones y el alcance aprobado.")}</div>`;
@@ -427,13 +443,16 @@ function go(n){
 function validateContact(requireConsent=false){
   for(const id of ["nombre","empresa","pais","email","telefono"]){if(!$("#"+id).value.trim()){toast("Completa tus datos de contacto, empresa y país.");$("#"+id).focus();return false;}}
   if(requireConsent && !$("#consentimiento").checked){toast("Autoriza el uso de tus datos antes de abrir WhatsApp.");$("#consentimiento").focus();return false;}
-  const name=$("#nombre").value.trim(), email=$("#email").value.trim(), phone=$("#telefono").value.trim();
-  if(!name || !email || !phone){ toast("Completa nombre, correo y WhatsApp para continuar."); return false; }
-  if(!/^\S+@\S+\.\S+$/.test(email)){ toast("Revisa el correo electrónico."); return false; }
+  const name=$("#nombre").value.trim(), company=$("#empresa").value.trim(), email=$("#email").value.trim(), phone=$("#telefono").value.trim();
+  // Mismas reglas que el formulario de contacto de la portada (quote-core.js) y que el servidor.
+  const Q=window.TuplusQuote;
+  if(Q&&!Q.validName(name)){toast("Escribe tu nombre con letras, de 2 a 80 caracteres, sin números ni símbolos.");$("#nombre").focus();return false;}
+  if(Q&&!Q.validCompany(company)){toast("Escribe tu empresa o actividad de 2 a 100 caracteres, con letras y puntuación habitual.");$("#empresa").focus();return false;}
+  if(Q?!Q.validEmail(email):!/^\S+@\S+\.\S+$/.test(email)){toast("Revisa el correo electrónico (por ejemplo nombre@empresa.com).");$("#email").focus();return false;}
   if(!/^\+?[\d\s().-]{7,30}$/.test(phone)||phone.replace(/\D/g,'').length<7||phone.replace(/\D/g,'').length>15){toast("Revisa el teléfono e incluye el código de país.");$("#telefono").focus();return false;}
   return true;
 }
-function quoteText(){
+function quoteText(forWhatsapp=false){
   const pend=pending(), rec=recurring();
   const selected=[...state.features].map(k=>t(featureInfo(k).label)).join(', ')||t('Ninguna adicional');
   const line=(label,value)=>`${t(label)}: ${value}`;
@@ -454,13 +473,14 @@ function quoteText(){
     ...(pend.items.length?[line('Por confirmar, no incluido',pend.items.map(i=>`${t(i.label)} ${rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)}`).join('; '))]:[]),
     ...rec.map(r=>line(r.label,r.text)),'',
     line('Tu nombre',$("#nombre").value.trim()),line('Empresa o actividad',$("#empresa").value.trim()),
-    line('País',countries.name(state.country)),line('Correo electrónico',$("#email").value.trim()),
-    line('Teléfono / WhatsApp',$("#telefono").value.trim()),line('Mensaje',$("#mensajeCliente").value.trim()||'—'),'',
+    line('País',countries.name(state.country)),
+    ...(forWhatsapp?[]:[line('Correo electrónico',$("#email").value.trim()),line('Teléfono / WhatsApp',$("#telefono").value.trim())]),
+    line('Mensaje',(forWhatsapp?$("#mensajeCliente").value.trim().slice(0,300):$("#mensajeCliente").value.trim())||'—'),'',
     t('La cifra es orientativa y se confirma al validar el alcance final.')
   ].join('\n');
 }
-function whatsappUrl(extra=''){
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText()+(extra?'\n\n'+extra:''))}`;
+function whatsappUrl(){
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText(true))}`;
 }
 function downloadTxt(){
   if(!validateContact()) return;
@@ -483,6 +503,8 @@ function sendToBackend(){
       total_usd:Math.round(toUsd(grandTotal())*100)/100,total_pen:grandTotal(),total_mostrado:money(grandTotal()),
       pais:state.country,consentimiento:$("#consentimiento").checked,cambio:`${fx.rates[state.currency].rate} (${fx.rates[state.currency].date})`,funciones:[...state.features],diseno:designs[state.design].label,soporte:supports[state.support].label,
       prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:Math.round(toUsd(grandTotal())*100)/100,notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`,
+      // Claves para que el servidor recalcule el precio con su propio tarifario (no confía en los totales).
+      proyecto_clave:state.project,diseno_clave:state.design,soporte_clave:state.support,blocks20:state.blocks20,blocks50:state.blocks50,
       cupon:promo.coupon?promo.coupon.codigo:'',descuento:disc.amount,campana:disc.origin==='campana'?disc.label:''
     };
     // Con apiUrl se usa la API Node; sin ella, el PHP anterior.
@@ -491,12 +513,13 @@ function sendToBackend(){
     const timer = setTimeout(()=>ctrl.abort(), 12000); // si el servidor no responde en 12 s, se considera fallo
     return fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:ctrl.signal})
       .then(async response=>{
+        if(response.status===429) throw new Error("limit"); // límite de cotizaciones por hora
         const result=await response.json();
         if(!response.ok||(result.status!=="success"&&result.estado!=="correcto")) throw new Error("save");
         window.TUPLUS_LOG?.('cotizacion_guardada', { proyecto: payload.proyecto, moneda: payload.moneda, total_pen: payload.total_pen });
         return true;
       })
-      .catch(()=>{ toast("No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."); return false; })
+      .catch(e=>{ toast(e&&e.message==="limit" ? "Alcanzaste el límite de cotizaciones por hora. Tu resumen sigue disponible por WhatsApp o descarga; inténtalo de nuevo más tarde." : "No se pudo guardar en el servidor. Tu resumen sigue disponible por WhatsApp o descarga."); return false; })
       .finally(()=>clearTimeout(timer));
   }catch{ return Promise.resolve(false); }
 }
@@ -549,11 +572,69 @@ $$(".stepper[data-block]").forEach(row=>row.addEventListener("click",e=>{
 }));
 $$(".toggle-card").forEach(el=>el.addEventListener("click",()=>{state.contentPro=el.dataset.toggle==="contentPro";save();sync();}));
 $$(".feature-select").forEach(el=>el.addEventListener("click",()=>{const k=el.dataset.feature; if(includedFeature(k))return; state.features.has(k)?state.features.delete(k):state.features.add(k); save(); sync();}));
+// ===== Panel de detalle de Funciones (escritorio): se actualiza al pasar el mouse, enfocar o hacer clic =====
+var paneKey;
+const paneMQ=window.matchMedia?window.matchMedia("(min-width: 901px)"):{matches:false};
+function renderFeaturePane(key){
+  const pane=document.getElementById("featurePane"); if(!pane)return;
+  if(key) paneKey=key;
+  const cards=$$(".feature-card"); if(!cards.length)return;
+  let card=cards.find(c=>c.dataset.feature===paneKey);
+  if(!card){card=cards.find(c=>c.querySelector(".xt-badge"))||cards[0];paneKey=card.dataset.feature;}
+  const sel=card.querySelector(".feature-select"), more=card.querySelector(".feature-more");
+  const included=card.classList.contains("is-included"), on=card.classList.contains("selected");
+  const title=esc(sel.querySelector("b")?.textContent||""), sub=esc(sel.querySelector("small")?.textContent||"");
+  const priceEl=sel.querySelector(".option-price"), price=esc(priceEl?priceEl.textContent:"");
+  const icon=sel.querySelector(":scope > span")?.innerHTML||"";
+  const rec=esc(card.querySelector(".xt-badge")?.textContent||"");
+  const label=esc(more?.querySelector(".feature-more-label")?.textContent||t("Qué incluye"));
+  const items=more?.querySelector("ul")?.innerHTML||"", note=esc(more?.querySelector(".feature-note-line")?.textContent||"");
+  const btnText=included?t("Incluido en tu nivel"):(on?t("Quitar de mi cotización"):t("Añadir a mi cotización"));
+  pane.classList.toggle("is-on",on);
+  pane.innerHTML=`<div class="fp-head"><span class="fp-icon" aria-hidden="true">${icon}</span><div class="fp-title"><h3>${title}</h3></div></div>${sub?`<p class="fp-desc">${sub}</p>`:""}
+    <div class="fp-price-row"><span class="fp-price" translate="no">${price}</span>${rec?`<span class="fp-tag">${rec}</span>`:""}</div>
+    <div class="fp-label">${label}</div><ul class="fp-list">${items}</ul>${note?`<p class="fp-note">${note}</p>`:""}
+    <button type="button" class="fp-btn${on&&!included?" is-remove":""}" ${included?"disabled":""}>${btnText}</button>`;
+  pane.querySelector(".fp-btn")?.addEventListener("click",()=>{sel.click();});
+  $$(".feature-card").forEach(c=>c.classList.toggle("is-previewed",c===card));
+  renderFeaturePicked();
+}
+// Resumen "Tu selección": funciones elegidas con su precio y un botón para quitarlas.
+function renderFeaturePicked(){
+  const box=document.getElementById("featurePicked"); if(!box)return;
+  const picked=$$(".feature-card.selected").filter(c=>!c.classList.contains("is-included"));
+  const rows=picked.map(c=>{
+    const name=esc(c.querySelector(".feature-select b")?.textContent||""), price=esc(c.querySelector(".feature-select .option-price")?.textContent||"");
+    return `<li data-feature="${esc(c.dataset.feature)}"><span class="fk-name">${name}</span><span class="fk-price" translate="no">${price}</span><button type="button" class="fk-x" aria-label="${t("Quitar de mi cotización")}: ${name}">×</button></li>`;
+  }).join("");
+  box.innerHTML=`<div class="fk-head"><span>${t("Tu selección")}</span><b>${picked.length}</b></div>`+
+    (rows?`<ul class="fk-list">${rows}</ul>`:`<p class="fk-empty">${t("Aún no has elegido funciones. Pasa el mouse por una para ver su detalle.")}</p>`);
+  box.querySelectorAll(".fk-x").forEach(btn=>btn.addEventListener("click",()=>{
+    document.querySelector(`.feature-select[data-feature="${btn.closest("li").dataset.feature}"]`)?.click();
+  }));
+}
+$$(".feature-card").forEach(card=>{
+  const show=()=>{if(paneMQ.matches)renderFeaturePane(card.dataset.feature);};
+  card.addEventListener("mouseenter",show);
+  card.addEventListener("focusin",show);
+  card.querySelector(".feature-select")?.addEventListener("click",()=>{if(paneMQ.matches)setTimeout(()=>renderFeaturePane(card.dataset.feature),0);});
+});
 const featureDetails=$$(".feature-grid .feature-details");
+// El panel "Qué incluye" ocupa todo el ancho de su grupo, debajo de la tarjeta, para no salirse de la pantalla.
+function placeFeatureMore(detail){
+  const more=detail.querySelector(".feature-more"),card=detail.closest(".feature-card"),group=detail.closest(".feature-group");
+  if(!more||!card||!group)return;
+  if(getComputedStyle(more).position!=="absolute"){more.style.left=more.style.right=more.style.width="";return;}
+  const c=card.getBoundingClientRect(),g=group.getBoundingClientRect();
+  more.style.left=(g.left-c.left-1)+"px";more.style.right="auto";more.style.width=(g.width+2)+"px";
+}
 featureDetails.forEach(detail=>detail.addEventListener("toggle",()=>{
   if(!detail.open)return;
   featureDetails.forEach(other=>{if(other!==detail&&other.open)other.open=false;});
+  placeFeatureMore(detail);
+  requestAnimationFrame(()=>{placeFeatureMore(detail);setTimeout(()=>{if(detail.open)placeFeatureMore(detail);},480);});
 }));
+window.addEventListener("resize",()=>featureDetails.forEach(d=>{if(d.open)placeFeatureMore(d);}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
@@ -589,7 +670,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     });
 
     const total = amountIn(grandTotal()); // en la moneda elegida
-    const subtotal = (total / 1.18).toFixed(2);
+    const subtotal = (state.tax ? total / 1.18 : total).toFixed(2);
     const igv = (total - subtotal).toFixed(2);
     const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
     const servicio = (typeof catalog !== "undefined" && typeof state !== "undefined" && catalog?.[state?.project]?.label) || "Servicio Web Especializado";
@@ -627,7 +708,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     const filas = [
       { c1: servicio, c2: "Desarrollo & Despliegue", c3: `${moneda} ${subtotal}`, isTotal: false },
       { c1: "Subtotal (Base Imponible)", c2: "—", c3: `${moneda} ${subtotal}`, isTotal: false },
-      { c1: "IGV (18%)", c2: "—", c3: `${moneda} ${igv}`, isTotal: false },
+      ...(state.tax ? [{ c1: "IGV (18%)", c2: "—", c3: `${moneda} ${igv}`, isTotal: false }] : []),
       { c1: "TOTAL ESTIMADO", c2: "—", c3: `${moneda} ${total.toFixed(2)}`, isTotal: true }
     ];
 
@@ -651,13 +732,18 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
     });
 
     
-    const yBar = y + 14;
-    doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(15, 23, 42);
-    doc.text("Distribución de Inversión (Neto vs IGV):", 14, yBar);
-    doc.setFillColor(37, 99, 235);
-    doc.rect(14, yBar + 4, 155, 6, "F");
-    doc.setFillColor(203, 213, 225);
-    doc.rect(169, yBar + 4, 27, 6, "F");
+    if (!state.tax) {
+      doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(15, 23, 42);
+      doc.text("Precio no incluye IGV", 14, y + 6);
+    } else {
+      const yBar = y + 14;
+      doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(15, 23, 42);
+      doc.text("Distribución de Inversión (Neto vs IGV):", 14, yBar);
+      doc.setFillColor(37, 99, 235);
+      doc.rect(14, yBar + 4, 155, 6, "F");
+      doc.setFillColor(203, 213, 225);
+      doc.rect(169, yBar + 4, 27, 6, "F");
+    }
 
     
     doc.addPage();
@@ -723,7 +809,7 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   });
 
   const total = amountIn(grandTotal()); // en la moneda elegida
-  const subtotal = (total / 1.18).toFixed(2);
+  const subtotal = (state.tax ? total / 1.18 : total).toFixed(2);
   const igv = (total - subtotal).toFixed(2);
   const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
   const numDoc = "F001-" + Math.floor(100000 + Math.random() * 900000);
@@ -816,12 +902,14 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   doc.text(`${moneda} ${subtotal}`, 192, yTable + 6.5, { align: "right" });
 
   
-  yTable += 10;
-  doc.setFillColor(255, 255, 255);
-  doc.rect(14, yTable, 182, 10, "F");
-  doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9.5);
-  doc.text("IGV (18%)", 18, yTable + 6.5);
-  doc.text(`${moneda} ${igv}`, 192, yTable + 6.5, { align: "right" });
+  if (state.tax) {
+    yTable += 10;
+    doc.setFillColor(255, 255, 255);
+    doc.rect(14, yTable, 182, 10, "F");
+    doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(9.5);
+    doc.text("IGV (18%)", 18, yTable + 6.5);
+    doc.text(`${moneda} ${igv}`, 192, yTable + 6.5, { align: "right" });
+  }
 
   
   yTable += 10;
@@ -831,8 +919,13 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   doc.text("TOTAL A PAGAR", 18, yTable + 6.5);
   doc.text(`${moneda} ${total.toFixed(2)}`, 192, yTable + 6.5, { align: "right" });
 
+  if (!state.tax) {
+    doc.setTextColor(15, 23, 42).setFont("helvetica", "normal").setFontSize(9);
+    doc.text("Precio no incluye IGV", 14, yTable + 16);
+  }
+
   
-  const terminosY = yTable + 18;
+  const terminosY = yTable + (state.tax ? 18 : 22);
 
   doc.setFillColor(248, 250, 252);
   doc.roundedRect(14, terminosY, 182, 22, 2, 2, "F");

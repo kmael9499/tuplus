@@ -3,3 +3,10 @@
 .portal-logout{border:0;background:transparent;font-family:inherit;cursor:pointer}
 
 .portal-logout{border:0;background:transparent;font-family:inherit;cursor:pointer}.access-header .brand-art img{transition:opacity .2s}
+
+/* El control permanece dentro del campo, tambi?n al recibir foco o hover. */
+.access-card .password-wrap{display:flex;align-items:center}
+.access-card .password-wrap input{width:100%;min-width:0}
+.access-card .password-wrap button{inset:4px 4px 4px auto;transform:none;display:flex;align-items:center;justify-content:center;width:70px;min-height:0;margin:0;padding:0 8px;line-height:1;border-radius:4px;box-sizing:border-box}
+.access-card .password-wrap button:hover{background:color-mix(in srgb,var(--gold) 15%,var(--paper))}
+.access-card .password-wrap button:focus-visible{outline:2px solid var(--gold-ink);outline-offset:-2px}

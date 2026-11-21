@@ -109,3 +109,13 @@ button,a,input,textarea{-webkit-tap-highlight-color:transparent}button:focus-vis
   .quote-layout .feature-card>b{font-size:12px}
   .quote-layout .feature-card>small{font-size:10px}
 }
+.summary-delivery{display:flex;align-items:center;gap:18px;margin:14px 0 8px;padding:13px 16px;border:1px solid #d8ad4b;border-radius:12px;background:rgba(225,195,139,.06);color:#e9b84c}
+.summary-delivery svg{width:42px;height:42px;flex:none}
+.summary-delivery>div{min-width:0;padding-left:18px;border-left:1px solid rgba(225,195,139,.45)}
+.summary-delivery span,.summary-delivery strong,.summary-delivery small{display:block}
+.summary-delivery span{font:10px "DM Mono",monospace;letter-spacing:.1em}
+.summary-delivery strong{font-size:clamp(20px,2vw,28px);line-height:1.2}
+.summary-delivery small{color:#cbd6dd;font-size:12px;line-height:1.4}
+
+.contact-card .consent-note{margin:2px 0 0;font-size:11.5px;line-height:1.55;color:#a5b9c6}
+@media print{.consent-note{display:none!important}}

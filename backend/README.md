@@ -15,7 +15,6 @@ backend/
 │  └─ package.json
 ├─ php/                     Versión anterior en PHP (hosting con PHP)
 │  ├─ procesar_cotizacion.php
-│  ├─ admin.php
 │  └─ server-config.php
 └─ database/
    └─ database.sql          Crea la base cotizador_db y la tabla cotizaciones
@@ -52,6 +51,9 @@ Las dos versiones usan la **misma base de datos** (`database/database.sql`).
 | GET | `/` | Comprueba que el servidor está encendido |
 | GET | `/api/rutas` | Lista de rutas disponibles |
 | GET | `/api/prueba-db` | Comprueba la conexión con MySQL |
+| POST | `/api/auth/login`, `/api/auth/verify-email-code`, `/api/auth/forgot-password`, `/api/auth/reset-password` | Acceso de socios y Dirección (límite de 20 intentos por IP cada 15 min, además del bloqueo por cuenta) |
+| GET | `/api/auth/session` | Datos de la sesión actual (401 sin sesión) |
+| POST | `/api/auth/logout` | Cierra la sesión |
 | POST | `/api/cotizaciones` | Guarda una cotización. Obligatorios: `nombre`, `email`, `telefono`, `proyecto`, `paginas` (entero ≥ 1) y `total` |
 
 Ejemplo de envío:
@@ -60,6 +62,14 @@ Ejemplo de envío:
   "proyecto": "Tienda virtual", "paginas": 5, "funciones": ["seo", "pagos"],
   "total": 1925, "igv": true }
 ```
+
+## Acceso (auth)
+
+`server.js` registra `routes/auth.js` y `cookie-parser` (necesario para leer la cookie de sesión). Pasos:
+1. Crea las tablas con `database/auth.sql`.
+2. Completa en `.env`: `AUTH_TOKEN_SECRET`, `CORS_ORIGINS` (la web que llama), `RESEND_API_KEY` y `AUTH_EMAIL_FROM` (correo de códigos).
+3. Crea la primera cuenta: `node src/scripts/create-auth-user.js`.
+4. En la web, `public/js/auth-config.js` debe apuntar a la URL de este servidor. La cookie es `SameSite=Strict`: la web y la API deben estar en el mismo sitio (por ejemplo `tuplus.com` y `api.tuplus.com`).
 
 ## Pendiente
 
@@ -71,4 +81,4 @@ Ejemplo de envío:
 
 1. Crea la base con `database/database.sql`.
 2. Define `AZZIZ_DB_HOST`, `AZZIZ_DB_USER`, `AZZIZ_DB_PASS` y `AZZIZ_DB_NAME` en el hosting.
-3. Sube los archivos de `php/` junto a `cotizador.html`. `admin.php` muestra las solicitudes.
+3. Sube `procesar_cotizacion.php`, `tarifario.php`, `limite.php`, `validacion.php` y `server-config.php` junto a `cotizador.html` (no subas `prueba-tarifario.php`). Opcional: variable `PEN_POR_USD` para el tipo de cambio. Las solicitudes se consultan en el panel del ERP (con login). El antiguo `admin.php` se eliminó porque mostraba los datos de los clientes sin autenticación.

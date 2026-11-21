@@ -1,6 +1,9 @@
 ---
+import NavigationStyles from "../components/NavigationStyles.astro";
 import SiteFooter from '../components/SiteFooter.astro';
 import GlobalAudio from '../components/GlobalAudio.astro';
+import { contactCountries } from '../data/contact-countries.js';
+const countryNames = new Intl.DisplayNames(['es'], { type: 'region' });
 ---
 <!doctype html>
 <html lang="es">
@@ -13,7 +16,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
   </title>
   <meta content="Diseño web, tiendas virtuales, automatización, sistemas digitales y datos para Latinoamérica. Explora nuestras soluciones y estima tu proyecto web." name="description"/>
   <meta content="#122c3d" name="theme-color"/>
-  <meta content="noindex, nofollow" name="robots"/>
+  <meta content="index, follow" name="robots"/>
   <meta content="TUPLUS | Tu siguiente paso digital" property="og:title"/>
   <meta content="Diseño web, tiendas virtuales, automatización, sistemas digitales y datos para Latinoamérica. Explora nuestras soluciones y estima tu proyecto web." property="og:description"/>
   <meta content="website" property="og:type"/>
@@ -22,9 +25,9 @@ import GlobalAudio from '../components/GlobalAudio.astro';
   <link href="css/style.css?v=20261112-1" rel="stylesheet"/>
   <script is:inline defer="" src="js/config.js?v=20260925-2">
   </script>
-  <script is:inline defer="" src="js/quote-core.js?v=20260925-2">
+  <script is:inline defer="" src="js/quote-core.js?v=20261118-2">
   </script>
-  <script is:inline defer="" src="js/script.js?v=20261002-1">
+  <script is:inline defer="" src="js/script.js?v=20261118-2">
   </script>
   <script is:inline src="js/theme.js?v=20261011-2">
   </script>
@@ -35,7 +38,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
   </script>
   <script is:inline defer="" src="js/motion.js?v=20261011-3">
   </script>
- <script is:inline src="js/i18n-data.js?v=20261031-footer-2" defer></script><script is:inline src="js/quote-translations.js?v=20260925-2" defer></script><script is:inline src="js/i18n.js?v=20261013-1" defer></script><link rel="stylesheet" href="css/polish.css?v=20261011-3"><link rel="stylesheet" href="css/responsive-v2.css?v=20261011-1"><link rel="stylesheet" href="css/light-contrast.css?v=20260929-3">
+ <script is:inline src="js/i18n-data.js?v=20261031-footer-2" defer></script><script is:inline src="js/quote-translations.js?v=20260925-2" defer></script><script is:inline src="js/contact-translations.js?v=20261118-1" defer></script><script is:inline defer src="js/site-translations.js?v=20261118-2"></script><script is:inline src="js/i18n.js?v=20261118-2" defer></script><link rel="stylesheet" href="css/polish.css?v=20261011-3"><link rel="stylesheet" href="css/responsive-v2.css?v=20261011-1"><link rel="stylesheet" href="css/light-contrast.css?v=20260929-3">
 <link rel="stylesheet" href="css/solution-emphasis.css?v=20261004-1">
 <link rel="stylesheet" href="css/brand-flight.css?v=20261011-3"/>
 <link rel="stylesheet" href="css/fondo-premium.css?v=20261012-2"/>
@@ -48,7 +51,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <script is:inline defer src="js/faq.js?v=20261011-1"></script>
 <link rel="stylesheet" href="css/ux-mejoras.css?v=20261014-1"/>
 <link rel="stylesheet" href="css/lang-flags.css?v=20261015-1"/>
-<link rel="stylesheet" href="css/secciones-v2.css?v=20261110-1"/>
+<link rel="stylesheet" href="css/secciones-v2.css?v=20261118-1"/>
 <script is:inline defer src="js/secciones-v2.js?v=20261016-2"></script>
 <link rel="stylesheet" href="css/home-extras.css?v=20261017-1"/>
 <script is:inline defer src="js/home-extras.js?v=20261017-1"></script>
@@ -56,8 +59,8 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <!-- NUEVO: estilos de los caminos clientes / partners -->
 <link rel="stylesheet" href="css/caminos.css?v=3"/>
 <link rel="stylesheet" href="css/ajuste-menu.css?v=2"/>
-<link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
-<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+<NavigationStyles />
+<script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
  <body>
   <svg aria-hidden="true" focusable="false" height="0" style="position:absolute;pointer-events:none" width="0" xmlns="http://www.w3.org/2000/svg">
@@ -109,10 +112,10 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 
      <!-- NUEVO: camino partners -->
 
-     <a href="https://plantillas-eosin.vercel.app/" target="_blank" rel="noopener noreferrer">Plantillas <span aria-hidden="true">↗</span></a><details class="nav-networks"><summary><span translate="no">Redes TUPLUS</span><span class="nav-chevron" aria-hidden="true"></span></summary><div class="nav-networks-menu"><a class="partner-nav-link" href="partner.html">
+     <a href="https://plantillas-eosin.vercel.app/" target="_blank" rel="noopener noreferrer">Plantillas <span aria-hidden="true">↗</span></a><details class="nav-networks"><summary><span>Redes TUPLUS</span><span class="nav-chevron" aria-hidden="true"></span></summary><div class="nav-networks-menu"><a class="partner-nav-link" href="partner.html">
       Red de Socios
 
-     </a><a class="nav-socios" href="socios-comerciales.html">Red de Socios Comerciales </a></div></details><a class="nav-access" translate="no" href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
+     </a><a class="nav-socios" href="socios-comerciales.html">Red de Socios Comerciales </a></div></details><a class="nav-access" href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
 <a class="nav-quote" href="cotizador.html">
       Cotizar mi web
       <span aria-hidden="true">
@@ -330,7 +333,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        <span class="sv-progress" aria-hidden="true"><i></i></span>
       </article>
       <article class="sv-panel" style="--i:4" aria-labelledby="sv-title-4">
-       <figure class="sv-media"><img alt="" data-i18n-image="imagenes/data-security.webp" decoding="async" height="800" loading="lazy" src="imagenes/data-security.webp" width="1200"/></figure>
+       <figure class="sv-media"><img alt="" data-i18n-image="imagenes/data-security.webp" decoding="async" height="948" loading="lazy" src="imagenes/data-security.webp" width="1200"/></figure>
        <button class="sv-tab" type="button" aria-controls="sv-body-4" aria-expanded="false"><span class="icon-box"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24"> <path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6zM8 12l3 3 5-6"> </path> </svg></span><span class="sv-num">05</span><span class="sv-tab-title">Datos y seguridad</span></button>
        <div class="sv-body" id="sv-body-4">
         <p class="sv-kicker">05 / 05</p>
@@ -355,7 +358,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
      </div>
      <div class="tp-stage">
       <div class="tp-concept" data-index="0">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/zenplus.png" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/zenplus.png" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-0">
         <p class="tp-info-count"><b>01</b><i></i>05</p>
         <p class="tp-eyebrow">DISEÑO WEB</p>
@@ -365,7 +368,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="1">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/tienda.jpg" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/tienda.jpg" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-1">
         <p class="tp-info-count"><b>02</b><i></i>05</p>
         <p class="tp-eyebrow">TIENDAS VIRTUALES</p>
@@ -375,7 +378,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="2">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/campa%C3%B1a.png" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/campa%C3%B1a.png" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-2">
         <p class="tp-info-count"><b>03</b><i></i>05</p>
         <p class="tp-eyebrow">DISEÑO WEB</p>
@@ -385,7 +388,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="3">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/crm.png" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/crm.png" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-3">
         <p class="tp-info-count"><b>04</b><i></i>05</p>
         <p class="tp-eyebrow">SISTEMAS A MEDIDA</p>
@@ -395,7 +398,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
        </article>
       </div>
       <div class="tp-concept" data-index="4">
-       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="/imagenes/catalogo.jpg" alt="" loading="lazy" /></div></div></figure>
+       <figure class="tp-plane" aria-hidden="true"><div class="tp-card"><div class="tpl-design tpl-zenplus"><img src="imagenes/catalogo.jpg" alt="" loading="lazy" /></div></div></figure>
        <article class="tp-info" aria-labelledby="tp-name-4">
         <p class="tp-info-count"><b>05</b><i></i>05</p>
         <p class="tp-eyebrow">TIENDAS VIRTUALES</p>
@@ -696,7 +699,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
       <div class="contact-form-card">
        <h3>Hablemos de tu idea</h3>
        <p>Completa los campos y prepara tu mensaje.</p>
-       <form id="contact-form">
+       <form id="contact-form" novalidate>
        <div class="field-grid">
         <label>
          Tu nombre
@@ -708,14 +711,17 @@ import GlobalAudio from '../components/GlobalAudio.astro';
         </label>
         <label>
          Correo o teléfono
-         <input aria-describedby="contact-contact-hint" autocomplete="email" maxlength="120" name="contact" placeholder="correo@empresa.com o +51…" required=""/>
+         <input aria-describedby="contact-contact-hint" autocomplete="email" maxlength="254" name="contact" placeholder="correo@empresa.com o +51…" required=""/>
          <small id="contact-contact-hint">
           Si usas teléfono, incluye el código de país.
          </small>
         </label>
         <label>
          País
-         <input autocomplete="country-name" list="countries" maxlength="60" name="country" placeholder="Selecciona o escribe tu país" required=""/>
+         <select autocomplete="country" name="country" required>
+          <option value="">Selecciona tu país</option>
+          {contactCountries.sort((a, b) => countryNames.of(a).localeCompare(countryNames.of(b), 'es')).map(code => <option value={code} translate="no">{countryNames.of(code)}</option>)}
+         </select>
         </label>
         <label>
          Solución de interés
@@ -796,7 +802,8 @@ import GlobalAudio from '../components/GlobalAudio.astro';
         Cuéntanos sobre tu proyecto
         <span class="optional">
         </span>
-        <textarea maxlength="1000" name="message" placeholder="¿Qué necesitas y qué te gustaría conseguir?" required="" rows="3"></textarea>
+        <textarea aria-describedby="contact-message-hint" minlength="20" maxlength="1000" name="message" placeholder="¿Qué necesitas y qué te gustaría conseguir?" required="" rows="3"></textarea>
+        <small id="contact-message-hint">Describe tu proyecto en 20 a 1000 caracteres.</small>
        </label>
        <label class="consent">
         <input name="consent" required="" type="checkbox"/>
@@ -832,46 +839,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
      </div>
     </div>
    </section>
-   <datalist id="countries">
-    <option value="Argentina">
-     <option value="Bolivia">
-      <option value="Brasil">
-       <option value="Chile">
-        <option value="Colombia">
-         <option value="Costa Rica">
-          <option value="Cuba">
-           <option value="Ecuador">
-            <option value="El Salvador">
-             <option value="Guatemala">
-              <option value="Honduras">
-               <option value="México">
-                <option value="Nicaragua">
-                 <option value="Panamá">
-                  <option value="Paraguay">
-                   <option value="Perú">
-                    <option value="República Dominicana">
-                     <option value="Uruguay">
-                      <option value="Venezuela">
-                      </option>
-                     </option>
-                    </option>
-                   </option>
-                  </option>
-                 </option>
-                </option>
-               </option>
-              </option>
-             </option>
-            </option>
-           </option>
-          </option>
-         </option>
-        </option>
-       </option>
-      </option>
-     </option>
-    </option>
-   </datalist>
+
   </main>
   <SiteFooter />
   <a aria-label="Conversar por WhatsApp" class="whatsapp-float" data-whatsapp="" href="https://wa.me/51916828870" rel="noopener noreferrer" target="_blank">

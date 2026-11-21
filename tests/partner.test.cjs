@@ -57,6 +57,7 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
   for (const file of [
     "theme.js",
     "i18n-data.js",
+    "site-translations.js",
     "partner-translations.js",
     "partner-application-translations.js",
     "partner-territory.js",

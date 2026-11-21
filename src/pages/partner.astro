@@ -1,4 +1,5 @@
 ---
+import NavigationStyles from "../components/NavigationStyles.astro";
 import SiteFooter from '../components/SiteFooter.astro';
 import ColibriVuelo from '../components/ColibriVuelo.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
@@ -30,17 +31,17 @@ import GlobalAudio from '../components/GlobalAudio.astro';
     <link rel="stylesheet" href="css/cta-buttons.css?v=20261028-2" />
     <script is:inline src="js/theme.js?v=20261031-1"></script>
     <script is:inline defer src="js/encabezado.js?v=20261028-1"></script>
-    <script is:inline src="js/config.js?v=20261031-2"></script>
+    <script is:inline src="js/config.js?v=20261107-partners-1"></script>
     <link rel="stylesheet" href="css/partner-public.css?v=12" />
     <link rel="stylesheet" href="css/partner-application.css?v=10" />
     <link rel="stylesheet" href="css/partner-application-premium.css?v=20261101-1" />
     <script is:inline defer src="js/i18n-data.js?v=20261031-footer-2"></script>
     <script is:inline defer src="js/partner-translations.js?v=11"></script>
-    <script is:inline defer src="js/partner-application-translations.js?v=12"></script><script is:inline defer src="js/partner-territory.js?v=14"></script><script is:inline defer src="js/i18n.js?v=9"></script>
+    <script is:inline defer src="js/partner-application-translations.js?v=12"></script><script is:inline defer src="js/partner-territory.js?v=14"></script><script is:inline defer src="js/site-translations.js?v=20261118-2"></script><script is:inline defer src="js/i18n.js?v=20261118-2"></script>
     <script is:inline defer src="js/partner-countries.js?v=7"></script>
     <script is:inline defer src="js/partner-globe.js?v=7"></script>
     <script is:inline defer src="js/partner-public.js?v=12"></script>
-    <script is:inline defer src="js/partner-application.js?v=12"></script>
+    <script is:inline defer src="js/partner-application.js?v=20261107-api-1"></script>
     <script is:inline defer src="js/partner-country-flag.js?v=20261031-1"></script>
     <link rel="stylesheet" href="css/partner-globe.css?v=7" />
     <link rel="stylesheet" href="css/partner-territory.css?v=12" />
@@ -58,8 +59,8 @@ import GlobalAudio from '../components/GlobalAudio.astro';
     <script is:inline defer src="js/faq.js?v=20261011-1"></script>
     <script is:inline defer src="js/partners-motion.js?v=8"></script>
 
-  <link rel="stylesheet" href="/css/navigation.css?v=20261107-2" />
-<script is:inline defer src="/js/navigation.js?v=20261107-2"></script>
+  <NavigationStyles />
+<script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
   <body class="partners-page partner-public">
     <ColibriVuelo />
@@ -138,7 +139,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
             ><span data-i18n="partner.application">Conocer la postulación</span>
             <span aria-hidden="true">↗</span></a
           >
-        <a translate="no" href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
+        <a href="https://tuplus-partners-portal.vercel.app/acceso">Acceso Partners</a>
 </nav>
         <label class="language-picker" translate="no"
           ><span class="sr-only">Idioma del sitio</span
@@ -174,7 +175,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
       <section class="pp-hero">
         <div class="container pp-hero-grid">
           <div class="pp-reveal">
-            <p class="pp-eyebrow" translate="no">TUPLUS / RED PARTNER</p>
+            <p class="pp-eyebrow">TUPLUS / RED PARTNER</p>
             <h1>
               <span data-i18n="partner.heroA">Tu comunidad.</span><br /><span
                 data-i18n="partner.heroB"
@@ -899,7 +900,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
       </section>
       <div id="postulacion" class="partner-application">
       <section class="pa-intro container">
-        <p class="pp-eyebrow" translate="no">TUPLUS · PARTNER</p>
+        <p class="pp-eyebrow">TUPLUS · PARTNER</p>
         <h2 data-i18n-html="application.0">Tu próxima etapa <em>empieza aquí.</em></h2>
         <p data-i18n="application.1">
           Cuéntanos quién eres, qué mercado conoces y cómo te gustaría crecer

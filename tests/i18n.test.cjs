@@ -10,13 +10,16 @@ async function test(file){
  if(picker)Object.defineProperty(picker,'value',{value:'es',writable:true});
  const store=new Map();
  const context=vm.createContext({window,document,scrollY:0,Node:window.Node,NodeFilter:{SHOW_TEXT:4},MutationObserver:window.MutationObserver,CustomEvent:window.CustomEvent,localStorage:{getItem:k=>store.get(k),setItem:(k,v)=>store.set(k,v)},matchMedia:()=>({matches:true,addEventListener(){}}),requestAnimationFrame:()=>0,cancelAnimationFrame(){},setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},console});
- for(const script of ['js/i18n-data.js','js/quote-translations.js',...(file==='index.html'?['js/proyectos.js','js/redesign.js']:[]),'js/i18n.js'])vm.runInContext(fs.readFileSync(path.join(base,script),'utf8'),context,{filename:script});
+ for(const script of ['js/i18n-data.js','js/site-translations.js','js/quote-translations.js',...(file==='index.html'?['js/contact-translations.js','js/proyectos.js','js/redesign.js']:[]),'js/i18n.js'])vm.runInContext(fs.readFileSync(path.join(base,script),'utf8'),context,{filename:script});
  const api=window.TUPLUS_I18N;
- for(const locale of ['ja','zh','en','zh','ja','es','ja','zh','es']){
+ for(const locale of ['ja','zh','en','ru','pt','fr','de','zh','ja','es','ja','zh','es']){
   api.setLocale(locale);await pause();
-  assert.equal(document.documentElement.lang,locale==='zh'?'zh-CN':locale);checks++;
+  assert.equal(document.documentElement.lang,({zh:'zh-CN',pt:'pt-BR'})[locale]||locale);checks++;
   for(const node of document.querySelectorAll('[data-i18n]')){assert.equal(node.textContent,api.t(node.getAttribute('data-i18n')));checks++;}
   if(file==='index.html'){
+   const eyebrow=document.querySelector('#contacto .eyebrow');
+   assert.equal(eyebrow.textContent.trim(),api.t('05 / CONSTRUYAMOS LO QUE SIGUE'));checks++;
+   if(locale!=='es'){assert.doesNotMatch(eyebrow.textContent,/CONSTRUYAMOS/);checks++;}
    const contact=document.getElementById('contact-title');
    if(locale==='ja'||locale==='zh'){assert.match(contact.textContent,locale==='ja'?/こんにちは/:/你好/);assert.doesNotMatch(contact.textContent,/\ba\b|hola|empiezan/);checks+=2;}
    // La escena de proyectos queda traducida por completo.

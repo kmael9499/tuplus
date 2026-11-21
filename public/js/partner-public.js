@@ -17,6 +17,15 @@
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLocaleLowerCase("es");
+  // Nombres alternativos con los que la gente busca (siglas, inglés abreviado). Se comparan sin tildes.
+  const aliases = {
+    US: ["usa", "eeuu", "ee uu", "ee.uu", "ee.uu.", "u.s.a", "united states", "estados"],
+    DE: ["deutschland", "germany"],
+    ES: ["spain"],
+    JP: ["japan", "nippon"],
+    PE: ["peru"],
+    PT: ["portugal"],
+  };
   let selected = "PE";
   function showCountry(id, focusGlobe = true) {
     if (!countries[id]) return;
@@ -43,11 +52,12 @@
     if (focusGlobe) window.TUPLUS_GLOBE?.focusCountry(id);
   }
   function applyFilters(focusGlobe = true) {
-    const query = normalize(search.value);
+    const query = normalize(search.value).replace(/\s+/g, " ");
     const ids = Object.keys(countries).filter((id) => {
       const names = [
         id,
         countries[id].name,
+        ...(aliases[id] || []),
         ...Object.values(window.TUPLUS_TRANSLATIONS || {}).map(
           (dict) => dict["partner.country" + id] || "",
         ),
@@ -63,7 +73,7 @@
         (button) => (button.hidden = !ids.includes(button.dataset.country)),
       );
     document.getElementById("pp-result-count").textContent =
-      ids.length + " / 6";
+      ids.length + " / " + Object.keys(countries).length;
     document.getElementById("pp-clear-search").hidden =
       !query && filter.value === "all";
     document.getElementById("pp-map-empty").hidden = ids.length > 0;
@@ -71,7 +81,10 @@
     // The territory form owns its action state independently of map search results.
     window.TUPLUS_GLOBE?.filter(ids);
     if (ids.length)
-      showCountry(ids.includes(selected) ? selected : ids[0], focusGlobe);
+      showCountry(
+        ids.includes(selected) ? selected : ids[0],
+        focusGlobe === "single" ? ids.length === 1 : focusGlobe,
+      );
     else
       document
         .querySelectorAll(".pp-country-list [data-country]")
@@ -97,8 +110,9 @@
   document.addEventListener("tuplus:country-select", (event) =>
     selectFromGlobe(event.detail?.id),
   );
-  search.addEventListener("input", () => applyFilters());
-  filter.addEventListener("change", () => applyFilters());
+  // Al escribir, el globo solo se orienta cuando la búsqueda deja un único país; con búsquedas amplias no salta en cada letra.
+  search.addEventListener("input", () => applyFilters("single"));
+  filter.addEventListener("change", () => applyFilters(false));
   document.querySelectorAll("[data-clear-filters]").forEach((button) =>
     button.addEventListener("click", () => {
       clearFilters();

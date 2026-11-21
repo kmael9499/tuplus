@@ -355,3 +355,6 @@ html[data-theme="dark"] body .ct2 .contact-form-card :is(input:not([type="checkb
 /* Separadores entre las secciones principales. */
 :root body .about-section.ab2, :root body .faq-section.fq2{border-top:3px solid var(--gold)}
 
+
+/* Opciones nativas: contraste expl?cito incluso cuando el SO usa fondo claro. */
+#contact-form select option{color:#122c3d;background-color:#fff}
