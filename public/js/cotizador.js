@@ -982,7 +982,7 @@ function cryptoPaidWhatsApp(){
   const w=cryptoWallets.find(x=>x.id===cryptoSelected)||cryptoWallets[0], tx=$("#cryptoTx").value.trim();
   const extra=['','PAGO CON CRYPTO',`Red: ${w.label}`,`Monto: ${payAmountUsd()}`,`TXID: ${tx||'—'}`].join('\n');
   sendToBackend(); closeCrypto();
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText()+'\n'+extra)}`,"_blank","noopener");
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(quoteText(true)+'\n'+extra)}`,"_blank","noopener");
   toast("Abriendo WhatsApp para confirmar tu pago.");
 }
 $("#gatewayBtn").addEventListener("click",openGateway);
