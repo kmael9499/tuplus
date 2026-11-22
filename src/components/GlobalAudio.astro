@@ -6,12 +6,68 @@ const depth = Math.max(0, rel.split('/').filter(Boolean).length - 1);
 const audioSrc = '../'.repeat(depth) + 'audio/tuplus-fondo.mp3';
 ---
 <audio id="tuplus-global-audio" src={audioSrc} loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
+<div class="tp-vol" id="tuplus-volume" role="group" aria-label="Volumen de la música">
+  <button type="button" class="tp-vol-btn" id="tuplus-volume-mute" aria-label="Silenciar música" aria-pressed="false">
+    <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor"/><path d="M15.5 9a4 4 0 0 1 0 6M17.8 6.7a7.3 7.3 0 0 1 0 10.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor"/><path d="m15.5 9.5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <input type="range" id="tuplus-volume-range" min="0" max="100" step="1" value="32" aria-label="Nivel de volumen" />
+  <output id="tuplus-volume-value" for="tuplus-volume-range">32%</output>
+</div>
+<style is:inline>
+  .tp-vol{position:fixed;left:max(18px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;gap:12px;padding:10px 18px 10px 10px;border-radius:999px;color:#ecd29b;background:rgba(10,28,39,.78);border:1px solid rgba(236,210,155,.28);box-shadow:0 14px 34px rgba(0,12,20,.38);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font:600 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .tp-vol-btn{all:unset;box-sizing:border-box;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;cursor:pointer;color:inherit;background:rgba(236,210,155,.12);transition:background .2s,transform .15s}
+  .tp-vol-btn:hover{background:rgba(236,210,155,.24)}
+  .tp-vol-btn:active{transform:scale(.94)}
+  .tp-vol-btn:focus-visible,.tp-vol input:focus-visible{outline:2px solid #ecd29b;outline-offset:3px}
+  .tp-vol-btn svg{width:20px;height:20px}
+  .tp-vol-btn .ic-off{display:none}
+  .tp-vol.is-muted .ic-on{display:none}
+  .tp-vol.is-muted .ic-off{display:block}
+  .tp-vol input[type=range]{--p:32%;-webkit-appearance:none;appearance:none;width:clamp(96px,12vw,150px);height:6px;border-radius:999px;cursor:pointer;background:linear-gradient(90deg,#e2c785 var(--p),rgba(236,210,155,.25) var(--p))}
+  .tp-vol input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#f3dfae;border:2px solid #b8913f;box-shadow:0 0 10px rgba(226,199,133,.6)}
+  .tp-vol input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#f3dfae;border:2px solid #b8913f;box-shadow:0 0 10px rgba(226,199,133,.6)}
+  .tp-vol output{min-width:3ch;text-align:right;font-variant-numeric:tabular-nums;color:#dcc89d}
+  html:not([data-theme="dark"]) .tp-vol{background:rgba(255,255,255,.88);color:#8a6422;border-color:rgba(158,116,46,.3);box-shadow:0 12px 28px rgba(18,44,61,.16)}
+  html:not([data-theme="dark"]) .tp-vol output{color:#6b5320}
+  @media(max-width:640px){.tp-vol{gap:8px;padding:6px 12px 6px 6px;bottom:max(14px,env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left))}.tp-vol-btn{width:34px;height:34px}.tp-vol input[type=range]{width:78px}.tp-vol output{font-size:11px}}
+</style>
 <script is:inline>
   (() => {
     const audio = document.getElementById("tuplus-global-audio");
     if (!audio || audio.dataset.initialized === "true") return;
     audio.dataset.initialized = "true";
-    audio.volume = 0.2; // música de fondo suave (antes estaba al máximo); sube o baja este valor entre 0 y 1
+    // Volumen controlable: se recuerda entre páginas. Por defecto 32 %.
+    const volKey = "tuplus-global-audio-volume", muteKey = "tuplus-global-audio-muted";
+    const ui = document.getElementById("tuplus-volume");
+    const range = document.getElementById("tuplus-volume-range");
+    const out = document.getElementById("tuplus-volume-value");
+    const muteBtn = document.getElementById("tuplus-volume-mute");
+    let vol = 32, muted = false;
+    try {
+      const v = Number(localStorage.getItem(volKey));
+      if (localStorage.getItem(volKey) !== null && Number.isFinite(v)) vol = Math.min(100, Math.max(0, Math.round(v)));
+      muted = localStorage.getItem(muteKey) === "1";
+    } catch (_) {}
+    const renderVolume = () => {
+      const shown = muted ? 0 : vol;
+      audio.volume = shown / 100;
+      audio.muted = muted || vol === 0;
+      if (range) { range.value = String(shown); range.style.setProperty("--p", shown + "%"); }
+      if (out) out.textContent = shown + "%";
+      if (ui) ui.classList.toggle("is-muted", audio.muted);
+      if (muteBtn) {
+        muteBtn.setAttribute("aria-pressed", String(audio.muted));
+        muteBtn.setAttribute("aria-label", audio.muted ? "Activar música" : "Silenciar música");
+      }
+    };
+    const persistVolume = () => { try { localStorage.setItem(volKey, String(vol)); localStorage.setItem(muteKey, muted ? "1" : "0"); } catch (_) {} };
+    if (range) range.addEventListener("input", () => { vol = Number(range.value); muted = vol === 0; renderVolume(); persistVolume(); });
+    if (muteBtn) muteBtn.addEventListener("click", () => {
+      if (muted || audio.muted) { muted = false; if (vol === 0) vol = 32; } else { muted = true; }
+      renderVolume(); persistVolume();
+    });
+    renderVolume();
     const storageKey = "tuplus-global-audio-time";
     const savePosition = () => {
       try { if (Number.isFinite(audio.currentTime)) sessionStorage.setItem(storageKey, String(audio.currentTime)); } catch (_) {}
