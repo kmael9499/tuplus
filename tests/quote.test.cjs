@@ -113,4 +113,12 @@ run(`promo.coupon={codigo:'X10',tipo:'porcentaje',valor:10};`);eq(run('discountI
 run(`promo.coupon={codigo:'X30',tipo:'porcentaje',valor:30};`);eq(run('discountInfo().origin'),'cupon');eq(run('discountInfo().amount'),Math.round(base0*30)/100);
 run(`promo.coupon={codigo:'GRANDE',tipo:'monto',valor:99999};`);eq(run('grandTotal()'),0);
 run(`promo.coupon=null;promo.campaign=null;`);eq(run('grandTotal()'),base0);
-console.log(`${checks} comprobaciones correctas: tarifario por niveles, páginas y productos extra, rangos por confirmar, recurrentes, IGV, 20 monedas, 27 opciones de país, moneda automática/manual, migración, persistencia, datos inválidos, resumen, WhatsApp y 7 traducciones.`);
+console.log(`${checks} comprobaciones correctas: tarifario por niveles, páginas y productos extra, rangos por confirmar, recurrentes, IGV, 20 monedas, 27 opciones de país, moneda automática/manual, migración, persistencia, datos inválidos, resumen, WhatsApp y 7 traducciones.`);// La comparación usa el plazo base incluso con prioridad activada.
+run(`window.TUPLUS_I18N.t=x=>x`);
+reset();run(`setProject('website');state.rush=true`);
+eq(run('deliveryDays(false)'),'20–30 días hábiles');eq(run('deliveryDays()'),'15–23 días hábiles');
+run(`setProject('ecommerce');state.pages=18;state.features=new Set(['seo'])`);
+eq(run('deliveryDays(false)'),'30–45 días hábiles');eq(run('deliveryDays()'),'23–34 días hábiles');
+run('state.rush=false');eq(run('deliveryDays()'),'30–45 días hábiles');
+eq(run('normalizedQuote().delivery'),run('deliveryDays()'));
+

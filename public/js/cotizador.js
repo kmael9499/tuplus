@@ -177,10 +177,12 @@ function recurring(){
   if(state.hosting){ const h = hostingInfo(); rows.push({label:h.label, text:`${t("desde")} ${money(withTax(h.yearly))} / ${t("año")}`}); }
   return rows;
 }
-function deliveryDays(){
+function deliveryDays(priority=state.rush){
   // Plazo fijo por tipo de proyecto: los extras no lo alargan. Solo la entrega urgente lo acorta.
-  let [min,max] = project().delivery;
-  if(state.rush){ min = Math.max(3, Math.ceil(min*RUSH_CUT)); max = Math.max(min, Math.ceil(max*RUSH_CUT)); }
+  const range = catalog[state.project]?.delivery;
+  if(!Array.isArray(range) || range.length!==2 || !range.every(n=>Number.isFinite(n) && n>0) || range[1]<range[0]) return "";
+  let [min,max] = range;
+  if(priority){ min = Math.max(3, Math.ceil(min*RUSH_CUT)); max = Math.max(min, Math.ceil(max*RUSH_CUT)); }
   const unit = t("días hábiles");
   return min===max ? `${min} ${unit}` : `${min}–${max} ${unit}`;
 }
@@ -318,7 +320,19 @@ function renderFeatures(){
   $("#hostingLabel").textContent=t(h.label); hp.dataset.pen=h.yearly;
 }
 
+function renderDeliveryIndicator(){
+  const el=$("#deliveryIndicator");
+  if(!el) return;
+  const current=deliveryDays(), normal=deliveryDays(false);
+  const title=current ? `${t("Entrega estimada")}: ${current}` : t("Completa las opciones para estimar la entrega");
+  const detail=current && state.rush ? `${t("Entrega prioritaria")} · ${t("Plazo habitual")}: ${normal} → ${t("Prioritario")}: ${current}` : "";
+  const main=el.querySelector(".delivery-indicator-main"), comparison=el.querySelector(".delivery-indicator-comparison");
+  if(main.textContent!==title) main.textContent=title;
+  if(comparison.textContent!==detail) comparison.textContent=detail;
+  el.classList.toggle("is-priority",!!detail);
+}
 function sync(){
+  renderDeliveryIndicator();
   updateCurrencyUI();
   renderTiers(); renderScope(); renderFeatures();
   $$(".option-price[data-pen]").forEach(el=>{el.setAttribute('translate','no');el.textContent=priceText(el);});
@@ -397,7 +411,7 @@ function summaryRows(){
   if(p.products) rows.push([`${productCount()} ${t("productos")}`, productsCost()?`+${money(productsCost())}`:inc]);
   rows.push([state.contentPro?"Contenido profesional":"Contenido entregado por el cliente", state.contentPro?money(contentCost()):"Sin recargo"]);
   rows.push(["Garantía de 30 días", "Incluida · corrección de defectos del alcance aprobado"]);
-  rows.push(["Plan de soporte", t(supports[state.support].label)]);
+  rows.push(["Plan de soporte", supports[state.support].monthly ? `${t(supports[state.support].label)} ? primer mes ${money(supports[state.support].monthly)}` : t(supports[state.support].label)]);
   state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
   rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?`${money(designs[state.design].price)}${state.design === "premium" ? ` (${t("desde")})` : ""}`:inc]);
   if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
@@ -406,16 +420,31 @@ function summaryRows(){
   if(state.tax) rows.push(["IGV 18%", money(Math.round((subtotal()-disc.amount)*.18))]);
   return rows;
 }
+// Instant?nea compartida por el resumen y el PDF; utiliza los c?lculos existentes.
+function normalizedQuote(){
+  const disc=discountInfo(), base=Math.max(0, subtotal()-disc.amount);
+  return {
+    service:project().label, project:state.project, plan:tierNames[state.tier], scope:tierCfg().scope,
+    client:$("#nombre").value.trim(), company:$("#empresa").value.trim(),
+    email:$("#email").value.trim(), phone:$("#telefono").value.trim(),
+    currency:state.currency, rows:summaryRows(), totalPen:grandTotal(), total:money(grandTotal()),
+    base:money(base), tax:state.tax ? money(grandTotal()-base) : null,
+    delivery:deliveryDays(), pending:pending(), recurring:recurring(),
+    support:supports[state.support].monthly>0, hosting:state.hosting,
+    date:new Intl.DateTimeFormat('es-PE',{timeZone:'America/Lima',day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date()),
+    format:money, taxAmount:withTax
+  };
+}
 function renderSummary(){
-  const total=grandTotal(), pend=pending(), rec=recurring();
+  const quote=normalizedQuote(), total=quote.totalPen, pend=quote.pending, rec=quote.recurring;
   $("#totalPrice").textContent=money(total);
-  $("#summaryDelivery").textContent=deliveryDays();
+  $("#summaryDelivery").textContent=quote.delivery || t("Completa las opciones para estimar la entrega");
   $("#rangePrice").textContent=pend.items.length
     ? `${t("Por confirmar, no incluido")}: ${rangeText(pend.min,pend.max,pend.open)}`
     : t("Precio según el alcance elegido");
   $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
   const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${esc(t(a))}</span><strong>${esc(t(b))}</strong></div>`;
-  let html=summaryRows().map(r=>line(r)).join("");
+  let html=quote.rows.map(r=>line(r)).join("");
   if(state.design === "premium"){
     html+=`<div class="summary-sub">${t("Premium Motion: el estimado incluye S/1,200. El precio final puede llegar a S/2,000 según las interacciones y el alcance aprobado.")}</div>`;
   }
@@ -424,7 +453,7 @@ function renderSummary(){
     html+=pend.items.map(i=>line([i.label, rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)]," is-pending")).join("");
   }
   if(rec.length){
-    html+=`<div class="summary-sub">${t("Pagos recurrentes, aparte del total")}</div>`;
+    html+=`<div class="summary-sub">${t(state.support!=="30" ? "Pagos recurrentes (el primer mes de soporte est? incluido en el total)" : "Pagos recurrentes, aparte del total")}</div>`;
     html+=rec.map(r=>line([r.label,r.text]," is-recurring")).join("");
   }
   $("#summaryLines").innerHTML=html;
@@ -652,149 +681,24 @@ $("#whatsappBtn").addEventListener("click",async()=>{
   if(win){win.opener=null;win.location.href=url;}else{window.location.href=url;}
   if(saved!==false) toast("Abriendo WhatsApp con tu cotización.");
 });
-document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
-  e.preventDefault();
-
+const downloadButton=document.getElementById("downloadBtn");
+downloadButton?.addEventListener("click", async () => {
+  if(downloadButton.disabled) return;
+  if(!$("#nombre").value.trim()){toast("Escribe tu nombre antes de descargar la cotizaci?n."); $("#nombre").focus(); return;}
+  downloadButton.disabled=true;
+  const original=downloadButton.textContent;
+  downloadButton.textContent="Generando cotizaci?n?";
   try {
-    const jsPDFClass = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
-    if (!jsPDFClass) {
-      alert("Error: jsPDF no esta cargado.");
-      return;
-    }
-
-    const doc = new jsPDFClass({
-      orientation: "p",
-      unit: "mm",
-      format: "a4"
-    });
-
-    const total = amountIn(grandTotal()); // en la moneda elegida
-    const subtotal = (state.tax ? total / 1.18 : total).toFixed(2);
-    const igv = (total - subtotal).toFixed(2);
-    const moneda = (typeof state !== "undefined" && state?.currency) || "PEN";
-    const servicio = (typeof catalog !== "undefined" && typeof state !== "undefined" && catalog?.[state?.project]?.label) || "Servicio Web Especializado";
-
-    const pintarHeader = (titulo) => {
-      doc.setFillColor(15, 23, 42); 
-      doc.rect(0, 0, 210, 20, "F");
-      doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(11);
-      doc.text("TUPLUS SOLUCIONES", 14, 13);
-      doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(203, 213, 225);
-      doc.text(titulo, 196, 13, { align: "right" });
-    };
-
-    
-    pintarHeader("RESUMEN EJECUTIVO (1/2)");
-
-    const nombreCliente = document.getElementById("nombre")?.value?.trim() || "Particular";
-    const empresaCliente = document.getElementById("empresa")?.value?.trim() || "—";
-
-    doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(10);
-    doc.text(`Cliente: ${nombreCliente}`, 14, 30);
-    doc.text(`Empresa: ${empresaCliente}`, 14, 36);
-    doc.text(`Fecha: ${new Date().toLocaleDateString("es-PE")}`, 196, 30, { align: "right" });
-
-    
-    let y = 44;
-    doc.setFillColor(15, 23, 42);
-    doc.rect(14, y, 182, 8, "F");
-    doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9.5);
-    doc.text("Concepto", 18, y + 5.5);
-    doc.text("Modalidad", 95, y + 5.5);
-    doc.text("Total", 192, y + 5.5, { align: "right" });
-
-    
-    const filas = [
-      { c1: servicio, c2: "Desarrollo & Despliegue", c3: `${moneda} ${subtotal}`, isTotal: false },
-      { c1: "Subtotal (Base Imponible)", c2: "—", c3: `${moneda} ${subtotal}`, isTotal: false },
-      ...(state.tax ? [{ c1: "IGV (18%)", c2: "—", c3: `${moneda} ${igv}`, isTotal: false }] : []),
-      { c1: "TOTAL ESTIMADO", c2: "—", c3: `${moneda} ${total.toFixed(2)}`, isTotal: true }
-    ];
-
-    y += 8;
-    filas.forEach((f) => {
-      if (f.isTotal) {
-        doc.setFillColor(15, 23, 42);
-        doc.rect(14, y, 182, 8, "F");
-        doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9.5);
-      } else {
-        doc.setFillColor(248, 250, 252);
-        doc.rect(14, y, 182, 8, "F");
-        doc.setDrawColor(226, 232, 240);
-        doc.line(14, y + 8, 196, y + 8);
-        doc.setTextColor(15, 23, 42).setFont("helvetica", "normal").setFontSize(9);
-      }
-      doc.text(f.c1, 18, y + 5.5);
-      doc.text(f.c2, 95, y + 5.5);
-      doc.text(f.c3, 192, y + 5.5, { align: "right" });
-      y += 8;
-    });
-
-    
-    if (!state.tax) {
-      doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(15, 23, 42);
-      doc.text("Precio no incluye IGV", 14, y + 6);
-    } else {
-      const yBar = y + 14;
-      doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(15, 23, 42);
-      doc.text("Distribución de Inversión (Neto vs IGV):", 14, yBar);
-      doc.setFillColor(37, 99, 235);
-      doc.rect(14, yBar + 4, 155, 6, "F");
-      doc.setFillColor(203, 213, 225);
-      doc.rect(169, yBar + 4, 27, 6, "F");
-    }
-
-    
-    doc.addPage();
-    pintarHeader("HOJA DE RUTA Y PRÓXIMOS PASOS (2/2)");
-
-    let y2 = 30;
-    
-    doc.setFillColor(37, 99, 235);
-    doc.rect(14, y2, 182, 8, "F");
-    doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9);
-    doc.text("Fase", 18, y2 + 5.5);
-    doc.text("Descripción del Entregable", 65, y2 + 5.5);
-
-    const fases = [
-      ["1. Planificación & Diseño", "Estructura, diseño responsive y definición de contenidos."],
-      ["2. Desarrollo & Código", "Maquetación funcional, lógica e interactividad."],
-      ["3. Pruebas & Calidad", "Pruebas multidispositivo, rendimiento y revisión final."],
-      ["4. Publicación", "Configuración de hosting, dominio y despliegue."]
-    ];
-
-    y2 += 8;
-    fases.forEach(([fase, desc]) => {
-      doc.setFillColor(248, 250, 252);
-      doc.rect(14, y2, 182, 8, "F");
-      doc.setDrawColor(226, 232, 240);
-      doc.line(14, y2 + 8, 196, y2 + 8);
-      doc.setTextColor(15, 23, 42).setFont("helvetica", "bold").setFontSize(8.5);
-      doc.text(fase, 18, y2 + 5.5);
-      doc.setFont("helvetica", "normal").setTextColor(71, 85, 105);
-      doc.text(desc, 65, y2 + 5.5);
-      y2 += 8;
-    });
-
-    const yPasos = y2 + 14;
-    doc.setFont("helvetica", "bold").setFontSize(10).setTextColor(15, 23, 42);
-    doc.text("Próximos Pasos para Iniciar:", 14, yPasos);
-    doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(71, 85, 105);
-    doc.text("1. Confirmar la aceptación formal de esta cotización.", 14, yPasos + 7);
-    doc.text("2. Compartir logotipo y material gráfico de la empresa.", 14, yPasos + 13);
-    doc.text("3. Agendar reunión.", 14, yPasos + 19);
-
-    
-    doc.save(`Resumen_Cotizacion_${nombreCliente}.pdf`);
-
-  } catch (err) {
-    console.error("Error al generar PDF:", err);
-    alert("Error al generar: " + (err?.message || err));
-  }
+    await new Promise(resolve=>setTimeout(resolve,0));
+    await window.TuplusQuotePdf.download(normalizedQuote());
+    toast("Cotizaci?n descargada.");
+  } catch(err) {
+    console.error("Error al generar PDF:",err);
+    toast("No se pudo generar el PDF. Int?ntalo de nuevo.");
+  } finally { downloadButton.disabled=false; downloadButton.textContent=original; }
 });
 
-
-(document.getElementById("printBtn") || document.querySelector("#printBtn"))?.addEventListener("click", () => {
+(document.getElementById("printBtn") || document.querySelector("#printBtn"))?.addEventListener("click", async () => {
   const jsPDFClass = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
   if (!jsPDFClass) {
     alert("Error: jsPDF no está cargado.");
@@ -820,23 +724,13 @@ document.getElementById("downloadBtn")?.addEventListener("click", (e) => {
   doc.rect(0, 28, 210, 1.5, "F");
 
   
-  doc.setFillColor(255, 255, 255);
-  doc.roundedRect(14, 5, 48, 18, 2, 2, "F");
+  const logo = await window.TuplusQuotePdf.loadLogo();
+  window.TuplusQuotePdf.drawLogo(doc, logo);
 
-  const logo = document.querySelector(".brand-light") || document.querySelector("header img") || document.querySelector(".bird-core img");
-  if (logo && logo.complete && logo.naturalWidth > 0) {
-    try {
-      doc.addImage(logo, "PNG", 16, 7, 44, 14);
-    } catch (e) {
-      console.warn("Logo no cargo:", e);
-    }
-  }
-
-  
   doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(13);
-  doc.text("TUPLUS SOLUCIONES", 70, 14);
+  doc.text("TUPLUS SOLUCIONES", 76, 14);
   doc.setFont("helvetica", "normal").setFontSize(8.5).setTextColor(203, 213, 225);
-  doc.text("Servicios Digitales & Desarrollo de Software", 70, 20);
+  doc.text("Servicios Digitales & Desarrollo de Software", 76, 20);
 
   
   const yCard = 37;

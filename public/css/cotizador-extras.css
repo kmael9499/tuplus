@@ -192,3 +192,13 @@ button.xt-chip:active { transform: scale(.97); }
   .xt-spark,
   .xt-badge { display: none !important; }
 }
+
+/* Plazo visible junto a las opciones, con salto natural en pantallas pequeñas. */
+.delivery-indicator{display:flex;align-items:center;gap:7px;min-width:0;max-width:100%;color:#f0d8aa;font-size:11px;line-height:1.35;transition:background-color .2s,border-color .2s;border:1px solid #d3b16b66;border-radius:12px;padding:6px 9px;background:#d3b16b0d}
+.delivery-indicator svg{width:16px;height:16px;flex:none;color:#e1c38b}
+.delivery-indicator strong{display:block;font-weight:700}
+.delivery-indicator small{display:block;color:#c9d4d9;font-size:10px;line-height:1.35}
+.delivery-indicator small:empty{display:none}
+.delivery-indicator.is-priority{background:#d3b16b20;border-color:#d3b16b}
+@media(max-width:620px){.delivery-indicator{flex:1 1 100%;width:100%;overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){.delivery-indicator{transition:none}}
