@@ -18,6 +18,23 @@
   menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
   overlay?.addEventListener('click', () => setMenu(false, true));
   mobile.addEventListener('change', () => setMenu(false));
+  // Al intentar desplazar la página con el menú abierto se cierra el menú.
+  // El propio menú (#main-nav) sí puede desplazarse por dentro sin cerrarse.
+  let touchStartY = null;
+  const cerrarAlDesplazar = event => {
+    if (menuButton.getAttribute('aria-expanded') !== 'true') return;
+    if (event?.target?.closest?.('#main-nav')) return;
+    if (event?.type === 'wheel' && Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+    if (event?.type === 'touchmove') {
+      const y = event.touches?.[0]?.clientY;
+      if (touchStartY == null || y == null || Math.abs(y - touchStartY) < 12) return;
+    }
+    setMenu(false);
+  };
+  addEventListener('touchstart', event => { touchStartY = event.touches?.[0]?.clientY ?? null; }, {passive: true});
+  addEventListener('scroll', cerrarAlDesplazar, {passive: true});
+  addEventListener('wheel', cerrarAlDesplazar, {passive: true});
+  addEventListener('touchmove', cerrarAlDesplazar, {passive: true});
   document.addEventListener('keydown', event => {
     if (menuButton.getAttribute('aria-expanded') !== 'true') return;
     if (event.key === 'Escape') setMenu(false, true);
