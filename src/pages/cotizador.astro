@@ -54,7 +54,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <link rel="stylesheet" href="css/cotizador-niveles.css?v=20261106-1"/>
 <link rel="stylesheet" href="css/caminos.css?v=1"/><NavigationStyles />
 <!-- Escalado fluido para monitores grandes; cargar después de todos los estilos del cotizador. -->
-<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261114-2"/>
+<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261125-1"/>
 <script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
 <body>
@@ -343,12 +343,28 @@ import GlobalAudio from '../components/GlobalAudio.astro';
             </div>
 
             <div class="section-block">
-              <div class="section-label">Dirección visual</div>
-              <div class="design-grid">
-                <button class="radio-card selected" data-design="clean" type="button"><span class="radio"></span><div><b>Clean / inteligente</b><small>Precisión, aire y jerarquía visual</small></div><strong>Incluido</strong></button>
-                <button class="radio-card" data-design="custom" type="button"><span class="radio"></span><div><b>Custom UI</b><small>Hasta 5 plantillas visuales y 2 rondas de cambios</small></div><strong><span class="option-price" data-pen="850">+S/850</span></strong></button>
-                <button class="radio-card" data-design="premium" type="button"><span class="radio"></span><div><b>Premium motion</b><small>Hasta 3 interacciones, con versión sin movimiento</small></div><strong><span class="option-price" data-pen="1200" data-pen-max="2000">S/1,200 — S/2,000</span></strong></button>
+              <div class="section-label">Elige una dirección visual</div>
+              <p class="design-intro">Selecciona una base para la apariencia de tu sitio. El movimiento avanzado se puede agregar por separado.</p>
+              <div class="design-grid design-choice-grid" role="group" aria-label="Dirección visual">
+                <button class="radio-card design-option selected" data-design="clean" type="button" aria-pressed="true">
+                  <span class="radio" aria-hidden="true"></span>
+                  <div class="design-option-copy"><b>Clean / inteligente</b><small>Una presentación clara, ordenada y fácil de recorrer.</small>
+                    <ul class="design-points"><li>Espacios amplios y tipografía legible</li><li>Colores de marca y navegación clara</li><li>Botones, tarjetas y formularios uniformes</li></ul>
+                  </div><strong>Incluido</strong>
+                </button>
+                <button class="radio-card design-option" data-design="custom" type="button" aria-pressed="false">
+                  <span class="radio" aria-hidden="true"></span>
+                  <div class="design-option-copy"><b>Custom UI</b><small>Una apariencia propia, creada alrededor de tu marca.</small>
+                    <ul class="design-points"><li>Hasta 5 tipos de página: inicio, servicios, ficha, acerca de y contacto</li><li>2 rondas de cambios: observaciones consolidadas por entrega</li><li>Composición, tarjetas y botones personalizados</li></ul>
+                  </div><strong><span class="option-price" data-pen="850">+S/850</span></strong>
+                </button>
               </div>
+              <button class="motion-addon" id="motionAddon" type="button" aria-pressed="false">
+                <span class="motion-addon-check" aria-hidden="true">✓</span>
+                <span class="motion-addon-copy"><b>Agregar Premium motion <em>Opcional</em></b><small>Hasta 3 interacciones acordadas, como animación al desplazarse o transiciones. Se adapta a móvil e incluye alternativa sin movimiento.</small></span>
+                <strong><span class="option-price" data-pen="1200" data-pen-max="2000">S/1,200 — S/2,000</span></strong>
+              </button>
+              <p class="design-footnote">Las interacciones se definen antes del desarrollo y respetan la preferencia de movimiento reducido del dispositivo.</p>
             </div>
 
             <div class="section-block">
