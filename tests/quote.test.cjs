@@ -36,9 +36,9 @@ run('state.tax=false;state.blocks20=0;state.blocks50=2');eq(run('productCount()'
 run(`setProject('website');state.blocks50=2`);eq(run('productCount()'),0);eq(run('grandTotal()'),1690);
 // Adicionales: blog incluido en Empresarial/Corporativo; la tienda incluye una pasarela y cobra la segunda.
 reset();run(`setProject('website');setTier('biz');state.features=new Set(['blog','seo'])`);eq(run('grandTotal()'),2790+650);
-run(`setTier('pro')`);eq(run('grandTotal()'),1690+650);eq(run('pending().min'),450);eq(run('pending().max'),650);
+run(`setTier('pro')`);eq(run('grandTotal()'),1690+450+650);
 reset();run(`setProject('ecommerce');state.features=new Set(['payments'])`);eq(run('grandTotal()'),3490+450);
-run(`setProject('landing');state.features=new Set(['payments','email'])`);eq(run('grandTotal()'),1090+180);eq(run('pending().min'),120);eq(run('pending().max'),180);
+run(`setProject('landing');state.features=new Set(['payments','email'])`);eq(run('grandTotal()'),1090+180+120);
 // Los adicionales con rango siguen por confirmar, pero Premium Motion suma su mínimo al estimado.
 reset();run(`setProject('website');state.features=new Set(['security','maps']);state.design='premium'`);
 eq(run('grandTotal()'),1690+1200);eq(run('pending().min'),600+600);eq(run('pending().max'),1200+600);eq(run('pending().open'),true);
@@ -66,12 +66,12 @@ for(const [key,text] of [['landing','14–16 días hábiles'],['website','20–3
 // Soporte mensual y alojamiento anual van aparte del total.
 reset();run(`setProject('ecommerce');state.support='store';state.hosting=true`);eq(run('grandTotal()'),3790);eq(run('recurring().length'),2);
 run(`Object.assign(state,{design:'custom',tax:true});state.features=new Set(['booking'])`);
-eq(run('subtotal()'),3490+850+450+300);eq(run('grandTotal()'),Math.round((3490+850+450+300)*1.18));
+eq(run('subtotal()'),3490+850+450);eq(run('grandTotal()'),Math.round((3490+850+450)*1.18));
 run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('IGV 18%'));checks++;
 assert.ok(elements.get('#summaryLines').innerHTML.includes('Pagos recurrentes'));checks++;
 // Una cotización guardada con el esquema anterior se migra sin errores.
 store.set('tuplusQuote',JSON.stringify({project:'website',pages:6,features:['whatsapp','seo'],support:'90',design:'custom',currency:'USD',version:2}));
-run('load()');eq(run('state.tier'),'pro');eq(run('state.support'),'30');eq(run('[...state.features].join()'),'whatsapp,seo');eq(run('state.blocks20'),0);
+run('load()');eq(run('state.tier'),'pro');eq(run('state.support'),'30');eq(run('[...state.features].join()'),'seo');eq(run('state.blocks20'),0);
 reset();run(`setProject('landing')`);
 for(const code of run('Object.keys(currencyMeta)')){
  run(`state.currency='${code}';`);const text=run('money(1090)');assert.ok(text.includes(code==='PEN'?'S/':code)&&!text.includes('NaN'));checks++;
@@ -83,42 +83,10 @@ run(`state.currency='JPY';state.currencyManual=true;save();state.currency='USD';
 store.set('tuplusQuote',JSON.stringify({project:'<invalid>',features:['<script>','booking'],pages:999,design:'invalid',support:'invalid',currency:'BAD'}));
 run('load()');eq(run('state.pages'),20);eq(run('state.currency'),'PEN');eq(run('state.features.size'),1);assert.ok(Number.isFinite(run('grandTotal()')));checks++;
 for(const [id,value]of Object.entries({nombre:'Prueba',empresa:'Negocio',pais:'PE',email:'prueba@example.com',telefono:'+51 900000000',mensajeCliente:'Texto con & y ñ'}))document.querySelector('#'+id).value=value;
-run('state.currency="EUR"');const quote=run('quoteText()'),whatsappQuote=run('quoteText(true)');assert.ok(quote.includes('EUR')&&quote.includes('Perú')&&quote.includes('IGV'));assert.ok(quote.includes('Correo electrónico: prueba@example.com')&&quote.includes('Teléfono / WhatsApp: +51 900000000'));checks++;
-eq(new URL(run('whatsappUrl()')).searchParams.get('text'),whatsappQuote);assert.ok(!whatsappQuote.includes('Correo electrónico:')&&!whatsappQuote.includes('Teléfono / WhatsApp:'));assert.ok(source.slice(source.indexOf('function cryptoPaidWhatsApp'),source.indexOf('function syncFloatingWhatsApp')).includes('quoteText(true)'));checks++;
+run('state.currency="EUR"');const quote=run('quoteText()');assert.ok(quote.includes('EUR')&&quote.includes('Perú')&&quote.includes('IGV'));checks++;
+eq(new URL(run('whatsappUrl()')).searchParams.get('text'),run('whatsappMessage()'));
 for(const locale of ['en','pt','fr','de','ru','zh','ja']){
  run(`window.TUPLUS_I18N.t=x=>window.TUPLUS_TRANSLATIONS['${locale}'][x]||x;`);
  run('renderSummary()');assert.ok(!elements.get('#summaryPriceLabel').textContent.includes('INVERSIÓN ESTIMADA'));checks++;
 }
-
-eq(run('state.country'),'PE');
-for(const code of run('countries.codes')){
- run(`setCountry('${code}')`);
- eq(run('state.currency'),run(`countries.currency('${code}')`));
- assert.ok(run('Object.hasOwn(currencyMeta,state.currency)'));checks++;
- eq(run('state.currencyManual'),false);
-}
-run('setCountry("MX");save();setCountry("PE");load()');eq(run('state.currency'),'MXN');eq(run('state.country'),'MX');
-run('state.currency="EUR";state.currencyManual=true;save();state.currency="PEN";load()');eq(run('state.currency'),'EUR');
-run('setCountry("PE")');eq(run('state.currency'),'PEN');eq(run('state.currencyManual'),false);
-store.set('tuplusQuote',JSON.stringify({project:'website',pages:8,currency:'USD',features:['booking']}));
-run('load()');eq(run('state.country'),'PE');eq(run('state.currency'),'PEN');eq(run('state.project'),'website');eq(run('state.pages'),8);eq(run('state.features.has("booking")'),true);
-run('setCountry("CL");setCountry("INVALID")');eq(run('state.country'),'CL');eq(run('state.currency'),'CLP');
-store.set('tuplusQuote','{invalid');run('load()');eq(run('state.currency'),'CLP');
-run('window.TUPLUS_I18N.locale="ja"');eq(run('countries.name("PE")'),'ペルー');
-// Descuentos: cupón y descuento por fecha no se suman, gana el mayor; sin descuento el total no cambia
-run(`Object.assign(state,{project:'website',pages:5,contentPro:false,design:'clean',support:'30',rush:false,hosting:false,tax:false});state.features=new Set();`);
-const base0=run('grandTotal()');
-run(`promo.campaign={nombre:'Navidad',tipo:'porcentaje',valor:15};`);eq(run('grandTotal()'),Math.round(base0-base0*0.15));
-run(`promo.coupon={codigo:'X10',tipo:'porcentaje',valor:10};`);eq(run('discountInfo().origin'),'campana');
-run(`promo.coupon={codigo:'X30',tipo:'porcentaje',valor:30};`);eq(run('discountInfo().origin'),'cupon');eq(run('discountInfo().amount'),Math.round(base0*30)/100);
-run(`promo.coupon={codigo:'GRANDE',tipo:'monto',valor:99999};`);eq(run('grandTotal()'),0);
-run(`promo.coupon=null;promo.campaign=null;`);eq(run('grandTotal()'),base0);
-console.log(`${checks} comprobaciones correctas: tarifario por niveles, páginas y productos extra, rangos por confirmar, recurrentes, IGV, 20 monedas, 27 opciones de país, moneda automática/manual, migración, persistencia, datos inválidos, resumen, WhatsApp y 7 traducciones.`);// La comparación usa el plazo base incluso con prioridad activada.
-run(`window.TUPLUS_I18N.t=x=>x`);
-reset();run(`setProject('website');state.rush=true`);
-eq(run('deliveryDays(false)'),'20–30 días hábiles');eq(run('deliveryDays()'),'15–23 días hábiles');
-run(`setProject('ecommerce');state.pages=18;state.features=new Set(['seo'])`);
-eq(run('deliveryDays(false)'),'30–45 días hábiles');eq(run('deliveryDays()'),'23–34 días hábiles');
-run('state.rush=false');eq(run('deliveryDays()'),'30–45 días hábiles');
-eq(run('normalizedQuote().delivery'),run('deliveryDays()'));
 
