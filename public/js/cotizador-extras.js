@@ -1378,7 +1378,7 @@
           $$("button", fxBox).forEach((b) =>
             b.classList.toggle("on", b.dataset.c === s.currency),
           );
-        if (calc) calc.textContent = "100 USD \u2248 " + money(100);
+        if (calc) calc.textContent = "100 USD \u2248 " + fx.format(100, s.currency);
 
         if (flag && s.country) {
           flag.src = `https://flagcdn.com/w40/${String(s.country).toLowerCase()}.png`;

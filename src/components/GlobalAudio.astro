@@ -24,13 +24,19 @@ const audioSrc = '../'.repeat(depth) + 'audio/tuplus-fondo.mp3';
   .tp-vol-btn .ic-off{display:none}
   .tp-vol.is-muted .ic-on{display:none}
   .tp-vol.is-muted .ic-off{display:block}
-  .tp-vol input[type=range]{--p:32%;-webkit-appearance:none;appearance:none;width:clamp(96px,12vw,150px);height:6px;border-radius:999px;cursor:pointer;background:linear-gradient(90deg,#e2c785 var(--p),rgba(236,210,155,.25) var(--p))}
-  .tp-vol input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#f3dfae;border:2px solid #b8913f;box-shadow:0 0 10px rgba(226,199,133,.6)}
-  .tp-vol input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#f3dfae;border:2px solid #b8913f;box-shadow:0 0 10px rgba(226,199,133,.6)}
+  .tp-vol #tuplus-volume-range{--p:32%;-webkit-appearance:none;appearance:none;display:block;width:clamp(96px,12vw,150px);height:38px;min-height:0;margin:0;padding:0;border:0;border-radius:0;cursor:pointer;background:transparent;box-shadow:none}
+  .tp-vol #tuplus-volume-range::-webkit-slider-runnable-track{height:38px;border:1px solid #667987;border-radius:999px;background:linear-gradient(90deg,#d8b96f var(--p),#203845 var(--p))}
+  .tp-vol #tuplus-volume-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:9px;border-radius:50%;background:#f3dfae;border:2px solid #b8913f}
+  .tp-vol #tuplus-volume-range::-moz-range-track{height:36px;border:1px solid #667987;border-radius:999px;background:#203845}
+  .tp-vol #tuplus-volume-range::-moz-range-progress{height:36px;border-radius:999px 0 0 999px;background:#d8b96f}
+  .tp-vol #tuplus-volume-range::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#f3dfae;border:2px solid #b8913f}
   .tp-vol output{min-width:3ch;text-align:right;font-variant-numeric:tabular-nums;color:#dcc89d}
   html:not([data-theme="dark"]) .tp-vol{background:rgba(255,255,255,.88);color:#8a6422;border-color:rgba(158,116,46,.3);box-shadow:0 12px 28px rgba(18,44,61,.16)}
   html:not([data-theme="dark"]) .tp-vol output{color:#6b5320}
-  @media(max-width:640px){.tp-vol{gap:8px;padding:6px 12px 6px 6px;bottom:max(14px,env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left))}.tp-vol-btn{width:34px;height:34px}.tp-vol input[type=range]{width:78px}.tp-vol output{font-size:11px}}
+  html:not([data-theme="dark"]) .tp-vol #tuplus-volume-range::-webkit-slider-runnable-track{border-color:#ded8c9;background:linear-gradient(90deg,#e2c785 var(--p),#f7f2e5 var(--p))}
+  html:not([data-theme="dark"]) .tp-vol #tuplus-volume-range::-moz-range-track{border-color:#ded8c9;background:#f7f2e5}
+  html:not([data-theme="dark"]) .tp-vol #tuplus-volume-range::-moz-range-progress{background:#e2c785}
+  @media(max-width:640px){.tp-vol{gap:8px;padding:6px 12px 6px 6px;bottom:max(14px,env(safe-area-inset-bottom));left:max(12px,env(safe-area-inset-left))}.tp-vol-btn{width:34px;height:34px}.tp-vol #tuplus-volume-range{width:78px}.tp-vol output{font-size:11px}}
 </style>
 <script is:inline>
   (() => {

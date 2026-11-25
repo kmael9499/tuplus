@@ -572,6 +572,18 @@ for(const id of ['countrySelect','pais']){
  select.addEventListener('change',e=>{setCountry(e.target.value);save();sync();renderProgress()});
 }
 load(); sync(); renderProgress();
+// Consultar como máximo una vez por día de Lima tras una actualización exitosa.
+async function refreshDailyRates(){
+  const today=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+  try { if(localStorage.getItem('tuplus-rates-refresh-day')===today) return; } catch {}
+  if(await fx.refresh()){
+    try { localStorage.setItem('tuplus-rates-refresh-day',today); } catch {}
+    sync(); renderProgress();
+  }
+}
+refreshDailyRates();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden) refreshDailyRates();});
+setInterval(()=>{if(!document.hidden) refreshDailyRates();},60*60*1000);
 $("#currencySelect").addEventListener('change',e=>{state.currency=e.target.value;state.currencyManual=true;save();sync();renderProgress()});
 $("#refreshRates").addEventListener('click',async e=>{
   const button=e.currentTarget;button.disabled=true;button.setAttribute('aria-busy','true');
