@@ -828,3 +828,36 @@ body { font-size: var(--quote-fluid-body); }
 [data-view="2"] .custom-card li { padding: 7px 2px; border-bottom: 1px solid rgba(255,255,255,.07); color: #dbe5ea; font-size: 12.5px; }
 [data-view="2"] .custom-card li::before { content: "✓ "; }
 [data-view="2"] .custom-card p { margin: auto 0 0; padding: 9px 12px; border-radius: 10px; background: rgba(225,195,139,.08); color: #dbe5ea; font-size: 12px; }
+
+
+/* Dirección visual: lectura cómoda y alcance explícito de cada alternativa. */
+[data-view="4"] .design-intro{margin:-5px 0 14px;color:var(--muted,#aebdc7);font-size:13px;line-height:1.65;max-width:72ch}
+[data-view="4"] .design-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch}
+[data-view="4"] .design-option{min-height:0;align-content:start;grid-template-columns:18px minmax(0,1fr);padding:20px;gap:0 12px;border-radius:18px}
+[data-view="4"] .design-option .radio{grid-column:1;grid-row:1;margin-top:3px}
+[data-view="4"] .design-option .design-option-copy{grid-column:2;grid-row:1 / span 2}
+[data-view="4"] .design-option .design-option-copy b{font-size:16px;line-height:1.35}
+[data-view="4"] .design-option .design-option-copy small{font-size:13px;line-height:1.65;margin-top:6px;color:var(--muted,#aebdc7)}
+[data-view="4"] .design-option > strong{grid-column:2;grid-row:3;justify-self:start;margin-top:14px;padding:6px 10px;border-radius:999px;background:rgba(236,210,155,.1);color:#f4dba9;font-size:12px}
+[data-view="4"] .design-points{grid-column:2;display:grid;gap:7px;margin:14px 0 0;padding:0;list-style:none}
+[data-view="4"] .design-points li{position:relative;padding-left:18px;color:var(--muted,#b9c7cf);font-size:12px;line-height:1.55}
+[data-view="4"] .design-points li:before{content:"✓";position:absolute;left:0;color:#e6c57f;font-weight:700}
+[data-view="4"] .design-option.selected{border-color:#e6c57f;box-shadow:0 0 0 1px rgba(230,197,127,.22),0 12px 30px rgba(0,0,0,.12)}
+[data-view="4"] .motion-addon{width:100%;display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:start;margin-top:14px;padding:18px 20px;text-align:left;border:1px solid var(--line,rgba(255,255,255,.16));border-radius:17px;color:inherit;background:rgba(255,255,255,.025);cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+[data-view="4"] .motion-addon:hover{transform:translateY(-2px);border-color:rgba(230,197,127,.65)}
+[data-view="4"] .motion-addon.selected{border-color:#e6c57f;background:rgba(230,197,127,.08)}
+[data-view="4"] .motion-addon-check{display:grid;place-items:center;width:20px;height:20px;margin-top:1px;border:1px solid rgba(190,204,211,.55);border-radius:6px;color:transparent;font-size:13px}
+[data-view="4"] .motion-addon.selected .motion-addon-check{color:#102b3a;background:#e6c57f;border-color:#e6c57f}
+[data-view="4"] .motion-addon-copy b{display:block;font-size:15px;line-height:1.4}
+[data-view="4"] .motion-addon-copy em{margin-left:7px;padding:3px 8px;border-radius:999px;background:rgba(230,197,127,.14);color:#efd59e;font-size:10px;font-style:normal;font-weight:600;white-space:nowrap}
+[data-view="4"] .motion-addon-copy small{display:block;margin-top:6px;color:var(--muted,#b9c7cf);font-size:12px;line-height:1.65}
+[data-view="4"] .motion-addon > strong{font-size:12px;color:#f4dba9;white-space:nowrap}
+@media(max-width:700px){[data-view="4"] .design-choice-grid{grid-template-columns:1fr}[data-view="4"] .design-option{padding:17px}[data-view="4"] .motion-addon{grid-template-columns:22px minmax(0,1fr);padding:16px}[data-view="4"] .motion-addon>strong{grid-column:2;justify-self:start;margin-top:4px}}
+
+
+/* Evita que el precio se superponga con los puntos de alcance en las tarjetas visuales. */
+[data-view="4"] .design-choice-grid .design-option{display:block!important;position:relative;padding:20px 20px 20px 54px}
+[data-view="4"] .design-choice-grid .design-option .radio{position:absolute!important;left:20px;top:23px;margin:0}
+[data-view="4"] .design-choice-grid .design-option .design-option-copy{display:block;min-width:0}
+[data-view="4"] .design-choice-grid .design-option>strong{position:static!important;display:inline-flex;align-items:center;justify-self:auto;grid-column:auto;grid-row:auto;margin:16px 0 0!important;padding:7px 11px;border:1px solid rgba(236,210,155,.24);border-radius:999px;background:rgba(236,210,155,.1);color:#f4dba9;font-size:12px;line-height:1.4;white-space:nowrap}
+@media(max-width:700px){[data-view="4"] .design-choice-grid .design-option{padding:18px 16px 18px 48px}[data-view="4"] .design-choice-grid .design-option .radio{left:16px;top:21px}}
