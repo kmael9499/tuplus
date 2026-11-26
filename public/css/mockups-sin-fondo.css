@@ -1,0 +1,38 @@
+/* Mockups de las 5 soluciones: ahora son recortes sin fondo ni planta (PNG/WebP transparente).
+   Se muestran completos (sin recorte), sobre el fondo de la tarjeta, y sin el degradado que los tapaba. */
+.sv-media img,
+.sl-visual-frame img,
+.sl-more-media img,
+.partners-page .sc-solution-media img,
+:root body.partners-page .sc-solution-media img {
+  object-fit: contain !important;
+  object-position: center !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  filter: none !important;
+}
+html[data-theme="dark"] .sv-media img,
+html[data-theme="dark"] .sl-more-media img,
+html[data-theme="dark"] body.partners-page .sc-solution-media img { filter: none !important; }
+
+.sl-visual-frame { background: var(--paper); }
+.sl-visual-frame img { padding: 2% 3%; box-sizing: border-box; }
+.sl-more-media img { padding: 4%; box-sizing: border-box; }
+.partners-page .sc-solution-media img { padding: 3% 4% 0; box-sizing: border-box; }
+
+/* Sección "Un ecosistema. Cinco posibilidades" (inicio).
+   Panel abierto: el mockup completo (laptop + tablet + celular juntos) arriba y el texto debajo, sin encimarse.
+   Paneles cerrados: la imagen ampliada y atenuada detrás del título vertical. */
+.sv-media { transition: bottom .6s cubic-bezier(.65,0,.35,1); }
+.sv-panel .sv-media { bottom: 42%; }
+.sv-panel .sv-media img { padding: 5% 3% 0; box-sizing: border-box; object-position: center top !important; }
+.sv-gallery.is-ready .sv-panel:not(.is-active) .sv-media { bottom: 0; }
+.sv-gallery.is-ready .sv-panel:not(.is-active) .sv-media img {
+  object-fit: cover !important;
+  object-position: 30% 35% !important;
+  padding: 0;
+}
+.sv-gallery.is-ready .sv-panel.is-active .sv-media img { transform: none; }
+@media (max-width: 760px) {
+  .sv-gallery.is-ready .sv-panel:not(.is-active) .sv-media img { object-position: 25% 40% !important; }
+}

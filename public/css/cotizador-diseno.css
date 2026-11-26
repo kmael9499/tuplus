@@ -69,6 +69,7 @@ html[data-theme=dark] .ambient .orb{opacity:.42!important}
 .steps .step:not(.active):not(.completed)>span{background:#0f2737}
 .steps .step.active>span{box-shadow:0 0 0 4px rgba(225,195,139,.14),0 0 24px rgba(225,195,139,.6)}
 .steps .step.completed>span{background:linear-gradient(rgba(225,195,139,.14),rgba(225,195,139,.14)),#0f2737}
+@media(max-width:850px){.steps::before,.steps::after{display:none}}
 
 /* ===== 4. TÍTULOS ===== */
 .quote-layout .view-heading h2{

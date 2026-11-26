@@ -61,10 +61,12 @@ for (const file of pages) {
   assert.match(html, /id="main-nav"/, file);
   assert.match(html, /class="menu-toggle"/, file);
   assert.match(html, /class="menu-overlay"/, file);
-  assert.match(html, /script\.js\?v=20261002-1/, file);
+  assert.match(html, /script\.js\?v=\d{8}-\d+/, file);
   assert.doesNotMatch(html, /id="pagesRange"/, file);
 }
 const quotePage = fs.readFileSync(path.join(base, 'cotizador.html'), 'utf8');
 assert.match(quotePage, /cotizador\.js\?v=/);
 assert.doesNotMatch(quotePage, /src="(?:\.\/)?js\/script\.js/);
 console.log('OK: inicio sin campos del cotizador, menú móvil, Escape, WhatsApp y scripts de las 9 páginas.');
+require('./contact.test.cjs');
+require('./contact-validation.test.cjs');

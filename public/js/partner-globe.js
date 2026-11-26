@@ -149,7 +149,7 @@
       yaw: -40 * DEG,
       tilt: 15 * DEG,
       target: null,
-      paused: motion.matches,
+      paused: true, // el globo ya no gira solo: solo se mueve si la persona lo arrastra o elige un país
       hold: 0,
       drag: null,
     };
@@ -252,8 +252,9 @@
       const image = await textureImage();
       state.draw = renderer(state.canvas, image);
       state.root.dataset.ready = "true";
+      // Sin giro automático no hace falta el botón de pausa; solo se ofrece restablecer la vista.
       state.root
-        .querySelectorAll("[data-globe-toggle],[data-globe-reset]")
+        .querySelectorAll("[data-globe-reset]")
         .forEach((button) => (button.hidden = false));
       translate(
         state.root.querySelector("[data-globe-toggle] [data-i18n]"),
@@ -353,9 +354,6 @@
           Math.abs(state.target.tilt - state.tilt) < 0.002
         )
           state.target = null;
-        state.dirty = true;
-      } else if (!state.paused && !state.drag && now > state.hold) {
-        state.yaw += delta * 0.000035;
         state.dirty = true;
       }
       if (state.dirty) {

@@ -1065,6 +1065,7 @@
 
     const bar = document.createElement("div");
     bar.className = "xt-chips";
+    const deliveryIndicator = $("#deliveryIndicator");
     row.insertAdjacentElement("afterend", bar);
 
     reChips = () => {
@@ -1079,9 +1080,10 @@
           `<span class="xt-chip">${s.pages} ${x(s.pages === 1 ? "pg1" : "pgN")}</span>` +
           `<span class="xt-chip">${n} ${x(n === 1 ? "fn1" : "fnN")}</span>` +
           `<span class="xt-chip">${tt(designs[s.design].label)}</span>` +
-          '<span class="xt-grow"></span>' +
+          '<span class="xt-delivery-slot"></span><span class="xt-grow"></span>' +
           `<button class="xt-chip" type="button" data-xt="igv" aria-pressed="${!!s.tax}">${tt(s.tax ? "CON IGV" : "SIN IGV")}</button>` +
           `<button class="xt-chip" type="button" data-xt="copy">${x("copyLink")}</button>`;
+        if (deliveryIndicator) bar.querySelector(".xt-delivery-slot").replaceWith(deliveryIndicator);
       } catch {
         /* si cotizador.js cambia, el resumen simplemente no se muestra */
       }
@@ -1376,7 +1378,7 @@
           $$("button", fxBox).forEach((b) =>
             b.classList.toggle("on", b.dataset.c === s.currency),
           );
-        if (calc) calc.textContent = "100 USD \u2248 " + money(100);
+        if (calc) calc.textContent = "100 USD \u2248 " + fx.format(100, s.currency);
 
         if (flag && s.country) {
           flag.src = `https://flagcdn.com/w40/${String(s.country).toLowerCase()}.png`;
