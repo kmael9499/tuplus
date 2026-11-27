@@ -1,9 +1,10 @@
 'use strict';
 
-const fs = require('node:fs');
-const path = require('node:path');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const frontend = path.resolve(__dirname, '..', 'public');
+const frontend = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'public');
 const sourcePath = path.join(frontend, 'js', 'i18n-translations.json');
 const outputPath = path.join(frontend, 'js', 'i18n-data.js');
 const translations = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));

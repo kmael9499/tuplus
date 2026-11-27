@@ -17,6 +17,14 @@ async function test(file){
   assert.equal(document.documentElement.lang,({zh:'zh-CN',pt:'pt-BR'})[locale]||locale);checks++;
   for(const node of document.querySelectorAll('[data-i18n]')){assert.equal(node.textContent,api.t(node.getAttribute('data-i18n')));checks++;}
   if(file==='index.html'){
+   const conversation = [...document.querySelectorAll('.ct2-preview [data-i18n]')];
+   assert.equal(conversation.length, 13);
+   for (const item of conversation) {
+    const key = item.getAttribute('data-i18n');
+    assert.equal(item.textContent, api.t(key));
+    if (locale !== 'es') assert.notEqual(item.textContent, window.TUPLUS_TRANSLATIONS.es[key]);
+    checks++;
+   }
    const eyebrow=document.querySelector('#contacto .eyebrow');
    assert.equal(eyebrow.textContent.trim(),api.t('05 / CONSTRUYAMOS LO QUE SIGUE'));checks++;
    if(locale!=='es'){assert.doesNotMatch(eyebrow.textContent,/CONSTRUYAMOS/);checks++;}

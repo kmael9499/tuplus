@@ -185,7 +185,7 @@ html:not([data-theme="dark"]) body .pr2-window{box-shadow:0 40px 90px rgba(18,44
 .ab2-bird::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(220,188,125,.22) 80%,transparent 90%);animation:ab2-spin 9s linear infinite}
 @keyframes ab2-spin{to{transform:rotate(360deg)}}
 .about-scene .ab2-radar-logo{position:absolute;width:42px;height:42px;object-fit:contain;transform:translate(-50%,-50%);opacity:0;z-index:2;filter:drop-shadow(0 0 calc(var(--radar-glow, 0) * 12px) rgba(255,200,61,.95));pointer-events:none}
-.about-scene .ab2-radar-logo--adisgea{left:29%;top:29%}
+.about-scene .ab2-radar-logo--adisgea{left:43%;top:20%}
 .about-scene .ab2-radar-logo--zenplus{left:71%;top:71%}
 @media(prefers-reduced-motion:reduce){.about-scene .ab2-radar-logo{opacity:1;filter:none}}
 html:not([data-theme="dark"]) body .ab2 .ab2-bird{background:radial-gradient(55% 45% at 50% 45%,rgba(220,188,125,.35),transparent 70%),linear-gradient(165deg,#fffaf0,#efe2c6)}
@@ -267,25 +267,21 @@ html:not([data-theme="dark"]) body .ct2 .ct2-panel{box-shadow:0 50px 110px rgba(
  -webkit-mask:radial-gradient(70% 70% at 20% 30%,#000,transparent);mask:radial-gradient(70% 70% at 20% 30%,#000,transparent)}
 :root body .ct2 .contact-copy h2{font-size:clamp(38px,4.6vw,64px);line-height:1.02;letter-spacing:-.04em}
 :root body .ct2 .contact-copy>p:not(.eyebrow){color:var(--v2-muted);font-size:15px}
-/* Vista previa del mensaje de WhatsApp */
-.ct2-preview{max-width:380px;margin-top:34px;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:26px;background:#0a1923;
- box-shadow:0 34px 70px rgba(0,0,0,.4),0 0 0 8px rgba(255,255,255,.025);transform:rotate(-2deg);transition:transform .5s}
-.ct2-preview:hover{transform:rotate(0)}
-.ct2-phone-top{background:#12303f;border-color:rgba(255,255,255,.06)}
-.ct2-phone-top b{color:#eef3f6}
-.ct2-thread{display:flex;flex-direction:column;align-items:flex-end;min-height:150px;padding:20px 18px;
- background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.03) 0 2px,transparent 3px) 0 0/22px 22px,#0b1d28}
-.ct2-bubble{position:relative;display:flex;flex-direction:column;gap:6px;width:80%;padding:12px 14px 22px;border-radius:16px 16px 4px 16px;background:#0f5a48;color:#eaf5f1;font-size:12.5px;line-height:1.45;word-break:break-word;box-shadow:0 8px 20px rgba(0,0,0,.25)}
-.ct2-bubble strong{font-size:13px}
-.ct2-bubble [data-preview]:empty{display:block;height:8px;margin:3px 0;border-radius:4px;background:rgba(255,255,255,.22)}
-.ct2-bubble strong:empty{width:48%;height:10px}
-.ct2-bubble [data-preview="company"]:empty{width:72%}
-.ct2-bubble [data-preview="service"]:empty{width:58%}
-.ct2-bubble [data-preview="message"]:empty{width:92%;box-shadow:0 14px 0 rgba(255,255,255,.22);margin-bottom:16px}
-.ct2-ticks{position:absolute;right:12px;bottom:6px;font-size:11px;font-style:normal;color:#5fc8f2;letter-spacing:-2px}
-.ct2-compose{display:flex;align-items:center;gap:10px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.06);background:#0a1923}
-.ct2-compose i{flex:1;height:34px;border-radius:17px;background:rgba(255,255,255,.07)}
-.ct2-compose b{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ecd29b,#c49650);color:#13222e;font-size:14px}
+/* Conversacion de contacto */
+.ct2-preview{width:100%;max-width:480px;margin-top:34px;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:#0a1923;box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.ct2-preview{display:flex;flex-direction:column;gap:12px;padding:16px;background:radial-gradient(circle at 90% 12%,rgba(18,76,85,.3),transparent 45%),#071b27}
+.ct2-message{display:flex;align-items:flex-start;gap:8px;min-width:0}
+.ct2-message--company{justify-content:flex-end}
+.ct2-message p,.ct2-message-bubble{min-width:0;margin:0;padding:11px 13px;border-radius:15px;background:#1b2c38;color:#eef3f6;font-size:clamp(12px,1.05vw,14px);line-height:1.4;overflow-wrap:anywhere}
+.ct2-message--company .ct2-message-bubble{background:linear-gradient(140deg,#087667,#005447)}
+.ct2-message-bubble p{padding:0;background:none;font-size:inherit}
+.ct2-message-bubble ul{list-style:none;margin:8px 0 0;padding:0}
+.ct2-message-bubble li{display:flex;gap:6px}
+.ct2-message-bubble li::before{content:'✓';flex:none;color:#b7e77b;font-weight:bold}
+.ct2-message .fq2-avatar,.ct2-customer-avatar{width:32px;height:32px;flex:0 0 32px}
+.ct2-customer-avatar{position:relative;overflow:hidden;border:1px solid #8da0ac;border-radius:50%;background:#263a49}
+.ct2-customer-avatar::before{content:'';position:absolute;top:5px;left:10px;width:10px;height:11px;border-radius:50%;background:#dbe7ef}
+.ct2-customer-avatar::after{content:'';position:absolute;left:5px;bottom:-4px;width:20px;height:15px;border-radius:50% 50% 0 0;background:#dbe7ef}
 .ct2-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 :root body .ct2 .ct2-links>*{margin:0}
 :root body .ct2 .contact-direct{display:inline-flex;align-items:center;min-height:42px;padding:8px 18px;border:1px solid var(--v2-line-hi);border-radius:999px;text-decoration:none;transition:background .25s}
@@ -349,7 +345,7 @@ html[data-theme="dark"] body .ct2 .contact-form-card :is(input:not([type="checkb
  .pr2-ring-fg{stroke-dashoffset:0}
  .pr2-site i,.pr2-site b,.pr2-img,.pr2-launch i{background-color:var(--c)}
  .pr2-cursor{display:none}
- .ab2-tile,.ab2-cta,.ct2-preview{transition:none}
+ .ab2-tile,.ab2-cta{transition:none}
 }
 
 /* Casilla de autorización centrada respecto a todo el texto */

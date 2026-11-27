@@ -93,19 +93,4 @@
     requestAnimationFrame(paintRadar);
   }
 
-  // -- Contacto: vista previa del mensaje --
-  const form = document.getElementById('contact-form');
-  const preview = document.querySelector('.ct2-preview');
-  if (form && preview) {
-    const fields = [...preview.querySelectorAll('[data-preview]')];
-    const update = () => fields.forEach(slot => {
-      const field = form.elements[slot.dataset.preview];
-      let value = (field?.value || '').trim();
-      if (slot.dataset.preview === 'message' && value.length > 120) value = value.slice(0, 117) + '…';
-      if (slot.textContent !== value) slot.textContent = value;
-    });
-    form.addEventListener('input', update);
-    form.addEventListener('change', update);
-    update();
-  }
 })();
