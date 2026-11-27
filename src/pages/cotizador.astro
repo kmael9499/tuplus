@@ -14,7 +14,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260925-2"><link rel="stylesheet" href="css/cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="css/quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="css/brand-flight.css?v=20261004-1"><link rel="stylesheet" href="css/cotizador-extras.css?v=20261124-1"><link rel="stylesheet" href="css/cotizador-diseno.css?v=20261021-2"><link rel="stylesheet" href="css/cotizador-colibri.css?v=20261011-1"><script is:inline defer src="js/brand-flight.js?v=20261106-1"></script><script is:inline src="js/theme.js?v=20261011-2"></script><script is:inline src="js/config.js?v=20261024-1"></script><meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="css/styles.css?v=20260925-2"><link rel="stylesheet" href="css/cotizador-tuplus.css?v=20261005-2"><link rel="stylesheet" href="css/quote-responsive-v2.css?v=20260925-2"><link rel="stylesheet" href="css/brand-flight.css?v=20261004-1"><link rel="stylesheet" href="css/cotizador-extras.css?v=20261124-1"><link rel="stylesheet" href="css/cotizador-diseno.css?v=20261021-2"><link rel="stylesheet" href="css/cotizador-colibri.css?v=20261011-1"><script is:inline defer src="js/brand-flight.js?v=20261126-1"></script><script is:inline src="js/theme.js?v=20261011-2"></script><script is:inline src="js/config.js?v=20261024-1"></script><meta name="robots" content="index, follow">
   <script is:inline src="js/vendor/jspdf.umd.min.js?v=2.5.1"></script>
   <link rel="icon" href="colibri.png" type="image/png">
 <style is:inline id="colibri-neon">
@@ -54,7 +54,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
 <link rel="stylesheet" href="css/cotizador-niveles.css?v=20261106-1"/>
 <link rel="stylesheet" href="css/caminos.css?v=1"/><NavigationStyles />
 <!-- Escalado fluido para monitores grandes; cargar después de todos los estilos del cotizador. -->
-<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261114-2"/>
+<link rel="stylesheet" href="css/cotizador-monitor-responsive.css?v=20261125-1"/>
 <script is:inline defer src="js/navigation.js?v=20261107-3"></script>
 </head>
 <body>
@@ -347,12 +347,27 @@ import GlobalAudio from '../components/GlobalAudio.astro';
             </div>
 
             <div class="section-block">
-              <div class="section-label">Dirección visual</div>
-              <div class="design-grid">
-                <button class="radio-card selected" data-design="clean" type="button"><span class="radio"></span><div><b>Clean / inteligente</b><small>Precisión, aire y jerarquía visual</small></div><strong>Incluido</strong></button>
-                <button class="radio-card" data-design="custom" type="button"><span class="radio"></span><div><b>Custom UI</b><small>Hasta 5 plantillas visuales y 2 rondas de cambios</small></div><strong><span class="option-price" data-pen="850">+S/850</span></strong></button>
-                <button class="radio-card" data-design="premium" type="button"><span class="radio"></span><div><b>Premium motion</b><small>Hasta 3 interacciones, con versión sin movimiento</small></div><strong><span class="option-price" data-pen="1200" data-pen-max="2000">S/1,200 — S/2,000</span></strong></button>
+              <div class="section-label">Elige una dirección visual</div>
+              <p class="design-intro">Selecciona una base para la apariencia de tu sitio. El movimiento avanzado se puede agregar por separado.</p>
+              <div class="design-grid design-choice-grid" role="group" aria-label="Dirección visual">
+                <button class="radio-card design-option selected" data-design="clean" type="button" aria-pressed="true">
+                  <span class="radio" aria-hidden="true"></span>
+                  <div class="design-option-copy"><b>Clean / inteligente</b><small>Una presentación clara, ordenada y fácil de recorrer.</small>
+                    <ul class="design-points"><li>Espacios amplios y tipografía legible</li><li>Colores de marca y navegación clara</li><li>Botones, tarjetas y formularios uniformes</li></ul>
+                  </div><strong>Incluido</strong>
+                </button>
+                <button class="radio-card design-option" data-design="custom" type="button" aria-pressed="false">
+                  <span class="radio" aria-hidden="true"></span>
+                  <div class="design-option-copy"><b>Custom UI</b><small>Una apariencia propia, creada alrededor de tu marca.</small>
+                    <ul class="design-points"><li>Hasta 5 tipos de página: inicio, servicios, ficha, acerca de y contacto</li><li>2 rondas de cambios: observaciones consolidadas por entrega</li><li>Composición, tarjetas y botones personalizados</li></ul>
+                  </div><strong><span class="option-price" data-pen="850">+S/850</span></strong>
+                </button>
               </div>
+              <button class="motion-addon" id="motionAddon" type="button" aria-pressed="false">
+                <span class="motion-addon-check" aria-hidden="true">✓</span>
+                <span class="motion-addon-copy"><b>Agregar Premium motion <em>Opcional</em></b><small>Hasta 3 interacciones acordadas, como animación al desplazarse o transiciones. Se adapta a móvil e incluye alternativa sin movimiento.</small></span>
+                <strong><span class="option-price" data-pen="1200" data-pen-max="2000">S/1,200 — S/2,000</span></strong>
+              </button>
             </div>
 
             <div class="section-block">
@@ -505,7 +520,7 @@ import GlobalAudio from '../components/GlobalAudio.astro';
   <SiteFooter top="#top" />
 
   <noscript><p class="no-js">Activa JavaScript para calcular tu proyecto o <a href="index.html#contacto">contacta con TUPLUS</a>.</p></noscript><script is:inline src="js/i18n-data.js?v=20261031-footer-2"></script><script is:inline src="js/quote-translations.js?v=20261124-1"></script><script is:inline src="js/quote-tiers-translations.js?v=20261106-1"></script><script is:inline src="js/quote-privacy-translations.js?v=20261120-1"></script><script is:inline src="js/site-translations.js?v=20261118-2"></script><script is:inline src="js/i18n.js?v=20261118-2"></script><script is:inline src="js/quote-core.js?v=20261120-1"></script><script is:inline src="js/currencies.js?v=20260925-2"></script><script is:inline src="js/countries.js?v=20260925-2"></script><script is:inline src="js/encabezado.js?v=20261125-1"></script><script is:inline src="js/cotizacion-pdf.js?v=20261124-2"></script><script is:inline src="js/cotizador.js?v=20261125-1"></script>
-<script is:inline src="js/neon-trail.js?v=20261012-1" defer></script><script is:inline src="js/cotizador-extras.js?v=20261125-1" defer></script><script is:inline src="js/cotizador-colibri.js?v=20261011-1" defer></script><script is:inline src="js/faq.js?v=20261011-1" defer></script>
+<script is:inline src="js/cotizador-extras.js?v=20261125-1" defer></script><script is:inline src="js/cotizador-colibri.js?v=20261011-1" defer></script><script is:inline src="js/faq.js?v=20261011-1" defer></script>
 <script is:inline src="js/lang-flags.js?v=20261015-1" defer></script>
 <script is:inline src="js/cotizador-vuelo.js?v=20261016-1" defer></script>
 <script is:inline src="js/cotizador-cupon.js?v=20261113-2" defer></script>

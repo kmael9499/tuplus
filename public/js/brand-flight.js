@@ -1,5 +1,10 @@
 
 (()=>{
+ // Keep the intro visible on modest devices while reducing its rendering cost.
+ const connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+ const lowPower=(Number(navigator.deviceMemory)>0&&Number(navigator.deviceMemory)<=4)||
+  (Number(navigator.hardwareConcurrency)>0&&Number(navigator.hardwareConcurrency)<=4)||!!(connection&&connection.saveData);
+ const minFrameMs=lowPower?1000/30:0;
  const root=document.querySelector('.site-header .brand-art, .quote-header .brand-art');
  if(!root) return;
  const original=root.querySelector('img');
@@ -96,7 +101,8 @@
   function sparkles(t,emit,x,y,size){
    const dt=Math.min(.05,Math.max(0,t-lastT));lastT=t;
    const m=Math.max(1,Math.min(3,size/90));
-   if(emit)for(let i=0;i<(m>1.5?3:2);i++)sparks.push({x:x+(Math.random()-.5)*size*.5,y:y+(Math.random()-.1)*size*.35,vx:(Math.random()-.5)*28*m,vy:(6+Math.random()*26)*m,life:0,max:.5+Math.random()*.7*m,r:(.8+Math.random()*1.6)*m});
+   if(emit)for(let i=0;i<(lowPower?1:(m>1.5?3:2));i++)sparks.push({x:x+(Math.random()-.5)*size*.5,y:y+(Math.random()-.1)*size*.35,vx:(Math.random()-.5)*28*m,vy:(6+Math.random()*26)*m,life:0,max:.5+Math.random()*.7*m,r:(.8+Math.random()*1.6)*m});
+   if(lowPower&&sparks.length>24)sparks.splice(0,sparks.length-24);
    sparks=sparks.filter(s=>(s.life+=dt)<s.max);
    if(!sparks.length)return;
    const dk=dark(),col=dk?'255,214,120':'196,126,8';
@@ -111,7 +117,7 @@
    bctx.restore();
   }
   function prepBig(){
-   const vw=document.documentElement.clientWidth,vh=innerHeight,dpr=Math.min(window.devicePixelRatio||1,2);
+   const vw=document.documentElement.clientWidth,vh=innerHeight,dpr=lowPower?1:Math.min(window.devicePixelRatio||1,2);
    if(!big){big=document.createElement('canvas');big.setAttribute('aria-hidden','true');big.className='brand-flight-full';
     big.style.cssText='position:fixed;left:0;top:0;pointer-events:none;z-index:41';document.body.appendChild(big);bctx=big.getContext('2d')}
    if(big.width!==Math.round(vw*dpr)||big.height!==Math.round(vh*dpr)){big.width=Math.round(vw*dpr);big.height=Math.round(vh*dpr);big.style.width=vw+'px';big.style.height=vh+'px'}
@@ -222,7 +228,10 @@
    sparkles(t,inBig||(u>0&&u<1),x,y,w);
    return false;
   }
+  let lastDrawAt=0;
   function draw(now){
+   if(minFrameMs&&now-lastDrawAt<minFrameMs){frame=requestAnimationFrame(draw);return}
+   lastDrawAt=now;
    const t=(now-started)/1000;ctx.clearRect(0,0,screen.width,screen.height);ctx.save();ctx.translate(ox,oy);ctx.scale(scale,scale);
    if(FULL){const done=flyFull(t);ctx.restore();if(!done)frame=requestAnimationFrame(draw);return}
    const progress=Math.min(1,t/1.05);ctx.globalAlpha=progress;ctx.save();ctx.translate(0,18*(1-ease(progress)));cropDraw(ctx,letters,LB);ctx.restore();ctx.globalAlpha=1;
@@ -233,7 +242,7 @@
    const fade=1-Math.max(0,(p-.78)/.22);
    drawWings(t,fade);ctx.restore();ctx.restore();frame=requestAnimationFrame(draw);
   }
-  function play(){cancelAnimationFrame(frame);started=performance.now();if(matchMedia('(prefers-reduced-motion:reduce)').matches)started-=20000;draw(performance.now())}
+  function play(){cancelAnimationFrame(frame);started=performance.now();lastDrawAt=0;if(matchMedia('(prefers-reduced-motion:reduce)').matches)started-=20000;draw(performance.now())}
   root.classList.add('brand-flight-ready');
   if(hasPlayed){cancelAnimationFrame(frame);draw(performance.now());}else{hasPlayed=true;play();}
  };

@@ -70,6 +70,7 @@ router.post('/api/cotizaciones', limitePorIp({ max: 10, ventanaMs: 60 * 60 * 100
         paginas: paginasNumero,
         blocks20: req.body.blocks20,
         blocks50: req.body.blocks50,
+        premium_motion: req.body.premium_motion,
         contenido_pro: contenido_pro,
         funciones: Array.isArray(funciones) ? funciones : [],
         diseno_clave: req.body.diseno_clave,

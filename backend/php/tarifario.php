@@ -52,7 +52,8 @@ function tuplus_calcular_cotizacion(array $d, $penPorUsd = 3.3923) {
     if (!is_string($f) || !array_key_exists($f, $funciones)) throw new InvalidArgumentException('Función no válida');
   }
 
-  $disenos = ['clean' => 0, 'custom' => 850, 'premium' => 1200];
+$disenos = ['clean' => 0, 'custom' => 850];
+$precioPremiumMotion = 1200;
   $soportes = ['30' => 0, 'web' => 150, 'store' => 300, 'plus' => 550];
   $diseno = (string)($d['diseno_clave'] ?? '');
   $soporte = (string)($d['soporte_clave'] ?? '');
@@ -80,6 +81,16 @@ function tuplus_calcular_cotizacion(array $d, $penPorUsd = 3.3923) {
     $suma += $funciones[$f];
   }
   $suma += $disenos[$diseno];
+
+$motion = $d['premium_motion'] ?? false;
+
+if (!is_bool($motion)) {
+  throw new InvalidArgumentException('Premium Motion no válido');
+}
+
+if ($motion) {
+  $suma += $precioPremiumMotion;
+}
 
   $implementacion = (int)round($suma);
   $prioritaria = !empty($d['prioritaria']) ? (int)round($implementacion * 0.20) : 0;

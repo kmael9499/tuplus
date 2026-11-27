@@ -10,11 +10,13 @@
     GBP:[.75348,'2026-09-24'], CAD:[1.4087,'2026-09-24']
   };
   const rates=Object.fromEntries(Object.entries(snapshot).map(([code,[rate,date]])=>[code,{rate,date}]));
+  const limaToday=()=>{const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const p=Object.fromEntries(parts.map(x=>[x.type,x.value]));return `${p.year}-${p.month}-${p.day}`};
+  const maxRateDate=limaToday();
   try{
     const saved=JSON.parse(localStorage.getItem('tuplus-rates')||'null');
     for(const code of Object.keys(rates)){
       const row=saved?.[code];
-      if(row&&Number.isFinite(row.rate)&&row.rate>0&&/^\d{4}-\d{2}-\d{2}$/.test(row.date)&&row.date>rates[code].date&&row.date<=new Date().toISOString().slice(0,10)) rates[code]=row;
+      if(row&&Number.isFinite(row.rate)&&row.rate>0&&/^\d{4}-\d{2}-\d{2}$/.test(row.date)&&row.date>rates[code].date&&row.date<=maxRateDate) rates[code]=row;
     }
   }catch{}
   rates.USD={rate:1,date:'2026-09-25'};
@@ -32,8 +34,9 @@
       const data=await response.json();
       if(!Array.isArray(data))throw new Error('format');
       let count=0;
+      const maxRateDate=limaToday();
       for(const row of data){
-        if(row.base==='USD'&&Object.hasOwn(rates,row.quote)&&row.quote!=='USD'&&Number.isFinite(row.rate)&&row.rate>0&&/^\d{4}-\d{2}-\d{2}$/.test(row.date)&&row.date>=rates[row.quote].date&&row.date<=new Date().toISOString().slice(0,10)){
+        if(row.base==='USD'&&Object.hasOwn(rates,row.quote)&&row.quote!=='USD'&&Number.isFinite(row.rate)&&row.rate>0&&/^\d{4}-\d{2}-\d{2}$/.test(row.date)&&row.date>=rates[row.quote].date&&row.date<=maxRateDate){
           rates[row.quote]={rate:row.rate,date:row.date}; count++;
         }
       }

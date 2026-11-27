@@ -16,6 +16,7 @@ const state = {
   contentPro: false,
   features: new Set(),
   design: "clean",
+  motion: false,
   support: "30",
   rush: false,
   hosting: false,
@@ -82,7 +83,8 @@ const featureDescriptions = {
   migration:"Traslada una página web existente a un nuevo entorno, procurando conservar su contenido, estructura y enlaces importantes. Antes del traslado se revisan los elementos del sitio para definir qué se puede migrar y evitar, en lo posible, interrupciones o pérdida de información.",
   geo:"Prepara y estructura el contenido de tu negocio para que los motores de búsqueda y asistentes de inteligencia artificial puedan comprender mejor qué ofreces. Se trabaja la claridad de la información, preguntas frecuentes, datos del negocio y contenido útil para aumentar las posibilidades de que tu marca sea considerada en respuestas generadas por IA; no garantiza menciones ni recomendaciones."
 };
-const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850},premium:{label:"Premium motion",price:1200,range:[1200,2000]}};
+const designs = {clean:{label:"Clean / inteligente",price:0},custom:{label:"Custom UI",price:850}};
+  const motionOption = {label:"Premium motion",price:1200,range:[1200,2000]};
 // Soporte mensual: pago recurrente, no entra al total de implementación.
 const supports = {"30":{label:"Sin soporte mensual adicional",monthly:0},web:{label:"Soporte web",monthly:150},store:{label:"Soporte tienda",monthly:300},plus:{label:"Soporte ampliado",monthly:550}};
 const CONTENT_PAGE = 150, CONTENT_PACK = 650; // contenido profesional: S/150 por página o S/650 cada 5
@@ -134,6 +136,7 @@ function implementationCost(){
   let sum = tierCfg().price + pagesExtraCost() + productsCost() + contentCost();
   state.features.forEach(k => sum += featureInfo(k).price || 0);
   sum += designs[state.design].price || 0;
+  if (state.motion) sum += motionOption.price;
   return Math.round(sum);
 }
 function rushAmount(){ return Math.round(implementationCost()*RUSH_RATE); }
@@ -206,7 +209,7 @@ const clampBlocks = n => Math.max(0, Math.min(10, Math.round(Number(n)) || 0));
 function save(){
   try { localStorage.setItem("tuplusQuote", JSON.stringify({
     project:state.project,tier:state.tier,pages:state.pages,blocks20:state.blocks20,blocks50:state.blocks50,contentPro:state.contentPro,features:[...state.features],
-    design:state.design,support:state.support,rush:state.rush,hosting:state.hosting,tax:state.tax,currency:state.currency,country:state.country,currencyManual:state.currencyManual,version:3
+    design:state.design,motion:state.motion,support:state.support,rush:state.rush,hosting:state.hosting,tax:state.tax,currency:state.currency,country:state.country,currencyManual:state.currencyManual,version:3
   })); } catch { /* El cálculo funciona aunque el navegador bloquee el guardado. */ }
 }
 function load(){
@@ -220,7 +223,8 @@ function load(){
     state.blocks50 = clampBlocks(q.blocks50);
     state.contentPro = !!q.contentPro;
     state.features = new Set(Array.isArray(q.features) ? q.features.filter(k=>Object.hasOwn(features,k)) : []);
-    state.design = Object.hasOwn(designs,q.design) ? q.design : state.design;
+    state.design = q.design === "premium" ? "clean" : (Object.hasOwn(designs,q.design) ? q.design : state.design);
+    state.motion = !!q.motion || q.design === "premium";
     state.support = Object.hasOwn(supports,q.support) ? q.support : "30";
     state.rush = !!q.rush;
     state.hosting = !!q.hosting;
@@ -253,7 +257,10 @@ function updateCurrencyUI(){
   }
   $('#countryCurrencyHint').textContent=t(state.currencyManual?'Moneda elegida manualmente. Cambiar de país vuelve a ajustar la moneda.':'La moneda se ajusta al país que elijas.');
   $("#currencyHeadline").textContent=fx.name(code);
-  $("#currencyRate").textContent=code==='USD'?t('Precios base en USD'):`1 USD = ${new Intl.NumberFormat(document.documentElement.lang,{maximumFractionDigits:4}).format(row.rate)} ${code} · ${row.date}`;
+  const dateLocale=document.documentElement.lang || "es-PE";
+  const today=new Intl.DateTimeFormat(dateLocale,{timeZone:"America/Lima",day:"2-digit",month:"short",year:"numeric"}).format(new Date());
+  const exchangeDate = new Intl.DateTimeFormat(dateLocale, {timeZone:"UTC", day:"2-digit", month:"short", year:"numeric"}).format(new Date(`${row.date}T00:00:00Z`));
+  $("#currencyRate").textContent=code==='USD'?`${t('Precios base en USD')} · ${today}`:`1 USD = ${new Intl.NumberFormat(dateLocale,{maximumFractionDigits:4}).format(row.rate)} ${code} · ${exchangeDate}`;
   ["heroCurrencyCode","heroEyebrowCurrency","summaryCurrencyTag","perkCurrency"].forEach(id=>{const el=$("#"+id);if(el)el.textContent=code});
   $("#estimatePill").textContent=`${code} · ${t('estimado')} · ${t(state.tax?'CON IGV':'SIN IGV')}`;
 }
@@ -345,7 +352,9 @@ function sync(){
     el.querySelector(".feature-select")?.setAttribute("aria-pressed",String(selected));
   });
   renderFeaturePane();
-  $$(".radio-card[data-design]").forEach(el => el.classList.toggle("selected", el.dataset.design===state.design));
+  $$(".radio-card[data-design]").forEach(el => { const selected = el.dataset.design===state.design; el.classList.toggle("selected", selected); el.setAttribute("aria-pressed", String(selected)); });
+    const motionAddon = $("#motionAddon");
+    if (motionAddon) { motionAddon.classList.toggle("selected", state.motion); motionAddon.setAttribute("aria-pressed", String(state.motion)); }
   $$(".radio-card[data-support]").forEach(el => el.classList.toggle("selected", el.dataset.support===state.support));
   $("#rushToggle").classList.toggle("active", state.rush); $("#rushToggle").setAttribute("aria-pressed", state.rush);
   // Mostrar el importe exacto del recargo, incluso antes de activar la entrega prioritaria.
@@ -413,7 +422,8 @@ function summaryRows(){
   rows.push(["Garantía de 30 días", "Incluida · corrección de defectos del alcance aprobado"]);
   rows.push(["Plan de soporte", supports[state.support].monthly ? `${t(supports[state.support].label)} ? primer mes ${money(supports[state.support].monthly)}` : t(supports[state.support].label)]);
   state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
-  rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price?`${money(designs[state.design].price)}${state.design === "premium" ? ` (${t("desde")})` : ""}`:inc]);
+  rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price ? money(designs[state.design].price) : inc]);
+    if (state.motion) rows.push([t(motionOption.label), `${money(motionOption.range[0])} — ${money(motionOption.range[1])}`]);
   if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
   const disc = discountInfo();
   if(disc.amount) rows.push([`Descuento · ${disc.label}`, `−${money(disc.amount)}`]);
@@ -443,9 +453,9 @@ function renderSummary(){
     ? `${t("Por confirmar, no incluido")}: ${rangeText(pend.min,pend.max,pend.open)}`
     : t("Precio según el alcance elegido");
   $("#summaryPriceLabel").textContent=`${t("INVERSIÓN ESTIMADA")} · ${moneyCode()} · ${t(state.tax ? "CON IGV" : "SIN IGV")}`;
-  const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${esc(t(a))}</span><strong>${esc(t(b))}</strong></div>`;
-  let html=quote.rows.map(r=>line(r)).join("");
-  if(state.design === "premium"){
+const line=([a,b],cls="")=>`<div class="summary-line${cls}"><span>${esc(t(a))}</span><strong>${esc(t(b))}</strong></div>`;
+let html=quote.rows.map(r=>line(r)).join("");
+if(state.motion){
     html+=`<div class="summary-sub">${t("Premium Motion: el estimado incluye S/1,200. El precio final puede llegar a S/2,000 según las interacciones y el alcance aprobado.")}</div>`;
   }
   if(pend.items.length){
@@ -491,7 +501,7 @@ function quoteText(forWhatsapp=false){
     line(project().unit==='section'?'Secciones':'Páginas',`${state.pages} (${tierCfg().included} ${t('incluidas')})`),
     ...(project().products?[line('Productos',`${productCount()} (${tierCfg().products} ${t('incluidos')})`)]:[]),
     line('Contenido profesional',t(state.contentPro?'Sí':'No')),line('Funciones',selected),
-    line('Diseño',state.design === "premium" ? `${t(designs[state.design].label)} — ${money(1200)} incluidos; hasta ${money(2000)} según alcance` : t(designs[state.design].label)),line('Soporte',t(supports[state.support].label)),
+    line('Diseño',t(designs[state.design].label)),...(state.motion?[['Premium motion',`${money(1200)} — ${money(2000)} según alcance`]]:[]),line('Soporte',t(supports[state.support].label)),
     line('Entrega prioritaria',state.rush?`+${money(rushCost())}`:t('No')),
     line('Garantía', '30 días incluida · defectos del alcance aprobado'),
     line('Hosting y dominio básico', state.hosting ? 'Seleccionado; registro del dominio al costo del proveedor' : 'No seleccionado'),
@@ -541,7 +551,7 @@ function sendToBackend(){
       // total y total_usd siguen en USD por compatibilidad con el panel; total_pen es el importe de referencia.
       proyecto:projectLabel(),nivel:project().custom?'':state.tier,paginas:state.pages,productos:productCount(),contenido_pro:state.contentPro,moneda:state.currency,
       total_usd:Math.round(toUsd(grandTotal())*100)/100,total_pen:grandTotal(),total_mostrado:money(grandTotal()),
-      pais:state.country,consentimiento:$("#consentimiento").checked,cambio:`${fx.rates[state.currency].rate} (${fx.rates[state.currency].date})`,funciones:[...state.features],diseno:designs[state.design].label,soporte:supports[state.support].label,
+      pais:state.country,consentimiento:$("#consentimiento").checked,cambio:`${fx.rates[state.currency].rate} (${fx.rates[state.currency].date})`,funciones:[...state.features],diseno:designs[state.design].label,premium_motion:state.motion,soporte:supports[state.support].label,
       prioritaria:state.rush,cloud:state.hosting,igv:state.tax,total:Math.round(toUsd(grandTotal())*100)/100,notas:`Empresa: ${$("#empresa").value.trim()} | País: ${countries.name(state.country)} (${state.country}) | ${$("#mensajeCliente").value.trim()}`,
       // Claves para que el servidor recalcule el precio con su propio tarifario (no confía en los totales).
       proyecto_clave:state.project,diseno_clave:state.design,soporte_clave:state.support,blocks20:state.blocks20,blocks50:state.blocks50,
@@ -591,6 +601,17 @@ $("#refreshRates").addEventListener('click',async e=>{
   toast(updated?'Tipos de cambio actualizados.':'Sin conexión. Conservamos la referencia fechada que ves en pantalla.');
   button.disabled=false;button.removeAttribute('aria-busy');
 });
+// Actualiza al abrir el cotizador y de nuevo si la persona vuelve al sitio en otro día.
+const limaDateKey=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+let automaticRateDate='';
+async function refreshRatesByDay(){
+  const today=limaDateKey();
+  if(automaticRateDate===today)return;
+  automaticRateDate=today;
+  if(await fx.refresh()){sync();renderProgress();}
+}
+refreshRatesByDay();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshRatesByDay();});
 document.addEventListener('tuplus:language-change',()=>{sync();renderProgress()});
 window.addEventListener('beforeprint',renderSummary);
 const projectCards=$$("#projectOptions .choice-card");
@@ -687,6 +708,7 @@ featureDetails.forEach(detail=>detail.addEventListener("toggle",()=>{
 }));
 window.addEventListener("resize",()=>featureDetails.forEach(d=>{if(d.open)placeFeatureMore(d);}));
 $$(".radio-card[data-design]").forEach(el=>el.addEventListener("click",()=>{state.design=el.dataset.design;save();sync();}));
+$("#motionAddon")?.addEventListener("click",()=>{state.motion=!state.motion;save();sync();});
 $$(".radio-card[data-support]").forEach(el=>el.addEventListener("click",()=>{state.support=el.dataset.support;save();sync();}));
 $("#rushToggle").addEventListener("click",()=>{state.rush=!state.rush;save();sync();});
 $("#hostingToggle").addEventListener("click",()=>{state.hosting=!state.hosting;save();sync();});

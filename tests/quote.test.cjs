@@ -11,7 +11,7 @@ const run=s=>vm.runInContext(s,context);
 let checks=0;
 function eq(actual,expected){assert.equal(actual,expected);checks++}
 // Tarifario por niveles del PDF (soles, sin IGV): con lo incluido, el total es el precio del nivel.
-const reset=()=>run(`Object.assign(state,{tier:'pro',blocks20:0,blocks50:0,contentPro:false,design:'clean',support:'30',rush:false,hosting:false,tax:false});state.features=new Set();`);
+const reset=()=>run(`Object.assign(state,{tier:'pro',blocks20:0,blocks50:0,contentPro:false,design:'clean',motion:false,support:'30',rush:false,hosting:false,tax:false});state.features=new Set();`);
 const tariff={landing:[1090,1490,1990],website:[1690,2790,3990],catalog:[2290,2990,3990],ecommerce:[3490,5490,7490]};
 const included={landing:[6,9,12],website:[5,8,12],catalog:[5,8,12],ecommerce:[5,8,12]};
 for(const [key,prices]of Object.entries(tariff)){
@@ -36,18 +36,18 @@ run('state.tax=false;state.blocks20=0;state.blocks50=2');eq(run('productCount()'
 run(`setProject('website');state.blocks50=2`);eq(run('productCount()'),0);eq(run('grandTotal()'),1690);
 // Adicionales: blog incluido en Empresarial/Corporativo; la tienda incluye una pasarela y cobra la segunda.
 reset();run(`setProject('website');setTier('biz');state.features=new Set(['blog','seo'])`);eq(run('grandTotal()'),2790+650);
-run(`setTier('pro')`);eq(run('grandTotal()'),1690+450+650);
+run(`setTier('pro')`);eq(run('grandTotal()'),1690+650);
 reset();run(`setProject('ecommerce');state.features=new Set(['payments'])`);eq(run('grandTotal()'),3490+450);
-run(`setProject('landing');state.features=new Set(['payments','email'])`);eq(run('grandTotal()'),1090+180+120);
+run(`setProject('landing');state.features=new Set(['payments','email'])`);eq(run('grandTotal()'),1090+180);
 // Los adicionales con rango siguen por confirmar, pero Premium Motion suma su mínimo al estimado.
-reset();run(`setProject('website');state.features=new Set(['security','maps']);state.design='premium'`);
+reset();run(`setProject('website');state.features=new Set(['security','maps']);state.design='clean';state.motion=true`);
 eq(run('grandTotal()'),1690+1200);eq(run('pending().min'),600+600);eq(run('pending().max'),1200+600);eq(run('pending().open'),true);
 run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('Por confirmar tras diagnóstico'));assert.ok(elements.get('#summaryLines').innerHTML.includes('S/1,200'));assert.ok(elements.get('#summaryLines').innerHTML.includes('puede llegar a S/2,000'));checks++;
 // Contenido profesional: S/150 por página, pack de 5 a S/650.
 reset();run(`setProject('website');state.contentPro=true`);eq(run('grandTotal()'),1690+650);run('state.pages=7');eq(run('grandTotal()'),1690+360+650+300);
 run(`setProject('landing');state.contentPro=true`);eq(run('grandTotal()'),1090+150);
 // Entrega prioritaria: +20 % del valor real de la implementación, sin mínimo.
-reset();run(`setProject('website');state.design='premium'`);eq(run('implementationCost()'),1690+1200);eq(run('grandTotal()'),2890);eq(run('pending().min'),0);
+reset();run(`setProject('website');state.design='clean';state.motion=true`);eq(run('implementationCost()'),1690+1200);eq(run('grandTotal()'),2890);eq(run('pending().min'),0);
 reset();run(`setProject('website');state.rush=false`);eq(run('rushAmount()'),338);eq(run('rushCost()'),0);
 run('state.rush=true');eq(run('rushCost()'),338);eq(run('grandTotal()'),1690+338);
 run(`setProject('landing')`);eq(run('grandTotal()'),1090+Math.round(1090*.20));
@@ -60,18 +60,18 @@ for(const [key,text,rush] of [['landing','14–16 días hábiles','11–12 días
 }
 // El plazo es fijo: páginas, productos, funciones, diseño y contenido extra no lo alargan.
 for(const [key,text] of [['landing','14–16 días hábiles'],['website','20–30 días hábiles'],['catalog','30–45 días hábiles'],['ecommerce','30–45 días hábiles'],['webapp','15 días hábiles']]){
- reset();run(`setProject('${key}');state.pages=18;state.blocks20=3;state.blocks50=2;state.contentPro=true;state.design='premium';state.features=new Set(['seo','forms','booking','multilingual','blog','automation','geo'])`);
+ reset();run(`setProject('${key}');state.pages=18;state.blocks20=3;state.blocks50=2;state.contentPro=true;state.design='clean';state.motion=true;state.features=new Set(['seo','forms','booking','multilingual','blog','automation','geo'])`);
  eq(run('deliveryDays()'),text);
 }
-// Soporte mensual y alojamiento anual van aparte del total.
+// El primer mes de soporte suma al total; el alojamiento anual va aparte.
 reset();run(`setProject('ecommerce');state.support='store';state.hosting=true`);eq(run('grandTotal()'),3790);eq(run('recurring().length'),2);
 run(`Object.assign(state,{design:'custom',tax:true});state.features=new Set(['booking'])`);
-eq(run('subtotal()'),3490+850+450);eq(run('grandTotal()'),Math.round((3490+850+450)*1.18));
+eq(run('subtotal()'),3490+850+450+300);eq(run('grandTotal()'),Math.round((3490+850+450+300)*1.18));
 run('renderSummary()');assert.ok(elements.get('#summaryLines').innerHTML.includes('IGV 18%'));checks++;
 assert.ok(elements.get('#summaryLines').innerHTML.includes('Pagos recurrentes'));checks++;
 // Una cotización guardada con el esquema anterior se migra sin errores.
 store.set('tuplusQuote',JSON.stringify({project:'website',pages:6,features:['whatsapp','seo'],support:'90',design:'custom',currency:'USD',version:2}));
-run('load()');eq(run('state.tier'),'pro');eq(run('state.support'),'30');eq(run('[...state.features].join()'),'seo');eq(run('state.blocks20'),0);
+run('load()');eq(run('state.tier'),'pro');eq(run('state.support'),'30');eq(run('[...state.features].join()'),'whatsapp,seo');eq(run('state.blocks20'),0);
 reset();run(`setProject('landing')`);
 for(const code of run('Object.keys(currencyMeta)')){
  run(`state.currency='${code}';`);const text=run('money(1090)');assert.ok(text.includes(code==='PEN'?'S/':code)&&!text.includes('NaN'));checks++;
@@ -84,9 +84,8 @@ store.set('tuplusQuote',JSON.stringify({project:'<invalid>',features:['<script>'
 run('load()');eq(run('state.pages'),20);eq(run('state.currency'),'PEN');eq(run('state.features.size'),1);assert.ok(Number.isFinite(run('grandTotal()')));checks++;
 for(const [id,value]of Object.entries({nombre:'Prueba',empresa:'Negocio',pais:'PE',email:'prueba@example.com',telefono:'+51 900000000',mensajeCliente:'Texto con & y ñ'}))document.querySelector('#'+id).value=value;
 run('state.currency="EUR"');const quote=run('quoteText()');assert.ok(quote.includes('EUR')&&quote.includes('Perú')&&quote.includes('IGV'));checks++;
-eq(new URL(run('whatsappUrl()')).searchParams.get('text'),run('whatsappMessage()'));
+eq(new URL(run('whatsappUrl()')).searchParams.get('text'),run('quoteText(true)'));
 for(const locale of ['en','pt','fr','de','ru','zh','ja']){
  run(`window.TUPLUS_I18N.t=x=>window.TUPLUS_TRANSLATIONS['${locale}'][x]||x;`);
  run('renderSummary()');assert.ok(!elements.get('#summaryPriceLabel').textContent.includes('INVERSIÓN ESTIMADA'));checks++;
 }
-

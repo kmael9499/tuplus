@@ -23,7 +23,8 @@ const funciones = {
   blog: null, maps: null, speed: null, security: null, email: null, migration: null, analytics: null
 };
 
-const disenos = { clean: 0, custom: 850, premium: 1200 };
+const disenos = { clean: 0, custom: 850 };
+const PRECIO_PREMIUM_MOTION = 1200;
 const soportes = { '30': 0, web: 150, store: 300, plus: 550 };
 
 const PAGINA_CONTENIDO = 150;
@@ -77,7 +78,17 @@ function calcularCotizacion(datos) {
     }
     suma += funciones[clave] || 0;
   }
-  suma += disenos[datos.diseno_clave];
+ suma += disenos[datos.diseno_clave];
+
+const motion = datos.premium_motion ?? false;
+
+if (typeof motion !== 'boolean') {
+  throw new Error('Premium Motion no válido');
+}
+
+if (motion) {
+  suma += PRECIO_PREMIUM_MOTION;
+}
 
   const implementacion = Math.round(suma);
   const prioritaria = datos.prioritaria ? Math.round(implementacion * RECARGO_PRIORITARIA) : 0;
