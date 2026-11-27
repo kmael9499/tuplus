@@ -184,6 +184,10 @@ html:not([data-theme="dark"]) body .pr2-window{box-shadow:0 40px 90px rgba(18,44
  background:radial-gradient(55% 45% at 50% 45%,rgba(220,188,125,.24),transparent 70%),linear-gradient(165deg,#12304a,#07121b)}
 .ab2-bird::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(220,188,125,.22) 80%,transparent 90%);animation:ab2-spin 9s linear infinite}
 @keyframes ab2-spin{to{transform:rotate(360deg)}}
+.about-scene .ab2-radar-logo{position:absolute;width:42px;height:42px;object-fit:contain;transform:translate(-50%,-50%);opacity:0;z-index:2;filter:drop-shadow(0 0 calc(var(--radar-glow, 0) * 12px) rgba(255,200,61,.95));pointer-events:none}
+.about-scene .ab2-radar-logo--adisgea{left:29%;top:29%}
+.about-scene .ab2-radar-logo--zenplus{left:71%;top:71%}
+@media(prefers-reduced-motion:reduce){.about-scene .ab2-radar-logo{opacity:1;filter:none}}
 html:not([data-theme="dark"]) body .ab2 .ab2-bird{background:radial-gradient(55% 45% at 50% 45%,rgba(220,188,125,.35),transparent 70%),linear-gradient(165deg,#fffaf0,#efe2c6)}
 html:not([data-theme="dark"]) body .ab2 .ab2-bird::before{background:conic-gradient(from 0deg,transparent 0 70%,rgba(184,138,69,.2) 80%,transparent 90%)}
 html:not([data-theme="dark"]) body .ab2 .ab2-bird .about-mark>span{color:var(--gold-ink)}

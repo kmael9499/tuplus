@@ -59,6 +59,40 @@
     tile.style.setProperty('--my', `${event.clientY - rect.top}px`);
   }));
 
+  // El máximo del degradado está a 288° desde arriba; la rotación procede del
+  // mismo pseudo-elemento que dibuja el barrido, no de un reloj paralelo.
+  const radar = document.querySelector('.ab2-bird');
+  const radarLogos = radar ? [...radar.querySelectorAll('.ab2-radar-logo')] : [];
+  if (radar && radarLogos.length) {
+    const detected = new WeakSet();
+    const previous = new WeakMap();
+    function paintRadar() {
+      if (reduce.matches) {
+        radarLogos.forEach(logo => { logo.style.removeProperty('opacity'); logo.style.removeProperty('--radar-glow'); });
+      } else {
+        const transform = getComputedStyle(radar, '::before').transform;
+        const matrix = transform === 'none' ? null : new DOMMatrixReadOnly(transform);
+        const sweep = ((matrix ? Math.atan2(matrix.b, matrix.a) * 180 / Math.PI : 0) + 288 + 360) % 360;
+        const bounds = radar.getBoundingClientRect();
+        radarLogos.forEach(logo => {
+          const rect = logo.getBoundingClientRect();
+          const dx = rect.left + rect.width / 2 - (bounds.left + bounds.width / 2);
+          const dy = rect.top + rect.height / 2 - (bounds.top + bounds.height / 2);
+          const bearing = (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360;
+          const phase = (sweep - bearing + 360) % 360;
+          const last = previous.get(logo);
+          if (last !== undefined && last > 180 && phase < 180) detected.add(logo);
+          previous.set(logo, phase);
+          const opacity = detected.has(logo) ? Math.max(0, Math.min(1, phase / 12, (150 - phase) / 60)) : 0;
+          logo.style.opacity = opacity.toFixed(3);
+          logo.style.setProperty('--radar-glow', Math.max(0, 1 - phase / 35).toFixed(3));
+        });
+      }
+      requestAnimationFrame(paintRadar);
+    }
+    requestAnimationFrame(paintRadar);
+  }
+
   // -- Contacto: vista previa del mensaje --
   const form = document.getElementById('contact-form');
   const preview = document.querySelector('.ct2-preview');
