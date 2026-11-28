@@ -3,3 +3,14 @@ import navigationCss from '../styles/navigation.css?raw';
 ---
 <!-- Embed navigation styles so subdirectory hosting cannot lose this stylesheet. -->
 <style is:inline set:html={navigationCss}></style>
+<!-- Las animaciones CSS de una sección se pausan mientras está fuera de la pantalla y siguen al volver.
+     Ahorra procesador y memoria gráfica sin cambiar lo que se ve. -->
+<style is:inline>.tp-offscreen,.tp-offscreen *{animation-play-state:paused!important}</style>
+<script is:inline>
+(()=>{
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(entries=>{for(const e of entries)e.target.classList.toggle('tp-offscreen',!e.isIntersecting)},{rootMargin:'300px 0px'});
+  const watch=()=>document.querySelectorAll('main > section, main > div, body > section, body > footer, .site-footer').forEach(el=>{if(!el.closest('.tp-offscreen-skip'))io.observe(el)});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch,{once:true});else watch();
+})();
+</script>

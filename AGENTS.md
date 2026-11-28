@@ -11,11 +11,11 @@ This is an Astro static site deployed under `/tuplus/`. Pages live in `src/pages
 - `npm run build` generates the static site in `dist/`.
 - `npm run preview` serves the built site locally.
 - `npm test` builds the site and runs the configured Node checks.
-- `node scripts/build-i18n-data.js` regenerates translation data after editing `public/js/i18n-translations.json`.
+- `node scripts/build-i18n-data.js` regenerates translation data after editing `src/i18n/i18n-translations.json`.
 
 ## Coding Style and Naming
 
-Follow the surrounding file's formatting; existing JavaScript commonly uses two-space indentation, semicolons, and single quotes. Use descriptive names and keep page-specific code near its page or in the corresponding `public/js/` or `public/css/` module. Astro routes use lowercase, hyphenated filenames. No formatter or linter is configured in the root package scripts. When changing a linked static CSS or JavaScript file, update its `?v=` cache version in the referencing page where applicable.
+Follow the surrounding file's formatting; existing JavaScript commonly uses two-space indentation, semicolons, and single quotes. Use descriptive names and keep page-specific code near its page or in the corresponding `public/js/` or `public/css/` module. Astro routes use lowercase, hyphenated filenames. No formatter or linter is configured in the root package scripts. Linked CSS and JS get a content hash in `?v=` at build time (`scripts/optimizar-dist.mjs`); no manual cache bump is needed.
 
 ## Testing
 
@@ -23,7 +23,7 @@ Tests use Node's built-in assertions and, where needed, `linkedom`. Name new che
 
 ## Commits and Pull Requests
 
-Recent commits use short, informal English or Spanish subjects, with no consistent prefix. Prefer a concise, descriptive imperative subject. Pull requests should explain the change and its verification, link the relevant issue when available, and include screenshots for visible UI changes. Deployment to GitHub Pages runs on pushes to `main`.
+Recent commits use short, informal English or Spanish subjects, with no consistent prefix. Prefer a concise, descriptive imperative subject. Pull requests should explain the change and its verification, link the relevant issue when available, and include screenshots for visible UI changes. Deployment to GitHub Pages runs on pushes to `main`. For Hostinger, run `npm run build:hostinger` and upload the contents of `dist/` (including `.htaccess`) to `public_html`.
 
 ## Configuration
 

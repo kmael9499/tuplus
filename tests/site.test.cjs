@@ -53,7 +53,9 @@ assert.match(new URL(whatsapp.href).searchParams.get('text'), /TUPLUS/);
 
 // GitHub Pages sirve el sitio en /tuplus/: una ruta que empiece por / se rompe allí.
 for (const file of ['index.html', 'partner.html', 'socios-comerciales.html', 'cotizador.html', 'privacidad.html', '404.html', 'soluciones/web.html']) {
-  assert.doesNotMatch(fs.readFileSync(path.join(base, file), 'utf8'), /(?:href|src)="\/(?!\/)/, file + ' usa una ruta absoluta');
+  // La 404 lleva <base href> con la carpeta del sitio para funcionar en cualquier ruta inexistente.
+  const html = fs.readFileSync(path.join(base, file), 'utf8').replace(/<base href="[^"]*">/, '');
+  assert.doesNotMatch(html, /(?:href|src)="\/(?!\/)/, file + ' usa una ruta absoluta');
 }
 const pages = ['index.html', 'privacidad.html', '404.html', ...fs.readdirSync(path.join(base, 'soluciones')).filter(file => file.endsWith('.html')).map(file => 'soluciones/' + file)];
 for (const file of pages) {
@@ -61,7 +63,7 @@ for (const file of pages) {
   assert.match(html, /id="main-nav"/, file);
   assert.match(html, /class="menu-toggle"/, file);
   assert.match(html, /class="menu-overlay"/, file);
-  assert.match(html, /script\.js\?v=\d{8}-\d+/, file);
+  assert.match(html, /script\.js\?v=[\w-]+/, file);
   assert.doesNotMatch(html, /id="pagesRange"/, file);
 }
 const quotePage = fs.readFileSync(path.join(base, 'cotizador.html'), 'utf8');

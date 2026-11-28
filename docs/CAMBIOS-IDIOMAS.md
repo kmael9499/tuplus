@@ -17,7 +17,7 @@ Los nombres TuPlus, WhatsApp y otros identificadores de marca se conservan. No s
 
 ## Archivos para integrar
 
-Revisar los cambios en `i18n.js`, `js/i18n-data.js`, `js/i18n-translations.json`, `carrusel.js`, `redesign.js`, `cotizador.js` y los nueve HTML (incluidos los de `soluciones`). Conservar también `js/quote-translations.js`: sigue siendo necesario.
+Revisar los cambios en `i18n.js`, `js/i18n-data.js`, `src/i18n/i18n-translations.json`, `carrusel.js`, `redesign.js`, `cotizador.js` y los nueve HTML (incluidos los de `soluciones`). Conservar también `js/quote-translations.js`: sigue siendo necesario.
 
 Este paquete parte del ZIP recibido. Integrarlo en la rama de trabajo del repositorio compartido y revisar el diff antes del commit. Si el equipo ha realizado cambios posteriores, combinarlos; no sustituirlos sin revisión. No subir el ZIP como archivo de la página.
 

@@ -28,3 +28,7 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Capturas y cachés de herramientas
+.playwright-mcp/
+.impeccable/

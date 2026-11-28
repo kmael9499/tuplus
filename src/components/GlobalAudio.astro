@@ -3,9 +3,9 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const rel = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) : Astro.url.pathname;
 const depth = Math.max(0, rel.split('/').filter(Boolean).length - 1);
-const audioSrc = '../'.repeat(depth) + 'audio/tuplus-fondo.mp3';
+const audioSrc = '../'.repeat(depth) + 'audio/tuplus-fondo.mp3?v=2';
 ---
-<audio id="tuplus-global-audio" src={audioSrc} loop preload="auto" playsinline aria-hidden="true" style="display:none"></audio>
+<audio id="tuplus-global-audio" src={audioSrc} loop preload="metadata" playsinline aria-hidden="true" style="display:none"></audio>
 <div class="tp-audio" id="tuplus-audio-control">
   <button type="button" class="tp-audio-trigger" id="tuplus-audio-trigger" aria-label="Abrir controles de música" aria-expanded="false" aria-controls="tuplus-audio-panel">🔊</button>
   <div class="tp-audio-panel" id="tuplus-audio-panel" role="group" aria-label="Volumen de la música" hidden>

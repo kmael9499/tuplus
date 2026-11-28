@@ -489,7 +489,7 @@ html:not([data-theme="dark"]) body.partner-public .territory-card { background: 
   height: 34px;
   border: 1px solid var(--pm-line-hi);
   border-radius: 50%;
-  background: url("../colibri.png") center / 66% no-repeat, radial-gradient(circle, #173a52, #0a1a26);
+  background: url("../colibri.svg") center / 66% no-repeat, radial-gradient(circle, #173a52, #0a1a26);
 }
 :root body.partner-public .pp-territory-form .territory-availability { gap: 10px; padding-top: 14px; border-top-color: var(--pm-line); }
 :root body.partner-public .pp-territory-form .territory-availability [role="status"] {

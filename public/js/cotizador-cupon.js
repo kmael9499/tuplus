@@ -18,6 +18,8 @@
   if (!fields.length) return;
 
   var applied = false;
+  // Traduce los mensajes propios al idioma elegido (los del servidor llegan ya redactados).
+  function tr(text) { return (window.TUPLUS_I18N && window.TUPLUS_I18N.t(text)) || text; }
 
   function each(fn) { fields.forEach(fn); }
 
@@ -25,7 +27,7 @@
     each(function (f) {
       f.box.classList.remove('is-ok', 'is-error');
       if (state) f.box.classList.add(state);
-      f.msg.textContent = text || '';
+      f.msg.textContent = text ? tr(text) : '';
     });
   }
 
@@ -73,8 +75,8 @@
           x.input.value = code;
           x.input.readOnly = true;
           x.box.classList.add('is-applied');
-          x.btn.textContent = 'Quitar';
-          x.btn.setAttribute('aria-label', 'Quitar el cupón ' + code);
+          x.btn.textContent = tr('Quitar');
+          x.btn.setAttribute('aria-label', tr('Quitar el cupón') + ' ' + code);
         });
         setState('is-ok', res.d.mensaje || 'Cupón aplicado.');
         document.dispatchEvent(new CustomEvent('tuplus:coupon', {
@@ -93,7 +95,7 @@
       x.input.readOnly = false;
       x.input.value = '';
       x.box.classList.remove('is-applied');
-      x.btn.textContent = 'Aplicar';
+      x.btn.textContent = tr('Aplicar');
       x.btn.removeAttribute('aria-label');
     });
     setState('', '');

@@ -7,12 +7,15 @@
     "dev": "astro dev --force",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "astro build && node tests/site.test.cjs && node tests/translation-coverage.test.cjs && node tests/quote.test.cjs && node tests/i18n.test.cjs && node tests/partner.test.cjs && node tests/partner-footer.test.cjs && node tests/partner-application.test.cjs && node tests/socios.test.cjs && node tests/socios-application.test.cjs && node tests/navigation.test.cjs"
+    "test": "astro build && node tests/site.test.cjs && node tests/translation-coverage.test.cjs && node tests/quote.test.cjs && node tests/i18n.test.cjs && node tests/partner.test.cjs && node tests/partner-application.test.cjs && node tests/socios.test.cjs && node tests/socios-application.test.cjs && node tests/navigation.test.cjs && node tests/i18n-js-keys.test.cjs",
+    "build:hostinger": "node scripts/build-hostinger.mjs",
+    "i18n": "node scripts/build-i18n-data.js"
   },
   "dependencies": {
     "astro": "^7.4.0"
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
     "linkedom": "^0.18.14"
   }
 }

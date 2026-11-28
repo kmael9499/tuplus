@@ -1,6 +1,6 @@
 # TUPLUS — Sitio web y cotizador
 
-Sitio de TUPLUS hecho con **Astro** (salida estática) y publicado en **GitHub Pages**. Incluye la portada, cinco páginas de soluciones, privacidad, 404 y un cotizador web de 5 pasos con varias monedas, cupón, resumen descargable y envío por WhatsApp. Está traducido a 8 idiomas.
+Sitio de TUPLUS hecho con **Astro** (salida estática). Se publica en **GitHub Pages** (`/tuplus`) y en **Hostinger** (raíz del dominio). Incluye la portada, cinco páginas de soluciones, privacidad, 404 y un cotizador web de 5 pasos con varias monedas, cupón, resumen descargable y envío por WhatsApp. Está traducido a 8 idiomas.
 
 ## Comandos
 
@@ -10,6 +10,8 @@ npm run dev       # servidor local con recarga (http://localhost:4321)
 npm run build     # genera el sitio en dist/
 npm run preview   # sirve dist/ para revisarlo
 npm test          # compila y ejecuta los tests de tests/
+npm run build:hostinger   # compila para Hostinger (raíz del dominio) en dist/
+npm run i18n      # regenera js/i18n-data.js desde src/i18n/i18n-translations.json
 ```
 
 Al hacer push a `main`, el sitio se publica solo (`.github/workflows/deploy.yml`).
@@ -38,8 +40,9 @@ src/pages/              Páginas (.astro). Las URLs finales son .html (build.for
 public/                 Se copia tal cual a dist/
   css/                  Hojas de estilo (css/soluciones/ = páginas de soluciones)
   js/                   Scripts (js/soluciones/ = páginas de soluciones)
-  imagenes/             Imágenes de soluciones y logotipos (marca/)
-  colibri.png           Colibrí de la marca (se usa en casi todas las páginas)
+  imagenes/             Imágenes de soluciones (WebP) y logotipos en SVG (marca/)
+  colibri.svg           Colibrí de la marca (se usa en casi todas las páginas)
+  fonts/                Fuentes Manrope y DM Mono (antes venían de Google Fonts)
 backend/                API (Node + Express y PHP) y base MySQL. Ver backend/README.md
   node/                 API en Node.js + Express
   php/                  Versión anterior en PHP
@@ -59,9 +62,21 @@ Las páginas cargan CSS y JS con rutas relativas y `?v=FECHA` para renovar la ca
 | Tarifas y lógica del cotizador | `public/js/cotizador.js`, `public/js/quote-core.js` |
 | Países y monedas | `public/js/countries.js`, `public/js/currencies.js` |
 | Cupón del cotizador | `public/js/cotizador-cupon.js` |
-| Traducciones | `public/js/i18n-translations.json` y luego `node scripts/build-i18n-data.js` (regenera `js/i18n-data.js`) |
+| Traducciones | `src/i18n/i18n-translations.json` y luego `node scripts/build-i18n-data.js` (regenera `js/i18n-data.js`) |
 | Textos propios del cotizador traducidos | `public/js/quote-translations.js` |
 | Tema claro/oscuro | `public/js/theme.js`, `public/css/theme.css` |
+
+## Publicar en Hostinger
+
+1. `npm install` y luego `npm run build:hostinger`.
+2. En el Administrador de archivos de Hostinger, abre `public_html` y sube **el contenido** de `dist/`, incluido el archivo oculto `.htaccess`.
+3. Activa el SSL del dominio en el panel. El `.htaccess` obliga a usar HTTPS.
+
+Si el sitio va en una subcarpeta (por ejemplo `public_html/tuplus`), compila con `node scripts/build-hostinger.mjs /tuplus`.
+
+El `.htaccess` se genera en cada build (`scripts/seguridad-navegador.mjs`): cabeceras de seguridad, HTTPS, compresión, caché, página 404 y bloqueo de archivos internos. Si agregas una API externa, súmala en `ORIGENES` de ese archivo o el navegador la bloqueará.
+
+Cada build también minifica CSS y JS y les pone una huella en `?v=` (`scripts/optimizar-dist.mjs`), así que ya no hace falta cambiar los `?v=` a mano.
 
 ## Backend (Node + Express / PHP + MySQL)
 

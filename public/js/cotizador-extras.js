@@ -730,7 +730,7 @@
     const bird = document.createElement("div");
     bird.className = "xt-bird";
     bird.setAttribute("aria-hidden", "true");
-    bird.innerHTML = '<img src="colibri.png" alt="">';
+    bird.innerHTML = '<img src="colibri.svg" alt="">';
     row.appendChild(bird);
 
     const place = () => {

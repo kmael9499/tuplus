@@ -11,7 +11,7 @@
  const screen=document.createElement('canvas');screen.width=2172;screen.height=724;
  screen.className='brand-flight';screen.setAttribute('aria-hidden','true');
  const ctx=screen.getContext('2d');if(!ctx||!original)return;
- const sourceUrl=original.src.replace(/logo-claro\.png.*$/,'logo-completo.webp'); // misma imagen, resolución completa
+ const sourceUrl=original.src; // el mismo SVG del logo, dibujado a 2172×724 para la animación
  root.appendChild(screen);
  // En la portada el colibrí del logo da un vuelo grande por toda la pantalla antes de posarse.
  const FULL=!!root.closest('.site-header')&&!!document.querySelector('.ux-hero');
@@ -20,6 +20,7 @@
  const dark=()=>document.documentElement.dataset.theme==='dark';
  const source=new Image(); let frame=0,started=0;
  source.onload=()=>{
+  screen.width=2172;screen.height=724; // tamaño de trabajo (release() lo reduce al terminar)
   const w=source.naturalWidth,h=source.naturalHeight;
   function layer(){const c=document.createElement('canvas');c.width=w;c.height=h;return c}
   const full=layer(),f=full.getContext('2d',{willReadFrequently:true});f.drawImage(source,0,0);
@@ -75,6 +76,15 @@
   const BIG_SWEEP=[.37,.58],BIG_SHINE=[.58,.67],TRAVEL=[.68,.97];
   let arrived=false;
   const lit=layer(),lc=lit.getContext('2d');
+  // Al terminar el vuelo solo queda el logo quieto: se reduce el lienzo al tamaño en pantalla y se liberan
+  // las capas de trabajo (cada una ocupa ~6 MB de memoria a 2172×724).
+  function release(){
+   const r=screen.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
+   const tw=Math.min(w,Math.max(240,Math.round(r.width*dpr*1.25))),th=Math.max(1,Math.round(tw*h/w));
+   if(tw<w){const tmp=document.createElement('canvas');tmp.width=tw;tmp.height=th;const tc=tmp.getContext('2d');tc.imageSmoothingQuality='high';tc.drawImage(screen,0,0,tw,th);
+    screen.width=tw;screen.height=th;ctx.drawImage(tmp,0,0);tmp.width=tmp.height=0}
+   for(const c of [full,letters,bird,warped,lit])c.width=c.height=0;
+  }
   function band(center,size,alpha,core){
    const g=lc.createLinearGradient(center-size,0,center+size,0),col=dark()?'255,200,90':'214,142,18';
    g.addColorStop(0,`rgba(${col},0)`);g.addColorStop(.5,`rgba(${core||col},${alpha})`);g.addColorStop(1,`rgba(${col},0)`);
@@ -233,9 +243,9 @@
    if(minFrameMs&&now-lastDrawAt<minFrameMs){frame=requestAnimationFrame(draw);return}
    lastDrawAt=now;
    const t=(now-started)/1000;ctx.clearRect(0,0,screen.width,screen.height);ctx.save();ctx.translate(ox,oy);ctx.scale(scale,scale);
-   if(FULL){const done=flyFull(t);ctx.restore();if(!done)frame=requestAnimationFrame(draw);return}
+   if(FULL){const done=flyFull(t);ctx.restore();if(!done)frame=requestAnimationFrame(draw);else release();return}
    const progress=Math.min(1,t/1.05);ctx.globalAlpha=progress;ctx.save();ctx.translate(0,18*(1-ease(progress)));cropDraw(ctx,letters,LB);ctx.restore();ctx.globalAlpha=1;
-   if(t>=3.5){cropDraw(ctx,bird,BB);ctx.restore();return}
+   if(t>=3.5){cropDraw(ctx,bird,BB);ctx.restore();release();return}
    const p=Math.max(0,Math.min(1,(t-.35)/3.15));
    const q=ease(p),dx=-1050*(1-q),dy=-150*Math.sin(p*Math.PI)+160*(1-q),angle=-.15*(1-q);
    ctx.save();ctx.globalAlpha=Math.min(1,p*9);ctx.translate(450+dx,330+dy);ctx.rotate(angle);ctx.translate(-450,-330);

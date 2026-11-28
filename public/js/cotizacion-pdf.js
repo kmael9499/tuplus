@@ -18,11 +18,30 @@
   function drawLogo(doc, logo) {
     doc.setFillColor(255,255,255).roundedRect(14,4,56,18,2.5,2.5,'F');
     if (logo && logo.naturalWidth) {
-      try { doc.addImage(logo,'PNG',16,5,52,17); return; } catch (_) {}
+      // El logo es SVG: se dibuja en un lienzo para pasarlo al PDF como PNG nítido.
+      try {
+        const canvas = document.createElement('canvas'); canvas.width = 1086; canvas.height = 362;
+        canvas.getContext('2d').drawImage(logo, 0, 0, canvas.width, canvas.height);
+        doc.addImage(canvas.toDataURL('image/png'),'PNG',16,5,52,17); canvas.width = canvas.height = 0; return;
+      } catch (_) {}
     }
     doc.setFont('helvetica','bold').setFontSize(15).setTextColor(12,34,49).text('TUPLUS',42,15,{align:'center'});
   }
+  // jsPDF pesa ~360 KB: se descarga solo cuando alguien pide un PDF, no al abrir el cotizador.
+  let pdfLibrary = null;
+  function loadPdfLibrary() {
+    if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve();
+    if (!pdfLibrary) pdfLibrary = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'js/vendor/jspdf.umd.min.js?v=2.5.1';
+      script.onload = resolve;
+      script.onerror = () => { pdfLibrary = null; reject(new Error('No está disponible la biblioteca PDF')); };
+      document.head.appendChild(script);
+    });
+    return pdfLibrary;
+  }
   async function download(q) {
+    await loadPdfLibrary();
     const PDF = window.jspdf && window.jspdf.jsPDF;
     if (!PDF) throw new Error('No está disponible la biblioteca PDF');
     const doc = new PDF({format:'a4', unit:'mm', compress:true});
@@ -95,5 +114,5 @@
     footer();
     doc.save('Cotizacion_TUPLUS_'+slug(q.service)+'_'+slug(q.client)+'_'+q.date.split('/').reverse().join('-')+'.pdf');
   }
-  window.TuplusQuotePdf={download, loadLogo, drawLogo};
+  window.TuplusQuotePdf={download, loadLogo, drawLogo, loadPdfLibrary};
 })();

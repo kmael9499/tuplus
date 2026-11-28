@@ -363,8 +363,8 @@ function sync(){
   const rushValue = money(rushAmount());
   if (rushPrice) rushPrice.textContent = `+${rushValue} · 20%`;
   if (rushDescription) rushDescription.textContent = state.rush
-    ? `Entrega acelerada activada. Se añadieron ${rushValue} (20 % del valor de implementación).`
-    : `¿La necesitas antes de los plazos indicados? Al activarla se añadirán ${rushValue} (20 % del valor de implementación).`;
+    ? t("Entrega acelerada activada. Se añadieron {amount} (20 % del valor de implementación).").replace("{amount}", rushValue)
+    : t("¿La necesitas antes de los plazos indicados? Al activarla se añadirán {amount} (20 % del valor de implementación).").replace("{amount}", rushValue);
   $("#hostingToggle").classList.toggle("active", state.hosting); $("#hostingToggle").setAttribute("aria-pressed", state.hosting);
   $("#taxToggle").classList.toggle("active", state.tax); $("#taxToggle").setAttribute("aria-pressed", state.tax);
   $("#taxToggle").querySelector("span").textContent = "";
@@ -418,19 +418,19 @@ function summaryRows(){
     [`${state.pages} ${unitName(state.pages)}`, extra?`+${money(pagesExtraCost())}`:inc],
   ];
   if(p.products) rows.push([`${productCount()} ${t("productos")}`, productsCost()?`+${money(productsCost())}`:inc]);
-  rows.push([state.contentPro?"Contenido profesional":"Contenido entregado por el cliente", state.contentPro?money(contentCost()):"Sin recargo"]);
-  rows.push(["Garantía de 30 días", "Incluida · corrección de defectos del alcance aprobado"]);
-  rows.push(["Plan de soporte", supports[state.support].monthly ? `${t(supports[state.support].label)} ? primer mes ${money(supports[state.support].monthly)}` : t(supports[state.support].label)]);
-  state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([f.label, f.included?inc:money(f.price)]); });
+  rows.push([t(state.contentPro?"Contenido profesional":"Contenido entregado por el cliente"), state.contentPro?money(contentCost()):t("Sin recargo")]);
+  rows.push([t("Garantía de 30 días"), t("Incluida · corrección de defectos del alcance aprobado")]);
+  rows.push([t("Plan de soporte"), supports[state.support].monthly ? `${t(supports[state.support].label)} · ${t("primer mes")} ${money(supports[state.support].monthly)}` : t(supports[state.support].label)]);
+  state.features.forEach(k=>{ const f=featureInfo(k); if(!f.range) rows.push([t(f.label), f.included?inc:money(f.price)]); });
   rows.push([`${t("Diseño")} · ${t(designs[state.design].label)}`, designs[state.design].price ? money(designs[state.design].price) : inc]);
     if (state.motion) rows.push([t(motionOption.label), `${money(motionOption.range[0])} — ${money(motionOption.range[1])}`]);
-  if(state.rush) rows.push(["Entrega prioritaria", `+${money(rushCost())}`]);
+  if(state.rush) rows.push([t("Entrega prioritaria"), `+${money(rushCost())}`]);
   const disc = discountInfo();
-  if(disc.amount) rows.push([`Descuento · ${disc.label}`, `−${money(disc.amount)}`]);
+  if(disc.amount) rows.push([`${t("Descuento")} · ${disc.label}`, `−${money(disc.amount)}`]);
   if(state.tax) rows.push(["IGV 18%", money(Math.round((subtotal()-disc.amount)*.18))]);
   return rows;
 }
-// Instant?nea compartida por el resumen y el PDF; utiliza los c?lculos existentes.
+// Instantánea compartida por el resumen y el PDF; utiliza los cálculos existentes.
 function normalizedQuote(){
   const disc=discountInfo(), base=Math.max(0, subtotal()-disc.amount);
   return {
@@ -463,7 +463,7 @@ if(state.motion){
     html+=pend.items.map(i=>line([i.label, rangeText(withTax(i.range[0]),withTax(i.range[1]??i.range[0]),i.range[1]==null)]," is-pending")).join("");
   }
   if(rec.length){
-    html+=`<div class="summary-sub">${t(state.support!=="30" ? "Pagos recurrentes (el primer mes de soporte est? incluido en el total)" : "Pagos recurrentes, aparte del total")}</div>`;
+    html+=`<div class="summary-sub">${t(state.support!=="30" ? "Pagos recurrentes (el primer mes de soporte está incluido en el total)" : "Pagos recurrentes, aparte del total")}</div>`;
     html+=rec.map(r=>line([r.label,r.text]," is-recurring")).join("");
   }
   $("#summaryLines").innerHTML=html;
@@ -676,7 +676,7 @@ function renderFeaturePicked(){
   const box=document.getElementById("featurePicked"); if(!box)return;
   const picked=$$(".feature-card.selected").filter(c=>!c.classList.contains("is-included"));
   const rows=picked.map(c=>{
-    const name=esc(c.querySelector(".feature-select b")?.textContent||""), price=esc(c.querySelector(".feature-select .option-price")?.textContent||"");
+    const name=esc(t(c.querySelector(".feature-select b")?.textContent||"")), price=esc(c.querySelector(".feature-select .option-price")?.textContent||"");
     return `<li data-feature="${esc(c.dataset.feature)}"><span class="fk-name">${name}</span><span class="fk-price" translate="no">${price}</span><button type="button" class="fk-x" aria-label="${t("Quitar de mi cotización")}: ${name}">×</button></li>`;
   }).join("");
   box.innerHTML=`<div class="fk-head"><span>${t("Tu selección")}</span><b>${picked.length}</b></div>`+
@@ -729,21 +729,22 @@ $("#whatsappBtn").addEventListener("click",async()=>{
 const downloadButton=document.getElementById("downloadBtn");
 downloadButton?.addEventListener("click", async () => {
   if(downloadButton.disabled) return;
-  if(!$("#nombre").value.trim()){toast("Escribe tu nombre antes de descargar la cotizaci?n."); $("#nombre").focus(); return;}
+  if(!$("#nombre").value.trim()){toast("Escribe tu nombre antes de descargar la cotización."); $("#nombre").focus(); return;}
   downloadButton.disabled=true;
   const original=downloadButton.textContent;
-  downloadButton.textContent="Generando cotizaci?n?";
+  downloadButton.textContent=t("Generando cotización…");
   try {
     await new Promise(resolve=>setTimeout(resolve,0));
     await window.TuplusQuotePdf.download(normalizedQuote());
-    toast("Cotizaci?n descargada.");
+    toast("Cotización descargada.");
   } catch(err) {
     console.error("Error al generar PDF:",err);
-    toast("No se pudo generar el PDF. Int?ntalo de nuevo.");
+    toast("No se pudo generar el PDF. Inténtalo de nuevo.");
   } finally { downloadButton.disabled=false; downloadButton.textContent=original; }
 });
 
 (document.getElementById("printBtn") || document.querySelector("#printBtn"))?.addEventListener("click", async () => {
+  try { await window.TuplusQuotePdf?.loadPdfLibrary(); } catch (_) {}
   const jsPDFClass = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
   if (!jsPDFClass) {
     alert("Error: jsPDF no está cargado.");

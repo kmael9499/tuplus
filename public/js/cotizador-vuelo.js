@@ -1,5 +1,5 @@
 /* TUPLUS cotizador: colibrí dorado que cruza la pantalla (aditivo).
-   Usa tu mismo colibri.png (diseño ilustrado, minimalista y dorado, sin cambios).
+   Usa tu mismo colibri.svg (diseño ilustrado, minimalista y dorado, sin cambios).
    Las alas se mueven deformando la propia imagen; se acerca (crece) y se aleja (se achica). */
 (() => {
   'use strict';
@@ -36,7 +36,7 @@
     setTimeout(launch, 3500);
   };
   img.onerror = () => wrap.remove();
-  img.src = 'colibri.png';
+  img.src = 'colibri.svg';
 
   function drawBird(ph, amp) {            // alas: deforma la imagen alrededor de una bisagra
     ctx.clearRect(0, 0, cw, ch);

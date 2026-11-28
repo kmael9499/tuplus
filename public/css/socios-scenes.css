@@ -283,7 +283,7 @@ html:not([data-theme="dark"]) body.partners-page .sc-req-overview-foot :is(p, sp
 }
 :root body.partners-page .sc-faq-help-icon {
   border-radius: 50%;
-  background: url("../colibri.png") center / 66% no-repeat, radial-gradient(circle, #173a52, #0a1a26);
+  background: url("../colibri.svg") center / 66% no-repeat, radial-gradient(circle, #173a52, #0a1a26);
   color: transparent;
 }
 :root body.partners-page .sc-faq-help-card a {

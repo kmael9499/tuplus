@@ -309,7 +309,7 @@ const pause = () => new Promise((r) => setTimeout(r, 0));
     "js/partner-countries.js",
     "css/partner-globe.css",
     "imagenes/partner/earth-mask.svg",
-    "colibri.png",
+    "colibri.svg",
   ])
     assert.ok(fs.existsSync(path.join(base, file)), file);
   console.log(

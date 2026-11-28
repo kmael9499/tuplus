@@ -180,7 +180,7 @@ body.partners-page::after {
   z-index: 30;
   width: clamp(90px, 11vw, 160px);
   aspect-ratio: 1;
-  background: url("../colibri.png") center / contain no-repeat;
+  background: url("../colibri.svg") center / contain no-repeat;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .25));
   opacity: 0;
   pointer-events: none;
@@ -349,7 +349,7 @@ body.partners-page::after {
   z-index: 30;
   width: clamp(90px, 11vw, 160px);
   aspect-ratio: 1;
-  background: url("../colibri.png") center / contain no-repeat;
+  background: url("../colibri.svg") center / contain no-repeat;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .25));
   opacity: 0;
   pointer-events: none;
@@ -639,7 +639,7 @@ body.partners-page::after {
   z-index: 30;
   width: var(--colibri-w);
   aspect-ratio: 1;
-  background: url("../colibri.png") center / contain no-repeat;
+  background: url("../colibri.svg") center / contain no-repeat;
   filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .22));
   opacity: 0;
   pointer-events: none;

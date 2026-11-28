@@ -28,7 +28,8 @@ for (const file of fs.readdirSync(base, {recursive: true}).filter(file => file.e
   }
   let extras = {};
   if (file === 'cotizador.html') {
-    const source = fs.readFileSync(path.join(base, 'js/cotizador-extras.js'), 'utf8');
+    // Se lee la fuente sin minificar: el test separa el archivo por bloques de texto.
+    const source = fs.readFileSync(path.join(__dirname, '..', 'public', 'js', 'cotizador-extras.js'), 'utf8');
     const split = source.indexOf('  let reChips');
     const laterRows = source.slice(split).match(/^  K\([\s\S]*?^  \);/gm) || [];
     vm.runInContext(source.slice(0, split) + laterRows.join('\n') + '\nwindow.__extraTranslations = D; window.__applyExtras = applyI18n;})();', context);

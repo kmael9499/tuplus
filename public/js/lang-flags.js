@@ -48,6 +48,9 @@
 
   function sync() {
     const cur = options.find(o => o.code === sel.value) || options[0];
+    // El selector está marcado translate="no": su etiqueta accesible se copia del <select>, que i18n.js traduce.
+    const label = sel.getAttribute('aria-label');
+    if (label) { btn.setAttribute('aria-label', label); menu.setAttribute('aria-label', label); }
     btn.innerHTML = `${flag(cur.code)}<span class="lang-name">${cur.name}</span><span class="lang-code">${cur.code.toUpperCase()}</span><svg class="lang-caret" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     items.forEach(li => li.setAttribute('aria-selected', li.dataset.code === cur.code ? 'true' : 'false'));
     document.documentElement.setAttribute('data-lang-ui', cur.code);
@@ -77,6 +80,7 @@
   });
   document.addEventListener('click', e => { if (isOpen() && !e.composedPath().includes(host)) close(false); });
   sel.addEventListener('change', sync);
+  document.addEventListener('tuplus:language-change', sync);
   addEventListener('load', sync);
   sync(); setTimeout(sync, 250); setTimeout(sync, 1000);
 })();

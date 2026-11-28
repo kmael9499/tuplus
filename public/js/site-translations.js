@@ -235,3 +235,613 @@
     (window.TUPLUS_TRANSLATIONS[locale] ||= {})[row[0]] = row[index];
   });
 })();
+
+/* Textos del cotizador que faltaban (descripciones de funciones, resumen, entrega prioritaria y cupón).
+   Orden: es, en, zh, ru, pt, fr, ja, de. {amount} se reemplaza por el importe al mostrarlo. */
+(() => {
+  const locales = ['es', 'en', 'zh', 'ru', 'pt', 'fr', 'ja', 'de'];
+  const rows = [
+    [
+     "Añade un acceso directo para que las personas puedan escribirte por WhatsApp desde tu página. Facilita las consultas, cotizaciones y coordinación con tus clientes sin que tengan que buscar tu número.",
+     "Adds a direct button so people can message you on WhatsApp from your site. It makes questions, quotes and coordination with your clients easier, without them having to look up your number.",
+     "添加一个直达按钮，让访客可以从您的网站直接通过 WhatsApp 联系您。无需查找您的号码，咨询、报价和与客户的沟通都更方便。",
+     "Добавляет кнопку, чтобы посетители могли написать вам в WhatsApp прямо с сайта. Упрощает вопросы, расчёты и согласование с клиентами: им не нужно искать ваш номер.",
+     "Adiciona um acesso direto para que as pessoas possam falar com você pelo WhatsApp a partir do seu site. Facilita consultas, orçamentos e a coordenação com seus clientes, sem que precisem procurar seu número.",
+     "Ajoute un accès direct pour que les visiteurs vous écrivent sur WhatsApp depuis votre site. Questions, devis et coordination avec vos clients deviennent plus simples, sans chercher votre numéro.",
+     "サイトから直接WhatsAppでメッセージを送れるボタンを追加します。番号を探す手間なく、問い合わせ、見積もり、お客様とのやり取りがスムーズになります。",
+     "Fügt einen direkten Zugang hinzu, über den Besucher dir von deiner Website aus per WhatsApp schreiben können. Anfragen, Angebote und Abstimmungen mit Kunden werden einfacher, ohne dass sie deine Nummer suchen müssen."
+    ],
+    [
+     "Permite crear formularios para recibir consultas, solicitudes de cotización, datos de contacto o pedidos. La información se organiza mediante campos personalizados y puede enviarse al correo que indiques para que puedas responder a tus potenciales clientes.",
+     "Lets you create forms to receive inquiries, quote requests, contact details or orders. The information is organized in custom fields and can be sent to the email address you choose, so you can reply to potential clients.",
+     "可创建表单来接收咨询、报价请求、联系信息或订单。信息通过自定义字段整理，并可发送到您指定的邮箱，方便您回复潜在客户。",
+     "Позволяет создавать формы для вопросов, заявок на расчёт, контактных данных или заказов. Информация собирается в настраиваемые поля и может отправляться на указанную вами почту, чтобы вы могли ответить потенциальным клиентам.",
+     "Permite criar formulários para receber consultas, pedidos de orçamento, dados de contato ou pedidos. As informações são organizadas em campos personalizados e podem ser enviadas ao e-mail que você indicar, para você responder aos seus potenciais clientes.",
+     "Permet de créer des formulaires pour recevoir des demandes, des devis, des coordonnées ou des commandes. Les informations sont organisées en champs personnalisés et peuvent être envoyées à l’adresse e-mail de votre choix pour répondre à vos prospects.",
+     "問い合わせ、見積もり依頼、連絡先、注文を受け付けるフォームを作成できます。情報はカスタム項目で整理され、指定したメールアドレスに送信できるので、見込み客にすぐ返信できます。",
+     "Ermöglicht Formulare für Anfragen, Angebotswünsche, Kontaktdaten oder Bestellungen. Die Angaben werden in eigenen Feldern geordnet und können an die von dir gewählte E-Mail-Adresse gesendet werden, damit du potenziellen Kunden antworten kannst."
+    ],
+    [
+     "Optimiza la estructura y el contenido de tu sitio para que Google pueda entender mejor tus páginas. Se trabajan elementos como títulos, descripciones y palabras clave relacionadas con tus servicios, ayudando a que tu negocio tenga más oportunidades de aparecer en búsquedas relevantes.",
+     "Improves your site's structure and content so Google can better understand your pages. We work on titles, descriptions and keywords related to your services, helping your business appear in more relevant searches.",
+     "优化网站的结构和内容，让 Google 更好地理解您的页面。我们会处理标题、描述以及与您服务相关的关键词，帮助您的业务在相关搜索中获得更多曝光机会。",
+     "Оптимизирует структуру и содержание сайта, чтобы Google лучше понимал ваши страницы. Мы прорабатываем заголовки, описания и ключевые слова по вашим услугам, чтобы бизнес чаще появлялся в релевантном поиске.",
+     "Otimiza a estrutura e o conteúdo do seu site para que o Google entenda melhor suas páginas. Trabalhamos títulos, descrições e palavras-chave relacionadas aos seus serviços, aumentando as chances de o seu negócio aparecer em buscas relevantes.",
+     "Optimise la structure et le contenu de votre site pour que Google comprenne mieux vos pages. Nous travaillons les titres, descriptions et mots-clés liés à vos services pour que votre activité apparaisse davantage dans les recherches pertinentes.",
+     "Googleがページをより理解できるよう、サイトの構造とコンテンツを最適化します。タイトル、説明文、サービスに関連するキーワードを整え、関連する検索で表示される機会を増やします。",
+     "Optimiert Struktur und Inhalt deiner Website, damit Google deine Seiten besser versteht. Wir bearbeiten Titel, Beschreibungen und Schlüsselwörter zu deinen Leistungen, damit dein Unternehmen öfter in relevanten Suchen erscheint."
+    ],
+    [
+     "Integra herramientas de medición para conocer cuántas personas visitan tu web, desde dónde llegan y qué páginas consultan. También permite revisar interacciones importantes para identificar qué contenido funciona mejor y tomar decisiones basadas en datos.",
+     "Adds measurement tools to see how many people visit your site, where they come from and which pages they view. You can also review key interactions to find out what content works best and make data-driven decisions.",
+     "集成统计工具，了解有多少人访问您的网站、来自哪里以及浏览了哪些页面。还可以查看重要的互动，找出效果最好的内容，基于数据做决策。",
+     "Подключает инструменты аналитики: сколько людей посещают сайт, откуда приходят и какие страницы смотрят. Можно отслеживать важные действия, чтобы понять, какой контент работает лучше, и принимать решения на основе данных.",
+     "Integra ferramentas de medição para saber quantas pessoas visitam seu site, de onde chegam e quais páginas consultam. Também permite acompanhar interações importantes para identificar o conteúdo que funciona melhor e decidir com base em dados.",
+     "Intègre des outils de mesure pour savoir combien de personnes visitent votre site, d’où elles viennent et quelles pages elles consultent. Vous suivez aussi les interactions clés pour repérer le contenu qui fonctionne et décider à partir des données.",
+     "計測ツールを導入し、訪問者数、流入元、閲覧ページを把握できます。重要な操作も確認できるため、効果の高いコンテンツを見極め、データに基づいて判断できます。",
+     "Bindet Messwerkzeuge ein, mit denen du siehst, wie viele Menschen deine Website besuchen, woher sie kommen und welche Seiten sie aufrufen. Wichtige Interaktionen lassen sich auswerten, um zu erkennen, welche Inhalte am besten funktionieren."
+    ],
+    [
+     "Incorpora un sistema para que tus clientes puedan consultar horarios disponibles y solicitar o reservar citas directamente desde tu página. Es útil para negocios que trabajan con atención por turnos, como consultorios, salones, servicios técnicos o asesorías.",
+     "Adds a system so your clients can check available times and request or book appointments directly from your site. It suits businesses that work by appointment, such as clinics, salons, technical services or consultancies.",
+     "加入预约系统，让客户直接在您的网站上查看可预约时间并申请或预订。适合按时段服务的业务，如诊所、美容院、技术服务或咨询机构。",
+     "Добавляет систему, где клиенты видят свободное время и записываются прямо на сайте. Подходит для бизнеса с приёмом по записи: клиник, салонов, сервисных центров или консультантов.",
+     "Incorpora um sistema para que seus clientes consultem horários disponíveis e solicitem ou reservem atendimentos diretamente no seu site. É útil para negócios que trabalham com agendamento, como consultórios, salões, assistências técnicas ou consultorias.",
+     "Ajoute un système pour que vos clients consultent les créneaux disponibles et demandent ou réservent un rendez-vous directement sur votre site. Idéal pour les activités sur rendez-vous : cabinets, salons, services techniques ou conseil.",
+     "空き時間の確認や予約の申し込みを、お客様がサイトから直接行える仕組みを追加します。クリニック、サロン、修理サービス、コンサルティングなど、予約制のビジネスに適しています。",
+     "Fügt ein System hinzu, mit dem Kunden freie Termine sehen und direkt auf deiner Website anfragen oder buchen können. Ideal für Unternehmen mit Terminvergabe wie Praxen, Salons, technische Dienste oder Beratungen."
+    ],
+    [
+     "Adapta el contenido de tu sitio para que pueda mostrarse en dos o más idiomas mediante un selector de idioma. Así, visitantes de distintos países pueden comprender mejor tus productos y servicios; la traducción y cantidad de idiomas se definen según el alcance del proyecto.",
+     "Adapts your site's content so it can be shown in two or more languages with a language selector. Visitors from different countries can better understand your products and services; the translation and number of languages are defined in the project scope.",
+     "调整网站内容，通过语言选择器以两种或更多语言展示。不同国家的访客能更好地了解您的产品和服务；翻译及语言数量将根据项目范围确定。",
+     "Адаптирует содержание сайта для показа на двух и более языках с переключателем. Посетители из разных стран лучше поймут ваши продукты и услуги; перевод и число языков определяются объёмом проекта.",
+     "Adapta o conteúdo do seu site para ser exibido em dois ou mais idiomas com um seletor de idioma. Assim, visitantes de diferentes países entendem melhor seus produtos e serviços; a tradução e a quantidade de idiomas são definidas no escopo do projeto.",
+     "Adapte le contenu de votre site pour l’afficher en deux langues ou plus grâce à un sélecteur. Les visiteurs de différents pays comprennent mieux vos produits et services ; la traduction et le nombre de langues sont définis dans le périmètre du projet.",
+     "言語切り替えを使って、サイトのコンテンツを2つ以上の言語で表示できるようにします。さまざまな国の訪問者が商品やサービスを理解しやすくなります。翻訳と言語数はプロジェクトの範囲で決めます。",
+     "Passt die Inhalte deiner Website an, damit sie über eine Sprachauswahl in zwei oder mehr Sprachen erscheinen. So verstehen Besucher aus verschiedenen Ländern deine Produkte und Leistungen besser; Übersetzung und Anzahl der Sprachen werden im Projektumfang festgelegt."
+    ],
+    [
+     "Agrega una opción para que tus clientes puedan realizar pagos o continuar el proceso de compra por internet. La integración se realiza mediante una pasarela o proveedor externo compatible; sus comisiones, requisitos y posibles cargos se pagan directamente al proveedor.",
+     "Adds an option for your clients to pay or continue their purchase online. The integration uses a compatible external gateway or provider; its fees, requirements and any charges are paid directly to the provider.",
+     "为客户添加在线付款或继续购买的选项。集成通过兼容的第三方支付网关或服务商完成；其手续费、要求及可能产生的费用直接支付给服务商。",
+     "Добавляет возможность оплаты или оформления покупки онлайн. Интеграция выполняется через совместимый внешний платёжный шлюз или провайдера; его комиссии, требования и возможные сборы оплачиваются напрямую провайдеру.",
+     "Adiciona uma opção para que seus clientes paguem ou continuem a compra pela internet. A integração é feita com um gateway ou provedor externo compatível; suas taxas, requisitos e possíveis cobranças são pagos diretamente ao provedor.",
+     "Ajoute une option pour que vos clients paient ou poursuivent leur achat en ligne. L’intégration passe par une passerelle ou un prestataire externe compatible ; ses frais, exigences et éventuels coûts sont réglés directement au prestataire.",
+     "お客様がオンラインで支払いや購入手続きを進められるオプションを追加します。連携は対応する外部の決済代行サービスで行い、その手数料や要件、費用はサービス提供者に直接お支払いいただきます。",
+     "Fügt eine Möglichkeit hinzu, online zu bezahlen oder den Kauf abzuschließen. Die Anbindung erfolgt über einen kompatiblen externen Zahlungsanbieter; dessen Gebühren, Anforderungen und mögliche Kosten werden direkt an den Anbieter gezahlt."
+    ],
+    [
+     "Añade una sección de artículos o noticias que podrás actualizar desde un administrador de contenido, sin tener que modificar el código de la página. Puedes publicar novedades, consejos, casos de trabajo y contenido útil para mantener tu web activa y compartir información con tus clientes.",
+     "Adds a section for articles or news that you can update from a content manager, without touching the site's code. Publish updates, tips, case studies and useful content to keep your site active and share information with your clients.",
+     "添加文章或新闻栏目，您可以通过内容管理后台更新，无需修改网站代码。发布动态、建议、案例和实用内容，保持网站活跃并与客户分享信息。",
+     "Добавляет раздел статей или новостей, который можно обновлять из системы управления контентом без правки кода. Публикуйте новости, советы, кейсы и полезные материалы, чтобы сайт оставался живым.",
+     "Adiciona uma seção de artigos ou notícias que você pode atualizar por um gerenciador de conteúdo, sem mexer no código do site. Publique novidades, dicas, casos e conteúdo útil para manter seu site ativo e compartilhar informações com seus clientes.",
+     "Ajoute une rubrique d’articles ou d’actualités que vous mettez à jour depuis un gestionnaire de contenu, sans toucher au code. Publiez nouveautés, conseils, études de cas et contenus utiles pour garder votre site vivant.",
+     "コードを触らずに管理画面から更新できる記事・ニュースのセクションを追加します。お知らせ、ヒント、事例、役立つ情報を発信して、サイトを活発に保ち、お客様と情報を共有できます。",
+     "Fügt einen Bereich für Artikel oder News hinzu, den du über ein Content-Management-System pflegst, ohne den Code anzufassen. Veröffentliche Neuigkeiten, Tipps, Fallbeispiele und nützliche Inhalte, um deine Website aktuell zu halten."
+    ],
+    [
+     "Integra un mapa para mostrar la ubicación de tu negocio, sucursales o puntos de atención. Según lo contratado, también puede incluir buscador de lugares o indicaciones de rutas para que los visitantes encuentren con mayor facilidad cómo llegar.",
+     "Adds a map showing the location of your business, branches or service points. Depending on the scope, it can also include a place search or directions so visitors can easily find how to get there.",
+     "加入地图，展示您的店铺、分店或服务网点位置。根据合同内容，还可以加入地点搜索或路线指引，方便访客找到前往方式。",
+     "Добавляет карту с расположением вашего бизнеса, филиалов или пунктов обслуживания. В зависимости от объёма может включать поиск мест или маршруты, чтобы посетителям было проще добраться.",
+     "Integra um mapa para mostrar a localização do seu negócio, filiais ou pontos de atendimento. Conforme o contratado, também pode incluir busca de locais ou rotas para que os visitantes encontrem com mais facilidade como chegar.",
+     "Intègre une carte indiquant l’emplacement de votre entreprise, de vos agences ou points d’accueil. Selon le périmètre, elle peut inclure une recherche de lieux ou un itinéraire pour aider les visiteurs à vous trouver.",
+     "店舗、支店、窓口の場所を示す地図を追加します。ご契約内容に応じて、場所の検索や道順の表示も加えられ、訪問者が迷わずたどり着けます。",
+     "Bindet eine Karte mit dem Standort deines Unternehmens, deiner Filialen oder Anlaufstellen ein. Je nach Umfang auch mit Ortssuche oder Routenführung, damit Besucher leichter zu dir finden."
+    ],
+    [
+     "Conecta procesos de tu web con herramientas externas para reducir tareas manuales, como enviar avisos, registrar solicitudes o distribuir información. Las automatizaciones específicas se definen según tu flujo de trabajo y pueden requerir servicios externos con costos propios.",
+     "Connects your site's processes with external tools to cut manual work, such as sending notifications, logging requests or distributing information. The specific automations are defined around your workflow and may require external services with their own costs.",
+     "将网站流程与外部工具连接，减少手动工作，例如发送通知、记录请求或分发信息。具体自动化内容将根据您的工作流程确定，可能需要自行付费的外部服务。",
+     "Связывает процессы сайта с внешними инструментами, чтобы сократить ручную работу: отправку уведомлений, регистрацию заявок или рассылку информации. Конкретные автоматизации определяются под ваш процесс и могут потребовать платных внешних сервисов.",
+     "Conecta processos do seu site a ferramentas externas para reduzir tarefas manuais, como enviar avisos, registrar solicitações ou distribuir informações. As automações específicas são definidas conforme seu fluxo de trabalho e podem exigir serviços externos com custos próprios.",
+     "Relie les processus de votre site à des outils externes pour réduire les tâches manuelles : envoi d’alertes, enregistrement des demandes ou diffusion d’informations. Les automatisations sont définies selon votre flux de travail et peuvent nécessiter des services externes payants.",
+     "サイトの処理を外部ツールとつなぎ、通知の送信、申し込みの記録、情報の配信などの手作業を減らします。具体的な自動化は業務フローに合わせて決め、別途費用がかかる外部サービスが必要な場合があります。",
+     "Verbindet Abläufe deiner Website mit externen Tools, um Handarbeit zu sparen, etwa beim Versand von Hinweisen, beim Erfassen von Anfragen oder beim Verteilen von Informationen. Die Automatisierungen richten sich nach deinem Arbeitsablauf und können kostenpflichtige externe Dienste erfordern."
+    ],
+    [
+     "Mejora el rendimiento de tu sitio para que sus páginas y recursos carguen de manera más eficiente. Se revisan aspectos como imágenes, archivos y recursos que afectan la velocidad, con el objetivo de ofrecer una navegación más fluida, especialmente desde celulares y conexiones lentas.",
+     "Improves your site's performance so its pages and resources load more efficiently. We review images, files and resources that affect speed, aiming for smoother browsing, especially on phones and slow connections.",
+     "提升网站性能，让页面和资源加载更高效。我们会检查影响速度的图片、文件和资源，让浏览更流畅，尤其是在手机和慢速网络下。",
+     "Повышает производительность сайта, чтобы страницы и ресурсы загружались эффективнее. Проверяем изображения, файлы и ресурсы, влияющие на скорость, чтобы навигация была плавной, особенно на телефонах и медленном интернете.",
+     "Melhora o desempenho do seu site para que as páginas e os recursos carreguem de forma mais eficiente. Revisamos imagens, arquivos e recursos que afetam a velocidade, buscando uma navegação mais fluida, principalmente no celular e em conexões lentas.",
+     "Améliore les performances de votre site pour que pages et ressources se chargent plus efficacement. Nous revoyons images, fichiers et ressources qui pèsent sur la vitesse pour une navigation plus fluide, surtout sur mobile et connexions lentes.",
+     "ページやリソースがより効率よく読み込まれるよう、サイトのパフォーマンスを改善します。速度に影響する画像、ファイル、リソースを見直し、特にスマートフォンや低速回線での快適な閲覧を目指します。",
+     "Verbessert die Leistung deiner Website, damit Seiten und Ressourcen effizienter laden. Wir prüfen Bilder, Dateien und Ressourcen, die die Geschwindigkeit beeinflussen, für ein flüssigeres Surfen, besonders auf dem Handy und bei langsamen Verbindungen."
+    ],
+    [
+     "Refuerza la seguridad de tu página mediante ajustes de configuración y buenas prácticas para reducir riesgos comunes. Puede incluir protección de accesos, revisión de permisos, configuración segura y medidas preventivas; no sustituye el monitoreo continuo ni garantiza que un sitio sea imposible de vulnerar.",
+     "Strengthens your site's security with configuration adjustments and good practices to reduce common risks. It can include access protection, permission reviews, secure configuration and preventive measures; it does not replace ongoing monitoring or guarantee that a site cannot be breached.",
+     "通过配置调整和最佳实践加强网站安全，降低常见风险。可包括访问保护、权限检查、安全配置和预防措施；但不能替代持续监控，也无法保证网站绝对不会被攻破。",
+     "Усиливает защиту сайта с помощью настроек и лучших практик, снижая типичные риски. Может включать защиту доступа, проверку прав, безопасную конфигурацию и профилактические меры; не заменяет постоянный мониторинг и не гарантирует полную неуязвимость.",
+     "Reforça a segurança do seu site com ajustes de configuração e boas práticas para reduzir riscos comuns. Pode incluir proteção de acessos, revisão de permissões, configuração segura e medidas preventivas; não substitui o monitoramento contínuo nem garante que um site seja impossível de invadir.",
+     "Renforce la sécurité de votre site grâce à des réglages et à de bonnes pratiques qui réduisent les risques courants. Peut inclure protection des accès, revue des droits, configuration sécurisée et mesures préventives ; ne remplace pas une surveillance continue ni ne garantit qu’un site soit inviolable.",
+     "設定の見直しとベストプラクティスにより、一般的なリスクを減らしてサイトの安全性を高めます。アクセス保護、権限の確認、安全な設定、予防策などを含められますが、継続的な監視の代わりにはならず、侵入されないことを保証するものではありません。",
+     "Stärkt die Sicherheit deiner Website durch Konfigurationsanpassungen und bewährte Verfahren, um häufige Risiken zu senken. Kann Zugriffsschutz, Rechteprüfung, sichere Konfiguration und Vorsorgemaßnahmen umfassen; ersetzt keine laufende Überwachung und garantiert nicht, dass eine Website unangreifbar ist."
+    ],
+    [
+     "Configura cuentas de correo con el nombre de tu propio dominio, por ejemplo ventas@tuempresa.com, para dar una imagen más profesional al comunicarte con tus clientes. La cantidad de buzones, capacidad y renovación dependen del proveedor de correo contratado.",
+     "Sets up email accounts with your own domain name, for example sales@yourcompany.com, for a more professional image when you write to clients. The number of mailboxes, storage and renewal depend on the email provider you choose.",
+     "使用您自己的域名设置邮箱账户，例如 sales@yourcompany.com，让您与客户沟通时更显专业。邮箱数量、容量和续费取决于所选的邮件服务商。",
+     "Настраивает почтовые ящики на вашем домене, например sales@вашакомпания.com, для более профессионального образа в переписке с клиентами. Количество ящиков, объём и продление зависят от выбранного почтового провайдера.",
+     "Configura contas de e-mail com o nome do seu próprio domínio, por exemplo vendas@suaempresa.com, para uma imagem mais profissional ao falar com seus clientes. A quantidade de caixas, a capacidade e a renovação dependem do provedor de e-mail contratado.",
+     "Configure des adresses e-mail à votre nom de domaine, par exemple ventes@votreentreprise.com, pour une image plus professionnelle auprès de vos clients. Le nombre de boîtes, l’espace et le renouvellement dépendent du fournisseur choisi.",
+     "sales@yourcompany.com のように独自ドメインのメールアカウントを設定し、お客様とのやり取りでより信頼感のある印象を与えます。アカウント数、容量、更新はご契約のメールサービスによって異なります。",
+     "Richtet E-Mail-Konten mit deiner eigenen Domain ein, zum Beispiel vertrieb@deinefirma.de, für einen professionelleren Auftritt gegenüber Kunden. Anzahl der Postfächer, Speicher und Verlängerung hängen vom gewählten E-Mail-Anbieter ab."
+    ],
+    [
+     "Traslada una página web existente a un nuevo entorno, procurando conservar su contenido, estructura y enlaces importantes. Antes del traslado se revisan los elementos del sitio para definir qué se puede migrar y evitar, en lo posible, interrupciones o pérdida de información.",
+     "Moves an existing website to a new environment, aiming to keep its content, structure and important links. Before the move we review the site to decide what can be migrated and to avoid, as far as possible, downtime or data loss.",
+     "将现有网站迁移到新环境，尽量保留其内容、结构和重要链接。迁移前会检查网站各部分，确定可迁移的内容，尽可能避免中断或信息丢失。",
+     "Переносит существующий сайт в новую среду, сохраняя содержание, структуру и важные ссылки. Перед переносом мы проверяем сайт, чтобы определить, что можно перенести, и по возможности избежать простоев или потери данных.",
+     "Transfere um site existente para um novo ambiente, procurando manter seu conteúdo, estrutura e links importantes. Antes da transferência, revisamos os elementos do site para definir o que pode ser migrado e evitar, na medida do possível, interrupções ou perda de informações.",
+     "Transfère un site existant vers un nouvel environnement en préservant son contenu, sa structure et ses liens importants. Avant le transfert, nous examinons le site pour définir ce qui peut être migré et éviter, autant que possible, interruptions ou pertes de données.",
+     "既存のウェブサイトを新しい環境へ移行し、コンテンツ、構成、重要なリンクをできる限り維持します。移行前にサイトを確認して移行できる範囲を決め、停止や情報の損失をできるだけ防ぎます。",
+     "Überträgt eine bestehende Website in eine neue Umgebung und erhält dabei Inhalte, Struktur und wichtige Links. Vorab prüfen wir die Website, um festzulegen, was migriert werden kann, und Ausfälle oder Datenverluste möglichst zu vermeiden."
+    ],
+    [
+     "Prepara y estructura el contenido de tu negocio para que los motores de búsqueda y asistentes de inteligencia artificial puedan comprender mejor qué ofreces. Se trabaja la claridad de la información, preguntas frecuentes, datos del negocio y contenido útil para aumentar las posibilidades de que tu marca sea considerada en respuestas generadas por IA; no garantiza menciones ni recomendaciones.",
+     "Prepares and structures your business content so search engines and AI assistants can better understand what you offer. We work on clear information, FAQs, business details and useful content to improve the chances of your brand being considered in AI-generated answers; mentions or recommendations are not guaranteed.",
+     "整理并结构化您的业务内容，让搜索引擎和人工智能助手更好地理解您提供的服务。我们会完善信息的清晰度、常见问题、企业资料和实用内容，提高品牌被 AI 生成的回答采纳的可能性；但不保证一定被提及或推荐。",
+     "Готовит и структурирует информацию о бизнесе, чтобы поисковые системы и ИИ-ассистенты лучше понимали, что вы предлагаете. Прорабатываем ясность информации, частые вопросы, данные компании и полезный контент, повышая шансы, что бренд учтут в ответах ИИ; упоминания и рекомендации не гарантируются.",
+     "Prepara e estrutura o conteúdo do seu negócio para que mecanismos de busca e assistentes de inteligência artificial entendam melhor o que você oferece. Trabalhamos a clareza das informações, perguntas frequentes, dados do negócio e conteúdo útil para aumentar as chances de sua marca ser considerada em respostas geradas por IA; não garante menções nem recomendações.",
+     "Prépare et structure le contenu de votre activité pour que moteurs de recherche et assistants d’intelligence artificielle comprennent mieux votre offre. Nous travaillons la clarté des informations, la FAQ, les données de l’entreprise et le contenu utile pour augmenter les chances que votre marque soit citée dans les réponses générées par l’IA ; aucune mention ni recommandation n’est garantie.",
+     "検索エンジンやAIアシスタントが提供内容を理解しやすいよう、ビジネスのコンテンツを整理・構造化します。情報の明確さ、よくある質問、事業データ、役立つコンテンツを整え、AIが生成する回答でブランドが取り上げられる可能性を高めます。言及や推奨を保証するものではありません。",
+     "Bereitet die Inhalte deines Unternehmens so auf, dass Suchmaschinen und KI-Assistenten besser verstehen, was du anbietest. Wir arbeiten an klaren Informationen, häufigen Fragen, Unternehmensdaten und nützlichen Inhalten, um die Chance zu erhöhen, dass deine Marke in KI-Antworten berücksichtigt wird; Erwähnungen oder Empfehlungen sind nicht garantiert."
+    ],
+    [
+     "Cada sección adicional cuesta",
+     "Each extra section costs",
+     "每个额外版块费用为",
+     "Каждый дополнительный блок стоит",
+     "Cada seção adicional custa",
+     "Chaque section supplémentaire coûte",
+     "追加セクション1つあたり",
+     "Jeder zusätzliche Abschnitt kostet"
+    ],
+    [
+     "Cada página adicional cuesta",
+     "Each extra page costs",
+     "每个额外页面费用为",
+     "Каждая дополнительная страница стоит",
+     "Cada página adicional custa",
+     "Chaque page supplémentaire coûte",
+     "追加ページ1つあたり",
+     "Jede zusätzliche Seite kostet"
+    ],
+    [
+     "Cambia de nivel arriba para ampliar lo incluido.",
+     "Choose a higher level above to include more.",
+     "在上方选择更高级别以包含更多内容。",
+     "Выберите уровень выше, чтобы включить больше.",
+     "Escolha um nível acima para ampliar o que está incluído.",
+     "Choisissez un niveau supérieur ci-dessus pour inclure davantage.",
+     "上でレベルを変更すると、含まれる内容が増えます。",
+     "Wähle oben eine höhere Stufe, um mehr einzuschließen."
+    ],
+    [
+     "Visibilidad en buscadores con IA (GEO)",
+     "AI search visibility (GEO)",
+     "AI 搜索可见性（GEO）",
+     "Видимость в ИИ-поиске (GEO)",
+     "Visibilidade em buscadores com IA (GEO)",
+     "Visibilité dans les moteurs IA (GEO)",
+     "AI検索での可視性（GEO）",
+     "Sichtbarkeit in KI-Suchmaschinen (GEO)"
+    ],
+    [
+     "Hosting básico + dominio básico (configuración)",
+     "Basic hosting + basic domain (setup)",
+     "基础主机 + 基础域名（配置）",
+     "Базовый хостинг + базовый домен (настройка)",
+     "Hospedagem básica + domínio básico (configuração)",
+     "Hébergement de base + domaine de base (configuration)",
+     "ベーシックホスティング＋ベーシックドメイン（設定）",
+     "Basis-Hosting + Basis-Domain (Einrichtung)"
+    ],
+    [
+     "Hosting tienda + dominio básico (configuración)",
+     "Store hosting + basic domain (setup)",
+     "商店主机 + 基础域名（配置）",
+     "Хостинг магазина + базовый домен (настройка)",
+     "Hospedagem de loja + domínio básico (configuração)",
+     "Hébergement boutique + domaine de base (configuration)",
+     "ストア用ホスティング＋ベーシックドメイン（設定）",
+     "Shop-Hosting + Basis-Domain (Einrichtung)"
+    ],
+    [
+     "Garantía de 30 días",
+     "30-day warranty",
+     "30 天保修",
+     "Гарантия 30 дней",
+     "Garantia de 30 dias",
+     "Garantie de 30 jours",
+     "30日間の保証",
+     "30 Tage Garantie"
+    ],
+    [
+     "Incluida · corrección de defectos del alcance aprobado",
+     "Included · fixes for defects within the approved scope",
+     "已包含 · 修复已批准范围内的缺陷",
+     "Включена · исправление дефектов в утверждённом объёме",
+     "Incluída · correção de defeitos do escopo aprovado",
+     "Incluse · correction des défauts du périmètre validé",
+     "込み · 承認済み範囲内の不具合修正",
+     "Inklusive · Behebung von Mängeln im genehmigten Umfang"
+    ],
+    [
+     "Plan de soporte",
+     "Support plan",
+     "支持计划",
+     "План поддержки",
+     "Plano de suporte",
+     "Formule de support",
+     "サポートプラン",
+     "Supportplan"
+    ],
+    [
+     "primer mes",
+     "first month",
+     "首月",
+     "первый месяц",
+     "primeiro mês",
+     "premier mois",
+     "初月",
+     "erster Monat"
+    ],
+    [
+     "Pagos recurrentes (el primer mes de soporte está incluido en el total)",
+     "Recurring payments (the first month of support is included in the total)",
+     "定期付款（首月支持费用已计入总额）",
+     "Регулярные платежи (первый месяц поддержки включён в итог)",
+     "Pagamentos recorrentes (o primeiro mês de suporte está incluído no total)",
+     "Paiements récurrents (le premier mois de support est inclus dans le total)",
+     "継続支払い（サポートの初月分は合計に含まれます）",
+     "Wiederkehrende Zahlungen (der erste Supportmonat ist im Gesamtbetrag enthalten)"
+    ],
+    [
+     "Sin soporte mensual adicional",
+     "No additional monthly support",
+     "无额外月度支持",
+     "Без дополнительной ежемесячной поддержки",
+     "Sem suporte mensal adicional",
+     "Sans support mensuel supplémentaire",
+     "追加の月額サポートなし",
+     "Kein zusätzlicher monatlicher Support"
+    ],
+    [
+     "Escribe tu nombre antes de descargar la cotización.",
+     "Enter your name before downloading the quote.",
+     "下载报价前请填写您的姓名。",
+     "Укажите имя, прежде чем скачать расчёт.",
+     "Escreva seu nome antes de baixar a cotação.",
+     "Saisissez votre nom avant de télécharger le devis.",
+     "見積もりをダウンロードする前にお名前を入力してください。",
+     "Gib deinen Namen ein, bevor du das Angebot herunterlädst."
+    ],
+    [
+     "Cotización descargada.",
+     "Quote downloaded.",
+     "报价已下载。",
+     "Расчёт скачан.",
+     "Cotação baixada.",
+     "Devis téléchargé.",
+     "見積もりをダウンロードしました。",
+     "Angebot heruntergeladen."
+    ],
+    [
+     "No se pudo generar el PDF. Inténtalo de nuevo.",
+     "The PDF couldn't be created. Please try again.",
+     "无法生成 PDF，请重试。",
+     "Не удалось создать PDF. Попробуйте ещё раз.",
+     "Não foi possível gerar o PDF. Tente novamente.",
+     "Impossible de générer le PDF. Réessayez.",
+     "PDFを作成できませんでした。もう一度お試しください。",
+     "Das PDF konnte nicht erstellt werden. Bitte versuche es erneut."
+    ],
+    [
+     "Generando cotización…",
+     "Creating quote…",
+     "正在生成报价…",
+     "Создаём расчёт…",
+     "Gerando cotação…",
+     "Création du devis…",
+     "見積もりを作成中…",
+     "Angebot wird erstellt…"
+    ],
+    [
+     "Hasta 8 pantallas y 2 módulos esenciales.",
+     "Up to 8 screens and 2 essential modules.",
+     "最多 8 个界面和 2 个基础模块。",
+     "До 8 экранов и 2 базовых модуля.",
+     "Até 8 telas e 2 módulos essenciais.",
+     "Jusqu’à 8 écrans et 2 modules essentiels.",
+     "最大8画面と基本モジュール2つ。",
+     "Bis zu 8 Ansichten und 2 Basismodule."
+    ],
+    [
+     "Hasta 12 pantallas, roles de usuario e integraciones.",
+     "Up to 12 screens, user roles and integrations.",
+     "最多 12 个界面、用户角色和集成。",
+     "До 12 экранов, роли пользователей и интеграции.",
+     "Até 12 telas, perfis de usuário e integrações.",
+     "Jusqu’à 12 écrans, rôles utilisateurs et intégrations.",
+     "最大12画面、ユーザー権限、外部連携。",
+     "Bis zu 12 Ansichten, Benutzerrollen und Integrationen."
+    ],
+    [
+     "Hasta 16 pantallas, módulos avanzados y automatizaciones.",
+     "Up to 16 screens, advanced modules and automations.",
+     "最多 16 个界面、高级模块和自动化。",
+     "До 16 экранов, расширенные модули и автоматизации.",
+     "Até 16 telas, módulos avançados e automações.",
+     "Jusqu’à 16 écrans, modules avancés et automatisations.",
+     "最大16画面、高度なモジュールと自動化。",
+     "Bis zu 16 Ansichten, erweiterte Module und Automatisierungen."
+    ],
+    [
+     "Alcance a medida",
+     "Custom scope",
+     "定制范围",
+     "Индивидуальный объём",
+     "Escopo sob medida",
+     "Périmètre sur mesure",
+     "オーダーメイドの範囲",
+     "Individueller Umfang"
+    ],
+    [
+     "Módulos y pantallas según tu proceso",
+     "Modules and screens built around your process",
+     "根据您的流程设计模块和界面",
+     "Модули и экраны под ваш процесс",
+     "Módulos e telas conforme seu processo",
+     "Modules et écrans adaptés à votre processus",
+     "業務フローに合わせたモジュールと画面",
+     "Module und Ansichten passend zu deinem Prozess"
+    ],
+    [
+     "Usuarios, roles y permisos",
+     "Users, roles and permissions",
+     "用户、角色和权限",
+     "Пользователи, роли и права",
+     "Usuários, perfis e permissões",
+     "Utilisateurs, rôles et autorisations",
+     "ユーザー、ロール、権限",
+     "Benutzer, Rollen und Berechtigungen"
+    ],
+    [
+     "Integraciones y automatizaciones",
+     "Integrations and automations",
+     "集成与自动化",
+     "Интеграции и автоматизации",
+     "Integrações e automações",
+     "Intégrations et automatisations",
+     "外部連携と自動化",
+     "Integrationen und Automatisierungen"
+    ],
+    [
+     "El importe final se confirma al revisar el alcance contigo.",
+     "The final amount is confirmed once we review the scope with you.",
+     "最终金额将在与您确认范围后确定。",
+     "Итоговая сумма подтверждается после согласования объёма с вами.",
+     "O valor final é confirmado ao revisar o escopo com você.",
+     "Le montant final est confirmé après revue du périmètre avec vous.",
+     "最終金額は、範囲を一緒に確認したうえで確定します。",
+     "Der Endbetrag wird nach Prüfung des Umfangs mit dir bestätigt."
+    ],
+    [
+     "¿La necesitas antes de los plazos indicados? Al activarla se añadirán {amount} (20 % del valor de implementación).",
+     "Need it sooner than the stated timeline? Turning this on adds {amount} (20% of the implementation cost).",
+     "需要比所示工期更早交付吗？开启后将增加 {amount}（实施费用的 20%）。",
+     "Нужно раньше указанных сроков? При включении добавится {amount} (20 % стоимости внедрения).",
+     "Precisa antes dos prazos indicados? Ao ativar, serão adicionados {amount} (20% do valor de implementação).",
+     "Besoin plus tôt que les délais indiqués ? L’activer ajoute {amount} (20 % du coût de mise en œuvre).",
+     "表示の納期より早く必要ですか？有効にすると {amount}（実装費用の20%）が加算されます。",
+     "Brauchst du es vor den angegebenen Fristen? Bei Aktivierung kommen {amount} hinzu (20 % der Umsetzungskosten)."
+    ],
+    [
+     "Entrega acelerada activada. Se añadieron {amount} (20 % del valor de implementación).",
+     "Priority delivery on. {amount} added (20% of the implementation cost).",
+     "已开启加急交付，已增加 {amount}（实施费用的 20%）。",
+     "Ускоренная сдача включена. Добавлено {amount} (20 % стоимости внедрения).",
+     "Entrega acelerada ativada. Foram adicionados {amount} (20% do valor de implementação).",
+     "Livraison accélérée activée. {amount} ajoutés (20 % du coût de mise en œuvre).",
+     "優先納品を有効にしました。{amount}（実装費用の20%）を加算しました。",
+     "Priorisierte Lieferung aktiviert. {amount} hinzugefügt (20 % der Umsetzungskosten)."
+    ],
+    [
+     "Agrega esta función para ampliar las posibilidades de tu sitio web.",
+     "Add this feature to expand what your website can do.",
+     "添加此功能，扩展网站的能力。",
+     "Добавьте эту функцию, чтобы расширить возможности сайта.",
+     "Adicione esta função para ampliar as possibilidades do seu site.",
+     "Ajoutez cette fonction pour étendre les possibilités de votre site.",
+     "この機能を追加して、サイトでできることを広げましょう。",
+     "Füge diese Funktion hinzu, um die Möglichkeiten deiner Website zu erweitern."
+    ],
+    [
+     "Escribe tu nombre con letras, de 2 a 80 caracteres, sin números ni símbolos.",
+     "Enter your name using letters, 2 to 80 characters, without numbers or symbols.",
+     "请用文字填写姓名，2 到 80 个字符，不含数字或符号。",
+     "Укажите имя буквами: от 2 до 80 символов, без цифр и знаков.",
+     "Escreva seu nome com letras, de 2 a 80 caracteres, sem números nem símbolos.",
+     "Saisissez votre nom en lettres, de 2 à 80 caractères, sans chiffres ni symboles.",
+     "お名前は文字で2〜80文字、数字や記号を使わずに入力してください。",
+     "Gib deinen Namen mit Buchstaben ein, 2 bis 80 Zeichen, ohne Zahlen oder Symbole."
+    ],
+    [
+     "Escribe tu empresa o actividad de 2 a 100 caracteres, con letras y puntuación habitual.",
+     "Enter your company or activity, 2 to 100 characters, with letters and standard punctuation.",
+     "请填写公司或业务，2 到 100 个字符，使用文字和常用标点。",
+     "Укажите компанию или род деятельности: от 2 до 100 символов, буквы и обычные знаки препинания.",
+     "Escreva sua empresa ou atividade, de 2 a 100 caracteres, com letras e pontuação habitual.",
+     "Saisissez votre entreprise ou activité, de 2 à 100 caractères, avec lettres et ponctuation courante.",
+     "会社名または業種を2〜100文字で、文字と一般的な句読点を使って入力してください。",
+     "Gib dein Unternehmen oder deine Tätigkeit ein, 2 bis 100 Zeichen, mit Buchstaben und üblicher Zeichensetzung."
+    ],
+    [
+     "Revisa el correo electrónico (por ejemplo nombre@empresa.com).",
+     "Check the email address (for example name@company.com).",
+     "请检查电子邮箱（例如 name@company.com）。",
+     "Проверьте адрес эл. почты (например, name@company.com).",
+     "Confira o e-mail (por exemplo nome@empresa.com).",
+     "Vérifiez l’adresse e-mail (par exemple nom@entreprise.com).",
+     "メールアドレスを確認してください（例：name@company.com）。",
+     "Prüfe die E-Mail-Adresse (zum Beispiel name@firma.de)."
+    ],
+    [
+     "Descuento",
+     "Discount",
+     "折扣",
+     "Скидка",
+     "Desconto",
+     "Remise",
+     "割引",
+     "Rabatt"
+    ],
+    [
+     "Cómo funciona",
+     "How it works",
+     "运作方式",
+     "Как это работает",
+     "Como funciona",
+     "Comment ça marche",
+     "ご利用の流れ",
+     "So funktioniert es"
+    ],
+    [
+     "Preguntas frecuentes",
+     "Frequently asked questions",
+     "常见问题",
+     "Частые вопросы",
+     "Perguntas frequentes",
+     "Questions fréquentes",
+     "よくある質問",
+     "Häufige Fragen"
+    ],
+    [
+     "Idioma del sitio",
+     "Site language",
+     "网站语言",
+     "Язык сайта",
+     "Idioma do site",
+     "Langue du site",
+     "サイトの言語",
+     "Seitensprache"
+    ],
+    [
+     "cliente@correo.com",
+     "client@email.com",
+     "client@email.com",
+     "client@email.com",
+     "cliente@email.com",
+     "client@email.com",
+     "client@email.com",
+     "kunde@email.de"
+    ],
+    [
+     "¿Qué necesitas y qué te gustaría conseguir?",
+     "What do you need, and what would you like to achieve?",
+     "您需要什么？希望实现什么目标？",
+     "Что вам нужно и чего вы хотите достичь?",
+     "Do que você precisa e o que gostaria de alcançar?",
+     "De quoi avez-vous besoin et que souhaitez-vous obtenir ?",
+     "何が必要で、何を実現したいですか？",
+     "Was brauchst du und was möchtest du erreichen?"
+    ],
+    [
+     "Escribe tu código de descuento.",
+     "Enter your discount code.",
+     "请输入折扣码。",
+     "Введите код скидки.",
+     "Digite seu código de desconto.",
+     "Saisissez votre code de réduction.",
+     "割引コードを入力してください。",
+     "Gib deinen Rabattcode ein."
+    ],
+    [
+     "Usa solo letras, números y guiones (mínimo 3 caracteres).",
+     "Use only letters, numbers and hyphens (at least 3 characters).",
+     "只能使用字母、数字和连字符（至少 3 个字符）。",
+     "Используйте только буквы, цифры и дефисы (не меньше 3 символов).",
+     "Use apenas letras, números e hífens (mínimo de 3 caracteres).",
+     "Utilisez uniquement lettres, chiffres et tirets (3 caractères minimum).",
+     "英字、数字、ハイフンのみ使用できます（3文字以上）。",
+     "Nur Buchstaben, Zahlen und Bindestriche (mindestens 3 Zeichen)."
+    ],
+    [
+     "Los cupones no están disponibles por ahora.",
+     "Coupons aren't available right now.",
+     "优惠券暂不可用。",
+     "Купоны сейчас недоступны.",
+     "Os cupons não estão disponíveis no momento.",
+     "Les codes promo ne sont pas disponibles pour le moment.",
+     "現在クーポンはご利用いただけません。",
+     "Gutscheine sind derzeit nicht verfügbar."
+    ],
+    [
+     "Comprobando…",
+     "Checking…",
+     "正在验证…",
+     "Проверяем…",
+     "Verificando…",
+     "Vérification…",
+     "確認中…",
+     "Wird geprüft…"
+    ],
+    [
+     "No se pudo comprobar el código.",
+     "The code couldn't be checked.",
+     "无法验证该代码。",
+     "Не удалось проверить код.",
+     "Não foi possível verificar o código.",
+     "Impossible de vérifier le code.",
+     "コードを確認できませんでした。",
+     "Der Code konnte nicht geprüft werden."
+    ],
+    [
+     "Quitar",
+     "Remove",
+     "移除",
+     "Удалить",
+     "Remover",
+     "Retirer",
+     "削除",
+     "Entfernen"
+    ],
+    [
+     "Quitar el cupón",
+     "Remove coupon",
+     "移除优惠券",
+     "Удалить купон",
+     "Remover o cupom",
+     "Retirer le code",
+     "クーポンを削除",
+     "Gutschein entfernen"
+    ],
+    [
+     "Cupón aplicado.",
+     "Coupon applied.",
+     "优惠券已应用。",
+     "Купон применён.",
+     "Cupom aplicado.",
+     "Code appliqué.",
+     "クーポンを適用しました。",
+     "Gutschein angewendet."
+    ],
+    [
+     "No pudimos comprobar el código. Inténtalo de nuevo.",
+     "We couldn't check the code. Please try again.",
+     "我们无法验证该代码，请重试。",
+     "Нам не удалось проверить код. Попробуйте ещё раз.",
+     "Não conseguimos verificar o código. Tente novamente.",
+     "Nous n’avons pas pu vérifier le code. Réessayez.",
+     "コードを確認できませんでした。もう一度お試しください。",
+     "Wir konnten den Code nicht prüfen. Bitte versuche es erneut."
+    ]
+];
+  const all = window.TUPLUS_TRANSLATIONS = window.TUPLUS_TRANSLATIONS || {};
+  for (const row of rows) locales.forEach((locale, index) => { (all[locale] ||= {})[row[0]] = row[index]; });
+})();
